@@ -1,6 +1,6 @@
 {
   "name": "astn-core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The TypeScript library for parsing and formatting ASTN (Abstract Syntax Tree Notation) - a human-editable data format for structured content",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -34,6 +34,6 @@
   "homepage": "https://github.com/corno/astn-core#readme",
   "dependencies": {
     "pareto-core-refiner": "^0.1.17",
-    "pareto-fountain-pen": "^0.3.32"
+    "pareto-fountain-pen": "^0.3.33"
   }
 }
