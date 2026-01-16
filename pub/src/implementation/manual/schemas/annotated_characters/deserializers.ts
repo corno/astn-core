@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core-deserializer'
 import * as _pi from 'pareto-core-interface'
-import * as _pdev from 'pareto-core-dev'
 
 import * as d_annotated_characters from "../../../../interface/to_be_generated/annotated_characters"
 

@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core-refiner'
 import * as _pi from 'pareto-core-interface'
-import * as _pdev from 'pareto-core-dev'
 import * as _p_temp_deserializer from 'pareto-core-deserializer'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
 
@@ -564,7 +563,7 @@ export const Delimited_String = (
                                         $i['add character'](get_char())
                                         $i['add character'](get_char())
                                     }),
-                                    () => _pdev.implement_me("IMPLEMENT ME: abort from unicode parsing")
+                                    () => _p.unreachable_code_path()
                                 ))
                                 break
                             default:

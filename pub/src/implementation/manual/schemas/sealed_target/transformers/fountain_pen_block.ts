@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core-transformer'
 import * as _pi from 'pareto-core-interface'
-import * as _pdev from 'pareto-core-dev'
 
 import * as d_in from "../../../../../interface/generated/pareto/schemas/sealed_target/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/pareto/schemas/block/data"
@@ -102,10 +101,8 @@ export const Document = (
     $: d_in.Document
 
 ): d_out.Group => {
-    _pdev.log_debug_message("Serializing sealed target document...", () => { })
     const result = sh.group([sh.g.nested_block([
         Value($),
     ])])
-    _pdev.log_debug_message("Serialization complete.", () => { })
     return result
 }
