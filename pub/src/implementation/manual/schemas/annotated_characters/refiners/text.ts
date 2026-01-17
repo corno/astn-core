@@ -1,11 +1,11 @@
 import * as _p from 'pareto-core-deserializer'
 import * as _pi from 'pareto-core-interface'
 
-import * as d_annotated_characters from "../../../../interface/to_be_generated/annotated_characters"
+import * as d_annotated_characters from "../../../../../interface/to_be_generated/annotated_characters"
 
 export namespace signatures {
 
-    export type Annotated_Characters = _pi.Deserializer_Without_Error_With_Parameters<d_annotated_characters.Annotated_Characters, { 'tab size': number, 'uri': string }>
+    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameters<d_annotated_characters.Annotated_Characters, _pi.List<number>, { 'tab size': number, 'uri': string }>
 
 }
 
@@ -83,10 +83,7 @@ type My_State = {
  * while keeping track of line numbers, columns, and line indentation.
  */
 export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => map_with_state<number, d_annotated_characters.Annotated_Character, My_State>(
-    _p.list.from_text(
-        $,
-        ($) => $
-    ),
+    $,
     {
         'absolute': 0,
         'line': 0,
