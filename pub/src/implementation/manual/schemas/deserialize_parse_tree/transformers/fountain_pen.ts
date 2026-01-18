@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core-transformer'
+import * as _p from 'pareto-core-serializer'
 import * as _pi from 'pareto-core-interface'
 
 import * as d_in from "../../../../../interface/generated/pareto/schemas/deserialize_parse_tree/data"
@@ -17,8 +17,23 @@ export namespace signatures {
 
 import * as sh from "pareto-fountain-pen/dist/shorthands/block"
 
-import { $$ as s_list_of_separated_texts } from "pareto-standard-operations/dist/implementation/temp_serializers/schemas/list_of_separated_texts"
 import * as t_token_to_fountain_pen from "../../token/transformers/fountain_pen"
+export const s_list_of_separated_texts: _pi.Serializer_With_Parameters<_pi.List<string>, { 'separator': string }> = ($, $p) => {
+    let is_first = true
+    return _p.text.from_list(_p.list.deprecated_build<number>(
+        ($i) => {
+            $.__for_each(($) => {
+                if (!is_first) {
+                    $i['add list'](_p.list.from_text($p.separator, ($) => $))
+                }
+                $i['add list'](_p.list.from_text($, ($) => $))
+                is_first = false
+
+            })
+        }),
+        ($) => $,
+    )
+}
 
 export const Error: signatures.Error = ($, $p) => {
     const extra: number = _p.sg($p['position info'], ($) => {

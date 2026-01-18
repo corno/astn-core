@@ -8,7 +8,7 @@ import * as d_out from "../../../../../interface/generated/pareto/schemas/token/
 import * as d_deseralize_parse_tree from "../../../../../interface/generated/pareto/schemas/deserialize_parse_tree/data"
 
 //dependencies
-import { $$ as ds_hexadecimal } from "pareto-standard-operations/dist/implementation/manual/primitives/integer/deserializers/hexadecimal"
+import { $$ as ds_hexadecimal } from "../../../primitives/integer/deserializers/hexadecimal"
 
 type Temp_Choice = null
 
