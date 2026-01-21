@@ -33,8 +33,8 @@
   },
   "homepage": "https://github.com/corno/astn-core#readme",
   "dependencies": {
-    "pareto-core-deserializer": "^0.3.0",
-    "pareto-core-refiner": "^0.2.0",
-    "pareto-fountain-pen": "^0.4.1"
+    "pareto-core-deserializer": "^0.3.2",
+    "pareto-core-refiner": "^0.2.2",
+    "pareto-fountain-pen": "^0.4.2"
   }
 }
