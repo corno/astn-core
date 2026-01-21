@@ -1,6 +1,7 @@
 import * as _p from 'pareto-core-refiner'
 import * as _pi from 'pareto-core-interface'
-import * as _p_temp_deserializer from 'pareto-core-deserializer'
+import * as _pd from 'pareto-core-deserializer'
+import * as _ps from 'pareto-core-serializer'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
 
 import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
@@ -63,7 +64,7 @@ export const Whitespace = (
 ): d_out.Whitespace => {
     const start_location = temp_get_current_location(iterator)
     return {
-        'value': _p_temp_deserializer.text.deprecated_build(($i) => {
+        'value': _ps.text.deprecated_build(($i) => {
             while (true) {
                 {
                     const $ = temp_get_current_character_or_null(iterator)
@@ -149,7 +150,7 @@ export const Trivia = (
                             }
                             $i['add element']({
                                 'type': ['line', null],
-                                'content': _p_temp_deserializer.text.deprecated_build(($i) => {
+                                'content': _ps.text.deprecated_build(($i) => {
                                     while (true) {
                                         const $ = temp_get_current_character_or_null(iterator)
                                         if ($ === null) {
@@ -176,7 +177,7 @@ export const Trivia = (
                             iterator.old.discard(() => null) // consume the asterisk
                             $i['add element']({
                                 'type': ['block', null],
-                                'content': _p_temp_deserializer.text.deprecated_build(($i) => {
+                                'content': _ps.text.deprecated_build(($i) => {
                                     let found_asterisk = false
                                     const Character = {
                                         solidus: 0x2F,              // /
@@ -352,7 +353,7 @@ export const Annotated_Token = (
                 default:
                     return ['text', {
                         'type': ['undelimited', null],
-                        'value': _p_temp_deserializer.text.deprecated_build(($i) => {
+                        'value': _ps.text.deprecated_build(($i) => {
                             while (true) {
                                 const $ = temp_get_current_character_or_null(iterator)
                                 if ($ === null) {
@@ -438,7 +439,7 @@ export const Delimited_String = (
 
     }
     const start = temp_get_current_location(iterator)
-    const txt = _p_temp_deserializer.text.deprecated_build(($i) => {
+    const txt = _ps.text.deprecated_build(($i) => {
         while (true) {
             const $ = temp_get_current_character_or_null(iterator)
             if ($ === null) {
@@ -536,7 +537,7 @@ export const Delimited_String = (
                             case Character.u:
                                 iterator.old.discard(() => null)
                                 $i['add character'](ds_hexadecimal(
-                                    _p_temp_deserializer.text.deprecated_build(($i) => {
+                                    _ps.text.deprecated_build(($i) => {
                                         const get_char = () => {
                                             const char = temp_get_current_character_or_null(iterator)
                                             if (char === null) {

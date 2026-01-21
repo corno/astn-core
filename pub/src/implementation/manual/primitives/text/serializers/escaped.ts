@@ -1,10 +1,12 @@
+import * as _p from 'pareto-core-transformer'
 import * as _pi from 'pareto-core-interface'
-import * as _p from 'pareto-core-serializer'
+import * as _ps from 'pareto-core-serializer'
+import * as _pd from 'pareto-core-deserializer'
 
 export const $$ = (
     $: string,
-): string => _p.text.deprecated_build(($i) => {
-        _p.list.from_text($, ($) => $).__for_each(($) => {
+): string => _ps.text.deprecated_build(($i) => {
+        _pd.list.from_text($, ($) => $).__for_each(($) => {
             switch ($) {
                 case 0x2F: // slash (\/)
                     $i['add character'](0x5C) // \

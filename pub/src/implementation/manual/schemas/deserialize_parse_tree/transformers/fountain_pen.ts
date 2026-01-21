@@ -1,5 +1,7 @@
-import * as _p from 'pareto-core-serializer'
+import * as _p from 'pareto-core-transformer'
 import * as _pi from 'pareto-core-interface'
+import * as _ps from 'pareto-core-serializer'
+import * as _pd from 'pareto-core-deserializer'
 
 import * as d_in from "../../../../../interface/generated/pareto/schemas/deserialize_parse_tree/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/pareto/schemas/block/data"
@@ -20,13 +22,13 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/block"
 import * as t_token_to_fountain_pen from "../../token/transformers/fountain_pen"
 export const s_list_of_separated_texts: _pi.Serializer_With_Parameters<_pi.List<string>, { 'separator': string }> = ($, $p) => {
     let is_first = true
-    return _p.text.from_list(_p.list.deprecated_build<number>(
+    return _ps.text.from_list(_p.list.deprecated_build<number>(
         ($i) => {
             $.__for_each(($) => {
                 if (!is_first) {
-                    $i['add list'](_p.list.from_text($p.separator, ($) => $))
+                    $i['add list'](_pd.list.from_text($p.separator, ($) => $))
                 }
-                $i['add list'](_p.list.from_text($, ($) => $))
+                $i['add list'](_pd.list.from_text($, ($) => $))
                 is_first = false
 
             })

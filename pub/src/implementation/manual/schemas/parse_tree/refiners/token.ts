@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core-deserializer'
+import * as _p from 'pareto-core-refiner'
 import * as _pi from 'pareto-core-interface'
 import * as _pi_new from '../productions/temp'
 import * as _pds_new from "../../parse_tree/productions/temp"
