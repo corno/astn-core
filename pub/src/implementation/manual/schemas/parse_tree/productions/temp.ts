@@ -28,7 +28,7 @@ export const create_iterator = <Iterator_Element, Choice>(
             () => unexpected_element(
                 _p.list.literal(expected),
                 next[0],
-                old['get position']()
+                old.get_position()
             )
         )
 

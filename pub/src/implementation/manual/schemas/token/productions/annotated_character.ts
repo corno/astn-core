@@ -45,7 +45,7 @@ const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Charac
     const next = iterator.old.look()
     if (next === null) {
         return {
-            'absolute': iterator.old['get position'](),
+            'absolute': iterator.old.get_position(),
             'relative': {
                 'uri': "FIXME_URI",
                 'line': -1,
@@ -81,23 +81,23 @@ export const Whitespace = (
                     switch ($.code) {
                         case 0x09: // \t
                             iterator.old.discard(() => null)
-                            $i['add character']($.code)
+                            $i.add_character($.code)
                             break
                         case 0x0A: // \n
                             iterator.old.discard(() => null)
-                            $i['add character']($.code)
+                            $i.add_character($.code)
                             break
                         case 0x0D: // \r
                             iterator.old.discard(() => null)
-                            $i['add character']($.code)
+                            $i.add_character($.code)
                             break
                         case 0x20: // space
                             iterator.old.discard(() => null)
-                            $i['add character']($.code)
+                            $i.add_character($.code)
                             break
                         case 0x2C: // ,
                             iterator.old.discard(() => null)
-                            $i['add character']($.code)
+                            $i.add_character($.code)
                             break
                         default:
                             return
@@ -127,7 +127,7 @@ export const Trivia = (
             switch ($.code) {
                 case 0x2F: // /
                     const start = $.location
-                    const next_char = iterator.old['look ahead'](1)
+                    const next_char = iterator.old.look_ahead(1)
                     if (next_char === null) {
                         const start = temp_get_current_location(iterator)
                         iterator.old.discard(() => null)
@@ -161,7 +161,7 @@ export const Trivia = (
                                             case Character.carriage_return: return
                                             default:
                                                 iterator.old.discard(() => null)
-                                                $i['add character']($.code)
+                                                $i.add_character($.code)
                                         }
                                     }
                                 }),
@@ -200,12 +200,12 @@ export const Trivia = (
                                         }
                                         //not a solidus, so this is part of the comment
                                         if (found_asterisk) {
-                                            $i['add character'](Character.asterisk) // add the asterisk that was found before but was not part of the end delimiter
+                                            $i.add_character(Character.asterisk) // add the asterisk that was found before but was not part of the end delimiter
                                         }
                                         if ($.code === Character.asterisk) {
                                             found_asterisk = true
                                         } else {
-                                            $i['add character']($.code)
+                                            $i.add_character($.code)
                                         }
                                         iterator.old.discard(() => null)
                                     }
@@ -398,7 +398,7 @@ export const Annotated_Token = (
                                     return
                                 }
                                 iterator.old.discard(() => null)
-                                $i['add character']($.code)
+                                $i.add_character($.code)
                             }
                         }),
                     }]
@@ -477,7 +477,7 @@ export const Delimited_String = (
                         }])
                     }
                     iterator.old.discard(() => null)
-                    $i['add character']($.code)
+                    $i.add_character($.code)
                     break
                 case Character.reverse_solidus: // \ (escape)
                     iterator.old.discard(() => null)
@@ -496,47 +496,47 @@ export const Delimited_String = (
                         switch ($.code) {
                             case Character.quotation_mark:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.quotation_mark)
+                                $i.add_character(Character.quotation_mark)
                                 break
                             case Character.apostrophe:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.apostrophe)
+                                $i.add_character(Character.apostrophe)
                                 break
                             case Character.backtick:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.backtick)
+                                $i.add_character(Character.backtick)
                                 break
                             case Character.reverse_solidus:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.reverse_solidus)
+                                $i.add_character(Character.reverse_solidus)
                                 break
                             case Character.solidus:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.solidus)
+                                $i.add_character(Character.solidus)
                                 break
                             case Character.b:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.backspace)
+                                $i.add_character(Character.backspace)
                                 break
                             case Character.f:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.form_feed)
+                                $i.add_character(Character.form_feed)
                                 break
                             case Character.n:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.line_feed)
+                                $i.add_character(Character.line_feed)
                                 break
                             case Character.r:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.carriage_return)
+                                $i.add_character(Character.carriage_return)
                                 break
                             case Character.t:
                                 iterator.old.discard(() => null)
-                                $i['add character'](Character.tab)
+                                $i.add_character(Character.tab)
                                 break
                             case Character.u:
                                 iterator.old.discard(() => null)
-                                $i['add character'](ds_hexadecimal(
+                                $i.add_character(ds_hexadecimal(
                                     _ps.text.deprecated_build(($i) => {
                                         const get_char = () => {
                                             const char = temp_get_current_character_or_null(iterator)
@@ -559,10 +559,10 @@ export const Delimited_String = (
                                             iterator.old.discard(() => null)
                                             return char.code
                                         }
-                                        $i['add character'](get_char())
-                                        $i['add character'](get_char())
-                                        $i['add character'](get_char())
-                                        $i['add character'](get_char())
+                                        $i.add_character(get_char())
+                                        $i.add_character(get_char())
+                                        $i.add_character(get_char())
+                                        $i.add_character(get_char())
                                     }),
                                     () => _p.unreachable_code_path()
                                 ))
@@ -580,7 +580,7 @@ export const Delimited_String = (
                     break
                 default:
                     iterator.old.discard(() => null)
-                    $i['add character']($.code)
+                    $i.add_character($.code)
             }
         }
     })
