@@ -1,7 +1,7 @@
-import * as _p from 'pareto-core-transformer'
-import * as _pi from 'pareto-core-interface'
-import * as _ps from 'pareto-core-serializer'
-import * as _pd from 'pareto-core-deserializer'
+import * as _p from 'pareto-core/dist/transformer'
+import * as _pi from 'pareto-core/dist/interface'
+import * as _ps from 'pareto-core/dist/serializer'
+import * as _pd from 'pareto-core/dist/deserializer'
 
 import * as d_in from "../../../../../interface/generated/pareto/schemas/deserialize_parse_tree/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/pareto/schemas/block/data"

@@ -1,5 +1,5 @@
-import * as _p from 'pareto-core-refiner'
-import * as _pi from 'pareto-core-interface'
+import * as _p from 'pareto-core/dist/refiner'
+import * as _pi from 'pareto-core/dist/interface'
 
 import * as new_pi from "./new_interface_signatures"
 
