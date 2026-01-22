@@ -66,7 +66,7 @@ export namespace Trivia_ {
         
         export namespace L {
             
-            export namespace _type {
+            export namespace type_ {
                 
                 export type line = null
                 
@@ -74,9 +74,9 @@ export namespace Trivia_ {
                 
             }
             
-            export type _type = 
-                | readonly ['line', _type.line]
-                | readonly ['block', _type.block]
+            export type type_ = 
+                | readonly ['line', type_.line]
+                | readonly ['block', type_.block]
             
             export type content = string
             
@@ -87,7 +87,7 @@ export namespace Trivia_ {
         }
         
         export type L = {
-            readonly 'type': L._type
+            readonly 'type': L.type_
             readonly 'content': L.content
             readonly 'range': L.range
             readonly 'trailing whitespace': L.trailing_whitespace
@@ -160,13 +160,13 @@ export namespace Token_Type_ {
         
         export type value = Delimited_Text_
         
-        export type _type = Text_Type_
+        export type type_ = Text_Type_
         
     }
     
     export type text = {
         readonly 'value': text.value
-        readonly 'type': text._type
+        readonly 'type': text.type_
     }
     
 }
@@ -193,7 +193,7 @@ export namespace Annotated_Token_ {
     
     export type start = Location_
     
-    export type _type = Token_Type_
+    export type type_ = Token_Type_
     
     export type end = Location_
     
@@ -203,7 +203,7 @@ export namespace Annotated_Token_ {
 
 export type Annotated_Token_ = {
     readonly 'start': Annotated_Token_.start
-    readonly 'type': Annotated_Token_._type
+    readonly 'type': Annotated_Token_.type_
     readonly 'end': Annotated_Token_.end
     readonly 'trailing trivia': Annotated_Token_.trailing_trivia
 }

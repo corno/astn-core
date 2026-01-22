@@ -42,13 +42,13 @@ export namespace Value_ {
         
         export type not_set = null
         
-        export type _set = Value_
+        export type set_ = Value_
         
     }
     
     export type optional = 
         | readonly ['not set', optional.not_set]
-        | readonly ['set', optional._set]
+        | readonly ['set', optional.set_]
     
     export namespace state_group {
         

@@ -85,9 +85,9 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
         ['any value', null]
     ],
     (token, abort) => ({
-        'type': _p.sg(token.type, ($): d_target.Value._type => {
+        'type': _p.sg(token.type, ($): d_target.Value.type_ => {
             switch ($[0]) {
-                case 'text': return _p.ss($, ($): d_target.Value._type => ['concrete',
+                case 'text': return _p.ss($, ($): d_target.Value.type_ => ['concrete',
                     ['text', iterator.expect(
                         [
                             ['a text value', null]
@@ -108,12 +108,12 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                     'entries': Key_Value_Pairs(iterator, { 'end token': [')', null] }),
                     ')': Structural_Token(iterator)
                 }]]])
-                case '[': return _p.ss($, ($): d_target.Value._type => ['concrete', ['list', {
+                case '[': return _p.ss($, ($): d_target.Value.type_ => ['concrete', ['list', {
                     '[': Structural_Token(iterator),
                     'elements': Elements(iterator, { 'end token': [']', null] }),
                     ']': Structural_Token(iterator)
                 }]])
-                case '<': return _p.ss($, ($): d_target.Value._type => ['concrete', ['group', ['concise', {
+                case '<': return _p.ss($, ($): d_target.Value.type_ => ['concrete', ['group', ['concise', {
                     '<': Structural_Token(iterator),
                     'elements': Elements(iterator, { 'end token': ['>', null] }),
                     '>': Structural_Token(iterator)
@@ -139,7 +139,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                             ['any value', null],
                             ['#', null]
                         ],
-                        (token, abort) => _p.sg(token.type, ($): d_target.Value._type.concrete.state_group.status => {
+                        (token, abort) => _p.sg(token.type, ($): d_target.Value.type_.concrete.state_group.status => {
                             switch ($[0]) {
                                 case 'text': return _p.ss($, ($) => ['set', {
                                     'state': String(iterator, { 'string': $ }),

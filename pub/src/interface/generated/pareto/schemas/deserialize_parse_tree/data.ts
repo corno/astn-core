@@ -213,7 +213,7 @@ export type Parser_Error_ = {
 
 export namespace Error_ {
     
-    export namespace _type {
+    export namespace type_ {
         
         export type lexer = Lexer_Error_
         
@@ -221,14 +221,14 @@ export namespace Error_ {
         
     }
     
-    export type _type = 
-        | readonly ['lexer', _type.lexer]
-        | readonly ['parser', _type.parser]
+    export type type_ = 
+        | readonly ['lexer', type_.lexer]
+        | readonly ['parser', type_.parser]
     
 }
 
 export type Error_ = {
-    readonly 'type': Error_._type
+    readonly 'type': Error_.type_
 }
 
 export { 

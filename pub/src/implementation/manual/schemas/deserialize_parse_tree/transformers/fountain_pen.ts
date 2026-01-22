@@ -45,7 +45,7 @@ export const Error: signatures.Error = ($, $p) => {
             default: return _p.au($[0])
         }
     })
-    const Parse_Error_Type = ($: d_in.Error._type): string => _p.sg($, ($) => {
+    const Parse_Error_Type = ($: d_in.Error.type_): string => _p.sg($, ($) => {
         switch ($[0]) {
             case 'lexer': return _p.ss($, ($) => _p.sg($, ($) => {
                 switch ($[0]) {

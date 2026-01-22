@@ -26,7 +26,7 @@ export namespace Text_ {
     
     export type value = string
     
-    export type _type = i__imports_token.Text_Type
+    export type type_ = i__imports_token.Text_Type
     
 }
 
@@ -34,7 +34,7 @@ export type Text_ = {
     readonly 'trailing trivia': Text_.trailing_trivia
     readonly 'range': Text_.range
     readonly 'value': Text_.value
-    readonly 'type': Text_._type
+    readonly 'type': Text_.type_
 }
 
 export namespace Key_Value_Pairs_ {
@@ -91,7 +91,7 @@ export type Elements_ = _pi.List<Elements_.L>
 
 export namespace Value_ {
     
-    export namespace _type {
+    export namespace type_ {
         
         export namespace concrete {
             
@@ -179,7 +179,7 @@ export namespace Value_ {
             
             export namespace optional {
                 
-                export namespace _set {
+                export namespace set_ {
                     
                     export type $sr_ = Structural_Token_
                     
@@ -187,15 +187,15 @@ export namespace Value_ {
                     
                 }
                 
-                export type _set = {
-                    readonly '*': _set.$sr_
-                    readonly 'value': _set.value
+                export type set_ = {
+                    readonly '*': set_.$sr_
+                    readonly 'value': set_.value
                 }
                 
             }
             
             export type optional = 
-                | readonly ['set', optional._set]
+                | readonly ['set', optional.set_]
             
             export namespace state_group {
                 
@@ -213,7 +213,7 @@ export namespace Value_ {
                         readonly '#': missing_data.$ha_
                     }
                     
-                    export namespace _set {
+                    export namespace set_ {
                         
                         export type state = Text_
                         
@@ -221,16 +221,16 @@ export namespace Value_ {
                         
                     }
                     
-                    export type _set = {
-                        readonly 'state': _set.state
-                        readonly 'value': _set.value
+                    export type set_ = {
+                        readonly 'state': set_.state
+                        readonly 'value': set_.value
                     }
                     
                 }
                 
                 export type status = 
                     | readonly ['missing data', status.missing_data]
-                    | readonly ['set', status._set]
+                    | readonly ['set', status.set_]
                 
             }
             
@@ -277,15 +277,15 @@ export namespace Value_ {
         
     }
     
-    export type _type = 
-        | readonly ['concrete', _type.concrete]
-        | readonly ['include', _type.include]
-        | readonly ['missing data', _type.missing_data]
+    export type type_ = 
+        | readonly ['concrete', type_.concrete]
+        | readonly ['include', type_.include]
+        | readonly ['missing data', type_.missing_data]
     
 }
 
 export type Value_ = {
-    readonly 'type': Value_._type
+    readonly 'type': Value_.type_
 }
 
 export type Content_ = Value_
