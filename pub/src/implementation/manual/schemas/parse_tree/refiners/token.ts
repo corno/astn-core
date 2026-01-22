@@ -6,9 +6,9 @@ import * as _pds_new from "../../parse_tree/productions/temp"
 
 
 
-import * as d_authoring_parse_result from "../../../../../interface/generated/pareto/schemas/deserialize_parse_tree/data"
-import * as d_authoring_parse_tree from "../../../../../interface/generated/pareto/schemas/parse_tree/data"
-import * as d_token from "../../../../../interface/generated/pareto/schemas/token/data"
+import * as d_authoring_parse_result from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_authoring_parse_tree from "../../../../../interface/generated/liana/schemas/parse_tree/data"
+import * as d_token from "../../../../../interface/generated/liana/schemas/token/data"
 
 
 //dependencies

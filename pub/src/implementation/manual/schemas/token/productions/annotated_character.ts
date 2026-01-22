@@ -5,8 +5,8 @@ import * as _ps from 'pareto-core/dist/serializer'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
 
 import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
-import * as d_out from "../../../../../interface/generated/pareto/schemas/token/data"
-import * as d_deseralize_parse_tree from "../../../../../interface/generated/pareto/schemas/deserialize_parse_tree/data"
+import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
+import * as d_deseralize_parse_tree from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 
 //dependencies
 import { $$ as ds_hexadecimal } from "../../../primitives/integer/deserializers/hexadecimal"

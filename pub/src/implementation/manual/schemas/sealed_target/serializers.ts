@@ -1,7 +1,7 @@
 import * as _p from 'pareto-core/dist/transformer'
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as d_in from "../../../../interface/generated/pareto/schemas/sealed_target/data"
+import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
 
 export type Document = _pi.Serializer<d_in.Document>
 
