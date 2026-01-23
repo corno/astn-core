@@ -18,7 +18,7 @@ export namespace Lexer_Error_ {
 }
 
 export type Lexer_Error_ = (
-    $$_: Lexer_Error_.I,
+    context: Lexer_Error_.I,
 ) => Lexer_Error_.O
 
 export namespace Expected_ {
@@ -34,7 +34,7 @@ export namespace Expected_ {
 }
 
 export type Expected_ = (
-    $$_: Expected_.I,
+    context: Expected_.I,
 ) => Expected_.O
 
 export namespace Parser_Error_ {
@@ -50,7 +50,7 @@ export namespace Parser_Error_ {
 }
 
 export type Parser_Error_ = (
-    $$_: Parser_Error_.I,
+    context: Parser_Error_.I,
 ) => Parser_Error_.O
 
 export namespace Error_ {
@@ -66,7 +66,7 @@ export namespace Error_ {
 }
 
 export type Error_ = (
-    $$_: Error_.I,
+    context: Error_.I,
 ) => Error_.O
 
 export { 

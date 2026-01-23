@@ -18,7 +18,7 @@ export namespace Relative_Location_ {
 }
 
 export type Relative_Location_ = (
-    $$_: Relative_Location_.I,
+    context: Relative_Location_.I,
 ) => Relative_Location_.O
 
 export namespace Location_ {
@@ -34,7 +34,7 @@ export namespace Location_ {
 }
 
 export type Location_ = (
-    $$_: Location_.I,
+    context: Location_.I,
 ) => Location_.O
 
 export namespace Range_ {
@@ -50,7 +50,7 @@ export namespace Range_ {
 }
 
 export type Range_ = (
-    $$_: Range_.I,
+    context: Range_.I,
 ) => Range_.O
 
 export namespace Whitespace_ {
@@ -66,7 +66,7 @@ export namespace Whitespace_ {
 }
 
 export type Whitespace_ = (
-    $$_: Whitespace_.I,
+    context: Whitespace_.I,
 ) => Whitespace_.O
 
 export namespace Trivia_ {
@@ -82,7 +82,7 @@ export namespace Trivia_ {
 }
 
 export type Trivia_ = (
-    $$_: Trivia_.I,
+    context: Trivia_.I,
 ) => Trivia_.O
 
 export namespace Delimited_Text_ {
@@ -98,7 +98,7 @@ export namespace Delimited_Text_ {
 }
 
 export type Delimited_Text_ = (
-    $$_: Delimited_Text_.I,
+    context: Delimited_Text_.I,
 ) => Delimited_Text_.O
 
 export namespace Text_Type_ {
@@ -114,7 +114,7 @@ export namespace Text_Type_ {
 }
 
 export type Text_Type_ = (
-    $$_: Text_Type_.I,
+    context: Text_Type_.I,
 ) => Text_Type_.O
 
 export namespace Token_Type_ {
@@ -130,7 +130,7 @@ export namespace Token_Type_ {
 }
 
 export type Token_Type_ = (
-    $$_: Token_Type_.I,
+    context: Token_Type_.I,
 ) => Token_Type_.O
 
 export namespace Annotated_Token_ {
@@ -146,7 +146,7 @@ export namespace Annotated_Token_ {
 }
 
 export type Annotated_Token_ = (
-    $$_: Annotated_Token_.I,
+    context: Annotated_Token_.I,
 ) => Annotated_Token_.O
 
 export namespace Tokenizer_Result_ {
@@ -162,7 +162,7 @@ export namespace Tokenizer_Result_ {
 }
 
 export type Tokenizer_Result_ = (
-    $$_: Tokenizer_Result_.I,
+    context: Tokenizer_Result_.I,
 ) => Tokenizer_Result_.O
 
 export { 

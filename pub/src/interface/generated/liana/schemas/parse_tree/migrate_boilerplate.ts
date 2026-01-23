@@ -18,7 +18,7 @@ export namespace Structural_Token_ {
 }
 
 export type Structural_Token_ = (
-    $$_: Structural_Token_.I,
+    context: Structural_Token_.I,
 ) => Structural_Token_.O
 
 export namespace Text_ {
@@ -34,7 +34,7 @@ export namespace Text_ {
 }
 
 export type Text_ = (
-    $$_: Text_.I,
+    context: Text_.I,
 ) => Text_.O
 
 export namespace Key_Value_Pairs_ {
@@ -50,7 +50,7 @@ export namespace Key_Value_Pairs_ {
 }
 
 export type Key_Value_Pairs_ = (
-    $$_: Key_Value_Pairs_.I,
+    context: Key_Value_Pairs_.I,
 ) => Key_Value_Pairs_.O
 
 export namespace Elements_ {
@@ -66,7 +66,7 @@ export namespace Elements_ {
 }
 
 export type Elements_ = (
-    $$_: Elements_.I,
+    context: Elements_.I,
 ) => Elements_.O
 
 export namespace Value_ {
@@ -82,7 +82,7 @@ export namespace Value_ {
 }
 
 export type Value_ = (
-    $$_: Value_.I,
+    context: Value_.I,
 ) => Value_.O
 
 export namespace Content_ {
@@ -98,7 +98,7 @@ export namespace Content_ {
 }
 
 export type Content_ = (
-    $$_: Content_.I,
+    context: Content_.I,
 ) => Content_.O
 
 export namespace Document_ {
@@ -114,7 +114,7 @@ export namespace Document_ {
 }
 
 export type Document_ = (
-    $$_: Document_.I,
+    context: Document_.I,
 ) => Document_.O
 
 export { 
