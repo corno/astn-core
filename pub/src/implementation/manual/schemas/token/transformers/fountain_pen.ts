@@ -22,13 +22,13 @@ export const Range: signatures.Range = ($, $p) =>  sh.b.sub([
     $p['with @'] ? sh.b.snippet(`@ `) : sh.b.nothing(),
     sh.b.snippet($.start.relative.uri),
     sh.b.snippet(`:`),
-    sh.b.snippet("" + $.start.relative.line + _p.sg($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
+    sh.b.snippet("" + $.start.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
     sh.b.snippet(`:`),
-    sh.b.snippet("" + ($.start.relative.column + _p.sg($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.b.snippet("" + ($.start.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.b.snippet(`-`),
-    sh.b.snippet("" + $.end.relative.line + _p.sg($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
+    sh.b.snippet("" + $.end.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
     sh.b.snippet(`:`),
-    sh.b.snippet("" + ($.end.relative.column + _p.sg($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))))
+    sh.b.snippet("" + ($.end.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))))
 ])
 
 export const Location: signatures.Location = ($, $p) => {
@@ -36,8 +36,8 @@ export const Location: signatures.Location = ($, $p) => {
         $p['with @'] ? sh.b.snippet(`@ `) : sh.b.nothing(),
         sh.b.snippet($.relative.uri),
         sh.b.snippet(`:`),
-        sh.b.snippet("" + $.relative.line + _p.sg($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
+        sh.b.snippet("" + $.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
         sh.b.snippet(`:`),
-        sh.b.snippet("" + ($.relative.column + _p.sg($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+        sh.b.snippet("" + ($.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
     ])
 }

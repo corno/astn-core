@@ -251,7 +251,7 @@ export const Annotated_Token = (
 
     return {
         'start': temp_get_current_location(iterator),
-        'type': _p.state_group.block((): d_out.Token_Type => {
+        'type': _p.state.block((): d_out.Token_Type => {
 
             const Character = {
 

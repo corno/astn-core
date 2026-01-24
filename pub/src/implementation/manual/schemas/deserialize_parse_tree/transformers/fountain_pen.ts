@@ -38,16 +38,16 @@ export const s_list_of_separated_texts: _pi.Serializer_With_Parameters<_pi.List<
 }
 
 export const Error: signatures.Error = ($, $p) => {
-    const extra: number = _p.sg($p['position info'], ($) => {
+    const extra: number = _p.decide.state($p['position info'], ($) => {
         switch ($[0]) {
             case 'zero based': return 0
             case 'one based': return 1
             default: return _p.au($[0])
         }
     })
-    const Parse_Error_Type = ($: d_in.Error.type_): string => _p.sg($, ($) => {
+    const Parse_Error_Type = ($: d_in.Error.type_): string => _p.decide.state($, ($) => {
         switch ($[0]) {
-            case 'lexer': return _p.ss($, ($) => _p.sg($, ($) => {
+            case 'lexer': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
                     case 'dangling slash': return `found dangling slash`
                     case 'invalid unicode escape sequence': return `found invalid unicode escape sequence`
@@ -64,7 +64,7 @@ export const Error: signatures.Error = ($, $p) => {
                 }
             }))
             case 'parser': return _p.ss($, ($) => `expected ${s_list_of_separated_texts(
-                $.expected.__l_map(($) => _p.sg($, ($) => {
+                $.expected.__l_map(($) => _p.decide.state($, ($) => {
                     switch ($[0]) {
                         case '!': return "'!'"
                         case ')': return "')'"
@@ -81,7 +81,7 @@ export const Error: signatures.Error = ($, $p) => {
                     }
                 })),
                 { 'separator': " or " }
-            )}, found ${_p.sg($.cause, ($) => {
+            )}, found ${_p.decide.state($.cause, ($) => {
                 switch ($[0]) {
                     case 'unexpected token': return _p.ss($, ($) => $.found.type[0])
                     case 'missing token': return _p.ss($, ($) => `nothing`)
@@ -94,9 +94,9 @@ export const Error: signatures.Error = ($, $p) => {
     return sh.b.sub([
         sh.b.snippet(`failed to parse ASTN, ${Parse_Error_Type($.type)}`),
         //location
-        _p.sg($.type, ($) => {
+        _p.decide.state($.type, ($) => {
             switch ($[0]) {
-                case 'lexer': return _p.ss($, ($) => _p.sg($, ($) => {
+                case 'lexer': return _p.ss($, ($) => _p.decide.state($, ($) => {
                     switch ($[0]) {
                         case 'unexpected control character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'], 'with @': true }))
                         case 'unexpected control character in text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
@@ -112,7 +112,7 @@ export const Error: signatures.Error = ($, $p) => {
                         default: return _p.au($[0])
                     }
                 }))
-                case 'parser': return _p.ss($, ($): d_out.Block_Part => _p.sg($.cause, ($) => {
+                case 'parser': return _p.ss($, ($): d_out.Block_Part => _p.decide.state($.cause, ($) => {
                     switch ($[0]) {
                         case 'missing token': return _p.ss($, ($) => sh.b.nothing())
                         case 'unexpected token': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.found, { 'position info': $p['position info'], 'with @': true }))

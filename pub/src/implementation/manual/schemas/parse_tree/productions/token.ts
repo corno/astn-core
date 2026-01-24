@@ -85,7 +85,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
         ['any value', null]
     ],
     (token, abort) => ({
-        'type': _p.sg(token.type, ($): d_target.Value.type_ => {
+        'type': _p.decide.state(token.type, ($): d_target.Value.type_ => {
             switch ($[0]) {
                 case 'text': return _p.ss($, ($): d_target.Value.type_ => ['concrete',
                     ['text', iterator.expect(
@@ -139,7 +139,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                             ['any value', null],
                             ['#', null]
                         ],
-                        (token, abort) => _p.sg(token.type, ($): d_target.Value.type_.concrete.state_group.status => {
+                        (token, abort) => _p.decide.state(token.type, ($): d_target.Value.type_.concrete.state_group.status => {
                             switch ($[0]) {
                                 case 'text': return _p.ss($, ($) => ['set', {
                                     'state': String(iterator, { 'string': $ }),
@@ -236,7 +236,7 @@ export const Key_Value_Pairs: signatures.Key_Value_Pairs = (iterator, $p) => ite
                 [':', null],
                 $p['end token'],
             ],
-            (token, abort) => _p.sg(token.type, ($) => {
+            (token, abort) => _p.decide.state(token.type, ($) => {
                 switch ($[0]) {
                     case ':': return _p.ss($, ($) => _p.optional.set({
                         ':': Structural_Token(iterator),
