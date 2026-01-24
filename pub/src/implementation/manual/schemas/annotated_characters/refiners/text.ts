@@ -50,24 +50,31 @@ export namespace signatures {
 // }
 
 
-export const map_with_state = <T, New_Type, State>(
-    $: _pi.List<T>,
+export const map_with_state = <Source_Element, Target_Element, State, Result_Type>(
+    $: _pi.List<Source_Element>,
     initial_state: State,
     handle_value: (
-        value: T,
+        value: Source_Element,
         state: State
-    ) => New_Type,
+    ) => Target_Element,
     update_state: (
-        value: T,
+        value: Target_Element,
         state: State
-    ) => State
-): _pi.List<New_Type> => {
+    ) => State,
+    wrapup: (
+        final_list: _pi.List<Target_Element>,
+        final_state: State
+    ) => Result_Type,
+): Result_Type => {
     let current_state = initial_state
-    return $.__l_map(($) => {
-        const result = handle_value($, current_state)
-        current_state = update_state($, current_state)
-        return result
-    })
+    return wrapup(
+        $.__l_map(($) => {
+            const result = handle_value($, current_state)
+            current_state = update_state(result, current_state)
+            return result
+        }),
+        current_state
+    )
 }
 
 type My_State = {
@@ -82,7 +89,7 @@ type My_State = {
  * Creates a string iterator that allows iterating over characters in a string,
  * while keeping track of line numbers, columns, and line indentation.
  */
-export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => map_with_state<number, d_annotated_characters.Annotated_Character, My_State>(
+export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => map_with_state(
     $,
     {
         'absolute': 0,
@@ -90,7 +97,7 @@ export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => 
         'column': 0,
         'line indentation': null,
         'found carriage return before': false,
-    },
+    } as My_State,
     (value, state) => ({
         'code': value,
         'location': {
@@ -106,7 +113,7 @@ export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => 
             : state.column,
     }),
     (value, state) => {
-        return value === 0x0A /* line feed */
+        return value.code === 0x0A /* line feed */
             ? {
                 'absolute': state.absolute + 1,
                 'line': state.line + 1,
@@ -125,76 +132,16 @@ export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => 
                 : {
                     'absolute': state.absolute + 1,
                     'line': state.line,
-                    'column': state.column + (value === 0x09 /* tab */
+                    'column': state.column + (value.code === 0x09 /* tab */
                         ? $p['tab size']
                         : 1),
                     'line indentation': state['line indentation'] !== null
                         ? state['line indentation']
-                        : value === 0x20 /* space */ || value === 0x09 /* tab */
+                        : value.code === 0x20 /* space */ || value.code === 0x09 /* tab */
                             ? null
                             : state.column,
-                    'found carriage return before': value === 0x0D /* carriage return */,
+                    'found carriage return before': value.code === 0x0D /* carriage return */,
                 }
-    }
+    },
+    (final_list, final_state): d_annotated_characters.Annotated_Characters => final_list
 )
-
-// export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => _p.list.deprecated_build<d_annotated_characters.Annotated_Character>(
-//     ($i) => _p.iterate(_p.list.from_text($, ($) => $), (iterator) => {
-//         type State = {
-//             'line': number
-//             'column': number
-//             'line indentation': number | null
-//             'found carriage return before': boolean
-//         }
-
-//         loop<number, State>(
-//             iterator,
-//             {
-//                 'line': 0,
-//                 'column': 0,
-//                 'line indentation': null,
-//                 'found carriage return before': false,
-//             },
-//             ($, state) => {
-//                 $i['add element']({
-//                     'code': $,
-//                     'location': {
-//                         'line': state.line,
-//                         'column': state['column'],
-//                     },
-//                     'line indentation': state['line indentation'] !== null
-//                         ? state['line indentation']
-//                         : state['column'],
-//                 })
-//                 iterator.discard(() => null)
-
-//                 return $ === 0x0A /* line feed */
-//                     ? {
-//                         'line': state.line + 1,
-//                         'column': 0,
-//                         'line indentation': null,
-//                         'found carriage return before': false,
-//                     }
-//                     : state['found carriage return before']
-//                         ? {
-//                             'line': state.line + 1,
-//                             'column': 0,
-//                             'line indentation': null,
-//                             'found carriage return before': false,
-//                         }
-//                         : {
-//                             'line': state.line,
-//                             'column': state['column'] + ($ === 0x09 /* tab */
-//                                 ? $p['tab size']
-//                                 : 1),
-//                             'line indentation': state['line indentation'] !== null
-//                                 ? state['line indentation']
-//                                 : $ === 0x20 /* space */ || $ === 0x09 /* tab */
-//                                     ? null
-//                                     : state['column'],
-//                             'found carriage return before': $ === 0x0D /* carriage return */,
-//                         }
-//             })
-//     })
-
-// )
