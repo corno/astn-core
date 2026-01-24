@@ -116,11 +116,11 @@ export const Value: t_signatures.Value = ($) => ({
                             default: return _p.au($[0])
                         }
                     })])
-                    case 'state group': return _p.ss($, ($) => ['state group', ({
+                    case 'state': return _p.ss($, ($) => ['state', ({
                         '|': _p.deprecated_cc($['|'], ($) => Structural_Token(
                             $
                         )),
-                        'status': _p.deprecated_cc($['status'], ($) => _p.deprecated_cc($, ($): t_out.Value.type_.concrete.state_group.status => {
+                        'status': _p.deprecated_cc($['status'], ($) => _p.deprecated_cc($, ($): t_out.Value.type_.concrete.state.status => {
                             switch ($[0]) {
                                 case 'missing data': return _p.ss($, ($) => ['missing data', ({
                                     '#': _p.deprecated_cc($['#'], ($) => Structural_Token(
@@ -128,7 +128,7 @@ export const Value: t_signatures.Value = ($) => ({
                                     )),
                                 })])
                                 case 'set': return _p.ss($, ($) => ['set', ({
-                                    'state': _p.deprecated_cc($['state'], ($) => Text(
+                                    'option': _p.deprecated_cc($['option'], ($) => Text(
                                         $
                                     )),
                                     'value': _p.deprecated_cc($['value'], ($) => Value(

@@ -197,7 +197,7 @@ export namespace Value_ {
             export type optional = 
                 | readonly ['set', optional.set_]
             
-            export namespace state_group {
+            export namespace state {
                 
                 export type $vb_ = Structural_Token_
                 
@@ -215,14 +215,14 @@ export namespace Value_ {
                     
                     export namespace set_ {
                         
-                        export type state = Text_
+                        export type option = Text_
                         
                         export type value = Value_
                         
                     }
                     
                     export type set_ = {
-                        readonly 'state': set_.state
+                        readonly 'option': set_.option
                         readonly 'value': set_.value
                     }
                     
@@ -234,9 +234,9 @@ export namespace Value_ {
                 
             }
             
-            export type state_group = {
-                readonly '|': state_group.$vb_
-                readonly 'status': state_group.status
+            export type state = {
+                readonly '|': state.$vb_
+                readonly 'status': state.status
             }
             
             export type text = Text_
@@ -249,7 +249,7 @@ export namespace Value_ {
             | readonly ['list', concrete.list]
             | readonly ['nothing', concrete.nothing]
             | readonly ['optional', concrete.optional]
-            | readonly ['state group', concrete.state_group]
+            | readonly ['state', concrete.state]
             | readonly ['text', concrete.text]
         
         export namespace include {

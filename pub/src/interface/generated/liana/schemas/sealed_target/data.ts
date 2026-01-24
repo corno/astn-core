@@ -50,17 +50,17 @@ export namespace Value_ {
         | readonly ['not set', optional.not_set]
         | readonly ['set', optional.set_]
     
-    export namespace state_group {
+    export namespace state {
         
-        export type state = string
+        export type option = string
         
         export type value = Value_
         
     }
     
-    export type state_group = {
-        readonly 'state': state_group.state
-        readonly 'value': state_group.value
+    export type state = {
+        readonly 'option': state.option
+        readonly 'value': state.value
     }
     
     export namespace text {
@@ -97,7 +97,7 @@ export type Value_ =
     | readonly ['group', Value_.group]
     | readonly ['nothing', Value_.nothing]
     | readonly ['optional', Value_.optional]
-    | readonly ['state group', Value_.state_group]
+    | readonly ['state', Value_.state]
     | readonly ['text', Value_.text]
 
 export type Document_ = Value_

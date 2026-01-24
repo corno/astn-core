@@ -30,8 +30,8 @@ export const Value: t_signatures.Value = ($) => _p.deprecated_cc($, ($): t_out.V
                 default: return _p.au($[0])
             }
         })])
-        case 'state group': return _p.ss($, ($) => ['state group', ({
-            'state': _p.deprecated_cc($['state'], ($) => $),
+        case 'state': return _p.ss($, ($) => ['state', ({
+            'option': _p.deprecated_cc($['option'], ($) => $),
             'value': _p.deprecated_cc($['value'], ($) => Value(
                 $
             )),

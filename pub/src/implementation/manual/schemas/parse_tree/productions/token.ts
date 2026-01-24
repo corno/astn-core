@@ -132,17 +132,17 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                 case '~': return _p.ss($, ($) => ['concrete', ['nothing', {
                     '~': Structural_Token(iterator),
                 }]])
-                case '|': return _p.ss($, ($) => ['concrete', ['state group', {
+                case '|': return _p.ss($, ($) => ['concrete', ['state', {
                     '|': Structural_Token(iterator),
                     'status': iterator.expect(
                         [
                             ['any value', null],
                             ['#', null]
                         ],
-                        (token, abort) => _p.decide.state(token.type, ($): d_target.Value.type_.concrete.state_group.status => {
+                        (token, abort) => _p.decide.state(token.type, ($): d_target.Value.type_.concrete.state.status => {
                             switch ($[0]) {
                                 case 'text': return _p.ss($, ($) => ['set', {
-                                    'state': String(iterator, { 'string': $ }),
+                                    'option': String(iterator, { 'string': $ }),
                                     'value': Value(iterator)
                                 }])
                                 case '#': return _p.ss($, ($) => ['missing data', {

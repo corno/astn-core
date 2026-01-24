@@ -69,9 +69,9 @@ export const Value = (
                     default: return _p.au($[0])
                 }
             }))
-            case 'state group': return _p.ss($, ($) => sh.b.sub([
+            case 'state': return _p.ss($, ($) => sh.b.sub([
                 sh.b.snippet("| "),
-                sh.b.snippet(s_apostrophed($.state, {
+                sh.b.snippet(s_apostrophed($.option, {
                     'add delimiters': true
                 })),
                 sh.b.snippet(" "),
