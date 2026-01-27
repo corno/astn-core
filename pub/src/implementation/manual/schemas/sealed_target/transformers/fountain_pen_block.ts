@@ -35,12 +35,12 @@ export const Value = (
                         sh.b.sub([
                             sh.b.snippet("("),
                             sh.b.indent([
-                                sh.g.sub($.__to_list(($, id) => ({ 'key': id, 'value': $ })).__l_map(($) => sh.g.nested_block([
-                                    sh.b.snippet(s_apostrophed($.key, {
+                                sh.g.sub($.__to_list(($, id) => sh.g.nested_block([
+                                    sh.b.snippet(s_apostrophed(id, {
                                         'add delimiters': true
                                     })),
                                     sh.b.snippet(": "),
-                                    Value($.value),
+                                    Value($),
                                 ]))),
                             ]),
                             sh.b.snippet(")"),
