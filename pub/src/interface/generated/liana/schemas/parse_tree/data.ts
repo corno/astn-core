@@ -37,11 +37,11 @@ export type Text_ = {
     readonly 'type': Text_.type_
 }
 
-export namespace Key_Value_Pairs_ {
+export namespace ID_Value_Pairs_ {
     
     export namespace L {
         
-        export type key = Text_
+        export type id = Text_
         
         export namespace value {
             
@@ -65,15 +65,15 @@ export namespace Key_Value_Pairs_ {
     }
     
     export type L = {
-        readonly 'key': L.key
+        readonly 'id': L.id
         readonly 'value': L.value
     }
     
 }
 
-export type Key_Value_Pairs_ = _pi.List<Key_Value_Pairs_.L>
+export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
 
-export namespace Elements_ {
+export namespace Items_ {
     
     export namespace L {
         
@@ -87,7 +87,7 @@ export namespace Elements_ {
     
 }
 
-export type Elements_ = _pi.List<Elements_.L>
+export type Items_ = _pi.List<Items_.L>
 
 export namespace Value_ {
     
@@ -99,7 +99,7 @@ export namespace Value_ {
                 
                 export type $co_ = Structural_Token_
                 
-                export type entries = Key_Value_Pairs_
+                export type entries = ID_Value_Pairs_
                 
                 export type $cc_ = Structural_Token_
                 
@@ -117,7 +117,7 @@ export namespace Value_ {
                     
                     export type $st_ = Structural_Token_
                     
-                    export type elements = Elements_
+                    export type items = Items_
                     
                     export type $gt_ = Structural_Token_
                     
@@ -125,7 +125,7 @@ export namespace Value_ {
                 
                 export type concise = {
                     readonly '<': concise.$st_
-                    readonly 'elements': concise.elements
+                    readonly 'items': concise.items
                     readonly '>': concise.$gt_
                 }
                 
@@ -133,7 +133,7 @@ export namespace Value_ {
                     
                     export type $po_ = Structural_Token_
                     
-                    export type entries = Key_Value_Pairs_
+                    export type entries = ID_Value_Pairs_
                     
                     export type $pc_ = Structural_Token_
                     
@@ -155,7 +155,7 @@ export namespace Value_ {
                 
                 export type $bo_ = Structural_Token_
                 
-                export type elements = Elements_
+                export type items = Items_
                 
                 export type $bc_ = Structural_Token_
                 
@@ -163,7 +163,7 @@ export namespace Value_ {
             
             export type list = {
                 readonly '[': list.$bo_
-                readonly 'elements': list.elements
+                readonly 'items': list.items
                 readonly ']': list.$bc_
             }
             
@@ -323,8 +323,8 @@ export type Document_ = {
 export { 
     Structural_Token_ as Structural_Token, 
     Text_ as Text, 
-    Key_Value_Pairs_ as Key_Value_Pairs, 
-    Elements_ as Elements, 
+    ID_Value_Pairs_ as ID_Value_Pairs, 
+    Items_ as Items, 
     Value_ as Value, 
     Content_ as Content, 
     Document_ as Document, 

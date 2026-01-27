@@ -16,14 +16,14 @@ export const Text: t_signatures.Text = ($,) => ({
     'value': _p.deprecated_cc($['value'], ($,) => $),
     'type': _p.deprecated_cc($['type'], ($,) => v_token.Text_Type($)),
 })
-export const Key_Value_Pairs: t_signatures.Key_Value_Pairs = ($,) => $.__l_map(($,) => ({
-    'key': _p.deprecated_cc($['key'], ($,) => Text($)),
+export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($,) => $.__l_map(($,) => ({
+    'id': _p.deprecated_cc($['id'], ($,) => Text($)),
     'value': _p.deprecated_cc($['value'], ($,) => $.__o_map(($,) => ({
         ':': _p.deprecated_cc($[':'], ($,) => Structural_Token($)),
         'value': _p.deprecated_cc($['value'], ($,) => Value($)),
     }))),
 }))
-export const Elements: t_signatures.Elements = ($,) => $.__l_map(($,) => ({
+export const Items: t_signatures.Items = ($,) => $.__l_map(($,) => ({
     'value': _p.deprecated_cc($['value'], ($,) => Value($)),
 }))
 export const Value: t_signatures.Value = ($,) => ({
@@ -35,7 +35,7 @@ export const Value: t_signatures.Value = ($,) => ({
                         case 'dictionary':
                             return _p.ss($, ($,) => ['dictionary', ({
                                 '{': _p.deprecated_cc($['{'], ($,) => Structural_Token($)),
-                                'entries': _p.deprecated_cc($['entries'], ($,) => Key_Value_Pairs($)),
+                                'entries': _p.deprecated_cc($['entries'], ($,) => ID_Value_Pairs($)),
                                 '}': _p.deprecated_cc($['}'], ($,) => Structural_Token($)),
                             })])
                         case 'group':
@@ -44,13 +44,13 @@ export const Value: t_signatures.Value = ($,) => ({
                                     case 'concise':
                                         return _p.ss($, ($,) => ['concise', ({
                                             '<': _p.deprecated_cc($['<'], ($,) => Structural_Token($)),
-                                            'elements': _p.deprecated_cc($['elements'], ($,) => Elements($)),
+                                            'items': _p.deprecated_cc($['items'], ($,) => Items($)),
                                             '>': _p.deprecated_cc($['>'], ($,) => Structural_Token($)),
                                         })])
                                     case 'verbose':
                                         return _p.ss($, ($,) => ['verbose', ({
                                             '(': _p.deprecated_cc($['('], ($,) => Structural_Token($)),
-                                            'entries': _p.deprecated_cc($['entries'], ($,) => Key_Value_Pairs($)),
+                                            'entries': _p.deprecated_cc($['entries'], ($,) => ID_Value_Pairs($)),
                                             ')': _p.deprecated_cc($[')'], ($,) => Structural_Token($)),
                                         })])
                                     default:
@@ -60,7 +60,7 @@ export const Value: t_signatures.Value = ($,) => ({
                         case 'list':
                             return _p.ss($, ($,) => ['list', ({
                                 '[': _p.deprecated_cc($['['], ($,) => Structural_Token($)),
-                                'elements': _p.deprecated_cc($['elements'], ($,) => Elements($)),
+                                'items': _p.deprecated_cc($['items'], ($,) => Items($)),
                                 ']': _p.deprecated_cc($[']'], ($,) => Structural_Token($)),
                             })])
                         case 'nothing':

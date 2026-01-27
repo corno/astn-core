@@ -37,27 +37,11 @@ export type Text_ = (
     context: Text_.I,
 ) => Text_.O
 
-export namespace Key_Value_Pairs_ {
+export namespace ID_Value_Pairs_ {
     
-    export type I = i_in.Key_Value_Pairs
+    export type I = i_in.ID_Value_Pairs
     
-    export type O = i_out.Key_Value_Pairs
-    
-    export namespace P {
-        
-    }
-    
-}
-
-export type Key_Value_Pairs_ = (
-    context: Key_Value_Pairs_.I,
-) => Key_Value_Pairs_.O
-
-export namespace Elements_ {
-    
-    export type I = i_in.Elements
-    
-    export type O = i_out.Elements
+    export type O = i_out.ID_Value_Pairs
     
     export namespace P {
         
@@ -65,9 +49,25 @@ export namespace Elements_ {
     
 }
 
-export type Elements_ = (
-    context: Elements_.I,
-) => Elements_.O
+export type ID_Value_Pairs_ = (
+    context: ID_Value_Pairs_.I,
+) => ID_Value_Pairs_.O
+
+export namespace Items_ {
+    
+    export type I = i_in.Items
+    
+    export type O = i_out.Items
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Items_ = (
+    context: Items_.I,
+) => Items_.O
 
 export namespace Value_ {
     
@@ -120,8 +120,8 @@ export type Document_ = (
 export { 
     Structural_Token_ as Structural_Token, 
     Text_ as Text, 
-    Key_Value_Pairs_ as Key_Value_Pairs, 
-    Elements_ as Elements, 
+    ID_Value_Pairs_ as ID_Value_Pairs, 
+    Items_ as Items, 
     Value_ as Value, 
     Content_ as Content, 
     Document_ as Document, 

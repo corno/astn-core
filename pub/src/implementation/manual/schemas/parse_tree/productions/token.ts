@@ -34,8 +34,8 @@ export namespace signatures {
         }
     >
 
-    export type Elements = new_pi.Production<
-        d_target.Elements,
+    export type Items = new_pi.Production<
+        d_target.Items,
         d_source.Annotated_Token,
         d_parse_result.Expected,
         {
@@ -44,7 +44,7 @@ export namespace signatures {
     >
 
     export type Element = new_pi.Production<
-        d_target.Elements,
+        d_target.Items,
         d_source.Annotated_Token,
         d_parse_result.Expected,
         {
@@ -52,8 +52,8 @@ export namespace signatures {
         }
     >
 
-    export type Key_Value_Pairs = new_pi.Production<
-        d_target.Key_Value_Pairs,
+    export type ID_Value_Pairs = new_pi.Production<
+        d_target.ID_Value_Pairs,
         d_source.Annotated_Token,
         d_parse_result.Expected,
         {
@@ -100,22 +100,22 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                 ])
                 case '{': return _p.ss($, ($) => ['concrete', ['dictionary', {
                     '{': Structural_Token(iterator),
-                    'entries': Key_Value_Pairs(iterator, { 'end token': ['}', null] }),
+                    'entries': ID_Value_Pairs(iterator, { 'end token': ['}', null] }),
                     '}': Structural_Token(iterator)
                 }]])
                 case '(': return _p.ss($, ($) => ['concrete', ['group', ['verbose', {
                     '(': Structural_Token(iterator),
-                    'entries': Key_Value_Pairs(iterator, { 'end token': [')', null] }),
+                    'entries': ID_Value_Pairs(iterator, { 'end token': [')', null] }),
                     ')': Structural_Token(iterator)
                 }]]])
                 case '[': return _p.ss($, ($): d_target.Value.type_ => ['concrete', ['list', {
                     '[': Structural_Token(iterator),
-                    'elements': Elements(iterator, { 'end token': [']', null] }),
+                    'items': Items(iterator, { 'end token': [']', null] }),
                     ']': Structural_Token(iterator)
                 }]])
                 case '<': return _p.ss($, ($): d_target.Value.type_ => ['concrete', ['group', ['concise', {
                     '<': Structural_Token(iterator),
-                    'elements': Elements(iterator, { 'end token': ['>', null] }),
+                    'items': Items(iterator, { 'end token': ['>', null] }),
                     '>': Structural_Token(iterator)
                 }]]])
                 case '@': return _p.ss($, ($) => ['include', {
@@ -204,7 +204,7 @@ export const String: signatures.Text = (iterator, $p) => iterator.consume((token
     'trailing trivia': token['trailing trivia'],
 }))
 
-export const Elements: signatures.Elements = (iterator, $p) => iterator.list(
+export const Items: signatures.Items = (iterator, $p) => iterator.list(
     (current_token) => current_token.type[0] === $p['end token'][0],
     () => iterator.expect(
         [
@@ -218,10 +218,10 @@ export const Elements: signatures.Elements = (iterator, $p) => iterator.list(
 
 )
 
-export const Key_Value_Pairs: signatures.Key_Value_Pairs = (iterator, $p) => iterator.list(
+export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => iterator.list(
     (current_token) => current_token.type[0] === $p['end token'][0],
     () => ({
-        'key': iterator.expect(
+        'id': iterator.expect(
             [
                 ['a text value', null],
                 $p['end token'],
