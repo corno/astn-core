@@ -9,12 +9,12 @@ export const Value: t_signatures.Value = ($,) => _p.decide.state($, ($,): t_out.
         case 'list':
             return _p.ss($, ($,) => ['list', $.__l_map(($,) => Value($))])
         case 'dictionary':
-            return _p.ss($, ($,) => ['dictionary', $.__d_map(($,key,) => Value($))])
+            return _p.ss($, ($,) => ['dictionary', $.__d_map(($,id,) => Value($))])
         case 'group':
             return _p.ss($, ($,) => ['group', _p.decide.state($, ($,): t_out.Value.group => {
                 switch ($[0]) {
                     case 'verbose':
-                        return _p.ss($, ($,) => ['verbose', $.__d_map(($,key,) => Value($))])
+                        return _p.ss($, ($,) => ['verbose', $.__d_map(($,id,) => Value($))])
                     default:
                         return _p.au($[0])
                 }
