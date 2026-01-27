@@ -45,7 +45,7 @@ export const create_iterator = <Iterator_Element, Choice>(
                 } else if (end_reached(next_element[0])) {
                     return
                 } else {
-                    $i['add element'](handle())
+                    $i['add item'](handle())
                 }
             }
         })

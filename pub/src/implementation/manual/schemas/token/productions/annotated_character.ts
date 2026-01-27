@@ -148,7 +148,7 @@ export const Trivia = (
                                 carriage_return: 0x0D,      // \r
                                 solidus: 0x2F,              // /
                             }
-                            $i['add element']({
+                            $i['add item']({
                                 'type': ['line', null],
                                 'content': _ps.text.deprecated_build(($i) => {
                                     while (true) {
@@ -175,7 +175,7 @@ export const Trivia = (
                         case 0x2A: {// *
                             iterator.old.discard(() => null) // consume the first /
                             iterator.old.discard(() => null) // consume the asterisk
-                            $i['add element']({
+                            $i['add item']({
                                 'type': ['block', null],
                                 'content': _ps.text.deprecated_build(($i) => {
                                     let found_asterisk = false
@@ -600,7 +600,7 @@ export const Tokenizer_Result = (
             }
 
             const token = Annotated_Token(iterator, abort, { 'character': $ })
-            $i['add element'](token)
+            $i['add item'](token)
         }
     }),
     'end': temp_get_current_location(iterator)
