@@ -5,7 +5,7 @@ export type Annotated_Character = {
     'location': {
         absolute: number
         relative: {
-            'uri': string
+            'document resource identifier': string
             'line': number
             'column': number
         }

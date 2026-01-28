@@ -18,7 +18,7 @@ import * as r_from_token from "./token"
 
 export namespace signatures {
 
-    export type Document = _pi.Refiner_With_Parameters<d_authoring_parse_tree.Document, d_authoring_parse_result.Error, _pi.List<number>, { 'tab size': number, 'uri': string }>
+    export type Document = _pi.Refiner_With_Parameters<d_authoring_parse_tree.Document, d_authoring_parse_result.Error, _pi.List<number>, { 'tab size': number, 'document resource identifier': string }>
 
 }
 
@@ -27,7 +27,7 @@ export const Document: signatures.Document = ($, abort, $p,) => _p.iterate( //fi
         $,
         {
             'tab size': $p['tab size'],
-            'uri': $p['uri'],
+            'document resource identifier': $p['document resource identifier'],
         }
     ),
     (iter) => r_from_token.Document(//fixme: make this iterate_fully

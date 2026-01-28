@@ -47,7 +47,7 @@ const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Charac
         return {
             'absolute': iterator.old.get_position(),
             'relative': {
-                'uri': "FIXME_URI",
+                'document resource identifier': "FIXME_URI",
                 'line': -1,
                 'column': -1,
             }

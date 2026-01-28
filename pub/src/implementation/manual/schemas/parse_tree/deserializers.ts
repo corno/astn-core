@@ -9,7 +9,7 @@ import * as r_from_text from "./refiners/text"
 
 export namespace signatures {
 
-    export type Document = _pi.Deserializer_With_Parameters<d_authoring_parse_tree.Document, d_authoring_parse_result.Error, { 'tab size': number, 'uri': string }>
+    export type Document = _pi.Deserializer_With_Parameters<d_authoring_parse_tree.Document, d_authoring_parse_result.Error, { 'tab size': number, 'document resource identifier': string }>
 
 }
 

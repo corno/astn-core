@@ -5,7 +5,7 @@ import * as t_signatures from "../../../../../interface/generated/liana/schemas/
 
 import * as t_out from "../../../../../interface/generated/liana/schemas/token/data"
 export const Relative_Location: t_signatures.Relative_Location = ($,) => ({
-    'uri': _p.deprecated_cc($['uri'], ($,) => $),
+    'document resource identifier': _p.deprecated_cc($['document resource identifier'], ($,) => $),
     'line': _p.deprecated_cc($['line'], ($,) => $),
     'column': _p.deprecated_cc($['column'], ($,) => $),
 })

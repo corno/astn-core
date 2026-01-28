@@ -5,7 +5,7 @@ import * as i__location from "../../generic/location"
 
 export namespace Relative_Location_ {
     
-    export type uri = string
+    export type document_resource_identifier = string
     
     export type line = number
     
@@ -14,7 +14,7 @@ export namespace Relative_Location_ {
 }
 
 export type Relative_Location_ = {
-    readonly 'uri': Relative_Location_.uri
+    readonly 'document resource identifier': Relative_Location_.document_resource_identifier
     readonly 'line': Relative_Location_.line
     readonly 'column': Relative_Location_.column
 }

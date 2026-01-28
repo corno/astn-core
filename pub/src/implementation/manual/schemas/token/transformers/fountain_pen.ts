@@ -20,7 +20,7 @@ export namespace signatures {
 
 export const Range: signatures.Range = ($, $p) =>  sh.b.sub([
     $p['with @'] ? sh.b.snippet(`@ `) : sh.b.nothing(),
-    sh.b.snippet($.start.relative.uri),
+    sh.b.snippet($.start.relative['document resource identifier']),
     sh.b.snippet(`:`),
     sh.b.snippet("" + $.start.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
     sh.b.snippet(`:`),
@@ -34,7 +34,7 @@ export const Range: signatures.Range = ($, $p) =>  sh.b.sub([
 export const Location: signatures.Location = ($, $p) => {
     return sh.b.sub([
         $p['with @'] ? sh.b.snippet(`@ `) : sh.b.nothing(),
-        sh.b.snippet($.relative.uri),
+        sh.b.snippet($.relative['document resource identifier']),
         sh.b.snippet(`:`),
         sh.b.snippet("" + $.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
         sh.b.snippet(`:`),

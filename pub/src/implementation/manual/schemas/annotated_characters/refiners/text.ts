@@ -5,7 +5,7 @@ import * as d_annotated_characters from "../../../../../interface/to_be_generate
 
 export namespace signatures {
 
-    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameters<d_annotated_characters.Annotated_Characters, _pi.List<number>, { 'tab size': number, 'uri': string }>
+    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameters<d_annotated_characters.Annotated_Characters, _pi.List<number>, { 'tab size': number, 'document resource identifier': string }>
 
 }
 
@@ -103,7 +103,7 @@ export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => 
         'location': {
             'absolute': state.absolute,
             'relative': {
-                'uri': $p['uri'],
+                'document resource identifier': $p['document resource identifier'],
                 'line': state.line,
                 'column': state.column,
             }
