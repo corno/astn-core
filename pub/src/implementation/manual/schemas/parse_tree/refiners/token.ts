@@ -1,6 +1,8 @@
 import * as _p from 'pareto-core/dist/refiner'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../productions/temp'
+import { _p_unreachable_code_path } from 'pareto-core/dist/unreachable_code_path'
+import { _p_iterate } from 'pareto-core/dist/iterate'
 import * as _pds_new from "../../parse_tree/productions/temp"
 
 
@@ -22,7 +24,7 @@ export namespace signatures {
 
 }
 
-export const Document: signatures.Document = ($, abort) => _p.iterate(//fixme: make this iterate_fully
+export const Document: signatures.Document = ($, abort) => _p_iterate(//fixme: make this iterate_fully
     $.tokens,
     (iter) => p_authoring_parse_tree.Document(
         _pi_new.create_iterator(
@@ -37,7 +39,7 @@ export const Document: signatures.Document = ($, abort) => _p.iterate(//fixme: m
                 'expected': expected,
                 'cause': ['missing token', null],
             }),
-            () => _p.unreachable_code_path(),
+            () => _p_unreachable_code_path(),
         )
     )
 )

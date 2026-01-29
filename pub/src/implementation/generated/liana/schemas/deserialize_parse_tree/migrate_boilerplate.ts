@@ -1,6 +1,14 @@
 
 import * as _p from "pareto-core/dist/transformer"
 
+import { 
+    _p_unreachable_code_path, 
+} from "pareto-core/dist/unreachable_code_path"
+
+import { 
+    _p_cc, 
+} from "pareto-core/dist/change_context"
+
 import * as t_signatures from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/migrate_boilerplate"
 
 import * as t_out from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
@@ -16,13 +24,13 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['dangling slash', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
                             )
                         ),
-                        'at end of input': _p.deprecated_cc(
+                        'at end of input': _p_cc(
                             $['at end of input'], 
                             ($) => $
                         ),
@@ -32,7 +40,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['invalid unicode escape sequence', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -44,7 +52,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['missing character after escape', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -56,11 +64,11 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unexpected control character', ({
-                        'character': _p.deprecated_cc(
+                        'character': _p_cc(
                             $['character'], 
                             ($) => $
                         ),
-                        'location': _p.deprecated_cc(
+                        'location': _p_cc(
                             $['location'], 
                             ($) => v_token.Location(
                                 $
@@ -72,11 +80,11 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unexpected control character in text', ({
-                        'character': _p.deprecated_cc(
+                        'character': _p_cc(
                             $['character'], 
                             ($) => $
                         ),
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -88,7 +96,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unexpected end of line in delimited text', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -100,11 +108,11 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unknown escape character', ({
-                        'character': _p.deprecated_cc(
+                        'character': _p_cc(
                             $['character'], 
                             ($) => $
                         ),
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -116,7 +124,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unterminated block comment', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -128,7 +136,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unterminated text', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -140,7 +148,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['unterminated unicode escape sequence', ({
-                        'range': _p.deprecated_cc(
+                        'range': _p_cc(
                             $['range'], 
                             ($) => v_token.Range(
                                 $
@@ -222,7 +230,7 @@ export const Expected: t_signatures.Expected = ($) => _p.decide.state(
     }
 )
 export const Parser_Error: t_signatures.Parser_Error = ($) => ({
-    'expected': _p.deprecated_cc(
+    'expected': _p_cc(
         $['expected'], 
         ($) => $.__l_map(
             ($) => Expected(
@@ -230,7 +238,7 @@ export const Parser_Error: t_signatures.Parser_Error = ($) => ({
             )
         )
     ),
-    'cause': _p.deprecated_cc(
+    'cause': _p_cc(
         $['cause'], 
         ($) => _p.decide.state(
             $, 
@@ -245,7 +253,7 @@ export const Parser_Error: t_signatures.Parser_Error = ($) => ({
                         return _p.ss(
                             $, 
                             ($) => ['unexpected token', ({
-                                'found': _p.deprecated_cc(
+                                'found': _p_cc(
                                     $['found'], 
                                     ($) => v_token.Annotated_Token(
                                         $
@@ -263,7 +271,7 @@ export const Parser_Error: t_signatures.Parser_Error = ($) => ({
     ),
 })
 export const Error: t_signatures.Error = ($) => ({
-    'type': _p.deprecated_cc(
+    'type': _p_cc(
         $['type'], 
         ($) => _p.decide.state(
             $, 

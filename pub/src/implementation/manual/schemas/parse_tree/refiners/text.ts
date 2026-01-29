@@ -1,6 +1,8 @@
 import * as _p from 'pareto-core/dist/refiner'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../productions/temp'
+import { _p_iterate } from 'pareto-core/dist/iterate'
+import { _p_unreachable_code_path } from 'pareto-core/dist/unreachable_code_path'
 import * as _pds_new from "../productions/temp"
 
 
@@ -22,7 +24,7 @@ export namespace signatures {
 
 }
 
-export const Document: signatures.Document = ($, abort, $p,) => _p.iterate( //fixme: make this iterate_fully
+export const Document: signatures.Document = ($, abort, $p,) => _p_iterate( //fixme: make this iterate_fully
     ds_annotated_characters.Annotated_Characters(
         $,
         {
@@ -36,9 +38,9 @@ export const Document: signatures.Document = ($, abort, $p,) => _p.iterate( //fi
                 'old': iter,
                 'new': _pds_new.create_iterator(
                     iter,
-                    () => _p.unreachable_code_path(),
-                    () => _p.unreachable_code_path(),
-                    () => _p.unreachable_code_path(),
+                    () => _p_unreachable_code_path(),
+                    () => _p_unreachable_code_path(),
+                    () => _p_unreachable_code_path(),
                 )
             },
             ($) => abort({

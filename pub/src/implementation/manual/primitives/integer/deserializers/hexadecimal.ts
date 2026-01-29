@@ -13,7 +13,7 @@ export const $$: _pi.Number_Deserializer<string> = ($, abort) => {
     }
 
     const get_character_at = (index: number): number => {
-        return characters.__get_item_at(
+        return characters.__deprecated_get_item_at(
             index,
             () => abort(`index out of bounds`)
         )

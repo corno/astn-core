@@ -1,43 +1,51 @@
 
 import * as _p from "pareto-core/dist/transformer"
 
+import { 
+    _p_unreachable_code_path, 
+} from "pareto-core/dist/unreachable_code_path"
+
+import { 
+    _p_cc, 
+} from "pareto-core/dist/change_context"
+
 import * as t_signatures from "../../../../../interface/generated/liana/schemas/token/migrate_boilerplate"
 
 import * as t_out from "../../../../../interface/generated/liana/schemas/token/data"
 export const Relative_Location: t_signatures.Relative_Location = ($) => ({
-    'document resource identifier': _p.deprecated_cc(
+    'document resource identifier': _p_cc(
         $['document resource identifier'], 
         ($) => $
     ),
-    'line': _p.deprecated_cc(
+    'line': _p_cc(
         $['line'], 
         ($) => $
     ),
-    'column': _p.deprecated_cc(
+    'column': _p_cc(
         $['column'], 
         ($) => $
     ),
 })
 export const Location: t_signatures.Location = ($) => ({
-    'relative': _p.deprecated_cc(
+    'relative': _p_cc(
         $['relative'], 
         ($) => Relative_Location(
             $
         )
     ),
-    'absolute': _p.deprecated_cc(
+    'absolute': _p_cc(
         $['absolute'], 
         ($) => $
     ),
 })
 export const Range: t_signatures.Range = ($) => ({
-    'start': _p.deprecated_cc(
+    'start': _p_cc(
         $['start'], 
         ($) => Location(
             $
         )
     ),
-    'end': _p.deprecated_cc(
+    'end': _p_cc(
         $['end'], 
         ($) => Location(
             $
@@ -45,29 +53,29 @@ export const Range: t_signatures.Range = ($) => ({
     ),
 })
 export const Whitespace: t_signatures.Whitespace = ($) => ({
-    'range': _p.deprecated_cc(
+    'range': _p_cc(
         $['range'], 
         ($) => Range(
             $
         )
     ),
-    'value': _p.deprecated_cc(
+    'value': _p_cc(
         $['value'], 
         ($) => $
     ),
 })
 export const Trivia: t_signatures.Trivia = ($) => ({
-    'leading whitespace': _p.deprecated_cc(
+    'leading whitespace': _p_cc(
         $['leading whitespace'], 
         ($) => Whitespace(
             $
         )
     ),
-    'comments': _p.deprecated_cc(
+    'comments': _p_cc(
         $['comments'], 
         ($) => $.__l_map(
             ($) => ({
-                'type': _p.deprecated_cc(
+                'type': _p_cc(
                     $['type'], 
                     ($) => _p.decide.state(
                         $, 
@@ -91,17 +99,17 @@ export const Trivia: t_signatures.Trivia = ($) => ({
                         }
                     )
                 ),
-                'content': _p.deprecated_cc(
+                'content': _p_cc(
                     $['content'], 
                     ($) => $
                 ),
-                'range': _p.deprecated_cc(
+                'range': _p_cc(
                     $['range'], 
                     ($) => Range(
                         $
                     )
                 ),
-                'trailing whitespace': _p.deprecated_cc(
+                'trailing whitespace': _p_cc(
                     $['trailing whitespace'], 
                     ($) => Whitespace(
                         $
@@ -226,13 +234,13 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
                 return _p.ss(
                     $, 
                     ($) => ['text', ({
-                        'value': _p.deprecated_cc(
+                        'value': _p_cc(
                             $['value'], 
                             ($) => Delimited_Text(
                                 $
                             )
                         ),
-                        'type': _p.deprecated_cc(
+                        'type': _p_cc(
                             $['type'], 
                             ($) => Text_Type(
                                 $
@@ -248,25 +256,25 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
     }
 )
 export const Annotated_Token: t_signatures.Annotated_Token = ($) => ({
-    'start': _p.deprecated_cc(
+    'start': _p_cc(
         $['start'], 
         ($) => Location(
             $
         )
     ),
-    'type': _p.deprecated_cc(
+    'type': _p_cc(
         $['type'], 
         ($) => Token_Type(
             $
         )
     ),
-    'end': _p.deprecated_cc(
+    'end': _p_cc(
         $['end'], 
         ($) => Location(
             $
         )
     ),
-    'trailing trivia': _p.deprecated_cc(
+    'trailing trivia': _p_cc(
         $['trailing trivia'], 
         ($) => Trivia(
             $
@@ -274,13 +282,13 @@ export const Annotated_Token: t_signatures.Annotated_Token = ($) => ({
     ),
 })
 export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
-    'leading trivia': _p.deprecated_cc(
+    'leading trivia': _p_cc(
         $['leading trivia'], 
         ($) => Trivia(
             $
         )
     ),
-    'tokens': _p.deprecated_cc(
+    'tokens': _p_cc(
         $['tokens'], 
         ($) => $.__l_map(
             ($) => Annotated_Token(
@@ -288,7 +296,7 @@ export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
             )
         )
     ),
-    'end': _p.deprecated_cc(
+    'end': _p_cc(
         $['end'], 
         ($) => Location(
             $

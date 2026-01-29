@@ -3,6 +3,7 @@ import * as _pi from 'pareto-core/dist/interface'
 import * as _pd from 'pareto-core/dist/deserializer'
 import * as _ps from 'pareto-core/dist/serializer'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
+import { _p_unreachable_code_path } from 'pareto-core/dist/unreachable_code_path'
 
 import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
@@ -564,7 +565,7 @@ export const Delimited_String = (
                                         $i.add_character(get_char())
                                         $i.add_character(get_char())
                                     }),
-                                    () => _p.unreachable_code_path()
+                                    () => _p_unreachable_code_path()
                                 ))
                                 break
                             default:
