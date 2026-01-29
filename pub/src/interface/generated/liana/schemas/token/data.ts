@@ -1,8 +1,6 @@
 
 import * as _pi from "pareto-core/dist/interface"
 
-import * as i__location from "../../generic/location"
-
 import * as i__imports_location from "../location/data"
 
 export namespace Whitespace_ {
