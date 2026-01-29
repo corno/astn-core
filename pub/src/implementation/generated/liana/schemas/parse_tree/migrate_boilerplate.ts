@@ -111,7 +111,7 @@ export const Value: t_signatures.Value = ($) => ({
                                         case 'dictionary':
                                             return _p.ss(
                                                 $,
-                                                ($) => ['dictionary', ({
+                                                ($) => ['dictionary', {
                                                     '{': _p_cc(
                                                         $['{'],
                                                         ($) => Structural_Token(
@@ -130,7 +130,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                             $
                                                         )
                                                     ),
-                                                })]
+                                                }]
                                             )
                                         case 'group':
                                             return _p.ss(
@@ -142,7 +142,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                             case 'concise':
                                                                 return _p.ss(
                                                                     $,
-                                                                    ($) => ['concise', ({
+                                                                    ($) => ['concise', {
                                                                         '<': _p_cc(
                                                                             $['<'],
                                                                             ($) => Structural_Token(
@@ -161,12 +161,12 @@ export const Value: t_signatures.Value = ($) => ({
                                                                                 $
                                                                             )
                                                                         ),
-                                                                    })]
+                                                                    }]
                                                                 )
                                                             case 'verbose':
                                                                 return _p.ss(
                                                                     $,
-                                                                    ($) => ['verbose', ({
+                                                                    ($) => ['verbose', {
                                                                         '(': _p_cc(
                                                                             $['('],
                                                                             ($) => Structural_Token(
@@ -185,7 +185,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                                                 $
                                                                             )
                                                                         ),
-                                                                    })]
+                                                                    }]
                                                                 )
                                                             default:
                                                                 return _p.au(
@@ -198,7 +198,7 @@ export const Value: t_signatures.Value = ($) => ({
                                         case 'list':
                                             return _p.ss(
                                                 $,
-                                                ($) => ['list', ({
+                                                ($) => ['list', {
                                                     '[': _p_cc(
                                                         $['['],
                                                         ($) => Structural_Token(
@@ -217,19 +217,19 @@ export const Value: t_signatures.Value = ($) => ({
                                                             $
                                                         )
                                                     ),
-                                                })]
+                                                }]
                                             )
                                         case 'nothing':
                                             return _p.ss(
                                                 $,
-                                                ($) => ['nothing', ({
+                                                ($) => ['nothing', {
                                                     '~': _p_cc(
                                                         $['~'],
                                                         ($) => Structural_Token(
                                                             $
                                                         )
                                                     ),
-                                                })]
+                                                }]
                                             )
                                         case 'optional':
                                             return _p.ss(
@@ -241,7 +241,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                             case 'set':
                                                                 return _p.ss(
                                                                     $,
-                                                                    ($) => ['set', ({
+                                                                    ($) => ['set', {
                                                                         '*': _p_cc(
                                                                             $['*'],
                                                                             ($) => Structural_Token(
@@ -254,7 +254,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                                                 $
                                                                             )
                                                                         ),
-                                                                    })]
+                                                                    }]
                                                                 )
                                                             default:
                                                                 return _p.au(
@@ -267,7 +267,7 @@ export const Value: t_signatures.Value = ($) => ({
                                         case 'state':
                                             return _p.ss(
                                                 $,
-                                                ($) => ['state', ({
+                                                ($) => ['state', {
                                                     '|': _p_cc(
                                                         $['|'],
                                                         ($) => Structural_Token(
@@ -283,19 +283,19 @@ export const Value: t_signatures.Value = ($) => ({
                                                                     case 'missing data':
                                                                         return _p.ss(
                                                                             $,
-                                                                            ($) => ['missing data', ({
+                                                                            ($) => ['missing data', {
                                                                                 '#': _p_cc(
                                                                                     $['#'],
                                                                                     ($) => Structural_Token(
                                                                                         $
                                                                                     )
                                                                                 ),
-                                                                            })]
+                                                                            }]
                                                                         )
                                                                     case 'set':
                                                                         return _p.ss(
                                                                             $,
-                                                                            ($) => ['set', ({
+                                                                            ($) => ['set', {
                                                                                 'option': _p_cc(
                                                                                     $['option'],
                                                                                     ($) => Text(
@@ -308,7 +308,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                                                         $
                                                                                     )
                                                                                 ),
-                                                                            })]
+                                                                            }]
                                                                         )
                                                                     default:
                                                                         return _p.au(
@@ -318,7 +318,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                             }
                                                         )
                                                     ),
-                                                })]
+                                                }]
                                             )
                                         case 'text':
                                             return _p.ss(
@@ -338,7 +338,7 @@ export const Value: t_signatures.Value = ($) => ({
                     case 'include':
                         return _p.ss(
                             $,
-                            ($) => ['include', ({
+                            ($) => ['include', {
                                 '@': _p_cc(
                                     $['@'],
                                     ($) => Structural_Token(
@@ -351,19 +351,19 @@ export const Value: t_signatures.Value = ($) => ({
                                         $
                                     )
                                 ),
-                            })]
+                            }]
                         )
                     case 'missing data':
                         return _p.ss(
                             $,
-                            ($) => ['missing data', ({
+                            ($) => ['missing data', {
                                 '#': _p_cc(
                                     $['#'],
                                     ($) => Structural_Token(
                                         $
                                     )
                                 ),
-                            })]
+                            }]
                         )
                     default:
                         return _p.au(

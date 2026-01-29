@@ -196,7 +196,7 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
             case 'text':
                 return _p.ss(
                     $,
-                    ($) => ['text', ({
+                    ($) => ['text', {
                         'value': _p_cc(
                             $['value'],
                             ($) => Delimited_Text(
@@ -209,7 +209,7 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             default:
                 return _p.au(

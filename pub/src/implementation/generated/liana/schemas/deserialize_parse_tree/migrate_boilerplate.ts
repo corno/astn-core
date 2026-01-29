@@ -22,7 +22,7 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
             case 'dangling slash':
                 return _p.ss(
                     $,
-                    ($) => ['dangling slash', ({
+                    ($) => ['dangling slash', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
@@ -33,36 +33,36 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                             $['at end of input'],
                             ($) => $
                         ),
-                    })]
+                    }]
                 )
             case 'invalid unicode escape sequence':
                 return _p.ss(
                     $,
-                    ($) => ['invalid unicode escape sequence', ({
+                    ($) => ['invalid unicode escape sequence', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'missing character after escape':
                 return _p.ss(
                     $,
-                    ($) => ['missing character after escape', ({
+                    ($) => ['missing character after escape', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unexpected control character':
                 return _p.ss(
                     $,
-                    ($) => ['unexpected control character', ({
+                    ($) => ['unexpected control character', {
                         'character': _p_cc(
                             $['character'],
                             ($) => $
@@ -73,12 +73,12 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unexpected control character in text':
                 return _p.ss(
                     $,
-                    ($) => ['unexpected control character in text', ({
+                    ($) => ['unexpected control character in text', {
                         'character': _p_cc(
                             $['character'],
                             ($) => $
@@ -89,24 +89,24 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unexpected end of line in delimited text':
                 return _p.ss(
                     $,
-                    ($) => ['unexpected end of line in delimited text', ({
+                    ($) => ['unexpected end of line in delimited text', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unknown escape character':
                 return _p.ss(
                     $,
-                    ($) => ['unknown escape character', ({
+                    ($) => ['unknown escape character', {
                         'character': _p_cc(
                             $['character'],
                             ($) => $
@@ -117,43 +117,43 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unterminated block comment':
                 return _p.ss(
                     $,
-                    ($) => ['unterminated block comment', ({
+                    ($) => ['unterminated block comment', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unterminated text':
                 return _p.ss(
                     $,
-                    ($) => ['unterminated text', ({
+                    ($) => ['unterminated text', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             case 'unterminated unicode escape sequence':
                 return _p.ss(
                     $,
-                    ($) => ['unterminated unicode escape sequence', ({
+                    ($) => ['unterminated unicode escape sequence', {
                         'range': _p_cc(
                             $['range'],
                             ($) => v_location.Range(
                                 $
                             )
                         ),
-                    })]
+                    }]
                 )
             default:
                 return _p.au(
@@ -253,14 +253,14 @@ export const Parser_Error: t_signatures.Parser_Error = ($) => ({
                     case 'unexpected token':
                         return _p.ss(
                             $,
-                            ($) => ['unexpected token', ({
+                            ($) => ['unexpected token', {
                                 'found': _p_cc(
                                     $['found'],
                                     ($) => v_token.Annotated_Token(
                                         $
                                     )
                                 ),
-                            })]
+                            }]
                         )
                     default:
                         return _p.au(
