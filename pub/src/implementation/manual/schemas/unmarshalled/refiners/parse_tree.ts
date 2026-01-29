@@ -4,7 +4,7 @@ import * as _p from 'pareto-core/dist/refiner'
 import * as d_in from "../../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../../interface/to_be_generated/unmarshalled"
 
-export const expect_dictionary = (
+export const Dictionary = (
     $: d_in.Value,
     abort: _pi.Abort<null>
 ): d_out.Dictionary => _p.decide.state($.type, ($) => {
@@ -27,10 +27,10 @@ export const expect_dictionary = (
     }
 })
 
-export const expect_group = (
+export const Group = (
     $: d_in.Value,
     abort: _pi.Abort<null>
-): d_out.Dictionary => _p.decide.state($.type, ($) => {
+): d_out.Group => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
@@ -56,7 +56,7 @@ export const expect_group = (
     }
 })
 
-export const expect_list = (
+export const List = (
     $: d_in.Value,
     abort: _pi.Abort<null>
 ): d_out.List => _p.decide.state($.type, ($) => {
@@ -71,7 +71,7 @@ export const expect_list = (
     }
 })
 
-export const expect_nothing = (
+export const Nothing = (
     $: d_in.Value,
     abort: _pi.Abort<null>
 ): d_out.Nothing => _p.decide.state($.type, ($) => {
@@ -86,7 +86,7 @@ export const expect_nothing = (
     }
 })
 
-export const expect_optional = (
+export const Optional = (
     $: d_in.Value,
     abort: _pi.Abort<null>
 ): d_out.Optional => _p.decide.state($.type, ($) => {
@@ -107,7 +107,7 @@ export const expect_optional = (
     }
 })
 
-export const expect_state = (
+export const State = (
     $: d_in.Value,
     abort: _pi.Abort<null>
 ): d_out.State => _p.decide.state($.type, ($) => {
@@ -127,7 +127,7 @@ export const expect_state = (
     }
 })
 
-export const expect_text = (
+export const Text = (
     $: d_in.Value,
     abort: _pi.Abort<null>
 ): d_out.Text => _p.decide.state($.type, ($) => {

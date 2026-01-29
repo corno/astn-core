@@ -3,7 +3,7 @@ import * as _pi from 'pareto-core/dist/interface'
 
 
 import * as d_in from "../../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
+import * as d_out from "../../../../../interface/generated/liana/schemas/location/data"
 
 export type Value = _pi.Transformer<d_in.Value, d_out.Range>
 

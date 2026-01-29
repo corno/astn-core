@@ -5,11 +5,13 @@ import * as i__location from "../../generic/location"
 
 import * as i__imports_token from "../token/data"
 
+import * as i__imports_location from "../location/data"
+
 export namespace Structural_Token_ {
     
     export type trailing_trivia = i__imports_token.Trivia
     
-    export type range = i__imports_token.Range
+    export type range = i__imports_location.Range
     
 }
 
@@ -22,7 +24,7 @@ export namespace Text_ {
     
     export type trailing_trivia = i__imports_token.Trivia
     
-    export type range = i__imports_token.Range
+    export type range = i__imports_location.Range
     
     export type value = string
     

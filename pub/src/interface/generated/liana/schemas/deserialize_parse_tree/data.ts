@@ -7,11 +7,13 @@ import * as i__imports_parse_tree from "../parse_tree/data"
 
 import * as i__imports_token from "../token/data"
 
+import * as i__imports_location from "../location/data"
+
 export namespace Lexer_Error_ {
     
     export namespace dangling_slash {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
         export type at_end_of_input = boolean
         
@@ -24,7 +26,7 @@ export namespace Lexer_Error_ {
     
     export namespace invalid_unicode_escape_sequence {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -34,7 +36,7 @@ export namespace Lexer_Error_ {
     
     export namespace missing_character_after_escape {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -46,7 +48,7 @@ export namespace Lexer_Error_ {
         
         export type character = number
         
-        export type location = i__imports_token.Location
+        export type location = i__imports_location.Location
         
     }
     
@@ -59,7 +61,7 @@ export namespace Lexer_Error_ {
         
         export type character = number
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -70,7 +72,7 @@ export namespace Lexer_Error_ {
     
     export namespace unexpected_end_of_line_in_delimited_text {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -82,7 +84,7 @@ export namespace Lexer_Error_ {
         
         export type character = number
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -93,7 +95,7 @@ export namespace Lexer_Error_ {
     
     export namespace unterminated_block_comment {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -103,7 +105,7 @@ export namespace Lexer_Error_ {
     
     export namespace unterminated_text {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     
@@ -113,7 +115,7 @@ export namespace Lexer_Error_ {
     
     export namespace unterminated_unicode_escape_sequence {
         
-        export type range = i__imports_token.Range
+        export type range = i__imports_location.Range
         
     }
     

@@ -4,6 +4,8 @@ import * as d_parse_tree from "../generated/liana/schemas/parse_tree/data"
 
 export type Dictionary = _pi.Dictionary<d_parse_tree.Value>
 
+export type Group = _pi.Dictionary<d_parse_tree.Value>
+
 export type List = _pi.List<d_parse_tree.Value>
 
 export type Optional = _pi.Optional_Value<d_parse_tree.Value>

@@ -5,54 +5,6 @@ import * as i_out from "./data"
 
 import * as i_in from "./data"
 
-export namespace Relative_Location_ {
-    
-    export type I = i_in.Relative_Location
-    
-    export type O = i_out.Relative_Location
-    
-    export namespace P {
-        
-    }
-    
-}
-
-export type Relative_Location_ = (
-    context: Relative_Location_.I,
-) => Relative_Location_.O
-
-export namespace Location_ {
-    
-    export type I = i_in.Location
-    
-    export type O = i_out.Location
-    
-    export namespace P {
-        
-    }
-    
-}
-
-export type Location_ = (
-    context: Location_.I,
-) => Location_.O
-
-export namespace Range_ {
-    
-    export type I = i_in.Range
-    
-    export type O = i_out.Range
-    
-    export namespace P {
-        
-    }
-    
-}
-
-export type Range_ = (
-    context: Range_.I,
-) => Range_.O
-
 export namespace Whitespace_ {
     
     export type I = i_in.Whitespace
@@ -166,9 +118,6 @@ export type Tokenizer_Result_ = (
 ) => Tokenizer_Result_.O
 
 export { 
-    Relative_Location_ as Relative_Location, 
-    Location_ as Location, 
-    Range_ as Range, 
     Whitespace_ as Whitespace, 
     Trivia_ as Trivia, 
     Delimited_Text_ as Delimited_Text, 

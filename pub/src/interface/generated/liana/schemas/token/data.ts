@@ -3,51 +3,11 @@ import * as _pi from "pareto-core/dist/interface"
 
 import * as i__location from "../../generic/location"
 
-export namespace Relative_Location_ {
-    
-    export type document_resource_identifier = string
-    
-    export type line = number
-    
-    export type column = number
-    
-}
-
-export type Relative_Location_ = {
-    readonly 'document resource identifier': Relative_Location_.document_resource_identifier
-    readonly 'line': Relative_Location_.line
-    readonly 'column': Relative_Location_.column
-}
-
-export namespace Location_ {
-    
-    export type relative = Relative_Location_
-    
-    export type absolute = number
-    
-}
-
-export type Location_ = {
-    readonly 'relative': Location_.relative
-    readonly 'absolute': Location_.absolute
-}
-
-export namespace Range_ {
-    
-    export type start = Location_
-    
-    export type end = Location_
-    
-}
-
-export type Range_ = {
-    readonly 'start': Range_.start
-    readonly 'end': Range_.end
-}
+import * as i__imports_location from "../location/data"
 
 export namespace Whitespace_ {
     
-    export type range = Range_
+    export type range = i__imports_location.Range
     
     export type value = string
     
@@ -80,7 +40,7 @@ export namespace Trivia_ {
             
             export type content = string
             
-            export type range = Range_
+            export type range = i__imports_location.Range
             
             export type trailing_whitespace = Whitespace_
             
@@ -191,11 +151,11 @@ export type Token_Type_ =
 
 export namespace Annotated_Token_ {
     
-    export type start = Location_
+    export type start = i__imports_location.Location
     
     export type type_ = Token_Type_
     
-    export type end = Location_
+    export type end = i__imports_location.Location
     
     export type trailing_trivia = Trivia_
     
@@ -220,7 +180,7 @@ export namespace Tokenizer_Result_ {
     
     export type tokens = _pi.List<tokens.L>
     
-    export type end = Location_
+    export type end = i__imports_location.Location
     
 }
 
@@ -231,9 +191,6 @@ export type Tokenizer_Result_ = {
 }
 
 export { 
-    Relative_Location_ as Relative_Location, 
-    Location_ as Location, 
-    Range_ as Range, 
     Whitespace_ as Whitespace, 
     Trivia_ as Trivia, 
     Delimited_Text_ as Delimited_Text, 

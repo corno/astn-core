@@ -19,7 +19,7 @@ export namespace signatures {
 
 import * as sh from "pareto-fountain-pen/dist/shorthands/block"
 
-import * as t_token_to_fountain_pen from "../../token/transformers/fountain_pen"
+import * as t_token_to_fountain_pen from "../../location/transformers/fountain_pen"
 export const s_list_of_separated_texts: _pi.Serializer_With_Parameters<_pi.List<string>, { 'separator': string }> = ($, $p) => {
     let is_first = true
     return _ps.text.from_list(_p.list.deprecated_build<number>(

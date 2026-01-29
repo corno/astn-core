@@ -7,6 +7,7 @@ import { _p_unreachable_code_path } from 'pareto-core/dist/unreachable_code_path
 
 import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
+import * as d_out_location from "../../../../../interface/generated/liana/schemas/location/data"
 import * as d_deseralize_parse_tree from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 
 //dependencies
@@ -42,7 +43,7 @@ export const is_control_character = ($: d_in.Annotated_Character): boolean =>
     && $.code !== WhitespaceChars.line_feed
     && $.code !== WhitespaceChars.carriage_return
 
-const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Character>): d_out.Location => {
+const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Character>): d_out_location.Location => {
     const next = iterator.old.look()
     if (next === null) {
         return {

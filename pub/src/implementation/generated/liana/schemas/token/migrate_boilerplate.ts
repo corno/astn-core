@@ -1,94 +1,58 @@
 
 import * as _p from "pareto-core/dist/transformer"
 
-import { 
-    _p_unreachable_code_path, 
+import {
+    _p_unreachable_code_path,
 } from "pareto-core/dist/unreachable_code_path"
 
-import { 
-    _p_cc, 
+import {
+    _p_cc,
 } from "pareto-core/dist/change_context"
 
 import * as t_signatures from "../../../../../interface/generated/liana/schemas/token/migrate_boilerplate"
 
 import * as t_out from "../../../../../interface/generated/liana/schemas/token/data"
-export const Relative_Location: t_signatures.Relative_Location = ($) => ({
-    'document resource identifier': _p_cc(
-        $['document resource identifier'], 
-        ($) => $
-    ),
-    'line': _p_cc(
-        $['line'], 
-        ($) => $
-    ),
-    'column': _p_cc(
-        $['column'], 
-        ($) => $
-    ),
-})
-export const Location: t_signatures.Location = ($) => ({
-    'relative': _p_cc(
-        $['relative'], 
-        ($) => Relative_Location(
-            $
-        )
-    ),
-    'absolute': _p_cc(
-        $['absolute'], 
-        ($) => $
-    ),
-})
-export const Range: t_signatures.Range = ($) => ({
-    'start': _p_cc(
-        $['start'], 
-        ($) => Location(
-            $
-        )
-    ),
-    'end': _p_cc(
-        $['end'], 
-        ($) => Location(
-            $
-        )
-    ),
-})
+
+import * as v_location from "../location/migrate_boilerplate"
+
 export const Whitespace: t_signatures.Whitespace = ($) => ({
     'range': _p_cc(
-        $['range'], 
-        ($) => Range(
+        $['range'],
+        ($) => v_location.Range(
             $
         )
     ),
     'value': _p_cc(
-        $['value'], 
+        $['value'],
         ($) => $
     ),
 })
+
 export const Trivia: t_signatures.Trivia = ($) => ({
     'leading whitespace': _p_cc(
-        $['leading whitespace'], 
+        $['leading whitespace'],
         ($) => Whitespace(
             $
         )
     ),
     'comments': _p_cc(
-        $['comments'], 
+        $['comments'],
         ($) => $.__l_map(
             ($) => ({
                 'type': _p_cc(
-                    $['type'], 
+                    $['type'],
                     ($) => _p.decide.state(
-                        $, 
+                        $,
                         ($): t_out.Trivia.comments.L.type_ => {
                             switch ($[0]) {
                                 case 'line':
                                     return _p.ss(
-                                        $, 
+                                        $,
                                         ($) => ['line', null]
                                     )
                                 case 'block':
                                     return _p.ss(
-                                        $, 
+                                        $,
                                         ($) => ['block', null]
                                     )
                                 default:
@@ -100,17 +64,17 @@ export const Trivia: t_signatures.Trivia = ($) => ({
                     )
                 ),
                 'content': _p_cc(
-                    $['content'], 
+                    $['content'],
                     ($) => $
                 ),
                 'range': _p_cc(
-                    $['range'], 
-                    ($) => Range(
+                    $['range'],
+                    ($) => v_location.Range(
                         $
                     )
                 ),
                 'trailing whitespace': _p_cc(
-                    $['trailing whitespace'], 
+                    $['trailing whitespace'],
                     ($) => Whitespace(
                         $
                     )
@@ -119,29 +83,31 @@ export const Trivia: t_signatures.Trivia = ($) => ({
         )
     ),
 })
+
 export const Delimited_Text: t_signatures.Delimited_Text = ($) => $
+
 export const Text_Type: t_signatures.Text_Type = ($) => _p.decide.state(
-    $, 
+    $,
     ($): t_out.Text_Type => {
         switch ($[0]) {
             case 'quoted':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['quoted', null]
                 )
             case 'apostrophed':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['apostrophed', null]
                 )
             case 'undelimited':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['undelimited', null]
                 )
             case 'backticked':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['backticked', null]
                 )
             default:
@@ -151,97 +117,98 @@ export const Text_Type: t_signatures.Text_Type = ($) => _p.decide.state(
         }
     }
 )
+
 export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
-    $, 
+    $,
     ($): t_out.Token_Type => {
         switch ($[0]) {
             case '!':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['!', null]
                 )
             case '@':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['@', null]
                 )
             case ':':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => [':', null]
                 )
             case '#':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['#', null]
                 )
             case '{':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['{', null]
                 )
             case '}':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['}', null]
                 )
             case '[':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['[', null]
                 )
             case ']':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => [']', null]
                 )
             case '(':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['(', null]
                 )
             case ')':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => [')', null]
                 )
             case '<':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['<', null]
                 )
             case '>':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['>', null]
                 )
             case '~':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['~', null]
                 )
             case '*':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['*', null]
                 )
             case '|':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['|', null]
                 )
             case 'text':
                 return _p.ss(
-                    $, 
+                    $,
                     ($) => ['text', ({
                         'value': _p_cc(
-                            $['value'], 
+                            $['value'],
                             ($) => Delimited_Text(
                                 $
                             )
                         ),
                         'type': _p_cc(
-                            $['type'], 
+                            $['type'],
                             ($) => Text_Type(
                                 $
                             )
@@ -255,41 +222,43 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
         }
     }
 )
+
 export const Annotated_Token: t_signatures.Annotated_Token = ($) => ({
     'start': _p_cc(
-        $['start'], 
-        ($) => Location(
+        $['start'],
+        ($) => v_location.Location(
             $
         )
     ),
     'type': _p_cc(
-        $['type'], 
+        $['type'],
         ($) => Token_Type(
             $
         )
     ),
     'end': _p_cc(
-        $['end'], 
-        ($) => Location(
+        $['end'],
+        ($) => v_location.Location(
             $
         )
     ),
     'trailing trivia': _p_cc(
-        $['trailing trivia'], 
+        $['trailing trivia'],
         ($) => Trivia(
             $
         )
     ),
 })
+
 export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
     'leading trivia': _p_cc(
-        $['leading trivia'], 
+        $['leading trivia'],
         ($) => Trivia(
             $
         )
     ),
     'tokens': _p_cc(
-        $['tokens'], 
+        $['tokens'],
         ($) => $.__l_map(
             ($) => Annotated_Token(
                 $
@@ -297,8 +266,8 @@ export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
         )
     ),
     'end': _p_cc(
-        $['end'], 
-        ($) => Location(
+        $['end'],
+        ($) => v_location.Location(
             $
         )
     ),
