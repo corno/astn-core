@@ -53,7 +53,8 @@ export const Text: t_signatures.Text = ($) => ({
     ),
 })
 
-export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => $.__l_map(
+export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => _p.list.map(
+    $,
     ($) => ({
         'id': _p_cc(
             $['id'],
@@ -63,7 +64,8 @@ export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => $.__l_map(
         ),
         'value': _p_cc(
             $['value'],
-            ($) => $.__o_map(
+            ($) => _p.optional.map(
+                $,
                 ($) => ({
                     ':': _p_cc(
                         $[':'],
@@ -83,7 +85,8 @@ export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => $.__l_map(
     })
 )
 
-export const Items: t_signatures.Items = ($) => $.__l_map(
+export const Items: t_signatures.Items = ($) => _p.list.map(
+    $,
     ($) => ({
         'value': _p_cc(
             $['value'],
@@ -382,7 +385,8 @@ export const Content: t_signatures.Content = ($) => Value(
 export const Document: t_signatures.Document = ($) => ({
     'header': _p_cc(
         $['header'],
-        ($) => $.__o_map(
+        ($) => _p.optional.map(
+            $,
             ($) => ({
                 '!': _p_cc(
                     $['!'],

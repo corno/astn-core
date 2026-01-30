@@ -16,7 +16,8 @@ export const Value: t_signatures.Value = ($) => _p.decide.state(
             case 'list':
                 return _p.ss(
                     $,
-                    ($) => ['list', $.__l_map(
+                    ($) => ['list', _p.list.map(
+                        $,
                         ($) => Value(
                             $
                         )
@@ -25,7 +26,8 @@ export const Value: t_signatures.Value = ($) => _p.decide.state(
             case 'dictionary':
                 return _p.ss(
                     $,
-                    ($) => ['dictionary', $.__d_map(
+                    ($) => ['dictionary', _p.dictionary.map(
+                        $,
                         ($, id) => Value(
                             $
                         )
@@ -41,7 +43,8 @@ export const Value: t_signatures.Value = ($) => _p.decide.state(
                                 case 'verbose':
                                     return _p.ss(
                                         $,
-                                        ($) => ['verbose', $.__d_map(
+                                        ($) => ['verbose', _p.dictionary.map(
+                                            $,
                                             ($, id) => Value(
                                                 $
                                             )

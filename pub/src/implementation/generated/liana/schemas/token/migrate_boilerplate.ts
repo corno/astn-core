@@ -33,7 +33,8 @@ export const Trivia: t_signatures.Trivia = ($) => ({
     ),
     'comments': _p_cc(
         $['comments'],
-        ($) => $.__l_map(
+        ($) => _p.list.map(
+            $,
             ($) => ({
                 'type': _p_cc(
                     $['type'],
@@ -255,7 +256,8 @@ export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
     ),
     'tokens': _p_cc(
         $['tokens'],
-        ($) => $.__l_map(
+        ($) => _p.list.map(
+            $,
             ($) => Annotated_Token(
                 $
             )

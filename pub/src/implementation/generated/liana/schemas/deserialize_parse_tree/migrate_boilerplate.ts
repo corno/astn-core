@@ -233,7 +233,8 @@ export const Expected: t_signatures.Expected = ($) => _p.decide.state(
 export const Parser_Error: t_signatures.Parser_Error = ($) => ({
     'expected': _p_cc(
         $['expected'],
-        ($) => $.__l_map(
+        ($) => _p.list.map(
+            $,
             ($) => Expected(
                 $
             )
