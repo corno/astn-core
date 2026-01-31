@@ -13,88 +13,37 @@ import * as v_token from "../token/migrate_boilerplate"
 
 import * as v_location from "../location/migrate_boilerplate"
 
-export const Structural_Token: t_signatures.Structural_Token = ($) => ({
-    'trailing trivia': _p_cc(
-        $['trailing trivia'],
-        ($) => v_token.Trivia(
-            $
+export const Document: t_signatures.Document = ($) => ({
+    'header': _p_cc(
+        $['header'],
+        ($) => _p.optional.map(
+            $,
+            ($) => ({
+                '!': _p_cc(
+                    $['!'],
+                    ($) => Structural_Token(
+                        $
+                    )
+                ),
+                'value': _p_cc(
+                    $['value'],
+                    ($) => Value(
+                        $
+                    )
+                ),
+            })
         )
     ),
-    'range': _p_cc(
-        $['range'],
-        ($) => v_location.Range(
-            $
-        )
-    ),
-})
-
-export const Text: t_signatures.Text = ($) => ({
-    'trailing trivia': _p_cc(
-        $['trailing trivia'],
-        ($) => v_token.Trivia(
-            $
-        )
-    ),
-    'range': _p_cc(
-        $['range'],
-        ($) => v_location.Range(
-            $
-        )
-    ),
-    'value': _p_cc(
-        $['value'],
-        ($) => $
-    ),
-    'type': _p_cc(
-        $['type'],
-        ($) => v_token.Text_Type(
+    'content': _p_cc(
+        $['content'],
+        ($) => Content(
             $
         )
     ),
 })
 
-export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => _p.list.map(
-    $,
-    ($) => ({
-        'id': _p_cc(
-            $['id'],
-            ($) => Text(
-                $
-            )
-        ),
-        'value': _p_cc(
-            $['value'],
-            ($) => _p.optional.map(
-                $,
-                ($) => ({
-                    ':': _p_cc(
-                        $[':'],
-                        ($) => Structural_Token(
-                            $
-                        )
-                    ),
-                    'value': _p_cc(
-                        $['value'],
-                        ($) => Value(
-                            $
-                        )
-                    ),
-                })
-            )
-        ),
-    })
-)
-
-export const Items: t_signatures.Items = ($) => _p.list.map(
-    $,
-    ($) => ({
-        'value': _p_cc(
-            $['value'],
-            ($) => Value(
-                $
-            )
-        ),
-    })
+export const Content: t_signatures.Content = ($) => Value(
+    $
 )
 
 export const Value: t_signatures.Value = ($) => ({
@@ -378,35 +327,86 @@ export const Value: t_signatures.Value = ($) => ({
     ),
 })
 
-export const Content: t_signatures.Content = ($) => Value(
-    $
-)
-
-export const Document: t_signatures.Document = ($) => ({
-    'header': _p_cc(
-        $['header'],
-        ($) => _p.optional.map(
-            $,
-            ($) => ({
-                '!': _p_cc(
-                    $['!'],
-                    ($) => Structural_Token(
-                        $
-                    )
-                ),
-                'value': _p_cc(
-                    $['value'],
-                    ($) => Value(
-                        $
-                    )
-                ),
-            })
+export const Structural_Token: t_signatures.Structural_Token = ($) => ({
+    'trailing trivia': _p_cc(
+        $['trailing trivia'],
+        ($) => v_token.Trivia(
+            $
         )
     ),
-    'content': _p_cc(
-        $['content'],
-        ($) => Content(
+    'range': _p_cc(
+        $['range'],
+        ($) => v_location.Range(
             $
         )
     ),
 })
+
+export const Text: t_signatures.Text = ($) => ({
+    'trailing trivia': _p_cc(
+        $['trailing trivia'],
+        ($) => v_token.Trivia(
+            $
+        )
+    ),
+    'range': _p_cc(
+        $['range'],
+        ($) => v_location.Range(
+            $
+        )
+    ),
+    'value': _p_cc(
+        $['value'],
+        ($) => $
+    ),
+    'type': _p_cc(
+        $['type'],
+        ($) => v_token.Text_Type(
+            $
+        )
+    ),
+})
+
+export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => _p.list.map(
+    $,
+    ($) => ({
+        'id': _p_cc(
+            $['id'],
+            ($) => Text(
+                $
+            )
+        ),
+        'value': _p_cc(
+            $['value'],
+            ($) => _p.optional.map(
+                $,
+                ($) => ({
+                    ':': _p_cc(
+                        $[':'],
+                        ($) => Structural_Token(
+                            $
+                        )
+                    ),
+                    'value': _p_cc(
+                        $['value'],
+                        ($) => Value(
+                            $
+                        )
+                    ),
+                })
+            )
+        ),
+    })
+)
+
+export const Items: t_signatures.Items = ($) => _p.list.map(
+    $,
+    ($) => ({
+        'value': _p_cc(
+            $['value'],
+            ($) => Value(
+                $
+            )
+        ),
+    })
+)

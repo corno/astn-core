@@ -9,18 +9,18 @@ import * as t_signatures from "../../../../../interface/generated/liana/schemas/
 
 import * as t_out from "../../../../../interface/generated/liana/schemas/location/data"
 
-export const Relative_Location: t_signatures.Relative_Location = ($) => ({
-    'document resource identifier': _p_cc(
-        $['document resource identifier'],
-        ($) => $
+export const Range: t_signatures.Range = ($) => ({
+    'start': _p_cc(
+        $['start'],
+        ($) => Location(
+            $
+        )
     ),
-    'line': _p_cc(
-        $['line'],
-        ($) => $
-    ),
-    'column': _p_cc(
-        $['column'],
-        ($) => $
+    'end': _p_cc(
+        $['end'],
+        ($) => Location(
+            $
+        )
     ),
 })
 
@@ -37,17 +37,17 @@ export const Location: t_signatures.Location = ($) => ({
     ),
 })
 
-export const Range: t_signatures.Range = ($) => ({
-    'start': _p_cc(
-        $['start'],
-        ($) => Location(
-            $
-        )
+export const Relative_Location: t_signatures.Relative_Location = ($) => ({
+    'document resource identifier': _p_cc(
+        $['document resource identifier'],
+        ($) => $
     ),
-    'end': _p_cc(
-        $['end'],
-        ($) => Location(
-            $
-        )
+    'line': _p_cc(
+        $['line'],
+        ($) => $
+    ),
+    'column': _p_cc(
+        $['column'],
+        ($) => $
     ),
 })

@@ -5,6 +5,22 @@ import * as i_out from "./data"
 
 import * as i_in from "./data"
 
+export namespace Error_ {
+    
+    export type I = i_in.Error
+    
+    export type O = i_out.Error
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Error_ = (
+    context: Error_.I,
+) => Error_.O
+
 export namespace Lexer_Error_ {
     
     export type I = i_in.Lexer_Error
@@ -20,22 +36,6 @@ export namespace Lexer_Error_ {
 export type Lexer_Error_ = (
     context: Lexer_Error_.I,
 ) => Lexer_Error_.O
-
-export namespace Expected_ {
-    
-    export type I = i_in.Expected
-    
-    export type O = i_out.Expected
-    
-    export namespace P {
-        
-    }
-    
-}
-
-export type Expected_ = (
-    context: Expected_.I,
-) => Expected_.O
 
 export namespace Parser_Error_ {
     
@@ -53,11 +53,11 @@ export type Parser_Error_ = (
     context: Parser_Error_.I,
 ) => Parser_Error_.O
 
-export namespace Error_ {
+export namespace Expected_ {
     
-    export type I = i_in.Error
+    export type I = i_in.Expected
     
-    export type O = i_out.Error
+    export type O = i_out.Expected
     
     export namespace P {
         
@@ -65,13 +65,13 @@ export namespace Error_ {
     
 }
 
-export type Error_ = (
-    context: Error_.I,
-) => Error_.O
+export type Expected_ = (
+    context: Expected_.I,
+) => Expected_.O
 
 export { 
-    Lexer_Error_ as Lexer_Error, 
-    Expected_ as Expected, 
-    Parser_Error_ as Parser_Error, 
     Error_ as Error, 
+    Lexer_Error_ as Lexer_Error, 
+    Parser_Error_ as Parser_Error, 
+    Expected_ as Expected, 
 }

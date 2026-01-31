@@ -15,6 +15,37 @@ import * as v_token from "../token/migrate_boilerplate"
 
 import * as v_location from "../location/migrate_boilerplate"
 
+export const Error: t_signatures.Error = ($) => ({
+    'type': _p_cc(
+        $['type'],
+        ($) => _p.decide.state(
+            $,
+            ($): t_out.Error.type_ => {
+                switch ($[0]) {
+                    case 'lexer':
+                        return _p.ss(
+                            $,
+                            ($) => ['lexer', Lexer_Error(
+                                $
+                            )]
+                        )
+                    case 'parser':
+                        return _p.ss(
+                            $,
+                            ($) => ['parser', Parser_Error(
+                                $
+                            )]
+                        )
+                    default:
+                        return _p.au(
+                            $[0]
+                        )
+                }
+            }
+        )
+    ),
+})
+
 export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
     $,
     ($): t_out.Lexer_Error => {
@@ -163,6 +194,49 @@ export const Lexer_Error: t_signatures.Lexer_Error = ($) => _p.decide.state(
     }
 )
 
+export const Parser_Error: t_signatures.Parser_Error = ($) => ({
+    'expected': _p_cc(
+        $['expected'],
+        ($) => _p.list.map(
+            $,
+            ($) => Expected(
+                $
+            )
+        )
+    ),
+    'cause': _p_cc(
+        $['cause'],
+        ($) => _p.decide.state(
+            $,
+            ($): t_out.Parser_Error.cause => {
+                switch ($[0]) {
+                    case 'missing token':
+                        return _p.ss(
+                            $,
+                            ($) => ['missing token', null]
+                        )
+                    case 'unexpected token':
+                        return _p.ss(
+                            $,
+                            ($) => ['unexpected token', {
+                                'found': _p_cc(
+                                    $['found'],
+                                    ($) => v_token.Annotated_Token(
+                                        $
+                                    )
+                                ),
+                            }]
+                        )
+                    default:
+                        return _p.au(
+                            $[0]
+                        )
+                }
+            }
+        )
+    ),
+})
+
 export const Expected: t_signatures.Expected = ($) => _p.decide.state(
     $,
     ($): t_out.Expected => {
@@ -229,77 +303,3 @@ export const Expected: t_signatures.Expected = ($) => _p.decide.state(
         }
     }
 )
-
-export const Parser_Error: t_signatures.Parser_Error = ($) => ({
-    'expected': _p_cc(
-        $['expected'],
-        ($) => _p.list.map(
-            $,
-            ($) => Expected(
-                $
-            )
-        )
-    ),
-    'cause': _p_cc(
-        $['cause'],
-        ($) => _p.decide.state(
-            $,
-            ($): t_out.Parser_Error.cause => {
-                switch ($[0]) {
-                    case 'missing token':
-                        return _p.ss(
-                            $,
-                            ($) => ['missing token', null]
-                        )
-                    case 'unexpected token':
-                        return _p.ss(
-                            $,
-                            ($) => ['unexpected token', {
-                                'found': _p_cc(
-                                    $['found'],
-                                    ($) => v_token.Annotated_Token(
-                                        $
-                                    )
-                                ),
-                            }]
-                        )
-                    default:
-                        return _p.au(
-                            $[0]
-                        )
-                }
-            }
-        )
-    ),
-})
-
-export const Error: t_signatures.Error = ($) => ({
-    'type': _p_cc(
-        $['type'],
-        ($) => _p.decide.state(
-            $,
-            ($): t_out.Error.type_ => {
-                switch ($[0]) {
-                    case 'lexer':
-                        return _p.ss(
-                            $,
-                            ($) => ['lexer', Lexer_Error(
-                                $
-                            )]
-                        )
-                    case 'parser':
-                        return _p.ss(
-                            $,
-                            ($) => ['parser', Parser_Error(
-                                $
-                            )]
-                        )
-                    default:
-                        return _p.au(
-                            $[0]
-                        )
-                }
-            }
-        )
-    ),
-})

@@ -5,89 +5,37 @@ import * as i__imports_token from "../token/data"
 
 import * as i__imports_location from "../location/data"
 
-export namespace Structural_Token_ {
+export namespace Document_ {
     
-    export type trailing_trivia = i__imports_token.Trivia
-    
-    export type range = i__imports_location.Range
-    
-}
-
-export type Structural_Token_ = {
-    readonly 'trailing trivia': Structural_Token_.trailing_trivia
-    readonly 'range': Structural_Token_.range
-}
-
-export namespace Text_ {
-    
-    export type trailing_trivia = i__imports_token.Trivia
-    
-    export type range = i__imports_location.Range
-    
-    export type value = string
-    
-    export type type_ = i__imports_token.Text_Type
-    
-}
-
-export type Text_ = {
-    readonly 'trailing trivia': Text_.trailing_trivia
-    readonly 'range': Text_.range
-    readonly 'value': Text_.value
-    readonly 'type': Text_.type_
-}
-
-export namespace ID_Value_Pairs_ {
-    
-    export namespace L {
+    export namespace header {
         
-        export type id = Text_
-        
-        export namespace value {
+        export namespace O {
             
-            export namespace O {
-                
-                export type $cl_ = Structural_Token_
-                
-                export type value = Value_
-                
-            }
+            export type $ex_ = Structural_Token_
             
-            export type O = {
-                readonly ':': O.$cl_
-                readonly 'value': O.value
-            }
+            export type value = Value_
             
         }
         
-        export type value = _pi.Optional_Value<value.O>
+        export type O = {
+            readonly '!': O.$ex_
+            readonly 'value': O.value
+        }
         
     }
     
-    export type L = {
-        readonly 'id': L.id
-        readonly 'value': L.value
-    }
+    export type header = _pi.Optional_Value<header.O>
+    
+    export type content = Content_
     
 }
 
-export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
-
-export namespace Items_ {
-    
-    export namespace L {
-        
-        export type value = Value_
-        
-    }
-    
-    export type L = {
-        readonly 'value': L.value
-    }
-    
+export type Document_ = {
+    readonly 'header': Document_.header
+    readonly 'content': Document_.content
 }
 
-export type Items_ = _pi.List<Items_.L>
+export type Content_ = Value_
 
 export namespace Value_ {
     
@@ -288,44 +236,96 @@ export type Value_ = {
     readonly 'type': Value_.type_
 }
 
-export type Content_ = Value_
-
-export namespace Document_ {
+export namespace Structural_Token_ {
     
-    export namespace header {
+    export type trailing_trivia = i__imports_token.Trivia
+    
+    export type range = i__imports_location.Range
+    
+}
+
+export type Structural_Token_ = {
+    readonly 'trailing trivia': Structural_Token_.trailing_trivia
+    readonly 'range': Structural_Token_.range
+}
+
+export namespace Text_ {
+    
+    export type trailing_trivia = i__imports_token.Trivia
+    
+    export type range = i__imports_location.Range
+    
+    export type value = string
+    
+    export type type_ = i__imports_token.Text_Type
+    
+}
+
+export type Text_ = {
+    readonly 'trailing trivia': Text_.trailing_trivia
+    readonly 'range': Text_.range
+    readonly 'value': Text_.value
+    readonly 'type': Text_.type_
+}
+
+export namespace ID_Value_Pairs_ {
+    
+    export namespace L {
         
-        export namespace O {
+        export type id = Text_
+        
+        export namespace value {
             
-            export type $ex_ = Structural_Token_
+            export namespace O {
+                
+                export type $cl_ = Structural_Token_
+                
+                export type value = Value_
+                
+            }
             
-            export type value = Value_
+            export type O = {
+                readonly ':': O.$cl_
+                readonly 'value': O.value
+            }
             
         }
         
-        export type O = {
-            readonly '!': O.$ex_
-            readonly 'value': O.value
-        }
+        export type value = _pi.Optional_Value<value.O>
         
     }
     
-    export type header = _pi.Optional_Value<header.O>
-    
-    export type content = Content_
+    export type L = {
+        readonly 'id': L.id
+        readonly 'value': L.value
+    }
     
 }
 
-export type Document_ = {
-    readonly 'header': Document_.header
-    readonly 'content': Document_.content
+export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
+
+export namespace Items_ {
+    
+    export namespace L {
+        
+        export type value = Value_
+        
+    }
+    
+    export type L = {
+        readonly 'value': L.value
+    }
+    
 }
+
+export type Items_ = _pi.List<Items_.L>
 
 export { 
+    Document_ as Document, 
+    Content_ as Content, 
+    Value_ as Value, 
     Structural_Token_ as Structural_Token, 
     Text_ as Text, 
     ID_Value_Pairs_ as ID_Value_Pairs, 
     Items_ as Items, 
-    Value_ as Value, 
-    Content_ as Content, 
-    Document_ as Document, 
 }

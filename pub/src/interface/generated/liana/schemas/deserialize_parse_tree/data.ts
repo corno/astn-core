@@ -7,6 +7,26 @@ import * as i__imports_token from "../token/data"
 
 import * as i__imports_location from "../location/data"
 
+export namespace Error_ {
+    
+    export namespace type_ {
+        
+        export type lexer = Lexer_Error_
+        
+        export type parser = Parser_Error_
+        
+    }
+    
+    export type type_ = 
+        | readonly ['lexer', type_.lexer]
+        | readonly ['parser', type_.parser]
+    
+}
+
+export type Error_ = {
+    readonly 'type': Error_.type_
+}
+
 export namespace Lexer_Error_ {
     
     export namespace dangling_slash {
@@ -135,6 +155,43 @@ export type Lexer_Error_ =
     | readonly ['unterminated text', Lexer_Error_.unterminated_text]
     | readonly ['unterminated unicode escape sequence', Lexer_Error_.unterminated_unicode_escape_sequence]
 
+export namespace Parser_Error_ {
+    
+    export namespace expected {
+        
+        export type L = Expected_
+        
+    }
+    
+    export type expected = _pi.List<expected.L>
+    
+    export namespace cause {
+        
+        export type missing_token = null
+        
+        export namespace unexpected_token {
+            
+            export type found = i__imports_token.Annotated_Token
+            
+        }
+        
+        export type unexpected_token = {
+            readonly 'found': unexpected_token.found
+        }
+        
+    }
+    
+    export type cause = 
+        | readonly ['missing token', cause.missing_token]
+        | readonly ['unexpected token', cause.unexpected_token]
+    
+}
+
+export type Parser_Error_ = {
+    readonly 'expected': Parser_Error_.expected
+    readonly 'cause': Parser_Error_.cause
+}
+
 export namespace Expected_ {
     
     export type a_text_value = null
@@ -174,66 +231,9 @@ export type Expected_ =
     | readonly [']', Expected_.$bc_]
     | readonly ['#', Expected_.$ha_]
 
-export namespace Parser_Error_ {
-    
-    export namespace expected {
-        
-        export type L = Expected_
-        
-    }
-    
-    export type expected = _pi.List<expected.L>
-    
-    export namespace cause {
-        
-        export type missing_token = null
-        
-        export namespace unexpected_token {
-            
-            export type found = i__imports_token.Annotated_Token
-            
-        }
-        
-        export type unexpected_token = {
-            readonly 'found': unexpected_token.found
-        }
-        
-    }
-    
-    export type cause = 
-        | readonly ['missing token', cause.missing_token]
-        | readonly ['unexpected token', cause.unexpected_token]
-    
-}
-
-export type Parser_Error_ = {
-    readonly 'expected': Parser_Error_.expected
-    readonly 'cause': Parser_Error_.cause
-}
-
-export namespace Error_ {
-    
-    export namespace type_ {
-        
-        export type lexer = Lexer_Error_
-        
-        export type parser = Parser_Error_
-        
-    }
-    
-    export type type_ = 
-        | readonly ['lexer', type_.lexer]
-        | readonly ['parser', type_.parser]
-    
-}
-
-export type Error_ = {
-    readonly 'type': Error_.type_
-}
-
 export { 
-    Lexer_Error_ as Lexer_Error, 
-    Expected_ as Expected, 
-    Parser_Error_ as Parser_Error, 
     Error_ as Error, 
+    Lexer_Error_ as Lexer_Error, 
+    Parser_Error_ as Parser_Error, 
+    Expected_ as Expected, 
 }

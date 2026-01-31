@@ -9,6 +9,10 @@ import * as t_signatures from "../../../../../interface/generated/liana/schemas/
 
 import * as t_out from "../../../../../interface/generated/liana/schemas/sealed_target/data"
 
+export const Document: t_signatures.Document = ($) => Value(
+    $
+)
+
 export const Value: t_signatures.Value = ($) => _p.decide.state(
     $,
     ($): t_out.Value => {
@@ -151,8 +155,4 @@ export const Value: t_signatures.Value = ($) => _p.decide.state(
                 )
         }
     }
-)
-
-export const Document: t_signatures.Document = ($) => Value(
-    $
 )
