@@ -1,9 +1,9 @@
-import * as _p from 'pareto-core/dist/refiner'
+import * as _p from 'pareto-core/dist/expression'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pd from 'pareto-core/dist/deserializer'
-import * as _ps from 'pareto-core/dist/serializer'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
-import { _p_unreachable_code_path } from 'pareto-core/dist/unreachable_code_path'
+import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
+import _p_text_build_deprecated from 'pareto-core/dist/_p_text_build_deprecated'
+import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
 
 import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
@@ -66,7 +66,7 @@ export const Whitespace = (
 ): d_out.Whitespace => {
     const start_location = temp_get_current_location(iterator)
     return {
-        'value': _ps.text.deprecated_build(($i) => {
+        'value': _p_text_build_deprecated(($i) => {
             while (true) {
                 {
                     const $ = temp_get_current_character_or_null(iterator)
@@ -120,7 +120,7 @@ export const Trivia = (
     abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
-    'comments': _p.list.deprecated_build(($i) => {
+    'comments': _p_list_build_deprecated(($i) => {
         while (true) {
             const $ = temp_get_current_character_or_null(iterator)
             if ($ === null) {
@@ -152,7 +152,7 @@ export const Trivia = (
                             }
                             $i['add item']({
                                 'type': ['line', null],
-                                'content': _ps.text.deprecated_build(($i) => {
+                                'content': _p_text_build_deprecated(($i) => {
                                     while (true) {
                                         const $ = temp_get_current_character_or_null(iterator)
                                         if ($ === null) {
@@ -179,7 +179,7 @@ export const Trivia = (
                             iterator.old.discard(() => null) // consume the asterisk
                             $i['add item']({
                                 'type': ['block', null],
-                                'content': _ps.text.deprecated_build(($i) => {
+                                'content': _p_text_build_deprecated(($i) => {
                                     let found_asterisk = false
                                     const Character = {
                                         solidus: 0x2F,              // /
@@ -355,7 +355,7 @@ export const Annotated_Token = (
                 default:
                     return ['text', {
                         'type': ['undelimited', null],
-                        'value': _ps.text.deprecated_build(($i) => {
+                        'value': _p_text_build_deprecated(($i) => {
                             while (true) {
                                 const $ = temp_get_current_character_or_null(iterator)
                                 if ($ === null) {
@@ -441,7 +441,7 @@ export const Delimited_String = (
 
     }
     const start = temp_get_current_location(iterator)
-    const txt = _ps.text.deprecated_build(($i) => {
+    const txt = _p_text_build_deprecated(($i) => {
         while (true) {
             const $ = temp_get_current_character_or_null(iterator)
             if ($ === null) {
@@ -539,7 +539,7 @@ export const Delimited_String = (
                             case Character.u:
                                 iterator.old.discard(() => null)
                                 $i.add_character(ds_hexadecimal(
-                                    _ps.text.deprecated_build(($i) => {
+                                    _p_text_build_deprecated(($i) => {
                                         const get_char = () => {
                                             const char = temp_get_current_character_or_null(iterator)
                                             if (char === null) {
@@ -594,7 +594,7 @@ export const Tokenizer_Result = (
     abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
 ): d_out.Tokenizer_Result => ({
     'leading trivia': Trivia(iterator, abort),
-    'tokens': _p.list.deprecated_build<d_out.Annotated_Token>($i => {
+    'tokens': _p_list_build_deprecated<d_out.Annotated_Token>($i => {
         while (true) {
             const $ = temp_get_current_character_or_null(iterator)
             if ($ === null) {

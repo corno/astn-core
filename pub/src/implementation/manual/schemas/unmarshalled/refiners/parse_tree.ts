@@ -1,5 +1,5 @@
 import * as _pi from 'pareto-core/dist/interface'
-import * as _p from 'pareto-core/dist/refiner'
+import * as _p from 'pareto-core/dist/expression'
 
 import * as d_in from "../../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../../interface/to_be_generated/unmarshalled"

@@ -1,16 +1,14 @@
-import * as _p from 'pareto-core/dist/refiner'
+import * as _p from 'pareto-core/dist/expression'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../productions/temp'
-import { _p_iterate } from 'pareto-core/dist/iterate'
-import { _p_unreachable_code_path } from 'pareto-core/dist/unreachable_code_path'
+import _p_iterate from 'pareto-core/dist/_p_iterate'
+import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import * as _pds_new from "../productions/temp"
 
-
-
-
+//data types
 import * as d_authoring_parse_result from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_authoring_parse_tree from "../../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_token from "../../../../../interface/generated/liana/schemas/token/data"
+import * as d_out from "pareto-fountain-pen/dist/interface/to_be_generated/text"
 
 
 //dependencies
@@ -20,7 +18,15 @@ import * as r_from_token from "./token"
 
 export namespace signatures {
 
-    export type Document = _pi.Refiner_With_Parameters<d_authoring_parse_tree.Document, d_authoring_parse_result.Error, _pi.List<number>, { 'tab size': number, 'document resource identifier': string }>
+    export type Document = _pi.Refiner_With_Parameters<
+        d_authoring_parse_tree.Document,
+        d_authoring_parse_result.Error,
+        d_out.Text,
+        {
+            'tab size': number,
+            'document resource identifier': string
+        }
+    >
 
 }
 

@@ -1,9 +1,7 @@
 
-import * as _p from "pareto-core/dist/transformer"
+import * as _p from "pareto-core/dist/expression"
 
-import {
-    _p_cc,
-} from "pareto-core/dist/change_context"
+import _p_change_context from "pareto-core/dist/_p_change_context"
 
 import * as t_signatures from "../../../../../interface/generated/liana/schemas/sealed_target/migrate_boilerplate"
 
@@ -98,11 +96,11 @@ export const Value: t_signatures.Value = ($) => _p.decide.state(
                 return _p.ss(
                     $,
                     ($) => ['state', {
-                        'option': _p_cc(
+                        'option': _p_change_context(
                             $['option'],
                             ($) => $
                         ),
-                        'value': _p_cc(
+                        'value': _p_change_context(
                             $['value'],
                             ($) => Value(
                                 $
@@ -114,11 +112,11 @@ export const Value: t_signatures.Value = ($) => _p.decide.state(
                 return _p.ss(
                     $,
                     ($) => ['text', {
-                        'value': _p_cc(
+                        'value': _p_change_context(
                             $['value'],
                             ($) => $
                         ),
-                        'delimiter': _p_cc(
+                        'delimiter': _p_change_context(
                             $['delimiter'],
                             ($) => _p.decide.state(
                                 $,

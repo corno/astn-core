@@ -1,5 +1,6 @@
-import * as _p from 'pareto-core/dist/refiner'
+import * as _p from 'pareto-core/dist/expression'
 import * as _pi from 'pareto-core/dist/interface'
+import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
 
 import * as new_pi from "./new_interface_signatures"
 
@@ -37,7 +38,7 @@ export const create_iterator = <Iterator_Element, Choice>(
         end_reached,
         handle,
     ) => {
-        return _p.list.deprecated_build(($i) => {
+        return _p_list_build_deprecated(($i) => {
             while (true) {
                 const next_element = old.look()
                 if (next_element === null) {

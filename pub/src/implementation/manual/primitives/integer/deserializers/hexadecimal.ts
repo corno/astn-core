@@ -1,8 +1,8 @@
-import * as _p from 'pareto-core/dist/deserializer'
+import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 import * as _pi from 'pareto-core/dist/interface'
 
 export const $$: _pi.Number_Deserializer<string> = ($, abort) => {
-    const characters = _p.list.from_text($, ($) => $)
+    const characters = _p_list_from_text($, ($) => $)
     let result = 0
     let isNegative = false
     let startIndex = 0

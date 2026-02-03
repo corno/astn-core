@@ -1,9 +1,7 @@
 
-import * as _p from "pareto-core/dist/transformer"
+import * as _p from "pareto-core/dist/expression"
 
-import {
-    _p_cc,
-} from "pareto-core/dist/change_context"
+import _p_change_context from "pareto-core/dist/_p_change_context"
 
 import * as t_signatures from "../../../../../interface/generated/liana/schemas/token/migrate_boilerplate"
 
@@ -12,13 +10,13 @@ import * as t_out from "../../../../../interface/generated/liana/schemas/token/d
 import * as v_location from "../location/migrate_boilerplate"
 
 export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
-    'leading trivia': _p_cc(
+    'leading trivia': _p_change_context(
         $['leading trivia'],
         ($) => Trivia(
             $
         )
     ),
-    'tokens': _p_cc(
+    'tokens': _p_change_context(
         $['tokens'],
         ($) => _p.list.map(
             $,
@@ -27,7 +25,7 @@ export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
             )
         )
     ),
-    'end': _p_cc(
+    'end': _p_change_context(
         $['end'],
         ($) => v_location.Location(
             $
@@ -36,25 +34,25 @@ export const Tokenizer_Result: t_signatures.Tokenizer_Result = ($) => ({
 })
 
 export const Annotated_Token: t_signatures.Annotated_Token = ($) => ({
-    'start': _p_cc(
+    'start': _p_change_context(
         $['start'],
         ($) => v_location.Location(
             $
         )
     ),
-    'type': _p_cc(
+    'type': _p_change_context(
         $['type'],
         ($) => Token_Type(
             $
         )
     ),
-    'end': _p_cc(
+    'end': _p_change_context(
         $['end'],
         ($) => v_location.Location(
             $
         )
     ),
-    'trailing trivia': _p_cc(
+    'trailing trivia': _p_change_context(
         $['trailing trivia'],
         ($) => Trivia(
             $
@@ -145,13 +143,13 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
                 return _p.ss(
                     $,
                     ($) => ['text', {
-                        'value': _p_cc(
+                        'value': _p_change_context(
                             $['value'],
                             ($) => Delimited_Text(
                                 $
                             )
                         ),
-                        'type': _p_cc(
+                        'type': _p_change_context(
                             $['type'],
                             ($) => Text_Type(
                                 $
@@ -170,31 +168,31 @@ export const Token_Type: t_signatures.Token_Type = ($) => _p.decide.state(
 export const Delimited_Text: t_signatures.Delimited_Text = ($) => $
 
 export const Whitespace: t_signatures.Whitespace = ($) => ({
-    'range': _p_cc(
+    'range': _p_change_context(
         $['range'],
         ($) => v_location.Range(
             $
         )
     ),
-    'value': _p_cc(
+    'value': _p_change_context(
         $['value'],
         ($) => $
     ),
 })
 
 export const Trivia: t_signatures.Trivia = ($) => ({
-    'leading whitespace': _p_cc(
+    'leading whitespace': _p_change_context(
         $['leading whitespace'],
         ($) => Whitespace(
             $
         )
     ),
-    'comments': _p_cc(
+    'comments': _p_change_context(
         $['comments'],
         ($) => _p.list.map(
             $,
             ($) => ({
-                'type': _p_cc(
+                'type': _p_change_context(
                     $['type'],
                     ($) => _p.decide.state(
                         $,
@@ -218,17 +216,17 @@ export const Trivia: t_signatures.Trivia = ($) => ({
                         }
                     )
                 ),
-                'content': _p_cc(
+                'content': _p_change_context(
                     $['content'],
                     ($) => $
                 ),
-                'range': _p_cc(
+                'range': _p_change_context(
                     $['range'],
                     ($) => v_location.Range(
                         $
                     )
                 ),
-                'trailing whitespace': _p_cc(
+                'trailing whitespace': _p_change_context(
                     $['trailing whitespace'],
                     ($) => Whitespace(
                         $

@@ -1,9 +1,7 @@
 
-import * as _p from "pareto-core/dist/transformer"
+import * as _p from "pareto-core/dist/expression"
 
-import {
-    _p_cc,
-} from "pareto-core/dist/change_context"
+import _p_change_context from "pareto-core/dist/_p_change_context"
 
 import * as t_signatures from "../../../../../interface/generated/liana/schemas/parse_tree/migrate_boilerplate"
 
@@ -14,18 +12,18 @@ import * as v_token from "../token/migrate_boilerplate"
 import * as v_location from "../location/migrate_boilerplate"
 
 export const Document: t_signatures.Document = ($) => ({
-    'header': _p_cc(
+    'header': _p_change_context(
         $['header'],
         ($) => _p.optional.map(
             $,
             ($) => ({
-                '!': _p_cc(
+                '!': _p_change_context(
                     $['!'],
                     ($) => Structural_Token(
                         $
                     )
                 ),
-                'value': _p_cc(
+                'value': _p_change_context(
                     $['value'],
                     ($) => Value(
                         $
@@ -34,7 +32,7 @@ export const Document: t_signatures.Document = ($) => ({
             })
         )
     ),
-    'content': _p_cc(
+    'content': _p_change_context(
         $['content'],
         ($) => Content(
             $
@@ -47,7 +45,7 @@ export const Content: t_signatures.Content = ($) => Value(
 )
 
 export const Value: t_signatures.Value = ($) => ({
-    'type': _p_cc(
+    'type': _p_change_context(
         $['type'],
         ($) => _p.decide.state(
             $,
@@ -64,19 +62,19 @@ export const Value: t_signatures.Value = ($) => ({
                                             return _p.ss(
                                                 $,
                                                 ($) => ['dictionary', {
-                                                    '{': _p_cc(
+                                                    '{': _p_change_context(
                                                         $['{'],
                                                         ($) => Structural_Token(
                                                             $
                                                         )
                                                     ),
-                                                    'entries': _p_cc(
+                                                    'entries': _p_change_context(
                                                         $['entries'],
                                                         ($) => ID_Value_Pairs(
                                                             $
                                                         )
                                                     ),
-                                                    '}': _p_cc(
+                                                    '}': _p_change_context(
                                                         $['}'],
                                                         ($) => Structural_Token(
                                                             $
@@ -95,19 +93,19 @@ export const Value: t_signatures.Value = ($) => ({
                                                                 return _p.ss(
                                                                     $,
                                                                     ($) => ['concise', {
-                                                                        '<': _p_cc(
+                                                                        '<': _p_change_context(
                                                                             $['<'],
                                                                             ($) => Structural_Token(
                                                                                 $
                                                                             )
                                                                         ),
-                                                                        'items': _p_cc(
+                                                                        'items': _p_change_context(
                                                                             $['items'],
                                                                             ($) => Items(
                                                                                 $
                                                                             )
                                                                         ),
-                                                                        '>': _p_cc(
+                                                                        '>': _p_change_context(
                                                                             $['>'],
                                                                             ($) => Structural_Token(
                                                                                 $
@@ -119,19 +117,19 @@ export const Value: t_signatures.Value = ($) => ({
                                                                 return _p.ss(
                                                                     $,
                                                                     ($) => ['verbose', {
-                                                                        '(': _p_cc(
+                                                                        '(': _p_change_context(
                                                                             $['('],
                                                                             ($) => Structural_Token(
                                                                                 $
                                                                             )
                                                                         ),
-                                                                        'entries': _p_cc(
+                                                                        'entries': _p_change_context(
                                                                             $['entries'],
                                                                             ($) => ID_Value_Pairs(
                                                                                 $
                                                                             )
                                                                         ),
-                                                                        ')': _p_cc(
+                                                                        ')': _p_change_context(
                                                                             $[')'],
                                                                             ($) => Structural_Token(
                                                                                 $
@@ -151,19 +149,19 @@ export const Value: t_signatures.Value = ($) => ({
                                             return _p.ss(
                                                 $,
                                                 ($) => ['list', {
-                                                    '[': _p_cc(
+                                                    '[': _p_change_context(
                                                         $['['],
                                                         ($) => Structural_Token(
                                                             $
                                                         )
                                                     ),
-                                                    'items': _p_cc(
+                                                    'items': _p_change_context(
                                                         $['items'],
                                                         ($) => Items(
                                                             $
                                                         )
                                                     ),
-                                                    ']': _p_cc(
+                                                    ']': _p_change_context(
                                                         $[']'],
                                                         ($) => Structural_Token(
                                                             $
@@ -175,7 +173,7 @@ export const Value: t_signatures.Value = ($) => ({
                                             return _p.ss(
                                                 $,
                                                 ($) => ['nothing', {
-                                                    '~': _p_cc(
+                                                    '~': _p_change_context(
                                                         $['~'],
                                                         ($) => Structural_Token(
                                                             $
@@ -194,13 +192,13 @@ export const Value: t_signatures.Value = ($) => ({
                                                                 return _p.ss(
                                                                     $,
                                                                     ($) => ['set', {
-                                                                        '*': _p_cc(
+                                                                        '*': _p_change_context(
                                                                             $['*'],
                                                                             ($) => Structural_Token(
                                                                                 $
                                                                             )
                                                                         ),
-                                                                        'value': _p_cc(
+                                                                        'value': _p_change_context(
                                                                             $['value'],
                                                                             ($) => Value(
                                                                                 $
@@ -220,13 +218,13 @@ export const Value: t_signatures.Value = ($) => ({
                                             return _p.ss(
                                                 $,
                                                 ($) => ['state', {
-                                                    '|': _p_cc(
+                                                    '|': _p_change_context(
                                                         $['|'],
                                                         ($) => Structural_Token(
                                                             $
                                                         )
                                                     ),
-                                                    'status': _p_cc(
+                                                    'status': _p_change_context(
                                                         $['status'],
                                                         ($) => _p.decide.state(
                                                             $,
@@ -236,7 +234,7 @@ export const Value: t_signatures.Value = ($) => ({
                                                                         return _p.ss(
                                                                             $,
                                                                             ($) => ['missing data', {
-                                                                                '#': _p_cc(
+                                                                                '#': _p_change_context(
                                                                                     $['#'],
                                                                                     ($) => Structural_Token(
                                                                                         $
@@ -248,13 +246,13 @@ export const Value: t_signatures.Value = ($) => ({
                                                                         return _p.ss(
                                                                             $,
                                                                             ($) => ['set', {
-                                                                                'option': _p_cc(
+                                                                                'option': _p_change_context(
                                                                                     $['option'],
                                                                                     ($) => Text(
                                                                                         $
                                                                                     )
                                                                                 ),
-                                                                                'value': _p_cc(
+                                                                                'value': _p_change_context(
                                                                                     $['value'],
                                                                                     ($) => Value(
                                                                                         $
@@ -291,13 +289,13 @@ export const Value: t_signatures.Value = ($) => ({
                         return _p.ss(
                             $,
                             ($) => ['include', {
-                                '@': _p_cc(
+                                '@': _p_change_context(
                                     $['@'],
                                     ($) => Structural_Token(
                                         $
                                     )
                                 ),
-                                'path': _p_cc(
+                                'path': _p_change_context(
                                     $['path'],
                                     ($) => Text(
                                         $
@@ -309,7 +307,7 @@ export const Value: t_signatures.Value = ($) => ({
                         return _p.ss(
                             $,
                             ($) => ['missing data', {
-                                '#': _p_cc(
+                                '#': _p_change_context(
                                     $['#'],
                                     ($) => Structural_Token(
                                         $
@@ -328,13 +326,13 @@ export const Value: t_signatures.Value = ($) => ({
 })
 
 export const Structural_Token: t_signatures.Structural_Token = ($) => ({
-    'trailing trivia': _p_cc(
+    'trailing trivia': _p_change_context(
         $['trailing trivia'],
         ($) => v_token.Trivia(
             $
         )
     ),
-    'range': _p_cc(
+    'range': _p_change_context(
         $['range'],
         ($) => v_location.Range(
             $
@@ -343,23 +341,23 @@ export const Structural_Token: t_signatures.Structural_Token = ($) => ({
 })
 
 export const Text: t_signatures.Text = ($) => ({
-    'trailing trivia': _p_cc(
+    'trailing trivia': _p_change_context(
         $['trailing trivia'],
         ($) => v_token.Trivia(
             $
         )
     ),
-    'range': _p_cc(
+    'range': _p_change_context(
         $['range'],
         ($) => v_location.Range(
             $
         )
     ),
-    'value': _p_cc(
+    'value': _p_change_context(
         $['value'],
         ($) => $
     ),
-    'type': _p_cc(
+    'type': _p_change_context(
         $['type'],
         ($) => v_token.Text_Type(
             $
@@ -370,24 +368,24 @@ export const Text: t_signatures.Text = ($) => ({
 export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => _p.list.map(
     $,
     ($) => ({
-        'id': _p_cc(
+        'id': _p_change_context(
             $['id'],
             ($) => Text(
                 $
             )
         ),
-        'value': _p_cc(
+        'value': _p_change_context(
             $['value'],
             ($) => _p.optional.map(
                 $,
                 ($) => ({
-                    ':': _p_cc(
+                    ':': _p_change_context(
                         $[':'],
                         ($) => Structural_Token(
                             $
                         )
                     ),
-                    'value': _p_cc(
+                    'value': _p_change_context(
                         $['value'],
                         ($) => Value(
                             $
@@ -402,7 +400,7 @@ export const ID_Value_Pairs: t_signatures.ID_Value_Pairs = ($) => _p.list.map(
 export const Items: t_signatures.Items = ($) => _p.list.map(
     $,
     ($) => ({
-        'value': _p_cc(
+        'value': _p_change_context(
             $['value'],
             ($) => Value(
                 $
