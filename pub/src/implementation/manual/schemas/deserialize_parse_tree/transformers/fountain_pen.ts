@@ -93,7 +93,7 @@ export const Error: signatures.Error = ($, $p) => {
         }
     })
     return sh.b.sub([
-        sh.b.snippet(`failed to parse ASTN, ${Parse_Error_Type($.type)}`),
+        sh.b.literal("failed to parse ASTN, ${Parse_Error_Type($.type)}"),
         //location
         _p.decide.state($.type, ($) => {
             switch ($[0]) {

@@ -1,8 +1,10 @@
 import * as _p from 'pareto-core/dist/expression'
 import * as _pi from 'pareto-core/dist/interface'
+import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
 import * as d_in from "../../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/block/data"
+import * as d_text from "pareto-fountain-pen/dist/interface/to_be_generated/text"
 
 import * as sh from "pareto-fountain-pen/dist/shorthands/block"
 
@@ -18,26 +20,31 @@ export namespace signatures {
     export type Range = _pi.Transformer_With_Parameters<d_in.Range, d_out.Block_Part, Parameters>
 }
 
+
+const temp_serialize_number = (n: number): d_text.Text => {
+    return _p_list_from_text(`${n}`, ($) => $)
+}
+
 export const Range: signatures.Range = ($, $p) =>  sh.b.sub([
-    $p['with @'] ? sh.b.snippet(`@ `) : sh.b.nothing(),
-    sh.b.snippet($.start.relative['document resource identifier']),
-    sh.b.snippet(`:`),
-    sh.b.snippet("" + $.start.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
-    sh.b.snippet(`:`),
-    sh.b.snippet("" + ($.start.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
-    sh.b.snippet(`-`),
-    sh.b.snippet("" + $.end.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
-    sh.b.snippet(`:`),
-    sh.b.snippet("" + ($.end.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))))
+    $p['with @'] ? sh.b.literal("@ ") : sh.b.nothing(),
+    sh.b.literal($.start.relative['document resource identifier']),
+    sh.b.literal(":"),
+    sh.b.text(temp_serialize_number($.start.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.b.literal(":"),
+    sh.b.text(temp_serialize_number($.start.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.b.literal("-"),
+    sh.b.text(temp_serialize_number($.end.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.b.literal(":"),
+    sh.b.text(temp_serialize_number($.end.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))))
 ])
 
 export const Location: signatures.Location = ($, $p) => {
     return sh.b.sub([
-        $p['with @'] ? sh.b.snippet(`@ `) : sh.b.nothing(),
-        sh.b.snippet($.relative['document resource identifier']),
-        sh.b.snippet(`:`),
-        sh.b.snippet("" + $.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1))),
-        sh.b.snippet(`:`),
-        sh.b.snippet("" + ($.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+        $p['with @'] ? sh.b.literal("@ ") : sh.b.nothing(),
+        sh.b.literal($.relative['document resource identifier']),
+        sh.b.literal(":"),
+        sh.b.text(temp_serialize_number($.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
+        sh.b.literal(":"),
+        sh.b.text(temp_serialize_number($.relative.column + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
     ])
 }
