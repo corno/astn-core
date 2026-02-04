@@ -15,13 +15,13 @@ export type Signature = _pi.Transformer_With_Parameters<string, d_out.Text, Para
 export const $$: Signature = ($, $p) => $p['add delimiters']
     ? _p.list.nested_literal_old([
         [
-            0x34, // "
+            0x22, // "
         ],
         s_escaped(
             $,
         ),
         [
-            0x34, // "
+            0x22, // "
         ]
     ])
     : s_escaped($)

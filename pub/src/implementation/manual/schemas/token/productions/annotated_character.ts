@@ -2,8 +2,8 @@ import * as _p from 'pareto-core/dist/expression'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
-import _p_text_build_deprecated from 'pareto-core/dist/_p_text_build_deprecated'
 import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
+import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
@@ -66,48 +66,53 @@ export const Whitespace = (
 ): d_out.Whitespace => {
     const start_location = temp_get_current_location(iterator)
     return {
-        'value': _p_text_build_deprecated(($i) => {
-            while (true) {
-                {
-                    const $ = temp_get_current_character_or_null(iterator)
-                    if ($ === null) {
-                        return
-                    }
-                    if (is_control_character($)) {
-                        return abort(['unexpected control character', {
-                            'character': $.code,
-                            'location': $.location,
-                        }])
+        'value': _p_text_from_list(
+            _p_list_build_deprecated<number>(
+                ($i) => {
+                    while (true) {
+                        {
+                            const $ = temp_get_current_character_or_null(iterator)
+                            if ($ === null) {
+                                return
+                            }
+                            if (is_control_character($)) {
+                                return abort(['unexpected control character', {
+                                    'character': $.code,
+                                    'location': $.location,
+                                }])
 
-                    }
-                    switch ($.code) {
-                        case 0x09: // \t
-                            iterator.old.discard(() => null)
-                            $i.add_character($.code)
-                            break
-                        case 0x0A: // \n
-                            iterator.old.discard(() => null)
-                            $i.add_character($.code)
-                            break
-                        case 0x0D: // \r
-                            iterator.old.discard(() => null)
-                            $i.add_character($.code)
-                            break
-                        case 0x20: // space
-                            iterator.old.discard(() => null)
-                            $i.add_character($.code)
-                            break
-                        case 0x2C: // ,
-                            iterator.old.discard(() => null)
-                            $i.add_character($.code)
-                            break
-                        default:
-                            return
+                            }
+                            switch ($.code) {
+                                case 0x09: // \t
+                                    iterator.old.discard(() => null)
+                                    $i['add item']($.code)
+                                    break
+                                case 0x0A: // \n
+                                    iterator.old.discard(() => null)
+                                    $i['add item']($.code)
+                                    break
+                                case 0x0D: // \r
+                                    iterator.old.discard(() => null)
+                                    $i['add item']($.code)
+                                    break
+                                case 0x20: // space
+                                    iterator.old.discard(() => null)
+                                    $i['add item']($.code)
+                                    break
+                                case 0x2C: // ,
+                                    iterator.old.discard(() => null)
+                                    $i['add item']($.code)
+                                    break
+                                default:
+                                    return
 
+                            }
+                        }
                     }
                 }
-            }
-        }),
+            ),
+            ($) => $
+        ),
         'range': {
             'start': start_location,
             'end': temp_get_current_location(iterator),
@@ -152,21 +157,26 @@ export const Trivia = (
                             }
                             $i['add item']({
                                 'type': ['line', null],
-                                'content': _p_text_build_deprecated(($i) => {
-                                    while (true) {
-                                        const $ = temp_get_current_character_or_null(iterator)
-                                        if ($ === null) {
-                                            return
+                                'content': _p_text_from_list(
+                                    _p_list_build_deprecated<number>(
+                                        ($i) => {
+                                            while (true) {
+                                                const $ = temp_get_current_character_or_null(iterator)
+                                                if ($ === null) {
+                                                    return
+                                                }
+                                                switch ($.code) {
+                                                    case Character.line_feed: return
+                                                    case Character.carriage_return: return
+                                                    default:
+                                                        iterator.old.discard(() => null)
+                                                        $i['add item']($.code)
+                                                }
+                                            }
                                         }
-                                        switch ($.code) {
-                                            case Character.line_feed: return
-                                            case Character.carriage_return: return
-                                            default:
-                                                iterator.old.discard(() => null)
-                                                $i.add_character($.code)
-                                        }
-                                    }
-                                }),
+                                    ),
+                                    ($) => $,
+                                ),
                                 'range': {
                                     'start': start,
                                     'end': temp_get_current_location(iterator),
@@ -179,39 +189,44 @@ export const Trivia = (
                             iterator.old.discard(() => null) // consume the asterisk
                             $i['add item']({
                                 'type': ['block', null],
-                                'content': _p_text_build_deprecated(($i) => {
-                                    let found_asterisk = false
-                                    const Character = {
-                                        solidus: 0x2F,              // /
-                                        asterisk: 0x2A,             // *
-                                    }
-                                    while (true) {
-                                        const $ = temp_get_current_character_or_null(iterator)
-                                        if ($ === null) {
-                                            return abort(['unterminated block comment', {
-                                                'range': {
-                                                    'start': start,
-                                                    'end': temp_get_current_location(iterator)
+                                'content': _p_text_from_list(
+                                    _p_list_build_deprecated<number>(
+                                        ($i) => {
+                                            let found_asterisk = false
+                                            const Character = {
+                                                solidus: 0x2F,              // /
+                                                asterisk: 0x2A,             // *
+                                            }
+                                            while (true) {
+                                                const $ = temp_get_current_character_or_null(iterator)
+                                                if ($ === null) {
+                                                    return abort(['unterminated block comment', {
+                                                        'range': {
+                                                            'start': start,
+                                                            'end': temp_get_current_location(iterator)
+                                                        }
+                                                    }])
                                                 }
-                                            }])
+                                                if ($.code === Character.solidus && found_asterisk) {
+                                                    iterator.old.discard(() => null) // consume the solidus
+                                                    //found asterisk before solidus, so this is the end of the comment
+                                                    return
+                                                }
+                                                //not a solidus, so this is part of the comment
+                                                if (found_asterisk) {
+                                                    $i['add item'](Character.asterisk) // add the asterisk that was found before but was not part of the end delimiter
+                                                }
+                                                if ($.code === Character.asterisk) {
+                                                    found_asterisk = true
+                                                } else {
+                                                    $i['add item']($.code)
+                                                }
+                                                iterator.old.discard(() => null)
+                                            }
                                         }
-                                        if ($.code === Character.solidus && found_asterisk) {
-                                            iterator.old.discard(() => null) // consume the solidus
-                                            //found asterisk before solidus, so this is the end of the comment
-                                            return
-                                        }
-                                        //not a solidus, so this is part of the comment
-                                        if (found_asterisk) {
-                                            $i.add_character(Character.asterisk) // add the asterisk that was found before but was not part of the end delimiter
-                                        }
-                                        if ($.code === Character.asterisk) {
-                                            found_asterisk = true
-                                        } else {
-                                            $i.add_character($.code)
-                                        }
-                                        iterator.old.discard(() => null)
-                                    }
-                                }),
+                                    ),
+                                    ($) => $,
+                                ),
                                 'range': {
                                     'start': start,
                                     'end': temp_get_current_location(iterator),
@@ -355,54 +370,59 @@ export const Annotated_Token = (
                 default:
                     return ['text', {
                         'type': ['undelimited', null],
-                        'value': _p_text_build_deprecated(($i) => {
-                            while (true) {
-                                const $ = temp_get_current_character_or_null(iterator)
-                                if ($ === null) {
-                                    return
-                                }
-
-                                if (is_control_character($)) {
-                                    return abort(['unexpected control character in text', {
-                                        'character': $.code,
-                                        'range': {
-                                            'start': temp_get_current_location(iterator),
-                                            'end': $.location,
+                        'value': _p_text_from_list(
+                            _p_list_build_deprecated<number>(
+                                ($i) => {
+                                    while (true) {
+                                        const $ = temp_get_current_character_or_null(iterator)
+                                        if ($ === null) {
+                                            return
                                         }
-                                    }])
 
+                                        if (is_control_character($)) {
+                                            return abort(['unexpected control character in text', {
+                                                'character': $.code,
+                                                'range': {
+                                                    'start': temp_get_current_location(iterator),
+                                                    'end': $.location,
+                                                }
+                                            }])
+
+                                        }
+                                        if (
+                                            $.code === Character.open_brace ||
+                                            $.code === Character.close_brace ||
+                                            $.code === Character.open_bracket ||
+                                            $.code === Character.close_bracket ||
+                                            $.code === Character.open_angle_bracket ||
+                                            $.code === Character.close_angle_bracket ||
+                                            $.code === Character.open_paren ||
+                                            $.code === Character.close_paren ||
+                                            $.code === Character.apostrophe ||
+                                            $.code === Character.asterisk ||
+                                            $.code === Character.at ||
+                                            $.code === Character.backtick ||
+                                            $.code === Character.bang ||
+                                            $.code === Character.colon ||
+                                            $.code === Character.pipe ||
+                                            $.code === Character.quotation_mark ||
+                                            $.code === Character.slash ||
+                                            $.code === Character.tilde ||
+                                            $.code === WhitespaceChars.comma ||
+                                            $.code === WhitespaceChars.space ||
+                                            $.code === WhitespaceChars.tab ||
+                                            $.code === WhitespaceChars.line_feed ||
+                                            $.code === WhitespaceChars.carriage_return
+                                        ) {
+                                            return
+                                        }
+                                        iterator.old.discard(() => null)
+                                        $i['add item']($.code)
+                                    }
                                 }
-                                if (
-                                    $.code === Character.open_brace ||
-                                    $.code === Character.close_brace ||
-                                    $.code === Character.open_bracket ||
-                                    $.code === Character.close_bracket ||
-                                    $.code === Character.open_angle_bracket ||
-                                    $.code === Character.close_angle_bracket ||
-                                    $.code === Character.open_paren ||
-                                    $.code === Character.close_paren ||
-                                    $.code === Character.apostrophe ||
-                                    $.code === Character.asterisk ||
-                                    $.code === Character.at ||
-                                    $.code === Character.backtick ||
-                                    $.code === Character.bang ||
-                                    $.code === Character.colon ||
-                                    $.code === Character.pipe ||
-                                    $.code === Character.quotation_mark ||
-                                    $.code === Character.slash ||
-                                    $.code === Character.tilde ||
-                                    $.code === WhitespaceChars.comma ||
-                                    $.code === WhitespaceChars.space ||
-                                    $.code === WhitespaceChars.tab ||
-                                    $.code === WhitespaceChars.line_feed ||
-                                    $.code === WhitespaceChars.carriage_return
-                                ) {
-                                    return
-                                }
-                                iterator.old.discard(() => null)
-                                $i.add_character($.code)
-                            }
-                        }),
+                            ),
+                            ($) => $
+                        ),
                     }]
             }
         }),
@@ -441,151 +461,158 @@ export const Delimited_String = (
 
     }
     const start = temp_get_current_location(iterator)
-    const txt = _p_text_build_deprecated(($i) => {
-        while (true) {
-            const $ = temp_get_current_character_or_null(iterator)
-            if ($ === null) {
+    const txt = _p_text_from_list(
+        _p_list_build_deprecated<number>(
+            ($i) => {
+                while (true) {
+                    const $ = temp_get_current_character_or_null(iterator)
+                    if ($ === null) {
 
-                return abort(['unterminated text', {
-                    'range': {
-                        'start': start,
-                        'end': temp_get_current_location(iterator)
-                    }
-                }])
-            }
-            if (is_control_character($)) {
-                return abort(['unexpected control character in text', {
-                    'character': $.code,
-                    'range': {
-                        'start': start,
-                        'end': temp_get_current_location(iterator)
-                    }
-                }])
-
-            }
-            if (is_end_character($.code)) {
-                iterator.old.discard(() => null) // consume the end character
-                return
-            }
-            switch ($.code) {
-                case Character.line_feed:
-                case Character.carriage_return:
-                    if (!allow_newlines) {
-                        return abort(['unexpected end of line in delimited text', {
+                        return abort(['unterminated text', {
                             'range': {
                                 'start': start,
                                 'end': temp_get_current_location(iterator)
                             }
                         }])
                     }
-                    iterator.old.discard(() => null)
-                    $i.add_character($.code)
-                    break
-                case Character.reverse_solidus: // \ (escape)
-                    iterator.old.discard(() => null)
-                    {
-                        const $ = temp_get_current_character_or_null(iterator)
-                        if ($ === null) {
-                            return abort(['missing character after escape', {
-                                'range': {
-                                    'start': start,
-                                    'end': temp_get_current_location(iterator)
-                                }
-                            }]
+                    if (is_control_character($)) {
+                        return abort(['unexpected control character in text', {
+                            'character': $.code,
+                            'range': {
+                                'start': start,
+                                'end': temp_get_current_location(iterator)
+                            }
+                        }])
 
-                            )
-                        }
-                        switch ($.code) {
-                            case Character.quotation_mark:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.quotation_mark)
-                                break
-                            case Character.apostrophe:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.apostrophe)
-                                break
-                            case Character.backtick:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.backtick)
-                                break
-                            case Character.reverse_solidus:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.reverse_solidus)
-                                break
-                            case Character.solidus:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.solidus)
-                                break
-                            case Character.b:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.backspace)
-                                break
-                            case Character.f:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.form_feed)
-                                break
-                            case Character.n:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.line_feed)
-                                break
-                            case Character.r:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.carriage_return)
-                                break
-                            case Character.t:
-                                iterator.old.discard(() => null)
-                                $i.add_character(Character.tab)
-                                break
-                            case Character.u:
-                                iterator.old.discard(() => null)
-                                $i.add_character(ds_hexadecimal(
-                                    _p_text_build_deprecated(($i) => {
-                                        const get_char = () => {
-                                            const char = temp_get_current_character_or_null(iterator)
-                                            if (char === null) {
-                                                return abort(['unterminated unicode escape sequence', {
-                                                    'range': {
-                                                        'start': start,
-                                                        'end': temp_get_current_location(iterator)
-                                                    },
-                                                }])
-                                            }
-                                            if (char.code < Character.a || (char.code > Character.f && char.code < Character.A) || char.code > Character.F || char.code < 0x30 || char.code > 0x39) {
-                                                return abort(['invalid unicode escape sequence', {
-                                                    'range': {
-                                                        'start': start,
-                                                        'end': temp_get_current_location(iterator)
-                                                    }
-                                                }])
-                                            }
-                                            iterator.old.discard(() => null)
-                                            return char.code
-                                        }
-                                        $i.add_character(get_char())
-                                        $i.add_character(get_char())
-                                        $i.add_character(get_char())
-                                        $i.add_character(get_char())
-                                    }),
-                                    () => _p_unreachable_code_path()
-                                ))
-                                break
-                            default:
-                                return abort(['unknown escape character', {
+                    }
+                    if (is_end_character($.code)) {
+                        iterator.old.discard(() => null) // consume the end character
+                        return
+                    }
+                    switch ($.code) {
+                        case Character.line_feed:
+                        case Character.carriage_return:
+                            if (!allow_newlines) {
+                                return abort(['unexpected end of line in delimited text', {
                                     'range': {
                                         'start': start,
                                         'end': temp_get_current_location(iterator)
-                                    },
-                                    'character': $.code
+                                    }
                                 }])
-                        }
+                            }
+                            iterator.old.discard(() => null)
+                            $i['add item']($.code)
+                            break
+                        case Character.reverse_solidus: // \ (escape)
+                            iterator.old.discard(() => null)
+                            {
+                                const $ = temp_get_current_character_or_null(iterator)
+                                if ($ === null) {
+                                    return abort(['missing character after escape', {
+                                        'range': {
+                                            'start': start,
+                                            'end': temp_get_current_location(iterator)
+                                        }
+                                    }]
+
+                                    )
+                                }
+                                switch ($.code) {
+                                    case Character.quotation_mark:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.quotation_mark)
+                                        break
+                                    case Character.apostrophe:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.apostrophe)
+                                        break
+                                    case Character.backtick:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.backtick)
+                                        break
+                                    case Character.reverse_solidus:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.reverse_solidus)
+                                        break
+                                    case Character.solidus:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.solidus)
+                                        break
+                                    case Character.b:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.backspace)
+                                        break
+                                    case Character.f:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.form_feed)
+                                        break
+                                    case Character.n:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.line_feed)
+                                        break
+                                    case Character.r:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.carriage_return)
+                                        break
+                                    case Character.t:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](Character.tab)
+                                        break
+                                    case Character.u:
+                                        iterator.old.discard(() => null)
+                                        $i['add item'](ds_hexadecimal(
+                                            _p_list_build_deprecated<number>(
+                                                ($i) => {
+                                                    const get_char = () => {
+                                                        const char = temp_get_current_character_or_null(iterator)
+                                                        if (char === null) {
+                                                            return abort(['unterminated unicode escape sequence', {
+                                                                'range': {
+                                                                    'start': start,
+                                                                    'end': temp_get_current_location(iterator)
+                                                                },
+                                                            }])
+                                                        }
+                                                        if (char.code < Character.a || (char.code > Character.f && char.code < Character.A) || char.code > Character.F || char.code < 0x30 || char.code > 0x39) {
+                                                            return abort(['invalid unicode escape sequence', {
+                                                                'range': {
+                                                                    'start': start,
+                                                                    'end': temp_get_current_location(iterator)
+                                                                }
+                                                            }])
+                                                        }
+                                                        iterator.old.discard(() => null)
+                                                        return char.code
+                                                    }
+                                                    $i['add item'](get_char())
+                                                    $i['add item'](get_char())
+                                                    $i['add item'](get_char())
+                                                    $i['add item'](get_char())
+                                                }
+                                            ),
+                                            () => _p_unreachable_code_path()
+                                        ))
+                                        break
+                                    default:
+                                        return abort(['unknown escape character', {
+                                            'range': {
+                                                'start': start,
+                                                'end': temp_get_current_location(iterator)
+                                            },
+                                            'character': $.code
+                                        }])
+                                }
+                            }
+                            break
+                        default:
+                            iterator.old.discard(() => null)
+                            $i['add item']($.code)
                     }
-                    break
-                default:
-                    iterator.old.discard(() => null)
-                    $i.add_character($.code)
+                }
             }
-        }
-    })
+        ),
+        ($) => $
+    )
     return txt
 }
 

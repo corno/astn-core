@@ -1,8 +1,11 @@
 import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 import * as _pi from 'pareto-core/dist/interface'
 
-export const $$: _pi.Number_Deserializer<string> = ($, abort) => {
-    const characters = _p_list_from_text($, ($) => $)
+//data types
+import * as d_in from "pareto-fountain-pen/dist/interface/to_be_generated/text"
+
+export const $$: _pi.Refiner<number, string, d_in.Text> = ($, abort) => {
+    const characters = $
     let result = 0
     let isNegative = false
     let startIndex = 0
