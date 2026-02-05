@@ -1,7 +1,7 @@
 
 import * as _pi from "pareto-core/dist/interface"
 
-import * as i_location from "../generated/liana/schemas/location/data"
+import * as i_location from "./location_temp"
 
 export namespace Error_ {
     
