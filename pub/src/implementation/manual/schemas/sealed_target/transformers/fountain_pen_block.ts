@@ -13,81 +13,81 @@ import { $$ as s_backticked } from "../../../primitives/text/serializers/backtic
 
 export const Value = (
     $: d_in.Value,
-): d_out.Block_Part => sh.b.sub([
+): d_out.Phrase => sh.ph.composed([
     _p.decide.state($, ($) => {
         switch ($[0]) {
-            case 'dictionary': return _p.ss($, ($) => sh.b.sub([
-                sh.b.literal("{"),
-                sh.b.indent([
-                    sh.g.sub(_p.list.from_dictionary($, ($, id) => sh.g.nested_block([
-                        sh.b.text(s_backticked(id, {
+            case 'dictionary': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("{"),
+                sh.ph.indent(
+                    sh.pg.sentences(_p.list.from_dictionary($, ($, id) => sh.ph.composed([
+                        sh.ph.serialize(s_backticked(id, {
                             'add delimiters': true
                         })),
-                        sh.b.literal(": "),
+                        sh.ph.literal(": "),
                         Value($),
                     ]))),
-                ]),
-                sh.b.literal("}"),
+                ),
+                sh.ph.literal("}"),
             ]))
             case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'verbose': return _p.ss($, ($) => sh.b.sub([
-                        sh.b.sub([
-                            sh.b.literal("("),
-                            sh.b.indent([
-                                sh.g.sub($.__to_list(($, id) => sh.g.nested_block([
-                                    sh.b.text(s_apostrophed(id, {
+                    case 'verbose': return _p.ss($, ($) => sh.ph.composed([
+                        sh.ph.composed([
+                            sh.ph.literal("("),
+                            sh.ph.indent(
+                                sh.pg.sentences($.__to_list(($, id) => sh.ph.composed([
+                                    sh.ph.serialize(s_apostrophed(id, {
                                         'add delimiters': true
                                     })),
-                                    sh.b.literal(": "),
+                                    sh.ph.literal(": "),
                                     Value($),
                                 ]))),
-                            ]),
-                            sh.b.literal(")"),
+                            ),
+                            sh.ph.literal(")"),
                         ])
                     ]))
                     default: return _p.au($[0])
                 }
             }))
-            case 'list': return _p.ss($, ($) => sh.b.sub([
-                sh.b.literal("["),
-                sh.b.sub($.__l_map(($) => sh.b.sub([
-                    sh.b.literal(" "),
+            case 'list': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("["),
+                sh.ph.composed($.__l_map(($) => sh.ph.composed([
+                    sh.ph.literal(" "),
                     Value($),
                 ]))),
-                sh.b.literal(" ]"),
+                sh.ph.literal(" ]"),
             ]))
-            case 'nothing': return _p.ss($, ($) => sh.b.literal("~"))
+            case 'nothing': return _p.ss($, ($) => sh.ph.literal("~"))
             case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'not set': return _p.ss($, ($) => sh.b.literal("~"))
-                    case 'set': return _p.ss($, ($) => sh.b.sub([
-                        sh.b.literal("* "),
+                    case 'not set': return _p.ss($, ($) => sh.ph.literal("~"))
+                    case 'set': return _p.ss($, ($) => sh.ph.composed([
+                        sh.ph.literal("* "),
                         Value($),
                     ]))
 
                     default: return _p.au($[0])
                 }
             }))
-            case 'state': return _p.ss($, ($) => sh.b.sub([
-                sh.b.literal("| "),
-                sh.b.text(s_apostrophed($.option, {
+            case 'state': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("| "),
+                sh.ph.serialize(s_apostrophed($.option, {
                     'add delimiters': true
                 })),
-                sh.b.literal(" "),
+                sh.ph.literal(" "),
                 Value($.value),
             ]))
             case 'text': return _p.ss($, ($) => {
                 const value = $.value
                 return _p.decide.state($.delimiter, ($) => {
                     switch ($[0]) {
-                        case 'backtick': return _p.ss($, ($) => sh.b.text(s_backticked(value, {
+                        case 'backtick': return _p.ss($, ($) => sh.ph.serialize(s_backticked(value, {
                             'add delimiters': true
                         })))
-                        case 'quote': return _p.ss($, ($) => sh.b.text(s_quoted(value, {
+                        case 'quote': return _p.ss($, ($) => sh.ph.serialize(s_quoted(value, {
                             'add delimiters': true
                         })))
-                        case 'none': return _p.ss($, ($) => sh.b.literal(value))
+                        case 'none': return _p.ss($, ($) => sh.ph.literal(value))
                         default: return _p.au($[0])
                     }
                 })
@@ -100,9 +100,6 @@ export const Value = (
 export const Document = (
     $: d_in.Document
 
-): d_out.Group => {
-    const result = sh.group([sh.g.nested_block([
-        Value($),
-    ])])
-    return result
-}
+): d_out.Paragraph => sh.pg.sentences([
+    Value($),
+])

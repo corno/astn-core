@@ -8,7 +8,7 @@ import * as _pds_new from "../productions/temp"
 //data types
 import * as d_authoring_parse_result from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_authoring_parse_tree from "../../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "pareto-fountain-pen/dist/interface/to_be_generated/text"
+import * as d_out from "pareto-fountain-pen/dist/interface/to_be_generated/list_of_characters"
 
 
 //dependencies
@@ -21,7 +21,7 @@ export namespace signatures {
     export type Document = _pi.Refiner_With_Parameters<
         d_authoring_parse_tree.Document,
         d_authoring_parse_result.Error,
-        d_out.Text,
+        d_out.List_of_Characters,
         {
             'tab size': number,
             'document resource identifier': string

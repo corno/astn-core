@@ -5,11 +5,11 @@ import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 //data types
-import * as d_out from "pareto-fountain-pen/dist/interface/to_be_generated/text"
+import * as d_out from "pareto-fountain-pen/dist/interface/to_be_generated/list_of_characters"
 
 export const $$ = (
     $: string,
-): d_out.Text => _p.list.flatten(
+): d_out.List_of_Characters => _p.list.flatten(
     _p.list.map(
         _p_list_from_text($, ($) => $),
         ($): _pi.List<number> => {
