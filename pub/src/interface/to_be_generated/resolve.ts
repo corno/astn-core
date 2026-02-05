@@ -1,7 +1,7 @@
 
 import * as _pi from "pareto-core/dist/interface"
 
-import * as i_location from "./location"
+import * as i_location from "../generated/liana/schemas/location/data"
 
 export namespace Error_ {
     
@@ -22,7 +22,7 @@ export namespace Error_ {
                 readonly 'found': state.found
             }
             
-            export type optional_value_is_not_set = null
+            export type missingoptional_value = null
             
             export type same_node = string
             
@@ -30,7 +30,7 @@ export namespace Error_ {
         
         export type constraint = 
             | readonly ['state', constraint.state]
-            | readonly ['optional value is not set', constraint.optional_value_is_not_set]
+            | readonly ['missingoptional value', constraint.missingoptional_value]
             | readonly ['same node', constraint.same_node]
         
         export namespace lookup {
