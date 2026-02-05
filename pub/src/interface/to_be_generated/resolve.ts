@@ -30,7 +30,7 @@ export namespace Error_ {
         
         export type constraint = 
             | readonly ['state', constraint.state]
-            | readonly ['missingoptional value', constraint.missingoptional_value]
+            | readonly ['optional value is not set', constraint.missingoptional_value]
             | readonly ['same node', constraint.same_node]
         
         export namespace lookup {
