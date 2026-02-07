@@ -18,7 +18,7 @@ import * as r_from_token from "./token"
 
 export namespace signatures {
 
-    export type Document = _pi.Refiner_With_Parameters<
+    export type Document = _pi.Refiner_With_Parameter<
         d_authoring_parse_tree.Document,
         d_authoring_parse_result.Error,
         d_out.List_of_Characters,

@@ -16,7 +16,7 @@ export type Parameters = {
 }
 
 export namespace signatures {
-    export type Error = _pi.Transformer_With_Parameters<d_in.Error, d_out.Phrase, Parameters>
+    export type Error = _pi.Transformer_With_Parameter<d_in.Error, d_out.Phrase, Parameters>
 }
 
 import * as sh from "pareto-fountain-pen/dist/shorthands/block"

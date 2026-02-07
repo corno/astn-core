@@ -4,7 +4,7 @@ import * as d_annotated_characters from "../../../../../interface/to_be_generate
 
 export namespace signatures {
 
-    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameters<d_annotated_characters.Annotated_Characters, _pi.List<number>, { 'tab size': number, 'document resource identifier': string }>
+    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameter<d_annotated_characters.Annotated_Characters, _pi.List<number>, { 'tab size': number, 'document resource identifier': string }>
 
 }
 

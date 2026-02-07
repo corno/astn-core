@@ -10,7 +10,7 @@ export type Parameters = {
     'add delimiters': boolean
 }
 
-export type Signature = _pi.Transformer_With_Parameters<string, d_out.List_of_Characters, Parameters>
+export type Signature = _pi.Transformer_With_Parameter<string, d_out.List_of_Characters, Parameters>
 
 export const $$: Signature = ($, $p) => $p['add delimiters']
     ? _p.list.nested_literal_old([

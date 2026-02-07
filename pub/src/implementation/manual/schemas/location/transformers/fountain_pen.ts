@@ -16,8 +16,8 @@ export type Parameters = {
 }
 
 export namespace signatures {
-    export type Location = _pi.Transformer_With_Parameters<d_in.Location, d_out.Phrase, Parameters>
-    export type Range = _pi.Transformer_With_Parameters<d_in.Range, d_out.Phrase, Parameters>
+    export type Location = _pi.Transformer_With_Parameter<d_in.Location, d_out.Phrase, Parameters>
+    export type Range = _pi.Transformer_With_Parameter<d_in.Range, d_out.Phrase, Parameters>
 }
 
 
