@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core/dist/expression'
+import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
@@ -590,7 +590,7 @@ export const Delimited_String = (
                                                     $i['add item'](get_char())
                                                 }
                                             ),
-                                            () => _p_unreachable_code_path()
+                                            () => _p_unreachable_code_path("the number was built in a controlled way")
                                         ))
                                         break
                                     default:

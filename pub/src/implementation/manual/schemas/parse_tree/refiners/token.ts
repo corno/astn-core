@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core/dist/expression'
+import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../productions/temp'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
@@ -37,7 +37,7 @@ export const Document: signatures.Document = ($, abort) => _p_iterate(//fixme: m
                 'expected': expected,
                 'cause': ['missing token', null],
             }),
-            () => _p_unreachable_code_path(),
+            () => _p_unreachable_code_path("there should not be an unguarded unexpected end"),
         )
     )
 )

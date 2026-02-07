@@ -12,13 +12,13 @@ export const $$: _pi.Refiner<number, string, d_in.List_of_Characters> = ($, abor
 
     // Check for empty string
     if (characters.__get_number_of_items() === 0) {
-        abort(`Empty string is not a valid hexadecimal number`)
+        abort("Empty string is not a valid hexadecimal number")
     }
 
     const get_character_at = (index: number): number => {
         return characters.__deprecated_get_item_at(
             index,
-            () => abort(`index out of bounds`)
+            () => abort("index out of bounds")
         )
     }
 
@@ -32,13 +32,13 @@ export const $$: _pi.Refiner<number, string, d_in.List_of_Characters> = ($, abor
     if (characters.__get_number_of_items() <= startIndex + 1 ||
         get_character_at(startIndex) !== 48 || // '0'
         get_character_at(startIndex + 1) !== 120) { // 'x'
-        abort(`Hexadecimal number must have '0x' prefix`)
+        abort("Hexadecimal number must have '0x' prefix")
     }
     startIndex += 2
 
     // Check if there are digits after the prefix
     if (startIndex >= characters.__get_number_of_items()) {
-        abort(`Hexadecimal number must have digits after '0x' prefix`)
+        abort("Hexadecimal number must have digits after '0x' prefix")
     }
 
     // Parse hex digits from left to right
@@ -55,7 +55,7 @@ export const $$: _pi.Refiner<number, string, d_in.List_of_Characters> = ($, abor
             digit = charCode - 97 + 10
         } else {
             // Invalid character
-            return abort(`Invalid character in hexadecimal string`)
+            return abort("Invalid character in hexadecimal string")
         }
 
         result = result * 16 + digit

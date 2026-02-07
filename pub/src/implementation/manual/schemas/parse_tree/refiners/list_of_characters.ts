@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core/dist/expression'
+import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import * as _pi_new from '../productions/temp'
 import _p_iterate from 'pareto-core/dist/_p_iterate'
@@ -44,9 +44,9 @@ export const Document: signatures.Document = ($, abort, $p,) => _p_iterate( //fi
                 'old': iter,
                 'new': _pds_new.create_iterator(
                     iter,
-                    () => _p_unreachable_code_path(),
-                    () => _p_unreachable_code_path(),
-                    () => _p_unreachable_code_path(),
+                    () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                    () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                    () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
                 )
             },
             ($) => abort({

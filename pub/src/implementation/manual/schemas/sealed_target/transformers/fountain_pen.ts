@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core/dist/expression'
+import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 
 import * as d_in from "../../../../../interface/generated/liana/schemas/sealed_target/data"
@@ -19,7 +19,7 @@ export const Value = (
             case 'dictionary': return _p.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("{"),
                 sh.ph.indent(
-                    sh.pg.sentences(_p.list.from_dictionary($, ($, id) => sh.ph.composed([
+                    sh.pg.sentences(_p.list.from.dictionary($).convert(($, id) => sh.ph.composed([
                         sh.ph.serialize(s_backticked(id, {
                             'add delimiters': true
                         })),

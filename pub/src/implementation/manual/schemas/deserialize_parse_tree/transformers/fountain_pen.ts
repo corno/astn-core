@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core/dist/expression'
+import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
@@ -39,7 +39,7 @@ export const Error: signatures.Error = ($, $p) => {
                     case 'dangling slash': return sh.ph.literal("found dangling slash")
                     case 'invalid unicode escape sequence': return sh.ph.literal("found invalid unicode escape sequence")
                     case 'missing character after escape': return sh.ph.literal("found missing character after escape")
-                    // case 'unexpected character': return `found unexpected character`
+                    // case 'unexpected character': return "found unexpected character"
                     case 'unexpected control character': return sh.ph.literal("found unexpected control character")
                     case 'unexpected control character in text': return sh.ph.literal("found unexpected control character in text")
                     case 'unexpected end of line in delimited text': return sh.ph.literal("found unexpected end of line in delimited text")

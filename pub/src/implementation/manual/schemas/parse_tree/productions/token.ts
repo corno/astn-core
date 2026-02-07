@@ -1,4 +1,4 @@
-import * as _p from 'pareto-core/dist/expression'
+import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 
 import * as new_pi from "./new_interface_signatures"
@@ -71,11 +71,11 @@ export const Document: signatures.Document = (iterator) => ({
             ['any value', null]
         ],
         (token, abort) => token.type[0] === '!'
-            ? _p.optional.set({
+            ? _p.optional.literal.set({
                 '!': Structural_Token(iterator),
                 'value': Value(iterator)
             })
-            : _p.optional.not_set()
+            : _p.optional.literal.not_set()
     ),
     'content': Value(iterator)
 })
@@ -238,17 +238,17 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => itera
             ],
             (token, abort) => _p.decide.state(token.type, ($) => {
                 switch ($[0]) {
-                    case ':': return _p.ss($, ($) => _p.optional.set({
+                    case ':': return _p.ss($, ($) => _p.optional.literal.set({
                         ':': Structural_Token(iterator),
                         'value': Value(iterator)
                     }))
-                    case ')': return _p.ss($, ($) => _p.optional.not_set())
-                    case '}': return _p.ss($, ($) => _p.optional.not_set())
-                    case 'text': return _p.ss($, ($) => _p.optional.not_set())
+                    case ')': return _p.ss($, ($) => _p.optional.literal.not_set())
+                    case '}': return _p.ss($, ($) => _p.optional.literal.not_set())
+                    case 'text': return _p.ss($, ($) => _p.optional.literal.not_set())
                     default: return abort()
                 }
             })
         ),
-        ',': _p.optional.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
+        ',': _p.optional.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
     })
 )
