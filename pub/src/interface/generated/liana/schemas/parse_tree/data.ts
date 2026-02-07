@@ -1,331 +1,331 @@
+
+import * as _pi from 'pareto-core/dist/interface'
+
+import * as i__imports_token from "../token/data"
+
+import * as i__imports_location from "../location/data"
+
+export namespace Document_ {
     
-    import * as _pi from 'pareto-core/dist/interface'
-    
-    import * as i__imports_token from "../token/data"
-    
-    import * as i__imports_location from "../location/data"
-    
-    export namespace Document_ {
+    export namespace header {
         
-        export namespace header {
+        export namespace O {
             
-            export namespace O {
-                
-                export type $ex_ = Structural_Token_
-                
-                export type value = Value_
-                
-            }
+            export type $ex_ = Structural_Token_
             
-            export type O = {
-                readonly '!': O.$ex_
-                readonly 'value': O.value
-            }
+            export type value = Value_
             
         }
         
-        export type header = _pi.Optional_Value<header.O>
-        
-        export type content = Content_
+        export type O = {
+            readonly '!': O.$ex_
+            readonly 'value': O.value
+        }
         
     }
     
-    export type Document_ = {
-        readonly 'header': Document_.header
-        readonly 'content': Document_.content
-    }
+    export type header = _pi.Optional_Value<header.O>
     
-    export type Content_ = Value_
+    export type content = Content_
     
-    export namespace Value_ {
+}
+
+export type Document_ = {
+    readonly 'header': Document_.header
+    readonly 'content': Document_.content
+}
+
+export type Content_ = Value_
+
+export namespace Value_ {
+    
+    export namespace type_ {
         
-        export namespace type_ {
+        export namespace concrete {
             
-            export namespace concrete {
+            export namespace dictionary {
                 
-                export namespace dictionary {
-                    
-                    export type $co_ = Structural_Token_
-                    
-                    export type entries = ID_Value_Pairs_
-                    
-                    export type $cc_ = Structural_Token_
-                    
-                }
+                export type $co_ = Structural_Token_
                 
-                export type dictionary = {
-                    readonly '{': dictionary.$co_
-                    readonly 'entries': dictionary.entries
-                    readonly '}': dictionary.$cc_
-                }
+                export type entries = ID_Value_Pairs_
                 
-                export namespace group {
-                    
-                    export namespace concise {
-                        
-                        export type $st_ = Structural_Token_
-                        
-                        export type items = Items_
-                        
-                        export type $gt_ = Structural_Token_
-                        
-                    }
-                    
-                    export type concise = {
-                        readonly '<': concise.$st_
-                        readonly 'items': concise.items
-                        readonly '>': concise.$gt_
-                    }
-                    
-                    export namespace verbose {
-                        
-                        export type $po_ = Structural_Token_
-                        
-                        export type entries = ID_Value_Pairs_
-                        
-                        export type $pc_ = Structural_Token_
-                        
-                    }
-                    
-                    export type verbose = {
-                        readonly '(': verbose.$po_
-                        readonly 'entries': verbose.entries
-                        readonly ')': verbose.$pc_
-                    }
-                    
-                }
+                export type $cc_ = Structural_Token_
                 
-                export type group = 
-                    | readonly ['concise', group.concise]
-                    | readonly ['verbose', group.verbose]
+            }
+            
+            export type dictionary = {
+                readonly '{': dictionary.$co_
+                readonly 'entries': dictionary.entries
+                readonly '}': dictionary.$cc_
+            }
+            
+            export namespace group {
                 
-                export namespace list {
+                export namespace concise {
                     
-                    export type $bo_ = Structural_Token_
+                    export type $st_ = Structural_Token_
                     
                     export type items = Items_
                     
-                    export type $bc_ = Structural_Token_
+                    export type $gt_ = Structural_Token_
                     
                 }
                 
-                export type list = {
-                    readonly '[': list.$bo_
-                    readonly 'items': list.items
-                    readonly ']': list.$bc_
+                export type concise = {
+                    readonly '<': concise.$st_
+                    readonly 'items': concise.items
+                    readonly '>': concise.$gt_
                 }
                 
-                export namespace nothing {
+                export namespace verbose {
                     
-                    export type $ti_ = Structural_Token_
+                    export type $po_ = Structural_Token_
+                    
+                    export type entries = ID_Value_Pairs_
+                    
+                    export type $pc_ = Structural_Token_
                     
                 }
                 
-                export type nothing = {
-                    readonly '~': nothing.$ti_
+                export type verbose = {
+                    readonly '(': verbose.$po_
+                    readonly 'entries': verbose.entries
+                    readonly ')': verbose.$pc_
                 }
                 
-                export namespace optional {
+            }
+            
+            export type group = 
+                | readonly ['concise', group.concise]
+                | readonly ['verbose', group.verbose]
+            
+            export namespace list {
+                
+                export type $bo_ = Structural_Token_
+                
+                export type items = Items_
+                
+                export type $bc_ = Structural_Token_
+                
+            }
+            
+            export type list = {
+                readonly '[': list.$bo_
+                readonly 'items': list.items
+                readonly ']': list.$bc_
+            }
+            
+            export namespace nothing {
+                
+                export type $ti_ = Structural_Token_
+                
+            }
+            
+            export type nothing = {
+                readonly '~': nothing.$ti_
+            }
+            
+            export namespace optional {
+                
+                export namespace set_ {
+                    
+                    export type $sr_ = Structural_Token_
+                    
+                    export type value = Value_
+                    
+                }
+                
+                export type set_ = {
+                    readonly '*': set_.$sr_
+                    readonly 'value': set_.value
+                }
+                
+            }
+            
+            export type optional = 
+                | readonly ['set', optional.set_]
+            
+            export namespace state {
+                
+                export type $vb_ = Structural_Token_
+                
+                export namespace status {
+                    
+                    export namespace missing_data {
+                        
+                        export type $ha_ = Structural_Token_
+                        
+                    }
+                    
+                    export type missing_data = {
+                        readonly '#': missing_data.$ha_
+                    }
                     
                     export namespace set_ {
                         
-                        export type $sr_ = Structural_Token_
+                        export type option = Text_
                         
                         export type value = Value_
                         
                     }
                     
                     export type set_ = {
-                        readonly '*': set_.$sr_
+                        readonly 'option': set_.option
                         readonly 'value': set_.value
                     }
                     
                 }
                 
-                export type optional = 
-                    | readonly ['set', optional.set_]
-                
-                export namespace state {
-                    
-                    export type $vb_ = Structural_Token_
-                    
-                    export namespace status {
-                        
-                        export namespace missing_data {
-                            
-                            export type $ha_ = Structural_Token_
-                            
-                        }
-                        
-                        export type missing_data = {
-                            readonly '#': missing_data.$ha_
-                        }
-                        
-                        export namespace set_ {
-                            
-                            export type option = Text_
-                            
-                            export type value = Value_
-                            
-                        }
-                        
-                        export type set_ = {
-                            readonly 'option': set_.option
-                            readonly 'value': set_.value
-                        }
-                        
-                    }
-                    
-                    export type status = 
-                        | readonly ['missing data', status.missing_data]
-                        | readonly ['set', status.set_]
-                    
-                }
-                
-                export type state = {
-                    readonly '|': state.$vb_
-                    readonly 'status': state.status
-                }
-                
-                export type text = Text_
+                export type status = 
+                    | readonly ['missing data', status.missing_data]
+                    | readonly ['set', status.set_]
                 
             }
             
-            export type concrete = 
-                | readonly ['dictionary', concrete.dictionary]
-                | readonly ['group', concrete.group]
-                | readonly ['list', concrete.list]
-                | readonly ['nothing', concrete.nothing]
-                | readonly ['optional', concrete.optional]
-                | readonly ['state', concrete.state]
-                | readonly ['text', concrete.text]
-            
-            export namespace include {
-                
-                export type $at_ = Structural_Token_
-                
-                export type path = Text_
-                
+            export type state = {
+                readonly '|': state.$vb_
+                readonly 'status': state.status
             }
             
-            export type include = {
-                readonly '@': include.$at_
-                readonly 'path': include.path
-            }
-            
-            export namespace missing_data {
-                
-                export type $ha_ = Structural_Token_
-                
-            }
-            
-            export type missing_data = {
-                readonly '#': missing_data.$ha_
-            }
+            export type text = Text_
             
         }
         
-        export type type_ = 
-            | readonly ['concrete', type_.concrete]
-            | readonly ['include', type_.include]
-            | readonly ['missing data', type_.missing_data]
+        export type concrete = 
+            | readonly ['dictionary', concrete.dictionary]
+            | readonly ['group', concrete.group]
+            | readonly ['list', concrete.list]
+            | readonly ['nothing', concrete.nothing]
+            | readonly ['optional', concrete.optional]
+            | readonly ['state', concrete.state]
+            | readonly ['text', concrete.text]
         
-    }
-    
-    export type Value_ = {
-        readonly 'type': Value_.type_
-    }
-    
-    export namespace Structural_Token_ {
-        
-        export type trailing_trivia = i__imports_token.Trivia
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type Structural_Token_ = {
-        readonly 'trailing trivia': Structural_Token_.trailing_trivia
-        readonly 'range': Structural_Token_.range
-    }
-    
-    export namespace Text_ {
-        
-        export type trailing_trivia = i__imports_token.Trivia
-        
-        export type range = i__imports_location.Range
-        
-        export type value = string
-        
-        export type type_ = i__imports_token.Text_Type
-        
-    }
-    
-    export type Text_ = {
-        readonly 'trailing trivia': Text_.trailing_trivia
-        readonly 'range': Text_.range
-        readonly 'value': Text_.value
-        readonly 'type': Text_.type_
-    }
-    
-    export namespace ID_Value_Pairs_ {
-        
-        export namespace L {
+        export namespace include {
             
-            export type id = Text_
+            export type $at_ = Structural_Token_
             
-            export namespace value {
-                
-                export namespace O {
-                    
-                    export type $cl_ = Structural_Token_
-                    
-                    export type value = Value_
-                    
-                }
-                
-                export type O = {
-                    readonly ':': O.$cl_
-                    readonly 'value': O.value
-                }
-                
-            }
-            
-            export type value = _pi.Optional_Value<value.O>
+            export type path = Text_
             
         }
         
-        export type L = {
-            readonly 'id': L.id
-            readonly 'value': L.value
+        export type include = {
+            readonly '@': include.$at_
+            readonly 'path': include.path
+        }
+        
+        export namespace missing_data {
+            
+            export type $ha_ = Structural_Token_
+            
+        }
+        
+        export type missing_data = {
+            readonly '#': missing_data.$ha_
         }
         
     }
     
-    export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
+    export type type_ = 
+        | readonly ['concrete', type_.concrete]
+        | readonly ['include', type_.include]
+        | readonly ['missing data', type_.missing_data]
     
-    export namespace Items_ {
+}
+
+export type Value_ = {
+    readonly 'type': Value_.type_
+}
+
+export namespace Structural_Token_ {
+    
+    export type trailing_trivia = i__imports_token.Trivia
+    
+    export type range = i__imports_location.Range
+    
+}
+
+export type Structural_Token_ = {
+    readonly 'trailing trivia': Structural_Token_.trailing_trivia
+    readonly 'range': Structural_Token_.range
+}
+
+export namespace Text_ {
+    
+    export type trailing_trivia = i__imports_token.Trivia
+    
+    export type range = i__imports_location.Range
+    
+    export type value = string
+    
+    export type type_ = i__imports_token.Text_Type
+    
+}
+
+export type Text_ = {
+    readonly 'trailing trivia': Text_.trailing_trivia
+    readonly 'range': Text_.range
+    readonly 'value': Text_.value
+    readonly 'type': Text_.type_
+}
+
+export namespace ID_Value_Pairs_ {
+    
+    export namespace L {
         
-        export namespace L {
+        export type id = Text_
+        
+        export namespace value {
             
-            export type value = Value_
+            export namespace O {
+                
+                export type $cl_ = Structural_Token_
+                
+                export type value = Value_
+                
+            }
+            
+            export type O = {
+                readonly ':': O.$cl_
+                readonly 'value': O.value
+            }
             
         }
         
-        export type L = {
-            readonly 'value': L.value
-        }
+        export type value = _pi.Optional_Value<value.O>
         
     }
     
-    export type Items_ = _pi.List<Items_.L>
-    
-    export { 
-        Document_ as Document, 
-        Content_ as Content, 
-        Value_ as Value, 
-        Structural_Token_ as Structural_Token, 
-        Text_ as Text, 
-        ID_Value_Pairs_ as ID_Value_Pairs, 
-        Items_ as Items, 
+    export type L = {
+        readonly 'id': L.id
+        readonly 'value': L.value
     }
+    
+}
+
+export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
+
+export namespace Items_ {
+    
+    export namespace L {
+        
+        export type value = Value_
+        
+    }
+    
+    export type L = {
+        readonly 'value': L.value
+    }
+    
+}
+
+export type Items_ = _pi.List<Items_.L>
+
+export { 
+    Document_ as Document, 
+    Content_ as Content, 
+    Value_ as Value, 
+    Structural_Token_ as Structural_Token, 
+    Text_ as Text, 
+    ID_Value_Pairs_ as ID_Value_Pairs, 
+    Items_ as Items, 
+}

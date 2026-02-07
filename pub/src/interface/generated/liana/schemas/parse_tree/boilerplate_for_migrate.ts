@@ -1,128 +1,128 @@
+
+import * as _pi from 'pareto-core/dist/interface'
+
+import * as i_out from "./data"
+
+import * as i_in from "./data"
+
+export namespace Document_ {
     
-    import * as _pi from 'pareto-core/dist/interface'
+    export type I = i_in.Document
     
-    import * as i_out from "./data"
+    export type O = i_out.Document
     
-    import * as i_in from "./data"
-    
-    export namespace Document_ {
-        
-        export type I = i_in.Document
-        
-        export type O = i_out.Document
-        
-        export namespace P {
-            
-        }
+    export namespace P {
         
     }
     
-    export type Document_ = (
-        context: Document_.I,
-    ) => Document_.O
+}
+
+export type Document_ = (
+    context: Document_.I,
+) => Document_.O
+
+export namespace Content_ {
     
-    export namespace Content_ {
-        
-        export type I = i_in.Content
-        
-        export type O = i_out.Content
-        
-        export namespace P {
-            
-        }
+    export type I = i_in.Content
+    
+    export type O = i_out.Content
+    
+    export namespace P {
         
     }
     
-    export type Content_ = (
-        context: Content_.I,
-    ) => Content_.O
+}
+
+export type Content_ = (
+    context: Content_.I,
+) => Content_.O
+
+export namespace Value_ {
     
-    export namespace Value_ {
-        
-        export type I = i_in.Value
-        
-        export type O = i_out.Value
-        
-        export namespace P {
-            
-        }
+    export type I = i_in.Value
+    
+    export type O = i_out.Value
+    
+    export namespace P {
         
     }
     
-    export type Value_ = (
-        context: Value_.I,
-    ) => Value_.O
+}
+
+export type Value_ = (
+    context: Value_.I,
+) => Value_.O
+
+export namespace Structural_Token_ {
     
-    export namespace Structural_Token_ {
-        
-        export type I = i_in.Structural_Token
-        
-        export type O = i_out.Structural_Token
-        
-        export namespace P {
-            
-        }
+    export type I = i_in.Structural_Token
+    
+    export type O = i_out.Structural_Token
+    
+    export namespace P {
         
     }
     
-    export type Structural_Token_ = (
-        context: Structural_Token_.I,
-    ) => Structural_Token_.O
+}
+
+export type Structural_Token_ = (
+    context: Structural_Token_.I,
+) => Structural_Token_.O
+
+export namespace Text_ {
     
-    export namespace Text_ {
-        
-        export type I = i_in.Text
-        
-        export type O = i_out.Text
-        
-        export namespace P {
-            
-        }
+    export type I = i_in.Text
+    
+    export type O = i_out.Text
+    
+    export namespace P {
         
     }
     
-    export type Text_ = (
-        context: Text_.I,
-    ) => Text_.O
+}
+
+export type Text_ = (
+    context: Text_.I,
+) => Text_.O
+
+export namespace ID_Value_Pairs_ {
     
-    export namespace ID_Value_Pairs_ {
-        
-        export type I = i_in.ID_Value_Pairs
-        
-        export type O = i_out.ID_Value_Pairs
-        
-        export namespace P {
-            
-        }
+    export type I = i_in.ID_Value_Pairs
+    
+    export type O = i_out.ID_Value_Pairs
+    
+    export namespace P {
         
     }
     
-    export type ID_Value_Pairs_ = (
-        context: ID_Value_Pairs_.I,
-    ) => ID_Value_Pairs_.O
+}
+
+export type ID_Value_Pairs_ = (
+    context: ID_Value_Pairs_.I,
+) => ID_Value_Pairs_.O
+
+export namespace Items_ {
     
-    export namespace Items_ {
-        
-        export type I = i_in.Items
-        
-        export type O = i_out.Items
-        
-        export namespace P {
-            
-        }
+    export type I = i_in.Items
+    
+    export type O = i_out.Items
+    
+    export namespace P {
         
     }
     
-    export type Items_ = (
-        context: Items_.I,
-    ) => Items_.O
-    
-    export { 
-        Document_ as Document, 
-        Content_ as Content, 
-        Value_ as Value, 
-        Structural_Token_ as Structural_Token, 
-        Text_ as Text, 
-        ID_Value_Pairs_ as ID_Value_Pairs, 
-        Items_ as Items, 
-    }
+}
+
+export type Items_ = (
+    context: Items_.I,
+) => Items_.O
+
+export { 
+    Document_ as Document, 
+    Content_ as Content, 
+    Value_ as Value, 
+    Structural_Token_ as Structural_Token, 
+    Text_ as Text, 
+    ID_Value_Pairs_ as ID_Value_Pairs, 
+    Items_ as Items, 
+}
