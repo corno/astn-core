@@ -19,7 +19,7 @@ export const Value = (
             case 'dictionary': return _p.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("{"),
                 sh.ph.indent(
-                    sh.pg.sentences(_p.list.from.dictionary($).convert(($, id) => sh.ph.composed([
+                    sh.pg.sentences(_p.list.from.dictionary($).convert(($, id) => sh.sentence([
                         sh.ph.serialize(s_backticked(id, {
                             'add delimiters': true
                         })),
@@ -35,7 +35,7 @@ export const Value = (
                         sh.ph.composed([
                             sh.ph.literal("("),
                             sh.ph.indent(
-                                sh.pg.sentences($.__to_list(($, id) => sh.ph.composed([
+                                sh.pg.sentences($.__to_list(($, id) => sh.sentence([
                                     sh.ph.serialize(s_apostrophed(id, {
                                         'add delimiters': true
                                     })),
@@ -101,5 +101,7 @@ export const Document = (
     $: d_in.Document
 
 ): d_out.Paragraph => sh.pg.sentences([
-    Value($),
+    sh.sentence([
+        Value($),
+    ])
 ])
