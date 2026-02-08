@@ -69,9 +69,26 @@ export type Expected_ = (
     context: Expected_.I,
 ) => Expected_.O
 
+export namespace Parameters_ {
+    
+    export type I = i_in.Parameters
+    
+    export type O = i_out.Parameters
+    
+    export namespace P {
+        
+    }
+    
+}
+
+export type Parameters_ = (
+    context: Parameters_.I,
+) => Parameters_.O
+
 export { 
     Error_ as Error, 
     Lexer_Error_ as Lexer_Error, 
     Parser_Error_ as Parser_Error, 
     Expected_ as Expected, 
+    Parameters_ as Parameters, 
 }

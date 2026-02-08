@@ -231,9 +231,23 @@ export type Expected_ =
     | readonly [']', Expected_.$bc_]
     | readonly ['#', Expected_.$ha_]
 
+export namespace Parameters_ {
+    
+    export type document_resource_identifier = string
+    
+    export type tab_size = number
+    
+}
+
+export type Parameters_ = {
+    readonly 'document resource identifier': Parameters_.document_resource_identifier
+    readonly 'tab size': Parameters_.tab_size
+}
+
 export { 
     Error_ as Error, 
     Lexer_Error_ as Lexer_Error, 
     Parser_Error_ as Parser_Error, 
     Expected_ as Expected, 
+    Parameters_ as Parameters, 
 }
