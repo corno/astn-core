@@ -6,15 +6,19 @@ import * as new_pi from "./new_interface_signatures"
 
 export const create_iterator = <Iterator_Element, Choice>(
     old: _pi.Iterator<Iterator_Element>,
-    unexpected_element: (expected: _pi.List<Choice>, element: Iterator_Element, position: number) => never,
-    unexpected_end_with_expected: (expected: _pi.List<Choice>) => never,
-    unguarded_unexpected_end: () => never,
+    abort: {
+        unexpected_element: (expected: _pi.List<Choice>, element: Iterator_Element, position: number) => never,
+        unexpected_end_with_expected: (expected: _pi.List<Choice>) => never,
+        unguarded_unexpected_end: () => never,
+    }
 ): new_pi.Iterator<Iterator_Element, Choice> => ({
     'consume': (
         callback,
     ) => callback(old.consume(
         ($) => $,
-        () => unguarded_unexpected_end()
+        {
+            no_more_tokens: () => abort.unguarded_unexpected_end()
+        }
     )),
     'expect': (
         expected,
@@ -22,11 +26,11 @@ export const create_iterator = <Iterator_Element, Choice>(
     ) => {
         const next = old.look()
         if (next === null) {
-            return unexpected_end_with_expected(_p.list.literal(expected))
+            return abort.unexpected_end_with_expected(_p.list.literal(expected))
         }
         return callback(
             next[0],
-            () => unexpected_element(
+            () => abort.unexpected_element(
                 _p.list.literal(expected),
                 next[0],
                 old.get_position()

@@ -19,7 +19,9 @@ export const Dictionary = (
                         ($) => $.value,
                         () => abort(null)
                     ),
-                    () => abort(null),
+                    {
+                        duplicate_id: () => abort(null)
+                    },
                 ))
                 default: return abort(null)
             }
@@ -46,7 +48,9 @@ export const Group = (
                                 ($) => $.value,
                                 () => abort(null)
                             ),
-                            () => abort(null),
+                            {
+                                duplicate_id: () => abort(null)
+                            },
                         ))
                         default: return abort(null)
                     }

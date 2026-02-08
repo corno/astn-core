@@ -27,17 +27,19 @@ export const Document: signatures.Document = ($, abort) => _p_iterate(//fixme: m
     (iter) => p_authoring_parse_tree.Document(
         _pi_new.create_iterator(
             iter,
-            (expected, element) => abort({
-                'expected': expected,
-                'cause': ['unexpected token', {
-                    'found': element,
-                }],
-            }),
-            (expected) => abort({
-                'expected': expected,
-                'cause': ['missing token', null],
-            }),
-            () => _p_unreachable_code_path("there should not be an unguarded unexpected end"),
+            {
+                unexpected_element: (expected, element) => abort({
+                    'expected': expected,
+                    'cause': ['unexpected token', {
+                        'found': element,
+                    }],
+                }),
+                unexpected_end_with_expected: (expected) => abort({
+                    'expected': expected,
+                    'cause': ['missing token', null],
+                }),
+                unguarded_unexpected_end: () => _p_unreachable_code_path("there should not be an unguarded unexpected end"),
+            }
         )
     )
 )

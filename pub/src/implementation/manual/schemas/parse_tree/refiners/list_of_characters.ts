@@ -44,9 +44,11 @@ export const Document: signatures.Document = ($, abort, $p,) => _p_iterate( //fi
                 'old': iter,
                 'new': _pds_new.create_iterator(
                     iter,
-                    () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                    () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                    () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                    {
+                        unexpected_element: _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                        unexpected_end_with_expected: _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                        unguarded_unexpected_end: _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                    }
                 )
             },
             ($) => abort({

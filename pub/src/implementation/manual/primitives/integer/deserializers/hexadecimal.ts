@@ -18,7 +18,9 @@ export const $$: _pi.Refiner<number, string, d_in.List_of_Characters> = ($, abor
     const get_character_at = (index: number): number => {
         return characters.__deprecated_get_item_at(
             index,
-            () => abort("index out of bounds")
+            {
+                out_of_bounds: () => abort("index out of bounds")
+            }
         )
     }
 
