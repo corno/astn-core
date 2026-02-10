@@ -3,61 +3,61 @@ import * as _pi from 'pareto-core/dist/interface'
 
 import * as new_pi from "../../../../temp_core/new_interface_signatures"
 
-import * as d_target from "../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_parse_result from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_source from "../../../../interface/generated/liana/schemas/token/data"
+import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
+import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
 export namespace signatures {
 
     export type Document = new_pi.Production_Without_Parameters<
-        d_target.Document,
-        d_source.Annotated_Token,
-        d_parse_result.Expected
+        d_out.Document,
+        d_in.Annotated_Token,
+        d_choice.Expected
     >
 
     export type Value = new_pi.Production_Without_Parameters<
-        d_target.Value,
-        d_source.Annotated_Token,
-        d_parse_result.Expected
+        d_out.Value,
+        d_in.Annotated_Token,
+        d_choice.Expected
     >
 
-    export type Structural_Token = new_pi.Production_Without_Parameters<d_target.Structural_Token,
-        d_source.Annotated_Token,
-        d_parse_result.Expected
+    export type Structural_Token = new_pi.Production_Without_Parameters<d_out.Structural_Token,
+        d_in.Annotated_Token,
+        d_choice.Expected
     >
 
     export type Text = new_pi.Production<
-        d_target.Text,
-        d_source.Annotated_Token,
-        d_parse_result.Expected,
+        d_out.Text,
+        d_in.Annotated_Token,
+        d_choice.Expected,
         {
-            'string': d_source.Token_Type.text
+            'string': d_in.Token_Type.text
         }
     >
 
     export type Items = new_pi.Production<
-        d_target.Items,
-        d_source.Annotated_Token,
-        d_parse_result.Expected,
+        d_out.Items,
+        d_in.Annotated_Token,
+        d_choice.Expected,
         {
-            'end token': d_parse_result.Expected
+            'end token': d_choice.Expected
         }
     >
 
     export type Element = new_pi.Production<
-        d_target.Items,
-        d_source.Annotated_Token,
-        d_parse_result.Expected,
+        d_out.Items,
+        d_in.Annotated_Token,
+        d_choice.Expected,
         {
-            'end token': d_parse_result.Expected
+            'end token': d_choice.Expected
         }
     >
 
     export type ID_Value_Pairs = new_pi.Production<
-        d_target.ID_Value_Pairs,
-        d_source.Annotated_Token,
-        d_parse_result.Expected,
+        d_out.ID_Value_Pairs,
+        d_in.Annotated_Token,
+        d_choice.Expected,
         {
-            'end token': d_parse_result.Expected
+            'end token': d_choice.Expected
         }
     >
 
@@ -85,9 +85,9 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
         ['any value', null]
     ],
     (token, abort) => ({
-        'type': _p.decide.state(token.type, ($): d_target.Value.type_ => {
+        'type': _p.decide.state(token.type, ($): d_out.Value.type_ => {
             switch ($[0]) {
-                case 'text': return _p.ss($, ($): d_target.Value.type_ => ['concrete',
+                case 'text': return _p.ss($, ($): d_out.Value.type_ => ['concrete',
                     ['text', iterator.expect(
                         [
                             ['a text value', null]
@@ -108,12 +108,12 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                     'entries': ID_Value_Pairs(iterator, { 'end token': [')', null] }),
                     ')': Structural_Token(iterator)
                 }]]])
-                case '[': return _p.ss($, ($): d_target.Value.type_ => ['concrete', ['list', {
+                case '[': return _p.ss($, ($): d_out.Value.type_ => ['concrete', ['list', {
                     '[': Structural_Token(iterator),
                     'items': Items(iterator, { 'end token': [']', null] }),
                     ']': Structural_Token(iterator)
                 }]])
-                case '<': return _p.ss($, ($): d_target.Value.type_ => ['concrete', ['group', ['concise', {
+                case '<': return _p.ss($, ($): d_out.Value.type_ => ['concrete', ['group', ['concise', {
                     '<': Structural_Token(iterator),
                     'items': Items(iterator, { 'end token': ['>', null] }),
                     '>': Structural_Token(iterator)
@@ -139,7 +139,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                             ['any value', null],
                             ['#', null]
                         ],
-                        (token, abort) => _p.decide.state(token.type, ($): d_target.Value.type_.concrete.state.status => {
+                        (token, abort) => _p.decide.state(token.type, ($): d_out.Value.type_.concrete.state.status => {
                             switch ($[0]) {
                                 case 'text': return _p.ss($, ($) => ['set', {
                                     'option': String(iterator, { 'string': $ }),

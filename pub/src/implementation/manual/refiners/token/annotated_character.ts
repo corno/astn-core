@@ -7,8 +7,9 @@ import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
-import * as d_out_location from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_deseralize_parse_tree from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+
+import * as d_temp_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
 import { $$ as ds_hexadecimal } from "../../primitives/integer/deserializers/hexadecimal"
@@ -43,7 +44,7 @@ export const is_control_character = ($: d_in.Annotated_Character): boolean =>
     && $.code !== WhitespaceChars.line_feed
     && $.code !== WhitespaceChars.carriage_return
 
-const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Character>): d_out_location.Location => {
+const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Character>): d_temp_location.Location => {
     const next = iterator.old.look()
     if (next === null) {
         return {
@@ -62,7 +63,7 @@ const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Charac
 
 export const Whitespace = (
     iterator: Temp_Iterator<d_in.Annotated_Character>,
-    abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
+    abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Whitespace => {
     const start_location = temp_get_current_location(iterator)
     return {
@@ -122,7 +123,7 @@ export const Whitespace = (
 
 export const Trivia = (
     iterator: Temp_Iterator<d_in.Annotated_Character>,
-    abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
+    abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
     'comments': _p_list_build_deprecated(($i) => {
@@ -254,7 +255,7 @@ export const Trivia = (
 
 export const Annotated_Token = (
     iterator: Temp_Iterator<d_in.Annotated_Character>,
-    abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
+    abort: _pi.Abort<d_function.Lexer_Error>,
     $p: { 'character': d_in.Annotated_Character }
 ): d_out.Annotated_Token => {
     const WhitespaceChars = {
@@ -435,7 +436,7 @@ export const Delimited_String = (
     is_end_character: (character: number) => boolean,
     allow_newlines: boolean,
     iterator: Temp_Iterator<d_in.Annotated_Character>,
-    abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
+    abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Delimited_Text => {
 
     const Character = {
@@ -618,7 +619,7 @@ export const Delimited_String = (
 
 export const Tokenizer_Result = (
     iterator: Temp_Iterator<d_in.Annotated_Character>,
-    abort: _pi.Abort<d_deseralize_parse_tree.Lexer_Error>,
+    abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Tokenizer_Result => ({
     'leading trivia': Trivia(iterator, abort),
     'tokens': _p_list_build_deprecated<d_out.Annotated_Token>($i => {

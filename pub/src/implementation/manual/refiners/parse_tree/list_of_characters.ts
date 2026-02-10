@@ -6,9 +6,9 @@ import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import * as _pds_new from "../../../../temp_core/temp"
 
 //data types
-import * as d_authoring_parse_result from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_authoring_parse_tree from "../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "pareto-fountain-pen/dist/interface/to_be_generated/list_of_characters"
+import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
+import * as d_in from "pareto-fountain-pen/dist/interface/to_be_generated/list_of_characters"
 
 
 //dependencies
@@ -19,9 +19,9 @@ import * as r_from_token from "./tokenizer_result"
 export namespace signatures {
 
     export type Document = _pi.Refiner_With_Parameter<
-        d_authoring_parse_tree.Document,
-        d_authoring_parse_result.Error,
-        d_out.List_of_Characters,
+        d_out.Document,
+        d_function.Error,
+        d_in.List_of_Characters,
         {
             'tab size': number,
             'document resource identifier': string
