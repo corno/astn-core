@@ -22,10 +22,7 @@ export namespace signatures {
         d_out.Document,
         d_function.Error,
         d_in.List_of_Characters,
-        {
-            'tab size': number,
-            'document resource identifier': string
-        }
+        d_function.Parameters
     >
 
 }
