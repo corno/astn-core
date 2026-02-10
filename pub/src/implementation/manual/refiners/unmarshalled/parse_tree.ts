@@ -1,8 +1,8 @@
 import * as _pi from 'pareto-core/dist/interface'
 import * as _p from 'pareto-core/dist/assign'
 
-import * as d_in from "../../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../../interface/to_be_generated/unmarshalled"
+import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
+import * as d_out from "../../../../interface/to_be_generated/unmarshalled"
 
 export const Dictionary = (
     $: d_in.Value,

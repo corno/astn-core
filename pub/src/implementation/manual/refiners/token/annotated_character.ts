@@ -1,17 +1,17 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pi_new from '../../parse_tree/productions/new_interface_signatures'
+import * as _pi_new from '../../../../temp_core/new_interface_signatures'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
-import * as d_in from "../../../../../interface/to_be_generated/annotated_characters"
-import * as d_out from "../../../../../interface/generated/liana/schemas/token/data"
-import * as d_out_location from "../../../../../interface/generated/liana/schemas/location/data"
-import * as d_deseralize_parse_tree from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
+import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
+import * as d_out_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_deseralize_parse_tree from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 
 //dependencies
-import { $$ as ds_hexadecimal } from "../../../primitives/integer/deserializers/hexadecimal"
+import { $$ as ds_hexadecimal } from "../../primitives/integer/deserializers/hexadecimal"
 
 type Temp_Choice = null
 

@@ -1,11 +1,11 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as new_pi from "./new_interface_signatures"
+import * as new_pi from "../../../../temp_core/new_interface_signatures"
 
-import * as d_target from "../../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_parse_result from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_source from "../../../../../interface/generated/liana/schemas/token/data"
+import * as d_target from "../../../../interface/generated/liana/schemas/parse_tree/data"
+import * as d_parse_result from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_source from "../../../../interface/generated/liana/schemas/token/data"
 export namespace signatures {
 
     export type Document = new_pi.Production_Without_Parameters<

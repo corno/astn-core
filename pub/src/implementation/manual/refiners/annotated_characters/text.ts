@@ -1,10 +1,16 @@
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as d_annotated_characters from "../../../../../interface/to_be_generated/annotated_characters"
+import * as d_out from "../../../../interface/to_be_generated/annotated_characters"
+import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 
 export namespace signatures {
 
-    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameter<d_annotated_characters.Annotated_Characters, _pi.List<number>, { 'tab size': number, 'document resource identifier': string }>
+    export type Annotated_Characters = _pi.Refiner_Without_Error_With_Parameter<
+        d_out.Annotated_Characters,
+        d_in.List_of_Characters,
+        d_function.Parameters
+    >
 
 }
 
@@ -142,5 +148,5 @@ export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => 
                     'found carriage return before': value.code === 0x0D /* carriage return */,
                 }
     },
-    (final_list, final_state): d_annotated_characters.Annotated_Characters => final_list
+    (final_list, final_state): d_out.Annotated_Characters => final_list
 )

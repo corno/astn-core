@@ -2,7 +2,7 @@ import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
-import * as d_in from "../../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
 
 
@@ -18,7 +18,7 @@ export namespace signatures {
 
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-import * as t_token_to_fountain_pen from "../../location/transformers/fountain_pen"
+import * as t_token_to_fountain_pen from "../location/fountain_pen"
 
 
 export const Error: signatures.Error = ($, $p) => {
