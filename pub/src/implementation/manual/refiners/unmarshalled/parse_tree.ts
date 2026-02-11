@@ -18,16 +18,16 @@ export const Dictionary = (
                     ($) => $.id.value,
                     ($) => $.value.__decide(
                         ($) => $.value,
-                        () => abort(['not a dictionary', null])
+                        () => abort(['expected a dictionary', null])
                     ),
                     {
-                        duplicate_id: () => abort(['not a dictionary', null])
+                        duplicate_id: () => abort(['expected a dictionary', null])
                     },
                 ))
-                default: return abort(['not a dictionary', null])
+                default: return abort(['expected a dictionary', null])
             }
         }))
-        default: return abort(['not a dictionary', null])
+        default: return abort(['expected a dictionary', null])
     }
 })
 
@@ -47,19 +47,19 @@ export const Group = (
                             ($) => $.id.value,
                             ($) => $.value.__decide(
                                 ($) => $.value,
-                                () => abort(['not a group', null])
+                                () => abort(['expected a group', null])
                             ),
                             {
-                                duplicate_id: () => abort(['not a group', null])
+                                duplicate_id: () => abort(['expected a group', null])
                             },
                         ))
-                        default: return abort(['not a group', null])
+                        default: return abort(['expected a group', null])
                     }
                 }))
-                default: return abort(['not a group', null])
+                default: return abort(['expected a group', null])
             }
         }))
-        default: return abort(['not a group', null])
+        default: return abort(['expected a group', null])
     }
 })
 
@@ -71,10 +71,10 @@ export const List = (
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'list': return _p.ss($, ($) => $.items.__l_map(($) => $.value))
-                default: return abort(['not a list', null])
+                default: return abort(['expected a list', null])
             }
         }))
-        default: return abort(['not a list', null])
+        default: return abort(['expected a list', null])
     }
 })
 
@@ -86,10 +86,10 @@ export const Nothing = (
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'nothing': return _p.ss($, ($) => null)
-                default: return abort(['not a nothing', null])
+                default: return abort(['expected a nothing', null])
             }
         }))
-        default: return abort(['not a nothing', null])
+        default: return abort(['expected a nothing', null])
     }
 })
 
@@ -104,13 +104,13 @@ export const Optional = (
                 case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => _p.optional.literal.set($.value))
-                        default: return abort(['not an optional', null])
+                        default: return abort(['expected an optional', null])
                     }
                 }))
-                default: return abort(['not an optional', null])
+                default: return abort(['expected an optional', null])
             }
         }))
-        default: return abort(['not an optional', null])
+        default: return abort(['expected an optional', null])
     }
 })
 
@@ -124,13 +124,13 @@ export const State = (
                 case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => $)
-                        default: return abort(['not a state', null])
+                        default: return abort(['expected a state', null])
                     }
                 }))
-                default: return abort(['not a state', null])
+                default: return abort(['expected a state', null])
             }
         }))
-        default: return abort(['not a state', null])
+        default: return abort(['expected a state', null])
     }
 })
 
@@ -142,9 +142,9 @@ export const Text = (
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'text': return _p.ss($, ($) => $.value)
-                default: return abort(['not a text', null])
+                default: return abort(['expected a text', null])
             }
         }))
-        default: return abort(['not a text', null])
+        default: return abort(['expected a text', null])
     }
 })
