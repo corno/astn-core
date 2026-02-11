@@ -6,46 +6,81 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Error = ($: d_in.Error): d_out.Phrase => _p.decide.state($, ($) => {
-    switch ($[0]) {
+export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
+    _p.decide.state($.type, ($) => {
+        switch ($[0]) {
+            case 'entry missing': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("entry missing")
+            ]))
+            case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("duplicate entry: '"),
+                sh.ph.literal($),
+                sh.ph.literal("'")
+            ]))
+            case 'wrong value type': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("wrong value type, expected: "),
+                _p.decide.state($.expected, ($) => {
+                    switch ($[0]) {
+                        case 'optional': return _p.ss($, ($) => sh.ph.literal("an optional"))
+                        case 'nothing': return _p.ss($, ($) => sh.ph.literal("a nothing"))
+                        case 'dictionary': return _p.ss($, ($) => sh.ph.literal("a dictionary"))
+                        case 'group': return _p.ss($, ($) => sh.ph.literal("a group"))
+                        case 'list': return _p.ss($, ($) => sh.ph.literal("a list"))
+                        case 'state': return _p.ss($, ($) => sh.ph.literal("a state"))
+                        case 'text': return _p.ss($, ($) => sh.ph.literal("a text"))
+                        default: return _p.au($[0])
+                    }
+                }),
+                sh.ph.literal(" value")
+            ]))
+            default: return _p.au($[0])
+        }
+    }),
+    sh.ph.literal("@"),
+    sh.ph.literal(`${$.range.start.relative['document resource identifier']}${$.range.start.relative.line}:${$.range.start.relative.column}-${$.range.end.relative.line}:${$.range.end.relative.column}`),
 
-        case 'expected a dictionary': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected a dictionary")
-        ]))
-        case 'expected a group': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected a group")
-        ]))
-        case 'expected a list': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected a list")
-        ]))
-        case 'expected a nothing': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected a nothing ( ~ )")
-        ]))
-        case 'expected an optional': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected an optional ( ~ or * -value- )")
-        ]))
-        case 'expected a state': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected a state ( one of the allowed options )")
-        ]))
-        case 'expected a text': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("expected a text")
-        ]))
-        case 'not a valid number': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("not a valid number")
-        ]))
-        case 'not a valid boolean': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("not a valid boolean")
-        ]))
-        case 'no such entry': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("no such entry: '"),
-            sh.ph.literal($),
-            sh.ph.literal("'")
-        ]))
-        case 'unknown option': return _p.ss($, ($) => sh.ph.composed([
-            sh.ph.literal("unknown option: '"),
-            sh.ph.literal($),
-            sh.ph.literal("'")
-        ]))
-        default: return _p.au($[0])
-    }
-})
+])
+
+// export const Error = ($: d_in.Error): d_out.Phrase => _p.decide.state($, ($) => {
+//     switch ($[0]) {
+
+//         case 'expected a dictionary': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected a dictionary")
+//         ]))
+//         case 'expected a group': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected a group")
+//         ]))
+//         case 'expected a list': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected a list")
+//         ]))
+//         case 'expected a nothing': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected a nothing ( ~ )")
+//         ]))
+//         case 'expected an optional': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected an optional ( ~ or * -value- )")
+//         ]))
+//         case 'expected a state': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected a state ( one of the allowed options )")
+//         ]))
+//         case 'expected a text': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("expected a text")
+//         ]))
+//         case 'not a valid number': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("not a valid number")
+//         ]))
+//         case 'not a valid boolean': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("not a valid boolean")
+//         ]))
+//         case 'no such entry': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("no such entry: '"),
+//             sh.ph.literal($),
+//             sh.ph.literal("'")
+//         ]))
+//         case 'unknown option': return _p.ss($, ($) => sh.ph.composed([
+//             sh.ph.literal("unknown option: '"),
+//             sh.ph.literal($),
+//             sh.ph.literal("'")
+//         ]))
+//         default: return _p.au($[0])
+//     }
+// })
