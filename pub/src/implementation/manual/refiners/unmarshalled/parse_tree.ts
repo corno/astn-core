@@ -3,10 +3,11 @@ import * as _p from 'pareto-core/dist/assign'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/to_be_generated/unmarshalled"
+import * as d_function from "../../../../interface/to_be_generated/unmarshall"
 
 export const Dictionary = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.Dictionary => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -17,22 +18,22 @@ export const Dictionary = (
                     ($) => $.id.value,
                     ($) => $.value.__decide(
                         ($) => $.value,
-                        () => abort(null)
+                        () => abort(['not a dictionary', null])
                     ),
                     {
-                        duplicate_id: () => abort(null)
+                        duplicate_id: () => abort(['not a dictionary', null])
                     },
                 ))
-                default: return abort(null)
+                default: return abort(['not a dictionary', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not a dictionary', null])
     }
 })
 
 export const Group = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.Group => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -46,55 +47,55 @@ export const Group = (
                             ($) => $.id.value,
                             ($) => $.value.__decide(
                                 ($) => $.value,
-                                () => abort(null)
+                                () => abort(['not a group', null])
                             ),
                             {
-                                duplicate_id: () => abort(null)
+                                duplicate_id: () => abort(['not a group', null])
                             },
                         ))
-                        default: return abort(null)
+                        default: return abort(['not a group', null])
                     }
                 }))
-                default: return abort(null)
+                default: return abort(['not a group', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not a group', null])
     }
 })
 
 export const List = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.List => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'list': return _p.ss($, ($) => $.items.__l_map(($) => $.value))
-                default: return abort(null)
+                default: return abort(['not a list', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not a list', null])
     }
 })
 
 export const Nothing = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.Nothing => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'nothing': return _p.ss($, ($) => null)
-                default: return abort(null)
+                default: return abort(['not a nothing', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not a nothing', null])
     }
 })
 
 export const Optional = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.Optional => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -103,19 +104,19 @@ export const Optional = (
                 case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => _p.optional.literal.set($.value))
-                        default: return abort(null)
+                        default: return abort(['not an optional', null])
                     }
                 }))
-                default: return abort(null)
+                default: return abort(['not an optional', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not an optional', null])
     }
 })
 
 export const State = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.State => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -123,27 +124,27 @@ export const State = (
                 case 'state': return _p.ss($, ($) => _p.decide.state($.status, ($) => {
                     switch ($[0]) {
                         case 'set': return _p.ss($, ($) => $)
-                        default: return abort(null)
+                        default: return abort(['not a state', null])
                     }
                 }))
-                default: return abort(null)
+                default: return abort(['not a state', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not a state', null])
     }
 })
 
 export const Text = (
     $: d_in.Value,
-    abort: _pi.Abort<null>
+    abort: _pi.Abort<d_function.Error>
 ): d_out.Text => _p.decide.state($.type, ($) => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'text': return _p.ss($, ($) => $.value)
-                default: return abort(null)
+                default: return abort(['not a text', null])
             }
         }))
-        default: return abort(null)
+        default: return abort(['not a text', null])
     }
 })
