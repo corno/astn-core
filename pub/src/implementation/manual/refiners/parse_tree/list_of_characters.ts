@@ -8,7 +8,7 @@ import * as _pds_new from "../../../../temp_core/temp"
 //data types
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_in from "pareto-fountain-pen/dist/interface/to_be_generated/list_of_characters"
+import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 
 //dependencies
