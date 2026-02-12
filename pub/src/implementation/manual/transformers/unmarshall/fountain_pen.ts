@@ -7,10 +7,22 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
-    _p.decide.state($.type, ($) => {
+     sh.ph.literal(`${$.range.start.relative['document resource identifier']}${$.range.start.relative.line}:${$.range.start.relative.column}-${$.range.end.relative.line}:${$.range.end.relative.column}`),
+     sh.ph.literal(" - "),
+   _p.decide.state($.type, ($) => {
         switch ($[0]) {
-            case 'entry missing': return _p.ss($, ($) => sh.ph.composed([
-                sh.ph.literal("entry missing")
+            case 'unexpected properties': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("unexpected properties: '"),
+                sh.ph.indent(
+                    sh.pg.sentences($.__to_list(($, key) => sh.sentence([
+                        sh.ph.literal(key)
+                    ])))
+                ),
+            ]))
+            case 'missing property': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("missing property: '"),
+                sh.ph.literal($),
+                sh.ph.literal("'")
             ]))
             case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("duplicate entry: '"),
@@ -24,7 +36,7 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
                         case 'optional': return _p.ss($, ($) => sh.ph.literal("an optional"))
                         case 'nothing': return _p.ss($, ($) => sh.ph.literal("a nothing"))
                         case 'dictionary': return _p.ss($, ($) => sh.ph.literal("a dictionary"))
-                        case 'group': return _p.ss($, ($) => sh.ph.literal("a group"))
+                        case 'verbose group': return _p.ss($, ($) => sh.ph.literal("a verbose group"))
                         case 'list': return _p.ss($, ($) => sh.ph.literal("a list"))
                         case 'state': return _p.ss($, ($) => sh.ph.literal("a state"))
                         case 'text': return _p.ss($, ($) => sh.ph.literal("a text"))
@@ -36,8 +48,6 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
             default: return _p.au($[0])
         }
     }),
-    sh.ph.literal("@"),
-    sh.ph.literal(`${$.range.start.relative['document resource identifier']}${$.range.start.relative.line}:${$.range.start.relative.column}-${$.range.end.relative.line}:${$.range.end.relative.column}`),
 
 ])
 

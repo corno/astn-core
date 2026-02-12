@@ -12,7 +12,6 @@ import * as d_temp_text from "pareto-fountain-pen/dist/interface/generated/liana
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export type Parameters = {
-    'with @': boolean
     'position info':
     | ['zero based', null]
     | ['one based', null]
@@ -29,7 +28,6 @@ const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {
 }
 
 export const Range: signatures.Range = ($, $p) =>  sh.ph.composed([
-    $p['with @'] ? sh.ph.literal("@ ") : sh.ph.nothing(),
     sh.ph.literal($.start.relative['document resource identifier']),
     sh.ph.literal(":"),
     sh.ph.serialize(temp_serialize_number($.start.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
@@ -43,7 +41,6 @@ export const Range: signatures.Range = ($, $p) =>  sh.ph.composed([
 
 export const Location: signatures.Location = ($, $p) => {
     return sh.ph.composed([
-        $p['with @'] ? sh.ph.literal("@ ") : sh.ph.nothing(),
         sh.ph.literal($.relative['document resource identifier']),
         sh.ph.literal(":"),
         sh.ph.serialize(temp_serialize_number($.relative.line + _p.decide.state($p['position info'], ($) => ($[0] === 'zero based' ? 0 : 1)))),

@@ -91,30 +91,32 @@ export const Error: signatures.Error = ($, $p) => {
         }
     })
     return sh.ph.composed([
-        sh.ph.literal("failed to parse ASTN, ${Parse_Error_Type($.type)}"),
+        sh.ph.literal("failed to parse ASTN"),
+        Parse_Error_Type($['type']),
         //location
+        sh.ph.literal(" @"),
         _p.decide.state($.type, ($) => {
             switch ($[0]) {
                 case 'lexer': return _p.ss($, ($) => _p.decide.state($, ($) => {
                     switch ($[0]) {
-                        case 'unexpected control character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'], 'with @': true }))
-                        case 'unexpected control character in text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'missing character after escape': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'unexpected end of line in delimited text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        // case 'unexpected character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'], 'with @': true }))
-                        case 'unterminated text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'unterminated block comment': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'unterminated unicode escape sequence': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'invalid unicode escape sequence': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'unknown escape character': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
-                        case 'dangling slash': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'], 'with @': true }))
+                        case 'unexpected control character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'] }))
+                        case 'unexpected control character in text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'missing character after escape': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'unexpected end of line in delimited text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        // case 'unexpected character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'] }))
+                        case 'unterminated text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'unterminated block comment': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'unterminated unicode escape sequence': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'invalid unicode escape sequence': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'unknown escape character': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'dangling slash': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
                         default: return _p.au($[0])
                     }
                 }))
                 case 'parser': return _p.ss($, ($): d_out.Phrase => _p.decide.state($.cause, ($) => {
                     switch ($[0]) {
                         case 'missing token': return _p.ss($, ($) => sh.ph.nothing())
-                        case 'unexpected token': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.found, { 'position info': $p['position info'], 'with @': true }))
+                        case 'unexpected token': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.found, { 'position info': $p['position info'] }))
                         default: return _p.au($[0])
                     }
                 }))

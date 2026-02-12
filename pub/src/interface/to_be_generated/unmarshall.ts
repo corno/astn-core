@@ -1,3 +1,5 @@
+import * as _pi from 'pareto-core/dist/interface'
+
 import * as d_location from "../../interface/generated/liana/schemas/location/data"
 
 export type Error = {
@@ -6,12 +8,13 @@ export type Error = {
 }
 
 export type Error_Type =
-    | ['entry missing', null]
+    | ['unexpected properties', _pi.Dictionary<d_location.Range>]
+    | ['missing property', string]
     | ['duplicate entry', string]
     | ['wrong value type', {
         'expected':
         | ['dictionary', null]
-        | ['group', null]
+        | ['verbose group', null]
         | ['list', null]
         | ['nothing', null]
         | ['optional', null]
