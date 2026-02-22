@@ -11,6 +11,21 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
      sh.ph.literal(" - "),
    _p.decide.state($.type, ($) => {
         switch ($[0]) {
+            case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("duplicate entry: '"),
+                sh.ph.literal($),
+                sh.ph.literal("'")
+            ]))
+            case 'missing property': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("missing property: '"),
+                sh.ph.literal($),
+                sh.ph.literal("'")
+            ]))
+            case 'unknown option': return _p.ss($, ($) => sh.ph.composed([
+                sh.ph.literal("unknown option: '"),
+                sh.ph.literal($),
+                sh.ph.literal("'")
+            ]))
             case 'unexpected properties': return _p.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("unexpected properties: '"),
                 sh.ph.indent(
@@ -18,16 +33,6 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
                         sh.ph.literal(key)
                     ])))
                 ),
-            ]))
-            case 'missing property': return _p.ss($, ($) => sh.ph.composed([
-                sh.ph.literal("missing property: '"),
-                sh.ph.literal($),
-                sh.ph.literal("'")
-            ]))
-            case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
-                sh.ph.literal("duplicate entry: '"),
-                sh.ph.literal($),
-                sh.ph.literal("'")
             ]))
             case 'wrong value type': return _p.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("wrong value type, expected: "),

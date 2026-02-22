@@ -10,6 +10,7 @@ export type Error = {
 export type Error_Type =
     | ['unexpected properties', _pi.Dictionary<d_location.Range>]
     | ['missing property', string]
+    | ['unknown option', string]
     | ['duplicate entry', string]
     | ['wrong value type', {
         'expected':
