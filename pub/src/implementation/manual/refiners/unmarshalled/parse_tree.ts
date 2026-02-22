@@ -29,7 +29,7 @@ export const Dictionary = (
                             ($) => $,
                             {
                                 duplicate_id: ($) => abort({
-                                    'type': ['duplicate entry', $],
+                                    'type': ['dictionary', ['duplicate entry', $]],
                                     'range': t_parse_tree_to_location.Value(value),
                                 })
                             },
@@ -125,9 +125,9 @@ export const Optional = (
             case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
                     case 'nothing': return _p.ss($, ($) => ({
-                                'value': value,
-                                'optional': _p.optional.literal.not_set()
-                            }))
+                        'value': value,
+                        'optional': _p.optional.literal.not_set()
+                    }))
                     case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => ({
@@ -174,7 +174,7 @@ export const Property = (
         {
             no_such_entry: ($) => abort({
                 'range': t_parse_tree_to_location.Value(value.value),
-                'type': ['missing property', $p.id]
+                'type': ['type', ['missing property', $p.id]]
             })
         }
     )
@@ -272,7 +272,7 @@ export const Verbose_Group = (
                                         ($) => $,
                                         {
                                             duplicate_id: ($) => abort({
-                                                'type': ['duplicate entry', $],
+                                                'type': ['type', ['duplicate property', $]],
                                                 'range': t_parse_tree_to_location.Value(value),
                                             })
                                         },
@@ -295,7 +295,7 @@ export const Verbose_Group = (
                                     if (unexpected_properties.__get_number_of_entries() > 0) {
                                         return abort({
                                             'range': t_parse_tree_to_location.Value(value),
-                                            'type': ['unexpected properties', unexpected_properties]
+                                            'type': ['type', ['unexpected properties', unexpected_properties]]
                                         })
                                     }
                                     return xxx
