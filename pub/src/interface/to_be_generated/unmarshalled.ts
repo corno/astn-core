@@ -24,6 +24,7 @@ export type Optional = {
 
 export type Nothing = {
     'value': d_parse_tree.Value
+    'null': null //useful for unmarshalling functions that have to produce a null value
 }
 
 export type State = d_parse_tree.Value.type_.concrete.state.status.set_

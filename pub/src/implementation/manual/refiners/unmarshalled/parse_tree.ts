@@ -95,6 +95,7 @@ export const Nothing = (
                 switch ($[0]) {
                     case 'nothing': return _p.ss($, ($) => ({
                         'value': value,
+                        'null': null
                     }))
                     default: return abort({
                         'type': ['wrong value type', {
