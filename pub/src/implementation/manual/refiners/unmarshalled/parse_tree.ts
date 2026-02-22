@@ -11,10 +11,61 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/location"
 
-export const Dictionary = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>
-): d_out.Dictionary => {
+export type Dictionary = _pi.Refiner<
+    d_out.Dictionary,
+    d_function.Error,
+    d_in.Value
+>
+
+export type List = _pi.Refiner<
+    d_out.List,
+    d_function.Error,
+    d_in.Value
+>
+
+export type Nothing = _pi.Refiner<
+    d_out.Nothing,
+    d_function.Error,
+    d_in.Value
+>
+
+export type Optional = _pi.Refiner<
+    d_out.Optional,
+    d_function.Error,
+    d_in.Value
+>
+
+export type Property = _pi.Refiner_With_Parameter<
+    d_out.Property,
+    d_function.Error,
+    d_out.Verbose_Group,
+    {
+        'id': string
+    }
+>
+
+export type State = _pi.Refiner<
+    d_out.State,
+    d_function.Error,
+    d_in.Value
+>
+
+export type Text = _pi.Refiner<
+    d_out.Text,
+    d_function.Error,
+    d_in.Value
+>
+
+export type Verbose_Group = _pi.Refiner_With_Parameter<
+    d_out.Verbose_Group,
+    d_function.Error,
+    d_in.Value,
+    {
+        'expected properties': _pi.Dictionary<null>
+    }
+>
+
+export const Dictionary: Dictionary = ($, abort) => {
     const value = $
     return _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -53,10 +104,7 @@ export const Dictionary = (
     })
 }
 
-export const List = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>
-): d_out.List => {
+export const List: List = ($, abort) => {
     const value = $
     return _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -84,10 +132,7 @@ export const List = (
     })
 }
 
-export const Nothing = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>
-): d_out.Nothing => {
+export const Nothing: Nothing = ($, abort) => {
     const value = $
     return _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -115,10 +160,7 @@ export const Nothing = (
     })
 }
 
-export const Optional = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>
-): d_out.Optional => {
+export const Optional: Optional = ($, abort) => {
     const value = $
     return _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -160,13 +202,7 @@ export const Optional = (
     })
 }
 
-export const Property = (
-    $: d_out.Verbose_Group,
-    abort: _pi.Abort<d_function.Error>,
-    $p: {
-        'id': string
-    }
-): d_out.Property => {
+export const Property: Property = ($, abort, $p) => {
     const value = $
     return _p.select.entry(
         $.properties,
@@ -181,10 +217,7 @@ export const Property = (
 }
 
 
-export const State = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>
-): d_out.State => {
+export const State: State = ($, abort) => {
     const value = $
     return _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -219,10 +252,7 @@ export const State = (
     })
 }
 
-export const Text = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>
-): d_out.Text => {
+export const Text: Text = ($, abort) => {
     const value = $
     return _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -247,13 +277,7 @@ export const Text = (
     })
 }
 
-export const Verbose_Group = (
-    $: d_in.Value,
-    abort: _pi.Abort<d_function.Error>,
-    $p: {
-        'expected properties': _pi.Dictionary<null>
-    }
-): d_out.Verbose_Group => {
+export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
     const value = $
     return {
         'value': $,

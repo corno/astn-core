@@ -8,7 +8,6 @@ export type Error = {
 }
 
 export type Error_Type =
-    | ['state', State_Error]
     | ['dictionary', Dictionary_Error]
     | ['type', Type_Error]
     | ['wrong value type', {
@@ -22,15 +21,10 @@ export type Error_Type =
         | ['text', null]
     }]
 
-export type State_Error =
-    | ['unknown option', string]
-
 export type Dictionary_Error =
-    | ['entry not set', string]
     | ['duplicate entry', string]
 
 export type Type_Error = 
     | ['duplicate property', string]
     | ['unexpected properties', _pi.Dictionary<d_location.Range>]
     | ['missing property', string]
-    | ['property not set', string]

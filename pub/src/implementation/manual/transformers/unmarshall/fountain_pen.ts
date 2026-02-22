@@ -11,26 +11,10 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
     sh.ph.literal(" - "),
     _p.decide.state($.type, ($) => {
         switch ($[0]) {
-            case 'state': return _p.ss($, ($) => _p.decide.state($, ($) => {
-                switch ($[0]) {
-                    case 'unknown option': return _p.ss($, ($) => sh.ph.composed([
-                        sh.ph.literal("unknown option: '"),
-                        sh.ph.literal($),
-                        sh.ph.literal("'")
-                    ]))
-
-                    default: return _p.au($[0])
-                }
-            }))
             case 'dictionary': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
                     case 'duplicate entry': return _p.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("duplicate entry: '"),
-                        sh.ph.literal($),
-                        sh.ph.literal("'")
-                    ]))
-                    case 'entry not set': return _p.ss($, ($) => sh.ph.composed([
-                        sh.ph.literal("entry not set: '"),
                         sh.ph.literal($),
                         sh.ph.literal("'")
                     ]))
@@ -47,11 +31,6 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
                     ]))
                     case 'missing property': return _p.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("missing property: '"),
-                        sh.ph.literal($),
-                        sh.ph.literal("'")
-                    ]))
-                    case 'property not set': return _p.ss($, ($) => sh.ph.composed([
-                        sh.ph.literal("property not set: '"),
                         sh.ph.literal($),
                         sh.ph.literal("'")
                     ]))
