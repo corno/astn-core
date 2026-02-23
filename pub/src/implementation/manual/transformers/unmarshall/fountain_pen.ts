@@ -40,7 +40,7 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
                             sh.pg.sentences($.__to_list(($, key) => sh.sentence([
                                 sh.ph.literal("-'"),
                                 sh.ph.literal(key),
-                                sh.ph.literal("-"),
+                                sh.ph.literal("'"),
                             ])))
                         ),
                     ]))
