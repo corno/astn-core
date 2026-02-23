@@ -7,7 +7,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
-    sh.ph.literal(`${$.range.start.relative['document resource identifier']}${$.range.start.relative.line}:${$.range.start.relative.column}-${$.range.end.relative.line}:${$.range.end.relative.column}`),
+    sh.ph.literal(`${$.range.start.relative['document resource identifier']}:${$.range.start.relative.line}:${$.range.start.relative.column}-${$.range.end.relative.line}:${$.range.end.relative.column}`),
     sh.ph.literal(" - "),
     _p.decide.state($.type, ($) => {
         switch ($[0]) {
@@ -35,10 +35,12 @@ export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
                         sh.ph.literal("'")
                     ]))
                     case 'unexpected properties': return _p.ss($, ($) => sh.ph.composed([
-                        sh.ph.literal("unexpected properties: '"),
+                        sh.ph.literal("unexpected properties: "),
                         sh.ph.indent(
                             sh.pg.sentences($.__to_list(($, key) => sh.sentence([
-                                sh.ph.literal(key)
+                                sh.ph.literal("-'"),
+                                sh.ph.literal(key),
+                                sh.ph.literal("-"),
                             ])))
                         ),
                     ]))
