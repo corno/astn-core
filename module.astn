@@ -1,0 +1,1354 @@
+(
+    'omit (de)serializer': true
+    'schema tree': | 'set' {
+        `location`: | 'schema' (
+            'schema imports': {}
+            'resolver imports': {}
+            'globals': (
+                'complexity': | 'unconstrained' ~
+                'text types': {}
+                'number types': {}
+            )
+            'modules': {
+                `Range`: (
+                    'root value': | 'group' {
+                        `start`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Location`
+                                'results': ~
+                            )
+                        )
+                        `end`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Location`
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Location`: (
+                    'root value': | 'group' {
+                        `relative`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Relative Location`
+                                'results': ~
+                            )
+                        )
+                        `absolute`: (
+                            'description': ~
+                            'value': | 'number' | 'local' (
+                                'precision': | 'exact' (
+                                    'decimal separator offset': ~
+                                    'type': | 'natural' ~
+                                )
+                            )
+                        )
+                    }
+                )
+                `Relative Location`: (
+                    'root value': | 'group' {
+                        `document resource identifier`: (
+                            'description': ~
+                            'value': | 'text' | 'local' (
+                                'type': | 'single line' ~
+                            )
+                        )
+                        `line`: (
+                            'description': ~
+                            'value': | 'number' | 'local' (
+                                'precision': | 'exact' (
+                                    'decimal separator offset': ~
+                                    'type': | 'natural' ~
+                                )
+                            )
+                        )
+                        `column`: (
+                            'description': ~
+                            'value': | 'number' | 'local' (
+                                'precision': | 'exact' (
+                                    'decimal separator offset': ~
+                                    'type': | 'natural' ~
+                                )
+                            )
+                        )
+                    }
+                )
+            }
+            'complexity': | 'unconstrained' ~
+        )
+        `token`: | 'schema' (
+            'schema imports': {
+                `location`: (
+                    'schema set child': `location`
+                    'schema': ~
+                )
+            }
+            'resolver imports': {}
+            'globals': (
+                'complexity': | 'unconstrained' ~
+                'text types': {}
+                'number types': {}
+            )
+            'modules': {
+                `Tokenizer Result`: (
+                    'root value': | 'group' {
+                        `leading trivia`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Trivia`
+                                'results': ~
+                            )
+                        )
+                        `tokens`: (
+                            'description': ~
+                            'value': | 'list' (
+                                'value': | 'component' (
+                                    'type': | 'internal' `Annotated Token`
+                                    'results': ~
+                                )
+                                'results': ~
+                            )
+                        )
+                        `end`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `location`
+                                    'module': `Location`
+                                )
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Annotated Token`: (
+                    'root value': | 'group' {
+                        `start`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `location`
+                                    'module': `Location`
+                                )
+                                'results': ~
+                            )
+                        )
+                        `type`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Token Type`
+                                'results': ~
+                            )
+                        )
+                        `end`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `location`
+                                    'module': `Location`
+                                )
+                                'results': ~
+                            )
+                        )
+                        `trailing trivia`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Trivia`
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Token Type`: (
+                    'root value': | 'state' (
+                        'options': {
+                            `!`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `@`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `:`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `#`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `{`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `}`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `[`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `]`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `(`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `)`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `<`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `>`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `~`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `*`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `|`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `text`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `value`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Delimited Text`
+                                            'results': ~
+                                        )
+                                    )
+                                    `type`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Text Type`
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+                `Delimited Text`: (
+                    'root value': | 'text' | 'local' (
+                        'type': | 'single line' ~
+                    )
+                )
+                `Whitespace`: (
+                    'root value': | 'group' {
+                        `range`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `location`
+                                    'module': `Range`
+                                )
+                                'results': ~
+                            )
+                        )
+                        `value`: (
+                            'description': ~
+                            'value': | 'text' | 'local' (
+                                'type': | 'single line' ~
+                            )
+                        )
+                    }
+                )
+                `Trivia`: (
+                    'root value': | 'group' {
+                        `leading whitespace`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Whitespace`
+                                'results': ~
+                            )
+                        )
+                        `comments`: (
+                            'description': ~
+                            'value': | 'list' (
+                                'value': | 'group' {
+                                    `type`: (
+                                        'description': ~
+                                        'value': | 'state' (
+                                            'options': {
+                                                `line`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'nothing' ~
+                                                )
+                                                `block`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'nothing' ~
+                                                )
+                                            }
+                                            'results': ~
+                                        )
+                                    )
+                                    `content`: (
+                                        'description': ~
+                                        'value': | 'text' | 'local' (
+                                            'type': | 'single line' ~
+                                        )
+                                    )
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                    `trailing whitespace`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Whitespace`
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Text Type`: (
+                    'root value': | 'state' (
+                        'options': {
+                            `quoted`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `apostrophed`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `undelimited`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `backticked`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+            }
+            'complexity': | 'unconstrained' ~
+        )
+        `parse tree`: | 'schema' (
+            'schema imports': {
+                `token`: (
+                    'schema set child': `token`
+                    'schema': ~
+                )
+                `location`: (
+                    'schema set child': `location`
+                    'schema': ~
+                )
+            }
+            'resolver imports': {}
+            'globals': (
+                'complexity': | 'unconstrained' ~
+                'text types': {}
+                'number types': {}
+            )
+            'modules': {
+                `Document`: (
+                    'root value': | 'group' {
+                        `header`: (
+                            'description': ~
+                            'value': | 'optional' | 'group' {
+                                `!`: (
+                                    'description': ~
+                                    'value': | 'component' (
+                                        'type': | 'internal' `Structural Token`
+                                        'results': ~
+                                    )
+                                )
+                                `value`: (
+                                    'description': ~
+                                    'value': | 'component' (
+                                        'type': | 'internal' `Value`
+                                        'results': ~
+                                    )
+                                )
+                            }
+                        )
+                        `content`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'internal' `Content`
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Content`: (
+                    'root value': | 'component' (
+                        'type': | 'internal' `Value`
+                        'results': ~
+                    )
+                )
+                `Value`: (
+                    'root value': | 'group' {
+                        `type`: (
+                            'description': ~
+                            'value': | 'state' (
+                                'options': {
+                                    `concrete`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'state' (
+                                            'options': {
+                                                `dictionary`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'group' {
+                                                        `{`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Structural Token`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                        `entries`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `ID Value Pairs`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                        `}`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Structural Token`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                    }
+                                                )
+                                                `group`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'state' (
+                                                        'options': {
+                                                            `concise`: (
+                                                                'constraints': ~
+                                                                'description': ~
+                                                                'value': | 'group' {
+                                                                    `<`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Structural Token`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                    `items`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Items`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                    `>`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Structural Token`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                }
+                                                            )
+                                                            `verbose`: (
+                                                                'constraints': ~
+                                                                'description': ~
+                                                                'value': | 'group' {
+                                                                    `(`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Structural Token`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                    `entries`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `ID Value Pairs`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                    `)`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Structural Token`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                        'results': ~
+                                                    )
+                                                )
+                                                `list`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'group' {
+                                                        `[`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Structural Token`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                        `items`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Items`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                        `]`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Structural Token`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                    }
+                                                )
+                                                `nothing`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'group' {
+                                                        `~`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Structural Token`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                    }
+                                                )
+                                                `optional`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'state' (
+                                                        'options': {
+                                                            `set`: (
+                                                                'constraints': ~
+                                                                'description': ~
+                                                                'value': | 'group' {
+                                                                    `*`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Structural Token`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                    `value`: (
+                                                                        'description': ~
+                                                                        'value': | 'component' (
+                                                                            'type': | 'internal' `Value`
+                                                                            'results': ~
+                                                                        )
+                                                                    )
+                                                                }
+                                                            )
+                                                        }
+                                                        'results': ~
+                                                    )
+                                                )
+                                                `state`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'group' {
+                                                        `|`: (
+                                                            'description': ~
+                                                            'value': | 'component' (
+                                                                'type': | 'internal' `Structural Token`
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                        `status`: (
+                                                            'description': ~
+                                                            'value': | 'state' (
+                                                                'options': {
+                                                                    `missing data`: (
+                                                                        'constraints': ~
+                                                                        'description': ~
+                                                                        'value': | 'group' {
+                                                                            `#`: (
+                                                                                'description': ~
+                                                                                'value': | 'component' (
+                                                                                    'type': | 'internal' `Structural Token`
+                                                                                    'results': ~
+                                                                                )
+                                                                            )
+                                                                        }
+                                                                    )
+                                                                    `set`: (
+                                                                        'constraints': ~
+                                                                        'description': ~
+                                                                        'value': | 'group' {
+                                                                            `option`: (
+                                                                                'description': ~
+                                                                                'value': | 'component' (
+                                                                                    'type': | 'internal' `Text`
+                                                                                    'results': ~
+                                                                                )
+                                                                            )
+                                                                            `value`: (
+                                                                                'description': ~
+                                                                                'value': | 'component' (
+                                                                                    'type': | 'internal' `Value`
+                                                                                    'results': ~
+                                                                                )
+                                                                            )
+                                                                        }
+                                                                    )
+                                                                }
+                                                                'results': ~
+                                                            )
+                                                        )
+                                                    }
+                                                )
+                                                `text`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'component' (
+                                                        'type': | 'internal' `Text`
+                                                        'results': ~
+                                                    )
+                                                )
+                                            }
+                                            'results': ~
+                                        )
+                                    )
+                                    `include`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'group' {
+                                            `@`: (
+                                                'description': ~
+                                                'value': | 'component' (
+                                                    'type': | 'internal' `Structural Token`
+                                                    'results': ~
+                                                )
+                                            )
+                                            `path`: (
+                                                'description': ~
+                                                'value': | 'component' (
+                                                    'type': | 'internal' `Text`
+                                                    'results': ~
+                                                )
+                                            )
+                                        }
+                                    )
+                                    `missing data`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'group' {
+                                            `#`: (
+                                                'description': ~
+                                                'value': | 'component' (
+                                                    'type': | 'internal' `Structural Token`
+                                                    'results': ~
+                                                )
+                                            )
+                                        }
+                                    )
+                                }
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Structural Token`: (
+                    'root value': | 'group' {
+                        `trailing trivia`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `token`
+                                    'module': `Trivia`
+                                )
+                                'results': ~
+                            )
+                        )
+                        `range`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `location`
+                                    'module': `Range`
+                                )
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Text`: (
+                    'root value': | 'group' {
+                        `trailing trivia`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `token`
+                                    'module': `Trivia`
+                                )
+                                'results': ~
+                            )
+                        )
+                        `range`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `location`
+                                    'module': `Range`
+                                )
+                                'results': ~
+                            )
+                        )
+                        `value`: (
+                            'description': ~
+                            'value': | 'text' | 'local' (
+                                'type': | 'single line' ~
+                            )
+                        )
+                        `type`: (
+                            'description': ~
+                            'value': | 'component' (
+                                'type': | 'external' (
+                                    'import': `token`
+                                    'module': `Text Type`
+                                )
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `ID Value Pairs`: (
+                    'root value': | 'list' (
+                        'value': | 'group' {
+                            `id`: (
+                                'description': ~
+                                'value': | 'component' (
+                                    'type': | 'internal' `Text`
+                                    'results': ~
+                                )
+                            )
+                            `value`: (
+                                'description': ~
+                                'value': | 'optional' | 'group' {
+                                    `:`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Structural Token`
+                                            'results': ~
+                                        )
+                                    )
+                                    `value`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Value`
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+                `Items`: (
+                    'root value': | 'list' (
+                        'value': | 'group' {
+                            `value`: (
+                                'description': ~
+                                'value': | 'component' (
+                                    'type': | 'internal' `Value`
+                                    'results': ~
+                                )
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+            }
+            'complexity': | 'unconstrained' ~
+        )
+        `deserialize parse tree`: | 'schema' (
+            'schema imports': {
+                `parse tree`: (
+                    'schema set child': `parse tree`
+                    'schema': ~
+                )
+                `token`: (
+                    'schema set child': `token`
+                    'schema': ~
+                )
+                `location`: (
+                    'schema set child': `location`
+                    'schema': ~
+                )
+            }
+            'resolver imports': {}
+            'globals': (
+                'complexity': | 'unconstrained' ~
+                'text types': {}
+                'number types': {}
+            )
+            'modules': {
+                `Error`: (
+                    'root value': | 'group' {
+                        `type`: (
+                            'description': ~
+                            'value': | 'state' (
+                                'options': {
+                                    `lexer`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Lexer Error`
+                                            'results': ~
+                                        )
+                                    )
+                                    `parser`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Parser Error`
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Lexer Error`: (
+                    'root value': | 'state' (
+                        'options': {
+                            `dangling slash`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                    `at end of input`: (
+                                        'description': ~
+                                        'value': | 'boolean' ~
+                                    )
+                                }
+                            )
+                            `invalid unicode escape sequence`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `missing character after escape`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unexpected control character`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `character`: (
+                                        'description': ~
+                                        'value': | 'number' | 'local' (
+                                            'precision': | 'exact' (
+                                                'decimal separator offset': ~
+                                                'type': | 'natural' ~
+                                            )
+                                        )
+                                    )
+                                    `location`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Location`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unexpected control character in text`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `character`: (
+                                        'description': ~
+                                        'value': | 'number' | 'local' (
+                                            'precision': | 'exact' (
+                                                'decimal separator offset': ~
+                                                'type': | 'natural' ~
+                                            )
+                                        )
+                                    )
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unexpected end of line in delimited text`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unknown escape character`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `character`: (
+                                        'description': ~
+                                        'value': | 'number' | 'local' (
+                                            'precision': | 'exact' (
+                                                'decimal separator offset': ~
+                                                'type': | 'natural' ~
+                                            )
+                                        )
+                                    )
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unterminated block comment`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unterminated text`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `unterminated unicode escape sequence`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `range`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'external' (
+                                                'import': `location`
+                                                'module': `Range`
+                                            )
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+                `Parser Error`: (
+                    'root value': | 'group' {
+                        `expected`: (
+                            'description': ~
+                            'value': | 'list' (
+                                'value': | 'component' (
+                                    'type': | 'internal' `Expected`
+                                    'results': ~
+                                )
+                                'results': ~
+                            )
+                        )
+                        `cause`: (
+                            'description': ~
+                            'value': | 'state' (
+                                'options': {
+                                    `missing token`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'nothing' ~
+                                    )
+                                    `unexpected token`: (
+                                        'constraints': ~
+                                        'description': ~
+                                        'value': | 'group' {
+                                            `found`: (
+                                                'description': ~
+                                                'value': | 'component' (
+                                                    'type': | 'external' (
+                                                        'import': `token`
+                                                        'module': `Annotated Token`
+                                                    )
+                                                    'results': ~
+                                                )
+                                            )
+                                        }
+                                    )
+                                }
+                                'results': ~
+                            )
+                        )
+                    }
+                )
+                `Expected`: (
+                    'root value': | 'state' (
+                        'options': {
+                            `a text value`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `any value`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `!`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `>`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `}`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `@`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `,`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `:`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `)`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `]`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `#`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+                `Parameters`: (
+                    'root value': | 'group' {
+                        `document resource identifier`: (
+                            'description': ~
+                            'value': | 'text' | 'local' (
+                                'type': | 'single line' ~
+                            )
+                        )
+                        `tab size`: (
+                            'description': ~
+                            'value': | 'number' | 'local' (
+                                'precision': | 'exact' (
+                                    'decimal separator offset': ~
+                                    'type': | 'natural' ~
+                                )
+                            )
+                        )
+                    }
+                )
+            }
+            'complexity': | 'unconstrained' ~
+        )
+        `sealed target`: | 'schema' (
+            'schema imports': {}
+            'resolver imports': {}
+            'globals': (
+                'complexity': | 'unconstrained' ~
+                'text types': {
+                    `Text Value`: (
+                        'type': | 'single line' ~
+                    )
+                }
+                'number types': {
+                    `Position`: (
+                        'precision': | 'exact' (
+                            'decimal separator offset': ~
+                            'type': | 'natural' ~
+                        )
+                    )
+                }
+            )
+            'modules': {
+                `Document`: (
+                    'root value': | 'component' (
+                        'type': | 'internal' `Value`
+                        'results': ~
+                    )
+                )
+                `Value`: (
+                    'root value': | 'state' (
+                        'options': {
+                            `list`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'list' (
+                                    'value': | 'component' (
+                                        'type': | 'internal' `Value`
+                                        'results': ~
+                                    )
+                                    'results': ~
+                                )
+                            )
+                            `dictionary`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'dictionary' (
+                                    'value': | 'component' (
+                                        'type': | 'internal' `Value`
+                                        'results': ~
+                                    )
+                                )
+                            )
+                            `group`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'state' (
+                                    'options': {
+                                        `verbose`: (
+                                            'constraints': ~
+                                            'description': ~
+                                            'value': | 'dictionary' (
+                                                'value': | 'component' (
+                                                    'type': | 'internal' `Value`
+                                                    'results': ~
+                                                )
+                                            )
+                                        )
+                                    }
+                                    'results': ~
+                                )
+                            )
+                            `nothing`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'nothing' ~
+                            )
+                            `optional`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'state' (
+                                    'options': {
+                                        `not set`: (
+                                            'constraints': ~
+                                            'description': ~
+                                            'value': | 'nothing' ~
+                                        )
+                                        `set`: (
+                                            'constraints': ~
+                                            'description': ~
+                                            'value': | 'component' (
+                                                'type': | 'internal' `Value`
+                                                'results': ~
+                                            )
+                                        )
+                                    }
+                                    'results': ~
+                                )
+                            )
+                            `state`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `option`: (
+                                        'description': ~
+                                        'value': | 'text' | 'global' `Text Value`
+                                    )
+                                    `value`: (
+                                        'description': ~
+                                        'value': | 'component' (
+                                            'type': | 'internal' `Value`
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                            `text`: (
+                                'constraints': ~
+                                'description': ~
+                                'value': | 'group' {
+                                    `value`: (
+                                        'description': ~
+                                        'value': | 'text' | 'global' `Text Value`
+                                    )
+                                    `delimiter`: (
+                                        'description': ~
+                                        'value': | 'state' (
+                                            'options': {
+                                                `none`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'nothing' ~
+                                                )
+                                                `quote`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'nothing' ~
+                                                )
+                                                `backtick`: (
+                                                    'constraints': ~
+                                                    'description': ~
+                                                    'value': | 'nothing' ~
+                                                )
+                                            }
+                                            'results': ~
+                                        )
+                                    )
+                                }
+                            )
+                        }
+                        'results': ~
+                    )
+                )
+            }
+            'complexity': | 'unconstrained' ~
+        )
+    }
+)
