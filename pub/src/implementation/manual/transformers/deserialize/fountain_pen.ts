@@ -14,7 +14,7 @@ export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Phrase, d_f
     switch ($[0]) {
 
         case 'parse error': return _p.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($, $p))
-        case 'unmarshall error': return _p.ss($, ($) => t_unmarshall_to_fountain_pen.Error($))
+        case 'unmarshall error': return _p.ss($, ($) => t_unmarshall_to_fountain_pen.Error($, $p))
         default: return _p.au($[0])
     }
 })

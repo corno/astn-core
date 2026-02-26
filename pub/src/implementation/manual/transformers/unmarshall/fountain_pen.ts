@@ -1,13 +1,19 @@
 import * as _p from 'pareto-core/dist/assign'
+import * as _pi from 'pareto-core/dist/interface'
+
 //data types
 import * as d_in from "../../../../interface/to_be_generated/unmarshall"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
+import * as d_function_loc from "../../../../interface/to_be_generated/location_to_fountain_pen"
+
+//dependencies
+import * as t_loc_to_fountain_pen from "../location/fountain_pen"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Error = ($: d_in.Error): d_out.Phrase => sh.ph.composed([
-    sh.ph.literal(`${$.range.start.relative['document resource identifier']}:${$.range.start.relative.line}:${$.range.start.relative.column}-${$.range.end.relative.line}:${$.range.end.relative.column}`),
+export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Phrase, d_function_loc.Parameters> = ($, $p) => sh.ph.composed([
+    t_loc_to_fountain_pen.Range($.range, $p),
     sh.ph.literal(" - "),
     _p.decide.state($.type, ($) => {
         switch ($[0]) {
