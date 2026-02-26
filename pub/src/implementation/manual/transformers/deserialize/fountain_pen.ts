@@ -11,7 +11,7 @@ import * as t_unmarshall_to_fountain_pen from "../unmarshall/fountain_pen"
 export const Error = ($: d_in.Error): d_out.Phrase => _p.decide.state($, ($) => {
     switch ($[0]) {
 
-        case 'parse error': return _p.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($, { 'position info': ['zero based', null] }))
+        case 'parse error': return _p.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($, { 'character location reporting': ['zero based', null] }))
         case 'unmarshall error': return _p.ss($, ($) => t_unmarshall_to_fountain_pen.Error($))
         default: return _p.au($[0])
     }

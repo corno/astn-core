@@ -4,31 +4,26 @@ import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
+import * as d_function from "../../../../interface/to_be_generated/deserialize_parse_tree_to_fountain_pen"
 
-
-export type Parameters = {
-    'position info':
-    | ['zero based', null]
-    | ['one based', null]
-}
 
 export namespace signatures {
-    export type Error = _pi.Transformer_With_Parameter<d_in.Error, d_out.Phrase, Parameters>
+    export type Error = _pi.Transformer_With_Parameter<d_in.Error, d_out.Phrase, d_function.Parameters>
 }
 
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-import * as t_token_to_fountain_pen from "../location/fountain_pen"
+import * as t_location_to_fountain_pen from "../location/fountain_pen"
 
 
 export const Error: signatures.Error = ($, $p) => {
-    const extra: number = _p.decide.state($p['position info'], ($) => {
-        switch ($[0]) {
-            case 'zero based': return 0
-            case 'one based': return 1
-            default: return _p.au($[0])
-        }
-    })
+    // const extra: number = _p.decide.state($p['position info'], ($) => {
+    //     switch ($[0]) {
+    //         case 'zero based': return 0
+    //         case 'one based': return 1
+    //         default: return _p.au($[0])
+    //     }
+    // })
     const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => _p.decide.state($, ($) => {
         switch ($[0]) {
             case 'lexer': return _p.ss($, ($) => _p.decide.state($, ($) => {
@@ -99,24 +94,24 @@ export const Error: signatures.Error = ($, $p) => {
             switch ($[0]) {
                 case 'lexer': return _p.ss($, ($) => _p.decide.state($, ($) => {
                     switch ($[0]) {
-                        case 'unexpected control character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'] }))
-                        case 'unexpected control character in text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'missing character after escape': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'unexpected end of line in delimited text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'unexpected control character': return _p.ss($, ($) => t_location_to_fountain_pen.Location($.location, { 'character location reporting': $p['character location reporting'] }))
+                        case 'unexpected control character in text': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'missing character after escape': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'unexpected end of line in delimited text': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
                         // case 'unexpected character': return _p.ss($, ($) => t_token_to_fountain_pen.Location($.location, { 'position info': $p['position info'] }))
-                        case 'unterminated text': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'unterminated block comment': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'unterminated unicode escape sequence': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'invalid unicode escape sequence': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'unknown escape character': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
-                        case 'dangling slash': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.range, { 'position info': $p['position info'] }))
+                        case 'unterminated text': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'unterminated block comment': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'unterminated unicode escape sequence': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'invalid unicode escape sequence': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'unknown escape character': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
+                        case 'dangling slash': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.range, { 'character location reporting': $p['character location reporting'] }))
                         default: return _p.au($[0])
                     }
                 }))
                 case 'parser': return _p.ss($, ($): d_out.Phrase => _p.decide.state($.cause, ($) => {
                     switch ($[0]) {
                         case 'missing token': return _p.ss($, ($) => sh.ph.nothing())
-                        case 'unexpected token': return _p.ss($, ($) => t_token_to_fountain_pen.Range($.found, { 'position info': $p['position info'] }))
+                        case 'unexpected token': return _p.ss($, ($) => t_location_to_fountain_pen.Range($.found, { 'character location reporting': $p['character location reporting'] }))
                         default: return _p.au($[0])
                     }
                 }))
