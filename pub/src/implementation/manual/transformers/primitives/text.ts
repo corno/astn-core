@@ -3,14 +3,9 @@ import * as _pi from 'pareto-core/dist/interface'
 import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 
 import * as d_in from "../../../../interface/to_be_generated/primitives"
-import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
-import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
-
-export const Escaped = (
-    $: d_in.Escaped,
-): d_loc.List_of_Characters => _p.list.from.list(
+export const Escaped: _pi.Transformer<d_in.Escaped, d_out.List_of_Characters> = ($) => _p.list.from.list(
     _p_list_from_text($, ($) => $),
 ).flatten(
     ($): _pi.List<number> => {
@@ -70,7 +65,7 @@ export const Escaped = (
     }
 )
 
-export const Quoted: _pi.Transformer_With_Parameter<d_in.Quoted, d_loc.List_of_Characters, {
+export const Quoted: _pi.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_Characters, {
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? _p.list.nested_literal_old([
@@ -86,7 +81,7 @@ export const Quoted: _pi.Transformer_With_Parameter<d_in.Quoted, d_loc.List_of_C
     ])
     : Escaped($)
 
-export const Apostrophed: _pi.Transformer_With_Parameter<d_in.Apostrophed, d_loc.List_of_Characters, {
+export const Apostrophed: _pi.Transformer_With_Parameter<d_in.Apostrophed, d_out.List_of_Characters, {
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? _p.list.nested_literal_old([
@@ -102,7 +97,7 @@ export const Apostrophed: _pi.Transformer_With_Parameter<d_in.Apostrophed, d_loc
     ])
     : Escaped($)
 
-export const Backticked: _pi.Transformer_With_Parameter<d_in.Backticked, d_loc.List_of_Characters, {
+export const Backticked: _pi.Transformer_With_Parameter<d_in.Backticked, d_out.List_of_Characters, {
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? _p.list.nested_literal_old([
@@ -118,7 +113,7 @@ export const Backticked: _pi.Transformer_With_Parameter<d_in.Backticked, d_loc.L
     ])
     : Escaped($)
 
-export const Undelimited: _pi.Transformer<d_in.Undelimited, d_loc.List_of_Characters> = ($) => _p_list_from_text(
+export const Undelimited: _pi.Transformer<d_in.Undelimited, d_out.List_of_Characters> = ($) => _p_list_from_text(
     $,
     ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
 ) 
