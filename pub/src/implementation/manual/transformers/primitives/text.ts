@@ -15,11 +15,12 @@ export const Escaped = (
 ).flatten(
     ($): _pi.List<number> => {
         switch ($) {
-            case 0x2F: // slash (\/)
-                return _p.list.literal([
-                    0x5c, // \
-                    0x2f, // /
-                ])
+            //I see no need to escape the slash, as it is not an operator character in JSON, and it is not whitespace
+            // case 0x2F: // slash (\/)
+            //     return _p.list.literal([
+            //         0x5c, // \
+            //         0x2f, // /
+            //     ])
             case 0x22: // " (\")
                 return _p.list.literal([
                     0x5C, // \
