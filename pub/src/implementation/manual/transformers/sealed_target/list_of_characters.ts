@@ -12,6 +12,10 @@ import * as t_to_fp from "./fountain_pen"
 import * as t_fp_to_characters from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
 
 
+export const Document: _pi.Transformer_With_Parameter<d_in.Document, d_out.List_of_Characters, d_function_fp.Parameters> = ($, $p) => t_fp_to_characters.Paragraph(
+    t_to_fp.Document($),
+    $p
+)
 export const Value: _pi.Transformer_With_Parameter<d_in.Value, d_out.List_of_Characters, d_function_fp.Parameters> = ($, $p) => t_fp_to_characters.Phrase(
     t_to_fp.Value($),
     $p
