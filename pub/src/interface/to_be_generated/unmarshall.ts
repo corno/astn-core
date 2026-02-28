@@ -1,10 +1,11 @@
 import * as _pi from 'pareto-core/dist/interface'
 
 import * as d_location from "../../interface/generated/liana/schemas/location/data"
+import { Range_Info } from '../../implementation/manual/transformers/parse_tree/location_info'
 
 export type Error = {
     'type': Error_Type
-    'range': d_location.Range
+    'range': Range_Info
 }
 
 export type Error_Type =

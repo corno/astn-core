@@ -9,7 +9,7 @@ import * as d_function from "../../../../interface/to_be_generated/unmarshall"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
-import * as t_parse_tree_to_location from "../../transformers/parse_tree/location"
+import * as t_parse_tree_to_location from "../../transformers/parse_tree/location_info"
 
 export type Dictionary = _pi.Refiner<
     d_out.Dictionary,

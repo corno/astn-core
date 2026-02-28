@@ -13,7 +13,7 @@ import * as t_loc_to_fountain_pen from "../location/fountain_pen"
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error: _pi.Transformer_With_Parameter<d_in.Error, d_out.Phrase, d_function_loc.Parameters> = ($, $p) => sh.ph.composed([
-    t_loc_to_fountain_pen.Range($.range, $p),
+    t_loc_to_fountain_pen.Range($.range['start token'], $p),
     sh.ph.literal(" - "),
     _p.decide.state($.type, ($) => {
         switch ($[0]) {
