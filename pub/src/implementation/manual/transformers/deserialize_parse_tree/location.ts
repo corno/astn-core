@@ -6,14 +6,15 @@ import _p_change_context from 'pareto-core/dist/_p_change_context'
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/location/data"
+import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 export namespace signatures {
-    export type Error = _pi.Transformer<d_in.Error, _pi.Optional_Value<d_out.Range>>
+    export type Error = _pi.Transformer<d_in.Error, d_out.Range>
 }
 
 export const Error: signatures.Error = ($) => _p.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'lexer': return _p.ss($, ($): _pi.Optional_Value<d_out.Range> => _p_change_context(
+        case 'lexer': return _p.ss($, ($): d_out.Range => _p_change_context(
             _p.decide.state($, ($): d_out.Range => {
                 switch ($[0]) {
                     case 'dangling slash': return _p.ss($, ($) => $.range)
@@ -32,12 +33,12 @@ export const Error: signatures.Error = ($) => _p.decide.state($.type, ($) => {
                     default: return _p.au($[0])
                 }
             }),
-            ($): _pi.Optional_Value<d_out.Range> => _p.optional.literal.set($)
+            ($) => $
         ))
         case 'parser': return _p.ss($, ($) => _p.decide.state($.cause, ($) => {
             switch ($[0]) {
-                case 'missing token': return _p.ss($, ($) => _p.optional.literal.not_set())
-                case 'unexpected token': return _p.ss($, ($) => _p.optional.literal.set({
+                case 'missing token': return _p.ss($, ($) => _p_unreachable_code_path("this is not unreachable, needs implementation; how to get location info (at least the document resource identifier) for this error?"))
+                case 'unexpected token': return _p.ss($, ($) => ({
                     'start': $.found.start,
                     'end': $.found.end
                 }))
