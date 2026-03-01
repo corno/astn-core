@@ -1,6 +1,14 @@
 
 export type Parameters = {
-    'character location reporting':character_location_reporting
+    'add location information':
+    | ['no', null]
+    | ['yes', {
+        'character location reporting': character_location_reporting
+    }]
+}
+
+export type Old_Parameters = {
+    'character location reporting': character_location_reporting
 }
 
 export type character_location_reporting =

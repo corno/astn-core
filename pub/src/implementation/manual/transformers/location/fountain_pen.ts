@@ -15,8 +15,8 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
 export namespace signatures {
-    export type Location = _pi.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Parameters>
-    export type Range = _pi.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Parameters>
+    export type Location = _pi.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Old_Parameters>
+    export type Range = _pi.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Old_Parameters>
 }
 
 
