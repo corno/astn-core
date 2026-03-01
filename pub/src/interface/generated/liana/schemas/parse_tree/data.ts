@@ -151,14 +151,14 @@ export namespace Value_ {
                 
                 export namespace status {
                     
-                    export namespace missing_data {
+                    export namespace missing {
                         
                         export type $ha_ = Structural_Token_
                         
                     }
                     
-                    export type missing_data = {
-                        readonly '#': missing_data.$ha_
+                    export type missing = {
+                        readonly '#': missing.$ha_
                     }
                     
                     export namespace set_ {
@@ -177,7 +177,7 @@ export namespace Value_ {
                 }
                 
                 export type status = 
-                    | readonly ['missing data', status.missing_data]
+                    | readonly ['missing', status.missing]
                     | readonly ['set', status.set_]
                 
             }
@@ -200,27 +200,16 @@ export namespace Value_ {
             | readonly ['state', concrete.state]
             | readonly ['text', concrete.text]
         
-        export namespace include {
-            
-            export type $at_ = Structural_Token_
-            
-            export type path = Text_
-            
-        }
+        export type include = Include_
         
-        export type include = {
-            readonly '@': include.$at_
-            readonly 'path': include.path
-        }
-        
-        export namespace missing_data {
+        export namespace missing {
             
             export type $ha_ = Structural_Token_
             
         }
         
-        export type missing_data = {
-            readonly '#': missing_data.$ha_
+        export type missing = {
+            readonly '#': missing.$ha_
         }
         
     }
@@ -228,12 +217,25 @@ export namespace Value_ {
     export type type_ = 
         | readonly ['concrete', type_.concrete]
         | readonly ['include', type_.include]
-        | readonly ['missing data', type_.missing_data]
+        | readonly ['missing', type_.missing]
     
 }
 
 export type Value_ = {
     readonly 'type': Value_.type_
+}
+
+export namespace Include_ {
+    
+    export type $at_ = Structural_Token_
+    
+    export type path = Text_
+    
+}
+
+export type Include_ = {
+    readonly '@': Include_.$at_
+    readonly 'path': Include_.path
 }
 
 export namespace Structural_Token_ {
@@ -270,39 +272,41 @@ export type Text_ = {
 
 export namespace ID_Value_Pairs_ {
     
-    export namespace L {
-        
-        export type id = Text_
-        
-        export namespace value {
-            
-            export namespace O {
-                
-                export type $cl_ = Structural_Token_
-                
-                export type value = Value_
-                
-            }
-            
-            export type O = {
-                readonly ':': O.$cl_
-                readonly 'value': O.value
-            }
-            
-        }
-        
-        export type value = _pi.Optional_Value<value.O>
-        
-    }
-    
-    export type L = {
-        readonly 'id': L.id
-        readonly 'value': L.value
-    }
+    export type L = ID_Value_Pair_
     
 }
 
 export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
+
+export namespace ID_Value_Pair_ {
+    
+    export type id = Text_
+    
+    export namespace value {
+        
+        export namespace O {
+            
+            export type $cl_ = Structural_Token_
+            
+            export type value = Value_
+            
+        }
+        
+        export type O = {
+            readonly ':': O.$cl_
+            readonly 'value': O.value
+        }
+        
+    }
+    
+    export type value = _pi.Optional_Value<value.O>
+    
+}
+
+export type ID_Value_Pair_ = {
+    readonly 'id': ID_Value_Pair_.id
+    readonly 'value': ID_Value_Pair_.value
+}
 
 export namespace Items_ {
     
@@ -324,8 +328,10 @@ export {
     Document_ as Document, 
     Content_ as Content, 
     Value_ as Value, 
+    Include_ as Include, 
     Structural_Token_ as Structural_Token, 
     Text_ as Text, 
     ID_Value_Pairs_ as ID_Value_Pairs, 
+    ID_Value_Pair_ as ID_Value_Pair, 
     Items_ as Items, 
 }

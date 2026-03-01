@@ -145,7 +145,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                                     'option': String(iterator, { 'string': $ }),
                                     'value': Value(iterator)
                                 }])
-                                case '#': return _p.ss($, ($) => ['missing data', {
+                                case '#': return _p.ss($, ($) => ['missing', {
                                     '#': Structural_Token(iterator),
                                 }])
                                 default: return abort()
@@ -156,7 +156,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                     '*': Structural_Token(iterator),
                     'value': Value(iterator)
                 }]]])
-                case '#': return _p.ss($, ($) => ['missing data', {
+                case '#': return _p.ss($, ($) => ['missing', {
                     '#': Structural_Token(iterator),
                 }])
 

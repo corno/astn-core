@@ -48,7 +48,7 @@ export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _
             'start': $['|'].range.start,
             'end': _p.decide.state($.status, ($) => {
                 switch ($[0]) {
-                    case 'missing data': return _p.ss($, ($) => $['#'].range.end)
+                    case 'missing': return _p.ss($, ($) => $['#'].range.end)
                     case 'set': return _p.ss($, ($) => Value($['value']).end)
                     default: return _p.au($[0])
                 }
@@ -66,7 +66,7 @@ export const Value: Value = ($) => _p.decide.state($.type, ($): d_out.Range => {
             'start': $['@'].range.start,
             'end': $.path.range.end
         }))
-        case 'missing data': return _p.ss($, ($) => ($['#'].range))
+        case 'missing': return _p.ss($, ($) => ($['#'].range))
         default: return _p.au($[0])
     }
 })

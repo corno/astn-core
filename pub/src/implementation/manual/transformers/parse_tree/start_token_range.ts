@@ -37,7 +37,7 @@ export const Value: Value = ($) => _p.decide.state($.type, ($): d_out.Range => {
     switch ($[0]) {
         case 'concrete': return _p.ss($, ($) => Concrete_Value($))
         case 'include': return _p.ss($, ($) => $['@'].range)
-        case 'missing data': return _p.ss($, ($) => $['#'].range)
+        case 'missing': return _p.ss($, ($) => $['#'].range)
         default: return _p.au($[0])
     }
 })
