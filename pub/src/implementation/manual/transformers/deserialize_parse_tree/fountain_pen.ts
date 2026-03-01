@@ -5,7 +5,6 @@ import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
-import * as d_function from "../../../../interface/to_be_generated/deserialize_parse_tree_to_fountain_pen"
 export namespace signatures {
     export type Error = _pi.Transformer<d_in.Error, d_out.Phrase>
 }
