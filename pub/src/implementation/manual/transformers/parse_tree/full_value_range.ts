@@ -7,6 +7,7 @@ import * as d_out from "../../../../interface/generated/liana/schemas/location/d
 
 export type Value = _pi.Transformer<d_in.Value, d_out.Range>
 export type Concrete_Value = _pi.Transformer<d_in.Value.type_.concrete, d_out.Range>
+export type ID_Value_Pair = _pi.Transformer<d_in.ID_Value_Pairs.L, d_out.Range>
 
 
 export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _p.decide.state($, ($): d_out.Range => {
@@ -68,4 +69,12 @@ export const Value: Value = ($) => _p.decide.state($.type, ($): d_out.Range => {
         case 'missing data': return _p.ss($, ($) => ($['#'].range))
         default: return _p.au($[0])
     }
+})
+
+export const ID_Value_Pair: ID_Value_Pair = ($) => ({
+    'start': $.id.range.start,
+    'end': $.value.__decide(
+        ($) => Value($.value).end,
+        () => $.id.range.end
+    )
 })
