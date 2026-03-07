@@ -33,6 +33,6 @@
     "documentation"
   ],
   "dependencies": {
-    "pareto-fountain-pen": "^0.4.50"
+    "pareto-fountain-pen": "^0.4.51"
   }
 }
