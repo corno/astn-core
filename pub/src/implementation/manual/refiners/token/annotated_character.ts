@@ -352,19 +352,19 @@ export const Annotated_Token = (
                 case Character.quotation_mark:
                     iterator.old.discard(() => null)
                     return ['text', {
-                        'value': Delimited_String(($) => $ === Character.quotation_mark, true, iterator, abort),
+                        'value': Delimited_Text(($) => $ === Character.quotation_mark, true, iterator, abort),
                         'type': ['quoted', null],
                     }]
                 case Character.backtick:
                     iterator.old.discard(() => null)
                     return ['text', {
-                        'value': Delimited_String(($) => $ === Character.backtick, false, iterator, abort),
+                        'value': Delimited_Text(($) => $ === Character.backtick, false, iterator, abort),
                         'type': ['backticked', null],
                     }]
                 case Character.apostrophe:
                     iterator.old.discard(() => null)
                     return ['text', {
-                        'value': Delimited_String(($) => $ === Character.apostrophe, false, iterator, abort),
+                        'value': Delimited_Text(($) => $ === Character.apostrophe, false, iterator, abort),
                         'type': ['apostrophed', null],
                     }]
 
@@ -432,7 +432,7 @@ export const Annotated_Token = (
     }
 }
 
-export const Delimited_String = (
+export const Delimited_Text = (
     is_end_character: (character: number) => boolean,
     allow_newlines: boolean,
     iterator: Temp_Iterator<d_in.Annotated_Character>,

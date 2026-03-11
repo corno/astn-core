@@ -214,13 +214,13 @@ export const Items: signatures.Items = (iterator, $p) => iterator.list(
         (token, abort) => ({
             'value': Value(iterator)
         })
-    )
-
+    ),
+    ($) => $
 )
 
 export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => iterator.list(
     (current_token) => current_token.type[0] === $p['end token'][0],
-    () => ({
+    (): d_out.ID_Value_Pairs.L => ({
         'id': iterator.expect(
             [
                 ['a text value', null],
@@ -249,6 +249,7 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => itera
                 }
             })
         ),
-        ',': _p.optional.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
-    })
+        // ',': _p.optional.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
+    }),
+    ($) => $
 )

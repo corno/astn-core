@@ -2,10 +2,11 @@ import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 
 export type Iterator<Iterator_Element, Choice> = {
-    'list': <List_Element>(
+    'list': <List_Element, Out>(
         end_reached: ($: Iterator_Element) => boolean,
-        handle: () => List_Element
-    ) => _pi.List<List_Element>,
+        handle: () => List_Element,
+        wrap_up: (list: _pi.List<List_Element>) => Out,
+    ) => Out,
     'expect': <T>(
         expected: Choice[],
         callback: (token: Iterator_Element, abort: () => never) => T,
