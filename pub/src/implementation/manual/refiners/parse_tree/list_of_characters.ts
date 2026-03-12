@@ -44,8 +44,24 @@ export const Document: signatures.Document = ($, abort, $p,) => {
                     'new': _pds_new.create_iterator(
                         iter,
                         {
-                            unexpected_element: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                            unexpected_end_with_expected: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                            unexpected_element: ($, element) => abort({
+                                'type': ['lexer', {
+                                    'range': {
+                                        'start': element.location,
+                                        'end': {
+                                            'absolute': element.location.absolute + 1,
+                                            'relative': {
+                                                'line': element.location.relative.line,
+                                                'column': element.location.relative.column + 1,
+                                            }
+                                        }
+                                    },
+                                    'type': ['unexpected', { 
+                                        'expected': $
+                                    }]
+                                }]
+                            }),
+                            unexpected_end_with_expected: ($) => _p_unreachable_code_path("implement me"),
                             unguarded_unexpected_end: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
                         },
                         ann_chars.end,

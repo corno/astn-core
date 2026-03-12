@@ -17,7 +17,9 @@ export const Error: signatures.Error = ($) => _p.decide.state($.type, ($) => {
         case 'lexer': return _p.ss($, ($): d_out.Possible_Range => ['range', $.range])
         case 'parser': return _p.ss($, ($):d_out.Possible_Range => _p.decide.state($.cause, ($) => {
             switch ($[0]) {
-                case 'missing token': return _p.ss($, ($) => _p_unreachable_code_path("this is not unreachable, needs implementation; how to get location info (at least the document resource identifier) for this error?"))
+                case 'missing token': return _p.ss($, ($) => ['end of document', {
+                    'end': $.end
+                }])
                 case 'unexpected token': return _p.ss($, ($): d_out.Possible_Range => ['range', {
                     'start': $.found.start,
                     'end': $.found.end,

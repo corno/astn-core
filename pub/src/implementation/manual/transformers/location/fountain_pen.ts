@@ -17,6 +17,7 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 export namespace signatures {
     export type Location = _pi.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Old_Parameters>
     export type Range = _pi.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Old_Parameters>
+    export type Possible_Range = _pi.Transformer_With_Parameter<d_in.Possible_Range, d_out.Phrase, d_function.Old_Parameters>
 }
 
 
@@ -24,7 +25,7 @@ const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {
     return _p_list_from_text(`${n}`, ($) => $)
 }
 
-export const Range: signatures.Range = ($, $p) =>  sh.ph.composed([
+export const Range: signatures.Range = ($, $p) => sh.ph.composed([
     sh.ph.literal($p['document resource identifier']),
     sh.ph.literal(":"),
     sh.ph.serialize(temp_serialize_number($.start.relative.line + _p.decide.state($p['character location reporting'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
@@ -35,6 +36,17 @@ export const Range: signatures.Range = ($, $p) =>  sh.ph.composed([
     sh.ph.literal(":"),
     sh.ph.serialize(temp_serialize_number($.end.relative.column + _p.decide.state($p['character location reporting'], ($) => ($[0] === 'zero based' ? 0 : 1))))
 ])
+
+export const Possible_Range: signatures.Possible_Range = ($, $p) => _p.decide.state($, ($) => {
+    switch ($[0]) {
+        case 'range': return _p.ss($, ($) => Range($, $p))
+        case 'end of document': return _p.ss($, ($) => sh.ph.composed([
+            sh.ph.literal($p['document resource identifier']),
+            sh.ph.literal(":0:0"),
+        ]))
+        default: return _p.au($[0])
+    }
+})
 
 export const Location: signatures.Location = ($, $p) => {
     return sh.ph.composed([

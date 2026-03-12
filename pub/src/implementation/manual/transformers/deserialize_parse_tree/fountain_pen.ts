@@ -1,6 +1,7 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 import _p_list_from_text from 'pareto-core/dist/_p_list_from_text'
+import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
@@ -28,6 +29,17 @@ export const Error: signatures.Error = ($) => {
                     case 'unterminated block comment': return sh.ph.literal("found unterminated block comment")
                     case 'unterminated text': return sh.ph.literal("found unterminated text")
                     case 'unterminated unicode escape sequence': return sh.ph.literal("found unterminated unicode escape sequence")
+                    case 'unexpected': return _p.ss($, ($) => sh.ph.composed([
+                        sh.ph.literal("expected "),
+                        sh.ph.rich(
+                            $.expected.__l_map(($) => sh.ph.literal($[0])),
+                            _p_unreachable_code_path("there should always be at least 1 expected value"),
+                            sh.ph.literal("'"),
+                            sh.ph.literal("' or '"),
+                            sh.ph.literal("'"),
+                        )
+
+                    ]))
                     default: return _p.au($[0])
                 }
             }))

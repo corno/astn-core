@@ -214,7 +214,7 @@ export const Text: signatures.Text = (iterator, $p) => iterator.consume((token) 
 }))
 
 export const Items: signatures.Items = (iterator, $p) => iterator.list(
-    (current_token) => current_token.type[0] === $p['end token'][0],
+    (current_token) => current_token.type[0] !== $p['end token'][0],
     () => iterator.expect(
         [
             ['any value', null],
@@ -228,7 +228,7 @@ export const Items: signatures.Items = (iterator, $p) => iterator.list(
 )
 
 export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => iterator.list(
-    (current_token) => current_token.type[0] === $p['end token'][0],
+    (current_token) => current_token.type[0] !== $p['end token'][0],
     (): d_out.ID_Value_Pairs.L => ({
         'id': iterator.expect(
             [

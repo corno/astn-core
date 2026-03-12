@@ -18,7 +18,15 @@ export namespace Possible_Range_ {
     
     export type range = Range_
     
-    export type end_of_document = null
+    export namespace end_of_document {
+        
+        export type end = Location_
+        
+    }
+    
+    export type end_of_document = {
+        readonly 'end': end_of_document.end
+    }
     
 }
 

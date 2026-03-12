@@ -85,6 +85,32 @@ export namespace Lexer_Error_ {
         
         export type unterminated_unicode_escape_sequence = null
         
+        export namespace unexpected {
+            
+            export namespace expected {
+                
+                export namespace L {
+                    
+                    export type end_of_block_comment = null
+                    
+                    export type end_of_delimited_text = null
+                    
+                }
+                
+                export type L = 
+                    | readonly ['end of block comment', L.end_of_block_comment]
+                    | readonly ['end of delimited text', L.end_of_delimited_text]
+                
+            }
+            
+            export type expected = _pi.List<expected.L>
+            
+        }
+        
+        export type unexpected = {
+            readonly 'expected': unexpected.expected
+        }
+        
     }
     
     export type type_ = 
@@ -98,6 +124,7 @@ export namespace Lexer_Error_ {
         | readonly ['unterminated block comment', type_.unterminated_block_comment]
         | readonly ['unterminated text', type_.unterminated_text]
         | readonly ['unterminated unicode escape sequence', type_.unterminated_unicode_escape_sequence]
+        | readonly ['unexpected', type_.unexpected]
     
 }
 
@@ -118,7 +145,15 @@ export namespace Parser_Error_ {
     
     export namespace cause {
         
-        export type missing_token = null
+        export namespace missing_token {
+            
+            export type end = i__imports_location.Location
+            
+        }
+        
+        export type missing_token = {
+            readonly 'end': missing_token.end
+        }
         
         export namespace unexpected_token {
             

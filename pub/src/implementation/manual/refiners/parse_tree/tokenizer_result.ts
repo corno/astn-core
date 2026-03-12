@@ -36,7 +36,9 @@ export const Document: signatures.Document = ($, abort) => _p_iterate(//fixme: m
                 }),
                 unexpected_end_with_expected: (expected) => abort({
                     'expected': expected,
-                    'cause': ['missing token', null],
+                    'cause': ['missing token', {
+                        'end': $.end
+                    }],
                 }),
                 unguarded_unexpected_end: () => _p_unreachable_code_path("there should not be an unguarded unexpected end"),
             },

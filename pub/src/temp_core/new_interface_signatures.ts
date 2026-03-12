@@ -3,8 +3,8 @@ import * as _pi from 'pareto-core/dist/interface'
 
 export type Iterator<Iterator_Element, Choice, End_Info> = {
     list: <List_Element, Out>(
-        end_reached: ($: Iterator_Element) => boolean,
-        handle: () => List_Element,
+        has_more_elements: ($: Iterator_Element) => boolean,
+        handle: ($: Iterator_Element) => List_Element,
         wrap_up: (list: _pi.List<List_Element>) => Out,
     ) => Out,
     expect: <T>(

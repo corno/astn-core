@@ -40,8 +40,8 @@ export const create_iterator = <Iterator_Element, Choice, End_Info>(
 
     },
     list: <List_Element, Out>(
-        end_reached: ($: Iterator_Element) => boolean,
-        handle: () => List_Element,
+        has_more_elements: ($: Iterator_Element) => boolean,
+        handle: ($: Iterator_Element) => List_Element,
         wrap_up: (list: _pi.List<List_Element>) => Out,
     ): Out => {
         return wrap_up(_p_list_build_deprecated<List_Element>(($i) => {
@@ -49,13 +49,13 @@ export const create_iterator = <Iterator_Element, Choice, End_Info>(
                 const next_element = old.look()
                 if (next_element === null) {
                     return
-                } else if (end_reached(next_element[0])) {
+                } else if (!has_more_elements(next_element[0])) {
                     return
                 } else {
-                    $i['add item'](handle())
+                    $i['add item'](handle(next_element[0]))
                 }
             }
         }))
     },
-    'get_end_info': () => end_info
+    get_end_info: () => end_info
 })
