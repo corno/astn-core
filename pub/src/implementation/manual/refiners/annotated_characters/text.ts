@@ -83,9 +83,13 @@ export const map_with_state = <Source_Element, Target_Element, State, Result_Typ
 }
 
 type My_State = {
-    'absolute': number
-    'line': number
-    'column': number
+    'location': {
+        'absolute': number
+        'relative': {
+            'line': number
+            'column': number
+        }
+    },
     'line indentation': number | null
     'found carriage return before': boolean
 }
@@ -97,56 +101,69 @@ type My_State = {
 export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => map_with_state(
     $,
     {
-        'absolute': 0,
-        'line': 0,
-        'column': 0,
+        'location': {
+            'absolute': 0,
+            'relative': {
+                'line': 0,
+                'column': 0,
+            }
+        },
         'line indentation': null,
         'found carriage return before': false,
     } as My_State,
     (value, state) => ({
         'code': value,
-        'location': {
-            'absolute': state.absolute,
-            'relative': {
-                'document resource identifier': $p['document resource identifier'],
-                'line': state.line,
-                'column': state.column,
-            }
-        },
+        'location': state.location,
         'line indentation': state['line indentation'] !== null
             ? state['line indentation']
-            : state.column,
+            : state.location.relative.column,
     }),
     (value, state) => {
         return value.code === 0x0A /* line feed */
             ? {
-                'absolute': state.absolute + 1,
-                'line': state.line + 1,
-                'column': 0,
+                'location': {
+                    'absolute': state.location.absolute + 1,
+                    'relative': {
+                        'line': state.location.relative.line + 1,
+                        'column': 0,
+                    }
+                },
                 'line indentation': null,
                 'found carriage return before': false,
             }
             : state['found carriage return before']
                 ? {
-                    'absolute': state.absolute + 1,
-                    'line': state.line + 1,
-                    'column': 0,
+                    'location': {
+                        'absolute': state.location.absolute + 1,
+                        'relative': {
+                            'line': state.location.relative.line + 1,
+                            'column': 0,
+                        },
+                    },
+
                     'line indentation': null,
                     'found carriage return before': false,
                 }
                 : {
-                    'absolute': state.absolute + 1,
-                    'line': state.line,
-                    'column': state.column + (value.code === 0x09 /* tab */
-                        ? $p['tab size']
-                        : 1),
+                    'location': {
+                        'absolute': state.location.absolute + 1,
+                        'relative': {
+                            'line': state.location.relative.line,
+                            'column': state.location.relative.column + (value.code === 0x09 /* tab */
+                                ? $p['tab size']
+                                : 1),
+                        }
+                    },
                     'line indentation': state['line indentation'] !== null
                         ? state['line indentation']
                         : value.code === 0x20 /* space */ || value.code === 0x09 /* tab */
                             ? null
-                            : state.column,
+                            : state.location.relative.column,
                     'found carriage return before': value.code === 0x0D /* carriage return */,
                 }
     },
-    (final_list, final_state): d_out.Annotated_Characters => final_list
+    (final_list, final_state): d_out.Annotated_Characters => ({
+        'characters': final_list,
+        'end': final_state.location,
+    })
 )

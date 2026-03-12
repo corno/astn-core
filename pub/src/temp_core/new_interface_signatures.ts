@@ -1,22 +1,23 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
 
-export type Iterator<Iterator_Element, Choice> = {
-    'list': <List_Element, Out>(
+export type Iterator<Iterator_Element, Choice, End_Info> = {
+    list: <List_Element, Out>(
         end_reached: ($: Iterator_Element) => boolean,
         handle: () => List_Element,
         wrap_up: (list: _pi.List<List_Element>) => Out,
     ) => Out,
-    'expect': <T>(
+    expect: <T>(
         expected: Choice[],
         callback: (token: Iterator_Element, abort: () => never) => T,
     ) => T
-    'consume': <T>(
+    consume: <T>(
         callback: (token: Iterator_Element) => T,
     ) => T
+    get_end_info: () => End_Info
 }
 
-export type Production<Result, Iterator_Element, Choice, Parameters> = (iterator: Iterator<Iterator_Element, Choice>, parameters: Parameters) => Result
+export type Production<Result, Iterator_Element, Choice, End_Info, Parameters> = (iterator: Iterator<Iterator_Element, Choice, End_Info>, parameters: Parameters) => Result
 
-export type Production_Without_Parameters<Result, Iterator_Element, Choice> = (iterator: Iterator<Iterator_Element, Choice>) => Result
+export type Production_Without_Parameters<Result, Iterator_Element, Choice, End_Info> = (iterator: Iterator<Iterator_Element, Choice, End_Info>) => Result
 

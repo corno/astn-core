@@ -27,33 +27,37 @@ export namespace signatures {
 
 }
 
-export const Document: signatures.Document = ($, abort, $p,) => _p_iterate( //fixme: make this iterate_fully
-    ds_annotated_characters.Annotated_Characters(
+export const Document: signatures.Document = ($, abort, $p,) => {
+    const ann_chars = ds_annotated_characters.Annotated_Characters(
         $,
         {
             'tab size': $p['tab size'],
             'document resource identifier': $p['document resource identifier'],
         }
-    ),
-    (iter) => r_from_token.Document(//fixme: make this iterate_fully
-        tokenize.Tokenizer_Result(
-            {
-                'old': iter,
-                'new': _pds_new.create_iterator(
-                    iter,
-                    {
-                        unexpected_element: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                        unexpected_end_with_expected: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                        unguarded_unexpected_end: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                    }
-                )
-            },
-            ($) => abort({
-                'type': ['lexer', $],
-            }),
-        ),
-        ($) => abort({
-            'type': ['parser', $],
-        })
     )
-)
+    return _p_iterate( //fixme: make this iterate_fully
+        ann_chars.characters,
+        (iter) => r_from_token.Document(//fixme: make this iterate_fully
+            tokenize.Tokenizer_Result(
+                {
+                    'old': iter,
+                    'new': _pds_new.create_iterator(
+                        iter,
+                        {
+                            unexpected_element: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                            unexpected_end_with_expected: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                            unguarded_unexpected_end: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
+                        },
+                        ann_chars.end,
+                    )
+                },
+                ($) => abort({
+                    'type': ['lexer', $],
+                }),
+            ),
+            ($) => abort({
+                'type': ['parser', $],
+            })
+        )
+    )
+}

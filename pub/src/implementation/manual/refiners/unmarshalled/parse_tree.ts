@@ -76,7 +76,7 @@ export const Dictionary: Dictionary = ($, abort) => {
                         'entries': _p.dictionary.from.list(
                             $.entries,
                         ).convert(
-                            ($) => $.id.value,
+                            ($) => $.id.token.value,
                             ($) => $,
                             {
                                 duplicate_id: ($) => abort({
@@ -292,7 +292,7 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                     const xxx = _p.dictionary.from.list(
                                         $.entries,
                                     ).convert(
-                                        ($) => $.id.value,
+                                        ($) => $.id.token.value,
                                         ($) => $,
                                         {
                                             duplicate_id: ($) => abort({

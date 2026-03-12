@@ -257,17 +257,14 @@ export namespace Text_ {
     
     export type range = i__imports_location.Range
     
-    export type value = string
-    
-    export type type_ = i__imports_token.Text_Type
+    export type token = i__imports_token.Text
     
 }
 
 export type Text_ = {
     readonly 'trailing trivia': Text_.trailing_trivia
     readonly 'range': Text_.range
-    readonly 'value': Text_.value
-    readonly 'type': Text_.type_
+    readonly 'token': Text_.token
 }
 
 export namespace ID_Value_Pairs_ {

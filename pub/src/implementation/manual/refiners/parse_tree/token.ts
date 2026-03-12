@@ -6,31 +6,36 @@ import * as new_pi from "../../../../temp_core/new_interface_signatures"
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 export namespace signatures {
 
     export type Document = new_pi.Production_Without_Parameters<
         d_out.Document,
         d_in.Annotated_Token,
-        d_choice.Expected
+        d_choice.Expected,
+        d_location.Location
     >
 
     export type Value = new_pi.Production_Without_Parameters<
         d_out.Value,
         d_in.Annotated_Token,
-        d_choice.Expected
+        d_choice.Expected,
+        d_location.Location
     >
 
     export type Structural_Token = new_pi.Production_Without_Parameters<d_out.Structural_Token,
         d_in.Annotated_Token,
-        d_choice.Expected
+        d_choice.Expected,
+        d_location.Location
     >
 
     export type Text = new_pi.Production<
         d_out.Text,
         d_in.Annotated_Token,
         d_choice.Expected,
+        d_location.Location,
         {
-            'string': d_in.Token_Type.text
+            'text': d_in.Annotated_Token.type_.text
         }
     >
 
@@ -38,6 +43,7 @@ export namespace signatures {
         d_out.Items,
         d_in.Annotated_Token,
         d_choice.Expected,
+        d_location.Location,
         {
             'end token': d_choice.Expected
         }
@@ -47,6 +53,7 @@ export namespace signatures {
         d_out.Items,
         d_in.Annotated_Token,
         d_choice.Expected,
+        d_location.Location,
         {
             'end token': d_choice.Expected
         }
@@ -56,6 +63,7 @@ export namespace signatures {
         d_out.ID_Value_Pairs,
         d_in.Annotated_Token,
         d_choice.Expected,
+        d_location.Location,
         {
             'end token': d_choice.Expected
         }
@@ -70,7 +78,7 @@ export const Document: signatures.Document = (iterator) => ({
             ['!', null],
             ['any value', null]
         ],
-        (token, abort) => token.type[0] === '!'
+        (token, abort) => token.type[0] === '!' //header token
             ? _p.optional.literal.set({
                 '!': Structural_Token(iterator),
                 'value': Value(iterator)
@@ -93,7 +101,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                             ['a text value', null]
                         ],
                         (token, abort) => token.type[0] === 'text'
-                            ? String(iterator, { 'string': token.type[1] })
+                            ? Text(iterator, { 'text': token.type[1] })
                             : abort()
 
                     )]
@@ -125,7 +133,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                             ['a text value', null]
                         ],
                         (token, abort) => token.type[0] === 'text'
-                            ? String(iterator, { 'string': token.type[1] })
+                            ? Text(iterator, { 'text': token.type[1] })
                             : abort()
                     )
                 }])
@@ -142,12 +150,13 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                         (token, abort) => _p.decide.state(token.type, ($): d_out.Value.type_.concrete.state.status => {
                             switch ($[0]) {
                                 case 'text': return _p.ss($, ($) => ['set', {
-                                    'option': String(iterator, { 'string': $ }),
+                                    'option': Text(iterator, { 'text': $ }),
                                     'value': Value(iterator)
                                 }])
                                 case '#': return _p.ss($, ($) => ['missing', {
                                     '#': Structural_Token(iterator),
                                 }])
+
                                 default: return abort()
                             }
                         }))
@@ -180,6 +189,7 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                 // case '}': return _p.ss($, ($) => iterator.unexpected_token(token, _p.list.literal([
                 //     ['any value', null]
                 // ])))
+
                 default: return abort()
             }
         })
@@ -194,13 +204,12 @@ export const Structural_Token: signatures.Structural_Token = (iterator) => itera
     }
 }))
 
-export const String: signatures.Text = (iterator, $p) => iterator.consume((token) => ({
+export const Text: signatures.Text = (iterator, $p) => iterator.consume((token) => ({
     'range': {
         'start': token['start'],
         'end': token['end']
     },
-    'value': $p.string.value,
-    'type': $p.string.type,
+    'token': $p.text,
     'trailing trivia': token['trailing trivia'],
 }))
 
@@ -227,7 +236,7 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => itera
                 $p['end token'],
             ],
             (token, abort) => token.type[0] === 'text'
-                ? String(iterator, { 'string': token.type[1] })
+                ? Text(iterator, { 'text': token.type[1] })
                 : abort()
         ),
         'value': iterator.expect(
@@ -238,13 +247,13 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => itera
             ],
             (token, abort) => _p.decide.state(token.type, ($) => {
                 switch ($[0]) {
+                    case 'text': return _p.ss($, ($) => _p.optional.literal.not_set())
                     case ':': return _p.ss($, ($) => _p.optional.literal.set({
                         ':': Structural_Token(iterator),
                         'value': Value(iterator)
                     }))
                     case ')': return _p.ss($, ($) => _p.optional.literal.not_set())
                     case '}': return _p.ss($, ($) => _p.optional.literal.not_set())
-                    case 'text': return _p.ss($, ($) => _p.optional.literal.not_set())
                     default: return abort()
                 }
             })

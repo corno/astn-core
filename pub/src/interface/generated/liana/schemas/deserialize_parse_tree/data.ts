@@ -29,131 +29,82 @@ export type Error_ = {
 
 export namespace Lexer_Error_ {
     
-    export namespace dangling_slash {
+    export type range = i__imports_location.Range
+    
+    export namespace type_ {
         
-        export type range = i__imports_location.Range
+        export namespace dangling_slash {
+            
+            export type at_end_of_input = boolean
+            
+        }
         
-        export type at_end_of_input = boolean
+        export type dangling_slash = {
+            readonly 'at end of input': dangling_slash.at_end_of_input
+        }
+        
+        export type invalid_unicode_escape_sequence = null
+        
+        export type missing_character_after_escape = null
+        
+        export namespace unexpected_control_character {
+            
+            export type character = number
+            
+        }
+        
+        export type unexpected_control_character = {
+            readonly 'character': unexpected_control_character.character
+        }
+        
+        export namespace unexpected_control_character_in_text {
+            
+            export type character = number
+            
+        }
+        
+        export type unexpected_control_character_in_text = {
+            readonly 'character': unexpected_control_character_in_text.character
+        }
+        
+        export type unexpected_end_of_line_in_delimited_text = null
+        
+        export namespace unknown_escape_character {
+            
+            export type character = number
+            
+        }
+        
+        export type unknown_escape_character = {
+            readonly 'character': unknown_escape_character.character
+        }
+        
+        export type unterminated_block_comment = null
+        
+        export type unterminated_text = null
+        
+        export type unterminated_unicode_escape_sequence = null
         
     }
     
-    export type dangling_slash = {
-        readonly 'range': dangling_slash.range
-        readonly 'at end of input': dangling_slash.at_end_of_input
-    }
-    
-    export namespace invalid_unicode_escape_sequence {
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type invalid_unicode_escape_sequence = {
-        readonly 'range': invalid_unicode_escape_sequence.range
-    }
-    
-    export namespace missing_character_after_escape {
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type missing_character_after_escape = {
-        readonly 'range': missing_character_after_escape.range
-    }
-    
-    export namespace unexpected_control_character {
-        
-        export type character = number
-        
-        export type location = i__imports_location.Location
-        
-    }
-    
-    export type unexpected_control_character = {
-        readonly 'character': unexpected_control_character.character
-        readonly 'location': unexpected_control_character.location
-    }
-    
-    export namespace unexpected_control_character_in_text {
-        
-        export type character = number
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type unexpected_control_character_in_text = {
-        readonly 'character': unexpected_control_character_in_text.character
-        readonly 'range': unexpected_control_character_in_text.range
-    }
-    
-    export namespace unexpected_end_of_line_in_delimited_text {
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type unexpected_end_of_line_in_delimited_text = {
-        readonly 'range': unexpected_end_of_line_in_delimited_text.range
-    }
-    
-    export namespace unknown_escape_character {
-        
-        export type character = number
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type unknown_escape_character = {
-        readonly 'character': unknown_escape_character.character
-        readonly 'range': unknown_escape_character.range
-    }
-    
-    export namespace unterminated_block_comment {
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type unterminated_block_comment = {
-        readonly 'range': unterminated_block_comment.range
-    }
-    
-    export namespace unterminated_text {
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type unterminated_text = {
-        readonly 'range': unterminated_text.range
-    }
-    
-    export namespace unterminated_unicode_escape_sequence {
-        
-        export type range = i__imports_location.Range
-        
-    }
-    
-    export type unterminated_unicode_escape_sequence = {
-        readonly 'range': unterminated_unicode_escape_sequence.range
-    }
+    export type type_ = 
+        | readonly ['dangling slash', type_.dangling_slash]
+        | readonly ['invalid unicode escape sequence', type_.invalid_unicode_escape_sequence]
+        | readonly ['missing character after escape', type_.missing_character_after_escape]
+        | readonly ['unexpected control character', type_.unexpected_control_character]
+        | readonly ['unexpected control character in text', type_.unexpected_control_character_in_text]
+        | readonly ['unexpected end of line in delimited text', type_.unexpected_end_of_line_in_delimited_text]
+        | readonly ['unknown escape character', type_.unknown_escape_character]
+        | readonly ['unterminated block comment', type_.unterminated_block_comment]
+        | readonly ['unterminated text', type_.unterminated_text]
+        | readonly ['unterminated unicode escape sequence', type_.unterminated_unicode_escape_sequence]
     
 }
 
-export type Lexer_Error_ = 
-    | readonly ['dangling slash', Lexer_Error_.dangling_slash]
-    | readonly ['invalid unicode escape sequence', Lexer_Error_.invalid_unicode_escape_sequence]
-    | readonly ['missing character after escape', Lexer_Error_.missing_character_after_escape]
-    | readonly ['unexpected control character', Lexer_Error_.unexpected_control_character]
-    | readonly ['unexpected control character in text', Lexer_Error_.unexpected_control_character_in_text]
-    | readonly ['unexpected end of line in delimited text', Lexer_Error_.unexpected_end_of_line_in_delimited_text]
-    | readonly ['unknown escape character', Lexer_Error_.unknown_escape_character]
-    | readonly ['unterminated block comment', Lexer_Error_.unterminated_block_comment]
-    | readonly ['unterminated text', Lexer_Error_.unterminated_text]
-    | readonly ['unterminated unicode escape sequence', Lexer_Error_.unterminated_unicode_escape_sequence]
+export type Lexer_Error_ = {
+    readonly 'range': Lexer_Error_.range
+    readonly 'type': Lexer_Error_.type_
+}
 
 export namespace Parser_Error_ {
     

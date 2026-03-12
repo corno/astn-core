@@ -4,15 +4,16 @@ import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
 
 import * as new_pi from "./new_interface_signatures"
 
-export const create_iterator = <Iterator_Element, Choice>(
+export const create_iterator = <Iterator_Element, Choice, End_Info>(
     old: _pi.Iterator<Iterator_Element>,
     abort: {
         unexpected_element: (expected: _pi.List<Choice>, element: Iterator_Element, position: number) => never,
         unexpected_end_with_expected: (expected: _pi.List<Choice>) => never,
         unguarded_unexpected_end: () => never,
-    }
-): new_pi.Iterator<Iterator_Element, Choice> => ({
-    'consume': (
+    },
+    end_info: End_Info,
+): new_pi.Iterator<Iterator_Element, Choice, End_Info> => ({
+    consume: (
         callback,
     ) => callback(old.consume(
         ($) => $,
@@ -20,7 +21,7 @@ export const create_iterator = <Iterator_Element, Choice>(
             no_more_tokens: () => abort.unguarded_unexpected_end()
         }
     )),
-    'expect': (
+    expect: (
         expected,
         callback,
     ) => {
@@ -38,7 +39,7 @@ export const create_iterator = <Iterator_Element, Choice>(
         )
 
     },
-    'list': <List_Element, Out>(
+    list: <List_Element, Out>(
         end_reached: ($: Iterator_Element) => boolean,
         handle: () => List_Element,
         wrap_up: (list: _pi.List<List_Element>) => Out,
@@ -56,4 +57,5 @@ export const create_iterator = <Iterator_Element, Choice>(
             }
         }))
     },
+    'get_end_info': () => end_info
 })

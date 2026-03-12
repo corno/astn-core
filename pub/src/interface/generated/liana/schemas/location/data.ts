@@ -14,6 +14,18 @@ export type Range_ = {
     readonly 'end': Range_.end
 }
 
+export namespace Possible_Range_ {
+    
+    export type range = Range_
+    
+    export type end_of_document = null
+    
+}
+
+export type Possible_Range_ = 
+    | readonly ['range', Possible_Range_.range]
+    | readonly ['end of document', Possible_Range_.end_of_document]
+
 export namespace Location_ {
     
     export type relative = Relative_Location_
@@ -29,8 +41,6 @@ export type Location_ = {
 
 export namespace Relative_Location_ {
     
-    export type document_resource_identifier = string
-    
     export type line = number
     
     export type column = number
@@ -38,13 +48,13 @@ export namespace Relative_Location_ {
 }
 
 export type Relative_Location_ = {
-    readonly 'document resource identifier': Relative_Location_.document_resource_identifier
     readonly 'line': Relative_Location_.line
     readonly 'column': Relative_Location_.column
 }
 
 export { 
     Range_ as Range, 
+    Possible_Range_ as Possible_Range, 
     Location_ as Location, 
     Relative_Location_ as Relative_Location, 
 }

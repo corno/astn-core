@@ -9,39 +9,19 @@ import * as d_out from "../../../../interface/generated/liana/schemas/location/d
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 
 export namespace signatures {
-    export type Error = _pi.Transformer<d_in.Error, d_out.Range>
+    export type Error = _pi.Transformer<d_in.Error, d_out.Possible_Range>
 }
 
 export const Error: signatures.Error = ($) => _p.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'lexer': return _p.ss($, ($): d_out.Range => _p_change_context(
-            _p.decide.state($, ($): d_out.Range => {
-                switch ($[0]) {
-                    case 'dangling slash': return _p.ss($, ($) => $.range)
-                    case 'invalid unicode escape sequence': return _p.ss($, ($) => $.range)
-                    case 'missing character after escape': return _p.ss($, ($) => $.range)
-                    case 'unexpected control character': return _p.ss($, ($) => ({
-                        'start': $.location,
-                        'end': $.location
-                    }))
-                    case 'unexpected control character in text': return _p.ss($, ($) => $.range)
-                    case 'unexpected end of line in delimited text': return _p.ss($, ($) => $.range)
-                    case 'unknown escape character': return _p.ss($, ($) => $.range)
-                    case 'unterminated block comment': return _p.ss($, ($) => $.range)
-                    case 'unterminated text': return _p.ss($, ($) => $.range)
-                    case 'unterminated unicode escape sequence': return _p.ss($, ($) => $.range)
-                    default: return _p.au($[0])
-                }
-            }),
-            ($) => $
-        ))
-        case 'parser': return _p.ss($, ($) => _p.decide.state($.cause, ($) => {
+        case 'lexer': return _p.ss($, ($): d_out.Possible_Range => ['range', $.range])
+        case 'parser': return _p.ss($, ($):d_out.Possible_Range => _p.decide.state($.cause, ($) => {
             switch ($[0]) {
                 case 'missing token': return _p.ss($, ($) => _p_unreachable_code_path("this is not unreachable, needs implementation; how to get location info (at least the document resource identifier) for this error?"))
-                case 'unexpected token': return _p.ss($, ($) => ({
+                case 'unexpected token': return _p.ss($, ($): d_out.Possible_Range => ['range', {
                     'start': $.found.start,
-                    'end': $.found.end
-                }))
+                    'end': $.found.end,
+                }])
                 default: return _p.au($[0])
             }
         }))

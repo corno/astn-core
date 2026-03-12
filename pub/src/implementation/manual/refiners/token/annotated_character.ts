@@ -8,6 +8,7 @@ import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 import * as d_temp_location from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
@@ -16,13 +17,13 @@ import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 type Temp_Choice = null
 
-type Temp_Iterator<Element> = {
+type Temp_Iterator<Element, End_Info> = {
     'old': _pi.Iterator<Element>,
-    'new': _pi_new.Iterator<Element, Temp_Choice>,
+    'new': _pi_new.Iterator<Element, Temp_Choice, End_Info>,
 }
 
 
-const temp_get_current_character_or_null = (iterator: Temp_Iterator<d_in.Annotated_Character>): d_in.Annotated_Character | null => {
+const temp_get_current_character_or_null = (iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>): d_in.Annotated_Character | null => {
     const next = iterator.old.look()
     if (next === null) {
         return null
@@ -44,29 +45,46 @@ export const is_control_character = ($: d_in.Annotated_Character): boolean =>
     && $.code !== WhitespaceChars.line_feed
     && $.code !== WhitespaceChars.carriage_return
 
-const temp_get_current_location = (iterator: Temp_Iterator<d_in.Annotated_Character>): d_temp_location.Location => {
+const create_range = (
+    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
+    $p: {
+        'start character': d_in.Annotated_Character
+    }
+): d_temp_location.Range => {
     const next = iterator.old.look()
     if (next === null) {
         return {
-            'absolute': iterator.old.get_position(),
-            'relative': {
-                'document resource identifier': "FIXME_URI",
-                'line': -1,
-                'column': -1,
-            }
+            'start': $p['start character'].location,
+            'end': iterator.new.get_end_info()
         }
     } else {
-        return next[0].location
+        return {
+            'start': $p['start character'].location,
+            'end': next[0].location,
+        }
     }
 }
 
 
 export const Whitespace = (
-    iterator: Temp_Iterator<d_in.Annotated_Character>,
+    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Whitespace => {
-    const start_location = temp_get_current_location(iterator)
-    return {
+
+    const next = iterator.old.look()
+    if (next === null) {
+        return _p.optional.literal.not_set()
+    }
+    if (next[0].code !== WhitespaceChars.tab &&
+        next[0].code !== WhitespaceChars.line_feed &&
+        next[0].code !== WhitespaceChars.carriage_return &&
+        next[0].code !== WhitespaceChars.space
+    ) {
+        return _p.optional.literal.not_set()
+    }
+    const start_character = next[0]
+    const start_location = next[0].location
+    return _p.optional.literal.set({
         'value': _p_text_from_list(
             _p_list_build_deprecated<number>(
                 ($i) => {
@@ -77,10 +95,12 @@ export const Whitespace = (
                                 return
                             }
                             if (is_control_character($)) {
-                                return abort(['unexpected control character', {
-                                    'character': $.code,
-                                    'location': $.location,
-                                }])
+                                return abort({
+                                    'range': create_range(iterator, { 'start character': $ }),
+                                    'type': ['unexpected control character', {
+                                        'character': $.code,
+                                    }]
+                                })
 
                             }
                             switch ($.code) {
@@ -114,15 +134,12 @@ export const Whitespace = (
             ),
             ($) => $
         ),
-        'range': {
-            'start': start_location,
-            'end': temp_get_current_location(iterator),
-        }
-    }
+        'range': create_range(iterator, { 'start character': start_character }),
+    })
 }
 
 export const Trivia = (
-    iterator: Temp_Iterator<d_in.Annotated_Character>,
+    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
@@ -134,22 +151,19 @@ export const Trivia = (
             }
             switch ($.code) {
                 case 0x2F: // /
-                    const start = $.location
+                    const slash_character = $
+                    iterator.old.discard(() => null)
                     const next_char = iterator.old.look_ahead(1)
                     if (next_char === null) {
-                        const start = temp_get_current_location(iterator)
-                        iterator.old.discard(() => null)
-                        return abort(['dangling slash', {
-                            'range': {
-                                'start': start,
-                                'end': temp_get_current_location(iterator),
-                            },
-                            'at end of input': true,
-                        }])
+                        return abort({
+                            'range': create_range(iterator, { 'start character': slash_character }),
+                            'type': ['dangling slash', {
+                                'at end of input': true,
+                            }]
+                        })
                     }
                     switch (next_char[0].code) {
                         case 0x2F: // /
-                            iterator.old.discard(() => null) // consume the first /
                             iterator.old.discard(() => null) // consume the second /
                             const Character = {
                                 line_feed: 0x0A,            // \n
@@ -178,15 +192,11 @@ export const Trivia = (
                                     ),
                                     ($) => $,
                                 ),
-                                'range': {
-                                    'start': start,
-                                    'end': temp_get_current_location(iterator),
-                                },
+                                'range': create_range(iterator, { 'start character': slash_character }),
                                 'trailing whitespace': Whitespace(iterator, abort)
                             })
                             break
                         case 0x2A: {// *
-                            iterator.old.discard(() => null) // consume the first /
                             iterator.old.discard(() => null) // consume the asterisk
                             $i['add item']({
                                 'type': ['block', null],
@@ -201,12 +211,10 @@ export const Trivia = (
                                             while (true) {
                                                 const $ = temp_get_current_character_or_null(iterator)
                                                 if ($ === null) {
-                                                    return abort(['unterminated block comment', {
-                                                        'range': {
-                                                            'start': start,
-                                                            'end': temp_get_current_location(iterator)
-                                                        }
-                                                    }])
+                                                    return abort({
+                                                        'range': create_range(iterator, { 'start character': slash_character }),
+                                                        'type': ['unterminated block comment', null]
+                                                    })
                                                 }
                                                 if ($.code === Character.solidus && found_asterisk) {
                                                     iterator.old.discard(() => null) // consume the solidus
@@ -228,22 +236,18 @@ export const Trivia = (
                                     ),
                                     ($) => $,
                                 ),
-                                'range': {
-                                    'start': start,
-                                    'end': temp_get_current_location(iterator),
-                                },
+                                'range': create_range(iterator, { 'start character': slash_character }),
                                 'trailing whitespace': Whitespace(iterator, abort)
                             })
                             break
                         }
                         default:
-                            return abort(['dangling slash', {
-                                'range': {
-                                    'start': start,
-                                    'end': temp_get_current_location(iterator)
-                                },
-                                'at end of input': false,
-                            }])
+                            return abort({
+                                'range': create_range(iterator, { 'start character': slash_character }),
+                                'type': ['dangling slash', {
+                                    'at end of input': false,
+                                }]
+                            })
                     }
                     break
                 default:
@@ -254,7 +258,7 @@ export const Trivia = (
 })
 
 export const Annotated_Token = (
-    iterator: Temp_Iterator<d_in.Annotated_Character>,
+    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
     $p: { 'character': d_in.Annotated_Character }
 ): d_out.Annotated_Token => {
@@ -268,8 +272,7 @@ export const Annotated_Token = (
 
 
     return {
-        'start': temp_get_current_location(iterator),
-        'type': _p.state.block((): d_out.Token_Type => {
+        'type': _p.state.block((): d_out.Annotated_Token.type_ => {
 
             const Character = {
 
@@ -312,8 +315,6 @@ export const Annotated_Token = (
                 case Character.open_paren:
                     iterator.old.discard(() => null)
                     return ['(', null]
-
-
                 case Character.close_brace:
                     iterator.old.discard(() => null)
                     return ['}', null]
@@ -348,23 +349,23 @@ export const Annotated_Token = (
                     return ['!', null] // header token
                 case Character.colon:
                     iterator.old.discard(() => null)
-                    return [':', null]
+                    return [':', null] // structural token
                 case Character.quotation_mark:
                     iterator.old.discard(() => null)
                     return ['text', {
-                        'value': Delimited_Text(($) => $ === Character.quotation_mark, true, iterator, abort),
+                        'value': Delimited_Text(($) => $ === Character.quotation_mark, true, iterator, abort, { 'start character': $p.character }),
                         'type': ['quoted', null],
                     }]
                 case Character.backtick:
                     iterator.old.discard(() => null)
                     return ['text', {
-                        'value': Delimited_Text(($) => $ === Character.backtick, false, iterator, abort),
+                        'value': Delimited_Text(($) => $ === Character.backtick, false, iterator, abort, { 'start character': $p.character }),
                         'type': ['backticked', null],
                     }]
                 case Character.apostrophe:
                     iterator.old.discard(() => null)
                     return ['text', {
-                        'value': Delimited_Text(($) => $ === Character.apostrophe, false, iterator, abort),
+                        'value': Delimited_Text(($) => $ === Character.apostrophe, false, iterator, abort, { 'start character': $p.character }),
                         'type': ['apostrophed', null],
                     }]
 
@@ -381,13 +382,13 @@ export const Annotated_Token = (
                                         }
 
                                         if (is_control_character($)) {
-                                            return abort(['unexpected control character in text', {
-                                                'character': $.code,
-                                                'range': {
-                                                    'start': temp_get_current_location(iterator),
-                                                    'end': $.location,
-                                                }
-                                            }])
+                                            iterator.old.discard(() => null)
+                                            return abort({
+                                                'range': create_range(iterator, { 'start character': $ }),
+                                                'type': ['unexpected control character in text', {
+                                                    'character': $.code,
+                                                }]
+                                            })
 
                                         }
                                         if (
@@ -423,11 +424,12 @@ export const Annotated_Token = (
                                 }
                             ),
                             ($) => $
-                        ),
+                        )
                     }]
             }
         }),
-        'end': temp_get_current_location(iterator),
+        'start': $p.character.location,
+        'end': create_range(iterator, { 'start character': $p.character }).end,
         'trailing trivia': Trivia(iterator, abort),
     }
 }
@@ -435,9 +437,12 @@ export const Annotated_Token = (
 export const Delimited_Text = (
     is_end_character: (character: number) => boolean,
     allow_newlines: boolean,
-    iterator: Temp_Iterator<d_in.Annotated_Character>,
+    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
-): d_out.Delimited_Text => {
+    $p: {
+        'start character': d_in.Annotated_Character
+    }
+): string => {
 
     const Character = {
         backspace: 0x08,            // \b
@@ -461,7 +466,6 @@ export const Delimited_Text = (
         F: 0x46,                    // F
 
     }
-    const start = temp_get_current_location(iterator)
     const txt = _p_text_from_list(
         _p_list_build_deprecated<number>(
             ($i) => {
@@ -469,21 +473,18 @@ export const Delimited_Text = (
                     const $ = temp_get_current_character_or_null(iterator)
                     if ($ === null) {
 
-                        return abort(['unterminated text', {
-                            'range': {
-                                'start': start,
-                                'end': temp_get_current_location(iterator)
-                            }
-                        }])
+                        return abort({
+                            'range': create_range(iterator, { 'start character': $p['start character'] }),
+                            'type': ['unterminated text', null]
+                        })
                     }
                     if (is_control_character($)) {
-                        return abort(['unexpected control character in text', {
-                            'character': $.code,
-                            'range': {
-                                'start': start,
-                                'end': temp_get_current_location(iterator)
-                            }
-                        }])
+                        return abort({
+                            'range': create_range(iterator, { 'start character': $p['start character'] }),
+                            'type': ['unexpected control character in text', {
+                                'character': $.code,
+                            }]
+                        })
 
                     }
                     if (is_end_character($.code)) {
@@ -494,12 +495,10 @@ export const Delimited_Text = (
                         case Character.line_feed:
                         case Character.carriage_return:
                             if (!allow_newlines) {
-                                return abort(['unexpected end of line in delimited text', {
-                                    'range': {
-                                        'start': start,
-                                        'end': temp_get_current_location(iterator)
-                                    }
-                                }])
+                                return abort({
+                                    'type': ['unexpected end of line in delimited text', null],
+                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                })
                             }
                             iterator.old.discard(() => null)
                             $i['add item']($.code)
@@ -509,14 +508,10 @@ export const Delimited_Text = (
                             {
                                 const $ = temp_get_current_character_or_null(iterator)
                                 if ($ === null) {
-                                    return abort(['missing character after escape', {
-                                        'range': {
-                                            'start': start,
-                                            'end': temp_get_current_location(iterator)
-                                        }
-                                    }]
-
-                                    )
+                                    return abort({
+                                        'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                        'type': ['missing character after escape', null]
+                                    })
                                 }
                                 switch ($.code) {
                                     case Character.quotation_mark:
@@ -628,20 +623,16 @@ export const Delimited_Text = (
                                                     const get_char = () => {
                                                         const char = temp_get_current_character_or_null(iterator)
                                                         if (char === null) {
-                                                            return abort(['unterminated unicode escape sequence', {
-                                                                'range': {
-                                                                    'start': start,
-                                                                    'end': temp_get_current_location(iterator)
-                                                                },
-                                                            }])
+                                                            return abort({
+                                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                                'type': ['unterminated unicode escape sequence', null]
+                                                            })
                                                         }
                                                         if (char.code < Character.a || (char.code > Character.f && char.code < Character.A) || char.code > Character.F || char.code < 0x30 || char.code > 0x39) {
-                                                            return abort(['invalid unicode escape sequence', {
-                                                                'range': {
-                                                                    'start': start,
-                                                                    'end': temp_get_current_location(iterator)
-                                                                }
-                                                            }])
+                                                            return abort({
+                                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                                'type': ['invalid unicode escape sequence', null]
+                                                            })
                                                         }
                                                         iterator.old.discard(() => null)
                                                         return char.code
@@ -656,13 +647,12 @@ export const Delimited_Text = (
                                         ))
                                         break
                                     default:
-                                        return abort(['unknown escape character', {
-                                            'range': {
-                                                'start': start,
-                                                'end': temp_get_current_location(iterator)
-                                            },
-                                            'character': $.code
-                                        }])
+                                        return abort({
+                                            'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                            'type': ['unknown escape character', {
+                                                'character': $.code
+                                            }]
+                                        })
                                 }
                             }
                             break
@@ -679,7 +669,7 @@ export const Delimited_Text = (
 }
 
 export const Tokenizer_Result = (
-    iterator: Temp_Iterator<d_in.Annotated_Character>,
+    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Tokenizer_Result => ({
     'leading trivia': Trivia(iterator, abort),
@@ -694,5 +684,5 @@ export const Tokenizer_Result = (
             $i['add item'](token)
         }
     }),
-    'end': temp_get_current_location(iterator)
+    'end': iterator.new.get_end_info()
 })

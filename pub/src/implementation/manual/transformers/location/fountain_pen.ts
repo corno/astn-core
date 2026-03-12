@@ -25,7 +25,7 @@ const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {
 }
 
 export const Range: signatures.Range = ($, $p) =>  sh.ph.composed([
-    sh.ph.literal($.start.relative['document resource identifier']),
+    sh.ph.literal($p['document resource identifier']),
     sh.ph.literal(":"),
     sh.ph.serialize(temp_serialize_number($.start.relative.line + _p.decide.state($p['character location reporting'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.ph.literal(":"),
@@ -38,7 +38,7 @@ export const Range: signatures.Range = ($, $p) =>  sh.ph.composed([
 
 export const Location: signatures.Location = ($, $p) => {
     return sh.ph.composed([
-        sh.ph.literal($.relative['document resource identifier']),
+        sh.ph.literal($p['document resource identifier']),
         sh.ph.literal(":"),
         sh.ph.serialize(temp_serialize_number($.relative.line + _p.decide.state($p['character location reporting'], ($) => ($[0] === 'zero based' ? 0 : 1)))),
         sh.ph.literal(":"),
