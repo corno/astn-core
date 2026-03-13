@@ -28,7 +28,7 @@ export namespace signatures {
 //     ) => State
 // ): State => {
 //     let current_state = initial_state
-//     _pdev.log_debug_message("Starting loop...", () => { })
+//     _p_log_debug_message("Starting loop...", () => { })
 //     while (true) {
 //         let end_reached = false
 //         const next = iterator.look()
@@ -49,7 +49,7 @@ export namespace signatures {
 //             break
 //         }
 //     }
-//     _pdev.log_debug_message("Loop ended.", () => { })
+//     _p_log_debug_message("Loop ended.", () => { })
 //     return current_state
 
 // }
