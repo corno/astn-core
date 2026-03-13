@@ -30,10 +30,7 @@ export namespace signatures {
 export const Document: signatures.Document = ($, abort, $p,) => {
     const ann_chars = ds_annotated_characters.Annotated_Characters(
         $,
-        {
-            'tab size': $p['tab size'],
-            'document resource identifier': $p['document resource identifier'],
-        }
+        $p
     )
     return _p_iterate( //fixme: make this iterate_fully
         ann_chars.characters,

@@ -219,14 +219,11 @@ export type Expected_ =
 
 export namespace Parameters_ {
     
-    export type document_resource_identifier = string
-    
     export type tab_size = number
     
 }
 
 export type Parameters_ = {
-    readonly 'document resource identifier': Parameters_.document_resource_identifier
     readonly 'tab size': Parameters_.tab_size
 }
 
