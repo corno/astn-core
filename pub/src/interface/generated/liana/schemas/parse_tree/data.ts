@@ -279,13 +279,19 @@ export namespace ID_Value_Pair_ {
     
     export type id = Text_
     
-    export namespace value {
+    export namespace assignment {
         
         export namespace O {
             
             export type $cl_ = Structural_Token_
             
-            export type value = Value_
+            export namespace value {
+                
+                export type O = Value_
+                
+            }
+            
+            export type value = _pi.Optional_Value<value.O>
             
         }
         
@@ -296,13 +302,13 @@ export namespace ID_Value_Pair_ {
         
     }
     
-    export type value = _pi.Optional_Value<value.O>
+    export type assignment = _pi.Optional_Value<assignment.O>
     
 }
 
 export type ID_Value_Pair_ = {
     readonly 'id': ID_Value_Pair_.id
-    readonly 'value': ID_Value_Pair_.value
+    readonly 'assignment': ID_Value_Pair_.assignment
 }
 
 export namespace Items_ {

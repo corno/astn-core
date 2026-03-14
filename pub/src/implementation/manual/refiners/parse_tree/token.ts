@@ -239,7 +239,7 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => itera
                 ? Text(iterator, { 'text': token.type[1] })
                 : abort()
         ),
-        'value': iterator.expect(
+        'assignment': iterator.expect(
             [
                 ['a text value', null],
                 [':', null],
@@ -250,7 +250,7 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, $p) => itera
                     case 'text': return _p.ss($, ($) => _p.optional.literal.not_set())
                     case ':': return _p.ss($, ($) => _p.optional.literal.set({
                         ':': Structural_Token(iterator),
-                        'value': Value(iterator)
+                        'value': _p.optional.literal.set(Value(iterator)) //FIXME determine if it is set... if the next token is a text, we will need to do an extra lookahead if there is a colon
                     }))
                     case ')': return _p.ss($, ($) => _p.optional.literal.not_set())
                     case '}': return _p.ss($, ($) => _p.optional.literal.not_set())

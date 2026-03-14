@@ -73,8 +73,11 @@ export const Value: Value = ($) => _p.decide.state($.type, ($): d_out.Range => {
 
 export const ID_Value_Pair: ID_Value_Pair = ($) => ({
     'start': $.id.range.start,
-    'end': $.value.__decide(
-        ($) => Value($.value).end,
+    'end': $.assignment.__decide(
+        ($) => $.value.__decide(
+            ($) => Value($).end,
+            () => $[':'].range.end
+        ),
         () => $.id.range.end
     )
 })
