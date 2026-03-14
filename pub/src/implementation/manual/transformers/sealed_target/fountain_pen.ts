@@ -31,7 +31,7 @@ export const Value = (
                 sh.ph.literal("{"),
                 sh.ph.indent(
                     sh.pg.sentences(_p.list.from.dictionary($).convert(($, id) => sh.sentence([
-                        sh.ph.serialize(t_primitives_to_text.Backticked(id, {
+                        sh.ph.serialize(t_primitives_to_text.Apostrophed(id, {
                             'add delimiters': true
                         })),
                         sh.ph.literal(": "),
@@ -47,7 +47,7 @@ export const Value = (
                             sh.ph.literal("("),
                             sh.ph.indent(
                                 sh.pg.sentences($.__to_list(($, id) => sh.sentence([
-                                    sh.ph.serialize(t_primitives_to_text.Apostrophed(id, {
+                                    sh.ph.serialize(t_primitives_to_text.Backticked(id, {
                                         'add delimiters': true
                                     })),
                                     sh.ph.literal(": "),
@@ -82,7 +82,7 @@ export const Value = (
             }))
             case 'state': return _p.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("| "),
-                sh.ph.serialize(t_primitives_to_text.Apostrophed($.option, {
+                sh.ph.serialize(t_primitives_to_text.Backticked($.option, {
                     'add delimiters': true
                 })),
                 sh.ph.literal(" "),
@@ -92,7 +92,7 @@ export const Value = (
                 const value = $.value
                 return _p.decide.state($.delimiter, ($) => {
                     switch ($[0]) {
-                        case 'backtick': return _p.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Backticked(value, {
+                        case 'apostrophe': return _p.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Apostrophed(value, {
                             'add delimiters': true
                         })))
                         case 'quote': return _p.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Quoted(value, {
