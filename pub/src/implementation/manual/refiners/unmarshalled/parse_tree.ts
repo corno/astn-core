@@ -166,15 +166,15 @@ export const Optional: Optional = ($, abort) => {
         switch ($[0]) {
             case 'concrete': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'nothing': return _p.ss($, ($) => ({
-                        'value': value,
-                        'optional': _p.optional.literal.not_set()
-                    }))
                     case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
                         switch ($[0]) {
                             case 'set': return _p.ss($, ($) => ({
                                 'value': value,
                                 'optional': _p.optional.literal.set($.value)
+                            }))
+                            case 'not set': return _p.ss($, ($) => ({
+                                'value': value,
+                                'optional': _p.optional.literal.not_set()
                             }))
                             default: return abort({
                                 'type': ['wrong value type', {
