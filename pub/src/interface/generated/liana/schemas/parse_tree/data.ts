@@ -140,10 +140,21 @@ export namespace Value_ {
                     readonly 'value': set_.value
                 }
                 
+                export namespace not_set {
+                    
+                    export type $_ = Structural_Token_
+                    
+                }
+                
+                export type not_set = {
+                    readonly '_': not_set.$_
+                }
+                
             }
             
             export type optional = 
                 | readonly ['set', optional.set_]
+                | readonly ['not set', optional.not_set]
             
             export namespace state {
                 

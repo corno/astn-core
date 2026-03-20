@@ -24,6 +24,7 @@ export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _
         case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
             switch ($[0]) {
                 case 'set': return _p.ss($, ($) => $['*'].range)
+                case 'not set': return _p.ss($, ($) => $['_'].range)
                 default: return _p.au($[0])
             }
         }))

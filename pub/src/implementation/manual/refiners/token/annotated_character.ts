@@ -257,6 +257,7 @@ export const Annotated_Token = (
                 pipe: 0x7C,                // |
                 quotation_mark: 0x22,       // "
                 slash: 0x2F,               // /
+                underscore: 0x5F,           // _
                 tilde: 0x7E,               // ~
                 hash: 0x23,                // #
 
@@ -297,6 +298,9 @@ export const Annotated_Token = (
                 case Character.pipe:
                     iterator.old.discard(() => null)
                     return ['|', null] // state value token
+                case Character.underscore:
+                    iterator.old.discard(() => null)
+                    return ['_', null] // unset value token
                 case Character.tilde:
                     iterator.old.discard(() => null)
                     return ['~', null] // unset value token

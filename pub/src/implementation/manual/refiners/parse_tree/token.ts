@@ -161,6 +161,9 @@ export const Value: signatures.Value = (iterator) => iterator.expect(
                             }
                         }))
                 }]])
+                case '_': return _p.ss($, ($) => ['concrete', ['optional', ['not set', {
+                    '_': Structural_Token(iterator),
+                }]]])
                 case '*': return _p.ss($, ($) => ['concrete', ['optional', ['set', {
                     '*': Structural_Token(iterator),
                     'value': Value(iterator)

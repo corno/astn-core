@@ -57,6 +57,8 @@ export namespace Annotated_Token_ {
         
         export type $ti_ = null
         
+        export type $_ = null
+        
         export type $sr_ = null
         
         export type $vb_ = null
@@ -79,6 +81,7 @@ export namespace Annotated_Token_ {
         | readonly ['<', type_.$st_]
         | readonly ['>', type_.$gt_]
         | readonly ['~', type_.$ti_]
+        | readonly ['_', type_.$_]
         | readonly ['*', type_.$sr_]
         | readonly ['|', type_.$vb_]
         | readonly ['text', type_.text]

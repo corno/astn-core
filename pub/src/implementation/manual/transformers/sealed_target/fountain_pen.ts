@@ -71,7 +71,7 @@ export const Value = (
             case 'nothing': return _p.ss($, ($) => sh.ph.literal("~"))
             case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
                 switch ($[0]) {
-                    case 'not set': return _p.ss($, ($) => sh.ph.literal("~"))
+                    case 'not set': return _p.ss($, ($) => sh.ph.literal("_"))
                     case 'set': return _p.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("* "),
                         Value($),

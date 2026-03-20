@@ -41,6 +41,7 @@ export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _
                     'start': $['*'].range.start,
                     'end': Value($['value']).end
                 }))
+                case 'not set': return _p.ss($, ($) => $['_'].range )
                 default: return _p.au($[0])
             }
         }))
