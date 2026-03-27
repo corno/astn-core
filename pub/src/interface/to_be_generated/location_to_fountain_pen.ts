@@ -1,7 +1,6 @@
 
-export type Old_Parameters = {
+export type Parameters = {
     'character location reporting': character_location_reporting
-    'document resource identifier': string
 }
 
 export type character_location_reporting =
