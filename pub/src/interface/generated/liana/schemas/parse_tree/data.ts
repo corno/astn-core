@@ -1,9 +1,9 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_token from "../token/data"
+import * as i_imports_token from "../token/data"
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
 export namespace Document_ {
     
@@ -251,9 +251,9 @@ export type Include_ = {
 
 export namespace Structural_Token_ {
     
-    export type trailing_trivia = i__imports_token.Trivia
+    export type trailing_trivia = i_imports_token.Trivia
     
-    export type range = i__imports_location.Range
+    export type range = i_imports_location.Range
     
 }
 
@@ -264,11 +264,11 @@ export type Structural_Token_ = {
 
 export namespace Text_ {
     
-    export type trailing_trivia = i__imports_token.Trivia
+    export type trailing_trivia = i_imports_token.Trivia
     
-    export type range = i__imports_location.Range
+    export type range = i_imports_location.Range
     
-    export type token = i__imports_token.Text
+    export type token = i_imports_token.Text
     
 }
 

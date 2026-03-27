@@ -1,11 +1,11 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_parse_tree from "../parse_tree/data"
+import * as i_imports_parse_tree from "../parse_tree/data"
 
-import * as i__imports_token from "../token/data"
+import * as i_imports_token from "../token/data"
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
 export namespace Error_ {
     
@@ -29,7 +29,7 @@ export type Error_ = {
 
 export namespace Lexer_Error_ {
     
-    export type range = i__imports_location.Range
+    export type range = i_imports_location.Range
     
     export namespace type_ {
         
@@ -147,7 +147,7 @@ export namespace Parser_Error_ {
         
         export namespace missing_token {
             
-            export type end = i__imports_location.Location
+            export type end = i_imports_location.Location
             
         }
         
@@ -157,7 +157,7 @@ export namespace Parser_Error_ {
         
         export namespace unexpected_token {
             
-            export type found = i__imports_token.Annotated_Token
+            export type found = i_imports_token.Annotated_Token
             
         }
         

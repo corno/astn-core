@@ -84,7 +84,7 @@ export const Error: signatures.Error = ($) => {
         }
     })
     return sh.ph.composed([
-        sh.ph.literal("failed to parse ASTN"),
+        sh.ph.literal("failed to parse ASTN: "),
         Parse_Error_Type($['type']),
     ])
 }

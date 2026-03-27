@@ -1,7 +1,7 @@
 
 import * as _pi from 'pareto-core/dist/interface'
 
-import * as i__imports_location from "../location/data"
+import * as i_imports_location from "../location/data"
 
 export namespace Tokenizer_Result_ {
     
@@ -15,7 +15,7 @@ export namespace Tokenizer_Result_ {
     
     export type tokens = _pi.List<tokens.L>
     
-    export type end = i__imports_location.Location
+    export type end = i_imports_location.Location
     
 }
 
@@ -27,7 +27,7 @@ export type Tokenizer_Result_ = {
 
 export namespace Annotated_Token_ {
     
-    export type start = i__imports_location.Location
+    export type start = i_imports_location.Location
     
     export namespace type_ {
         
@@ -86,7 +86,7 @@ export namespace Annotated_Token_ {
         | readonly ['|', type_.$vb_]
         | readonly ['text', type_.text]
     
-    export type end = i__imports_location.Location
+    export type end = i_imports_location.Location
     
     export type trailing_trivia = Trivia_
     
@@ -103,7 +103,7 @@ export namespace Whitespace_ {
     
     export namespace O {
         
-        export type range = i__imports_location.Range
+        export type range = i_imports_location.Range
         
         export type value = string
         
@@ -140,7 +140,7 @@ export namespace Trivia_ {
             
             export type content = string
             
-            export type range = i__imports_location.Range
+            export type range = i_imports_location.Range
             
             export type trailing_whitespace = Whitespace_
             
