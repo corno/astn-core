@@ -7,7 +7,14 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {
+                    'Natural': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
+                        )
+                    )
+                }
             )
             `modules`: {
                 'Range': (
@@ -67,12 +74,7 @@
                         )
                         'absolute': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -80,21 +82,11 @@
                     `root value`: | `group` {
                         'line': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                         'column': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -112,7 +104,7 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {}
             )
             `modules`: {
                 'Tokenizer Result': (
@@ -415,7 +407,7 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {}
             )
             `modules`: {
                 'Document': (
@@ -881,7 +873,14 @@
             `globals`: (
                 `complexity`: | `unconstrained` ~
                 `text types`: {}
-                `number types`: {}
+                `simple types`: {
+                    'Natural': (
+                        `precision`: | `exact` (
+                            `decimal separator offset`: _
+                            `type`: | `natural` ~
+                        )
+                    )
+                }
             )
             `modules`: {
                 'Error': (
@@ -954,12 +953,7 @@
                                         `value`: | `group` {
                                             'character': (
                                                 `description`: _
-                                                `value`: | `number` | `local` (
-                                                    `precision`: | `exact` (
-                                                        `decimal separator offset`: _
-                                                        `type`: | `natural` ~
-                                                    )
-                                                )
+                                                `value`: | `number` | `global` 'Natural'
                                             )
                                         }
                                     )
@@ -969,12 +963,7 @@
                                         `value`: | `group` {
                                             'character': (
                                                 `description`: _
-                                                `value`: | `number` | `local` (
-                                                    `precision`: | `exact` (
-                                                        `decimal separator offset`: _
-                                                        `type`: | `natural` ~
-                                                    )
-                                                )
+                                                `value`: | `number` | `global` 'Natural'
                                             )
                                         }
                                     )
@@ -989,12 +978,7 @@
                                         `value`: | `group` {
                                             'character': (
                                                 `description`: _
-                                                `value`: | `number` | `local` (
-                                                    `precision`: | `exact` (
-                                                        `decimal separator offset`: _
-                                                        `type`: | `natural` ~
-                                                    )
-                                                )
+                                                `value`: | `number` | `global` 'Natural'
                                             )
                                         }
                                     )
@@ -1166,12 +1150,7 @@
                     `root value`: | `group` {
                         'tab size': (
                             `description`: _
-                            `value`: | `number` | `local` (
-                                `precision`: | `exact` (
-                                    `decimal separator offset`: _
-                                    `type`: | `natural` ~
-                                )
-                            )
+                            `value`: | `number` | `global` 'Natural'
                         )
                     }
                 )
@@ -1188,7 +1167,7 @@
                         `type`: | `single line` ~
                     )
                 }
-                `number types`: {
+                `simple types`: {
                     'Position': (
                         `precision`: | `exact` (
                             `decimal separator offset`: _
