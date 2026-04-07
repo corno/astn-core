@@ -9,9 +9,11 @@
                 `text types`: {}
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
@@ -74,7 +76,7 @@
                         )
                         'absolute': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -82,11 +84,11 @@
                     `root value`: | `group` {
                         'line': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                         'column': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -103,7 +105,11 @@
             `resolver imports`: {}
             `globals`: (
                 `complexity`: | `unconstrained` ~
-                `text types`: {}
+                `text types`: {
+                    'text': (
+                        `type`: | `single line` ~
+                    )
+                }
                 `simple types`: {}
             )
             `modules`: {
@@ -279,9 +285,7 @@
                         )
                         'value': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `single line` ~
-                            )
+                            `value`: | `text` | `global` 'text'
                         )
                     }
                 )
@@ -318,9 +322,7 @@
                                     )
                                     'content': (
                                         `description`: _
-                                        `value`: | `text` | `local` (
-                                            `type`: | `single line` ~
-                                        )
+                                        `value`: | `text` | `global` 'text'
                                     )
                                     'range': (
                                         `description`: _
@@ -349,9 +351,7 @@
                     `root value`: | `group` {
                         'value': (
                             `description`: _
-                            `value`: | `text` | `local` (
-                                `type`: | `single line` ~
-                            )
+                            `value`: | `text` | `global` 'text'
                         )
                         'type': (
                             `description`: _
@@ -875,10 +875,15 @@
                 `text types`: {}
                 `simple types`: {
                     'Natural': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
+                    )
+                    'boolean': (
+                        `type`: | `boolean` ~
                     )
                 }
             )
@@ -933,7 +938,7 @@
                                         `value`: | `group` {
                                             'at end of input': (
                                                 `description`: _
-                                                `value`: | `boolean` ~
+                                                `value`: | `simple` | `global` 'boolean'
                                             )
                                         }
                                     )
@@ -953,7 +958,7 @@
                                         `value`: | `group` {
                                             'character': (
                                                 `description`: _
-                                                `value`: | `number` | `global` 'Natural'
+                                                `value`: | `simple` | `global` 'Natural'
                                             )
                                         }
                                     )
@@ -963,7 +968,7 @@
                                         `value`: | `group` {
                                             'character': (
                                                 `description`: _
-                                                `value`: | `number` | `global` 'Natural'
+                                                `value`: | `simple` | `global` 'Natural'
                                             )
                                         }
                                     )
@@ -978,7 +983,7 @@
                                         `value`: | `group` {
                                             'character': (
                                                 `description`: _
-                                                `value`: | `number` | `global` 'Natural'
+                                                `value`: | `simple` | `global` 'Natural'
                                             )
                                         }
                                     )
@@ -1150,7 +1155,7 @@
                     `root value`: | `group` {
                         'tab size': (
                             `description`: _
-                            `value`: | `number` | `global` 'Natural'
+                            `value`: | `simple` | `global` 'Natural'
                         )
                     }
                 )
@@ -1169,9 +1174,11 @@
                 }
                 `simple types`: {
                     'Position': (
-                        `precision`: | `exact` (
-                            `decimal separator offset`: _
-                            `type`: | `natural` ~
+                        `type`: | `number` (
+                            `precision`: | `exact` (
+                                `number of fractional digits`: _
+                                `type`: | `natural` ~
+                            )
                         )
                     )
                 }
