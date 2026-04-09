@@ -500,7 +500,7 @@
                                                                             `results`: _
                                                                         )
                                                                     )
-                                                                    'items': (
+                                                                    'properties': (
                                                                         `description`: _
                                                                         `value`: | `component` (
                                                                             `type`: | `internal` 'Items'
@@ -527,7 +527,7 @@
                                                                             `results`: _
                                                                         )
                                                                     )
-                                                                    'entries': (
+                                                                    'properties': (
                                                                         `description`: _
                                                                         `value`: | `component` (
                                                                             `type`: | `internal` 'ID Value Pairs'
