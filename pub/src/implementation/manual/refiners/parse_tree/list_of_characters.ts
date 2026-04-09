@@ -1,9 +1,7 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pi_new from '../../../../temp_core/temp'
 import _p_iterate from 'pareto-core/dist/_p_iterate'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
-import * as _pds_new from "../../../../temp_core/temp"
 
 //data types
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
@@ -34,36 +32,10 @@ export const Document: signatures.Document = ($, abort, $p,) => {
     )
     return _p_iterate( //fixme: make this iterate_fully
         ann_chars.characters,
+        ann_chars.end,
         (iter) => r_from_token.Document(//fixme: make this iterate_fully
             tokenize.Tokenizer_Result(
-                {
-                    'old': iter,
-                    'new': _pds_new.create_iterator(
-                        iter,
-                        {
-                            unexpected_element: ($, element) => abort({
-                                'type': ['lexer', {
-                                    'range': {
-                                        'start': element.location,
-                                        'end': {
-                                            'absolute': element.location.absolute + 1,
-                                            'relative': {
-                                                'line': element.location.relative.line,
-                                                'column': element.location.relative.column + 1,
-                                            }
-                                        }
-                                    },
-                                    'type': ['unexpected', { 
-                                        'expected': $
-                                    }]
-                                }]
-                            }),
-                            unexpected_end_with_expected: ($) => _p_unreachable_code_path("implement me"),
-                            unguarded_unexpected_end: () => _p_unreachable_code_path("not sure if this cannot be reacched or needs implementation"),
-                        },
-                        ann_chars.end,
-                    )
-                },
+                iter,
                 ($) => abort({
                     'type': ['lexer', $],
                 }),

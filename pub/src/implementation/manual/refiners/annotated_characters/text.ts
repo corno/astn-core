@@ -14,47 +14,6 @@ export namespace signatures {
 
 }
 
-
-
-// const loop = <Iterator_Element, State>(
-//     iterator: _pi.Iterator<Iterator_Element>,
-//     initial_state: State,
-//     callback: (
-//         element: Iterator_Element,
-//         state: State,
-//         $i: {
-//             'end reached': () => void
-//         },
-//     ) => State
-// ): State => {
-//     let current_state = initial_state
-//     _p_log_debug_message("Starting loop...", () => { })
-//     while (true) {
-//         let end_reached = false
-//         const next = iterator.look()
-//         if (next === null) {
-//             end_reached = true
-//         } else {
-//                 current_state = callback(
-//                     next[0],
-//                     current_state,
-//                     {
-//                         'end reached': () => {
-//                             end_reached = true
-//                         }
-//                     }
-//                 )
-//         }
-//         if (end_reached) {
-//             break
-//         }
-//     }
-//     _p_log_debug_message("Loop ended.", () => { })
-//     return current_state
-
-// }
-
-
 export const map_with_state = <Source_Element, Target_Element, State, Result_Type>(
     $: _pi.List<Source_Element>,
     initial_state: State,

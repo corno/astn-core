@@ -1,6 +1,5 @@
 import * as _p from 'pareto-core/dist/assign'
 import * as _pi from 'pareto-core/dist/interface'
-import * as _pi_new from '../../../../temp_core/new_interface_signatures'
 import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
 import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
 import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
@@ -15,60 +14,52 @@ import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 //dependencies
 
-type Temp_Choice = d_function.Lexer_Error.type_.unexpected.expected.L
 
-type Temp_Iterator<Element, End_Info> = {
-    'old': _pi.Iterator<Element>,
-    'new': _pi_new.Iterator<Element, Temp_Choice, End_Info>,
-}
-
-
-const temp_get_current_character_or_null = (iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>): d_in.Annotated_Character | null => {
-    const next = iterator.old.look()
-    if (next === null) {
-        return null
-    } else {
-        return next[0]
-    }
-}
-
-const WhitespaceChars = {
-    tab: 0x09,                  // \t
-    line_feed: 0x0A,            // \n
-    carriage_return: 0x0D,      // \r
-    space: 0x20,                //
-    comma: 0x2C                 // ,
-}
+const create_error = (
+    element: _pi.Optional_Value<d_in.Annotated_Character>,
+    expected: d_function.Lexer_Error.type_.unexpected.expected,
+    // end_info: d_location.Range
+): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
+    ($) => ({
+        'range': {
+            'start': $.location,
+            'end': {
+                'absolute': $.location.absolute + 1,
+                'relative': {
+                    'line': $.location.relative.line,
+                    'column': $.location.relative.column + 1,
+                }
+            }
+        },
+        'type': ['unexpected', {
+            'expected': expected
+        }]
+    }),
+    () => _p_unreachable_code_path("implement me")
+)
 
 export const is_control_character = ($: d_in.Annotated_Character): boolean =>
     $.code < 0x20
-    && $.code !== WhitespaceChars.tab
-    && $.code !== WhitespaceChars.line_feed
-    && $.code !== WhitespaceChars.carriage_return
+    && $.code !== 0x09 // \t
+    && $.code !== 0x0A // \n
+    && $.code !== 0x0D // \r
 
 const create_range = (
-    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     $p: {
         'start character': d_in.Annotated_Character
     }
-): d_temp_location.Range => {
-    const next = iterator.old.look()
-    if (next === null) {
-        return {
-            'start': $p['start character'].location,
-            'end': iterator.new.get_end_info()
-        }
-    } else {
-        return {
-            'start': $p['start character'].location,
-            'end': next[0].location,
-        }
-    }
-}
+): d_temp_location.Range => ({
+    'start': $p['start character'].location,
+    'end': iterator.look(
+        (next) => next.location,
+        (end_info) => end_info
+    )
+})
 
 
 export const Whitespace = (
-    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Whitespace => {
 
@@ -89,118 +80,121 @@ export const Whitespace = (
         }
     }
 
-    const next = iterator.old.look()
+    const next = iterator.look_raw()
     if (next === null) {
         return _p.optional.literal.not_set()
-    }
-    if (!is_whitespace_character(next[0])) {
-        return _p.optional.literal.not_set()
-    }
-    const start_character = next[0]
-    return _p.optional.literal.set({
-        'value': _p_text_from_list<number>(
-            iterator.new.list(
-                ($) => is_whitespace_character($),
-                ($) => {
-                    if (is_control_character($)) {
-                        iterator.old.discard(() => null)
-                        return abort({
-                            'range': create_range(iterator, { 'start character': $ }),
-                            'type': ['unexpected control character', {
-                                'character': $.code,
-                            }]
-                        })
+    } else {
+        if (!is_whitespace_character(next[0])) {
+            return _p.optional.literal.not_set()
+        } else {
+            const start_character = next[0]
+            return _p.optional.literal.set({
+                'value': _p_text_from_list<number>(
+                    iterator.list({
+                        has_more_items: ($) => is_whitespace_character($),
+                        handle: ($) => {
+                            if (is_control_character($)) {
+                                iterator.discard(() => null)
+                                return abort({
+                                    'range': create_range(iterator, { 'start character': $ }),
+                                    'type': ['unexpected control character', {
+                                        'character': $.code,
+                                    }]
+                                })
 
-                    }
-                    iterator.old.discard(() => null) // discard the character
-                    return $.code
-                },
-                ($) => $
-            ),
-            ($) => $
-        ),
-        'range': create_range(iterator, { 'start character': start_character }),
-    })
+                            } else {
+                                iterator.discard(() => null) // discard the character
+                                return $.code
+                            }
+                        },
+                    }),
+                    ($) => $
+                ),
+                'range': create_range(iterator, { 'start character': start_character }),
+            })
+        }
+    }
 }
 
 export const Trivia = (
-    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
-    'comments': iterator.new.list(
-        (current) => current.code === 0x2F, // /
-        (slash_character): d_out.Trivia.comments.L => {
-
-            const next_char = iterator.old.look_ahead(1)
+    'comments': iterator.list({
+        has_more_items: (current) => {
+            const next = iterator.look_ahead_raw(1)
+            return current.code === 0x2F
+                && next !== null && (next[0].code === 0x2F || next[0].code === 0x2A) // slash followed by either slash or asterisk
+        },
+        handle: (slash_character): d_out.Trivia.comments.L => {
+            iterator.discard(() => null) // discard the first slash
+            const next_char = iterator.look_ahead_raw(1)
             if (next_char === null) {
-                return abort({
-                    'range': create_range(iterator, { 'start character': slash_character }),
-                    'type': ['dangling slash', {
-                        'at end of input': true,
-                    }]
-                })
+                return _p_unreachable_code_path("we check for the presence of the next character in has_more_items, so this should never happen")
             }
             switch (next_char[0].code) {
                 case 0x2F: // /
-                    iterator.old.discard(() => null) // discard the second /
-                    const Character = {
-                        line_feed: 0x0A,            // \n
-                        carriage_return: 0x0D,      // \r
-                        // solidus: 0x2F,              // /
-                    }
+                    iterator.discard(() => null) // discard the second /
                     return ({
                         'type': ['line', null],
                         'content': _p_text_from_list(
-                            iterator.new.list(
-                                ($) => $.code !== Character.line_feed && $.code !== Character.carriage_return,
-                                ($) => {
-                                    iterator.old.discard(() => null) // discard the character
+                            iterator.list({
+                                has_more_items: ($) => $.code !== 0x0A && $.code !== 0x0D, // not a line feed or carriage return
+                                handle: ($) => {
+                                    iterator.discard(() => null) // discard the character
                                     return $.code
                                 },
-                                ($) => $,
-                            ),
+                            }),
                             ($) => $
                         ),
                         'range': create_range(iterator, { 'start character': slash_character }),
                         'trailing whitespace': Whitespace(iterator, abort)
                     })
-                    break
                 case 0x2A: {// *
-                    iterator.old.discard(() => null) // discard the asterisk
+                    iterator.discard(() => null) // discard the asterisk
                     return ({
                         'type': ['block', null],
-                        'content': _p_text_from_list(
-                            iterator.new.list(
-                                ($) => {
-                                    const next_char = iterator.old.look_ahead(1)
-                                    return $.code !== 0x2A || (next_char === null || next_char[0].code !== 0x2A) // not a solidus followed by an asterisk (end of block comment)
-                                },
-                                ($) => {
-                                    iterator.old.discard(() => null) // discard the character
-                                    return $.code
-                                },
-                                ($) => {
-                                    const asterisk = iterator.new.expect(
-                                        [
-                                            ['end of block comment', null]
-                                        ],
-                                        ($, abort) => $.code === 0x2A
-                                            ? $
-                                            : abort()
-                                    )
-                                    const solidus = iterator.new.expect(
-                                        [
-                                            ['end of block comment', null]
-                                        ],
-                                        ($, abort) => $.code === 0x2A
-                                            ? $
-                                            : abort()
-                                    )
-                                    return $
-                                },
+                        'content': iterator.wrap_up(
+                            () => _p_text_from_list(
+                                iterator.list({
+                                    has_more_items: ($) => {
+                                        const next_char = iterator.look_ahead_raw(1)
+                                        return $.code !== 0x2A || (next_char === null || next_char[0].code !== 0x2F) // not an asterisk followed by a solidus (end of block comment)
+                                    },
+                                    handle: ($) => {
+                                        iterator.discard(() => null) // discard the character
+                                        return $.code
+                                    },
+                                }),
+                                ($) => $
                             ),
-                            ($) => $
+                            () => ({
+                                'asterisk': iterator.expect({
+                                    abort: abort,
+                                    get_error: ($) => create_error(
+                                        $,
+                                        _p.list.literal([
+                                            ['end of block comment', null]
+                                        ]),
+                                    ),
+                                    item: ($, abort) => $.code === 0x2A
+                                        ? $
+                                        : abort(),
+                                }),
+                                'solidus': iterator.expect({
+                                    abort: abort,
+                                    get_error: ($) => create_error(
+                                        $,
+                                        _p.list.literal([
+                                            ['end of block comment', null]
+                                        ]),
+                                    ),
+                                    item: ($, abort) => $.code === 0x2F
+                                        ? $
+                                        : abort(),
+                                }),
+                            }),
                         ),
                         'range': create_range(iterator, { 'start character': slash_character }),
                         'trailing whitespace': Whitespace(iterator, abort)
@@ -215,190 +209,14 @@ export const Trivia = (
                     })
             }
         },
-        ($) => $
-    ),
+
+    }),
 })
-
-export const Annotated_Token = (
-    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: _pi.Abort<d_function.Lexer_Error>,
-    $p: { 'character': d_in.Annotated_Character }
-): d_out.Annotated_Token => {
-    const WhitespaceChars = {
-        tab: 0x09,                  // \t
-        line_feed: 0x0A,            // \n
-        carriage_return: 0x0D,      // \r
-        space: 0x20,                //
-        comma: 0x2C,                // ,
-    }
-
-
-    return {
-        'type': _p.state.block((): d_out.Annotated_Token.type_ => {
-
-            const Character = {
-
-                open_angle_bracket: 0x3C, // <
-                open_brace: 0x7B,           // {
-                open_bracket: 0x5B,         // [
-                open_paren: 0x28,          // (
-
-                close_angle_bracket: 0x3E, // >
-                close_brace: 0x7D,          // }
-                close_bracket: 0x5D,        // ]
-                close_paren: 0x29,         // )
-
-                apostrophe: 0x27,          // '
-                asterisk: 0x2A,            // *
-                at: 0x40,                  // @
-                backtick: 0x60,            // `
-                bang: 0x21,
-                colon: 0x3A,                // :
-                pipe: 0x7C,                // |
-                quotation_mark: 0x22,       // "
-                slash: 0x2F,               // /
-                underscore: 0x5F,           // _
-                tilde: 0x7E,               // ~
-                hash: 0x23,                // #
-
-                space: 0x20,               // space
-                tab: 0x09,                 // \t
-
-            }
-            switch ($p.character.code) {
-                case Character.open_brace:
-                    iterator.old.discard(() => null)
-                    return ['{', null]
-                case Character.open_bracket:
-                    iterator.old.discard(() => null)
-                    return ['[', null]
-                case Character.open_angle_bracket:
-                    iterator.old.discard(() => null)
-                    return ['<', null]
-                case Character.open_paren:
-                    iterator.old.discard(() => null)
-                    return ['(', null]
-                case Character.close_brace:
-                    iterator.old.discard(() => null)
-                    return ['}', null]
-                case Character.close_bracket:
-                    iterator.old.discard(() => null)
-                    return [']', null]
-                case Character.close_angle_bracket:
-                    iterator.old.discard(() => null)
-                    return ['>', null]
-                case Character.close_paren:
-                    iterator.old.discard(() => null)
-                    return [')', null]
-
-                //individuals
-                case Character.hash:
-                    iterator.old.discard(() => null)
-                    return ['#', null] // missing data token
-                case Character.pipe:
-                    iterator.old.discard(() => null)
-                    return ['|', null] // state value token
-                case Character.underscore:
-                    iterator.old.discard(() => null)
-                    return ['_', null] // unset value token
-                case Character.tilde:
-                    iterator.old.discard(() => null)
-                    return ['~', null] // unset value token
-                case Character.asterisk:
-                    iterator.old.discard(() => null)
-                    return ['*', null] // set value token
-                case Character.at:
-                    iterator.old.discard(() => null)
-                    return ['@', null] // include token
-                case Character.bang:
-                    iterator.old.discard(() => null)
-                    return ['!', null] // header token
-                case Character.colon:
-                    iterator.old.discard(() => null)
-                    return [':', null] // structural token
-                case Character.quotation_mark:
-                    iterator.old.discard(() => null)
-                    return ['text', {
-                        'value': Delimited_Text(($) => $ === Character.quotation_mark, true, iterator, abort, { 'start character': $p.character }),
-                        'type': ['quoted', null],
-                    }]
-                case Character.backtick:
-                    iterator.old.discard(() => null)
-                    return ['text', {
-                        'value': Delimited_Text(($) => $ === Character.backtick, false, iterator, abort, { 'start character': $p.character }),
-                        'type': ['backticked', null],
-                    }]
-                case Character.apostrophe:
-                    iterator.old.discard(() => null)
-                    return ['text', {
-                        'value': Delimited_Text(($) => $ === Character.apostrophe, false, iterator, abort, { 'start character': $p.character }),
-                        'type': ['apostrophed', null],
-                    }]
-
-                default:
-                    return ['text', {
-                        'type': ['undelimited', null],
-                        'value': _p_text_from_list(
-
-                            iterator.new.list(
-                                ($) => {
-                                    return $.code !== Character.open_brace &&
-                                        $.code !== Character.close_brace &&
-                                        $.code !== Character.open_bracket &&
-                                        $.code !== Character.close_bracket &&
-                                        $.code !== Character.open_angle_bracket &&
-                                        $.code !== Character.close_angle_bracket &&
-                                        $.code !== Character.open_paren &&
-                                        $.code !== Character.close_paren &&
-                                        $.code !== Character.apostrophe &&
-                                        $.code !== Character.asterisk &&
-                                        $.code !== Character.at &&
-                                        $.code !== Character.backtick &&
-                                        $.code !== Character.bang &&
-                                        $.code !== Character.colon &&
-                                        $.code !== Character.pipe &&
-                                        $.code !== Character.quotation_mark &&
-                                        $.code !== Character.slash &&
-                                        $.code !== Character.tilde &&
-                                        $.code !== WhitespaceChars.comma &&
-                                        $.code !== WhitespaceChars.space &&
-                                        $.code !== WhitespaceChars.tab &&
-                                        $.code !== WhitespaceChars.line_feed &&
-                                        $.code !== WhitespaceChars.carriage_return
-                                },
-                                ($) => {
-                                    if (is_control_character($)) {
-                                        iterator.old.discard(() => null)
-                                        return abort({
-                                            'range': create_range(iterator, { 'start character': $ }),
-                                            'type': ['unexpected control character in text', {
-                                                'character': $.code,
-                                            }]
-                                        })
-
-                                    }
-                                    iterator.old.discard(() => null) // discard the character
-                                    return $.code
-                                },
-                                ($) => {
-                                    return $
-                                },
-                            ),
-                            ($) => $
-                        )
-                    }]
-            }
-        }),
-        'start': $p.character.location,
-        'end': create_range(iterator, { 'start character': $p.character }).end,
-        'trailing trivia': Trivia(iterator, abort),
-    }
-}
 
 export const Delimited_Text = (
     is_end_character: (character: number) => boolean,
     allow_newlines: boolean,
-    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
     $p: {
         'start character': d_in.Annotated_Character
@@ -431,7 +249,7 @@ export const Delimited_Text = (
         _p_list_build_deprecated<number>(
             ($i) => {
                 while (true) {
-                    const $ = temp_get_current_character_or_null(iterator)
+                    const $ = iterator.look_raw()
                     if ($ === null) {
 
                         return abort({
@@ -439,20 +257,20 @@ export const Delimited_Text = (
                             'type': ['unterminated text', null]
                         })
                     }
-                    if (is_control_character($)) {
+                    if (is_control_character($[0])) {
                         return abort({
                             'range': create_range(iterator, { 'start character': $p['start character'] }),
                             'type': ['unexpected control character in text', {
-                                'character': $.code,
+                                'character': $[0].code,
                             }]
                         })
 
                     }
-                    if (is_end_character($.code)) {
-                        iterator.old.discard(() => null) // discard the end character
+                    if (is_end_character($[0].code)) {
+                        iterator.discard(() => null) // discard the end character
                         return
                     }
-                    switch ($.code) {
+                    switch ($[0].code) {
                         case Character.line_feed:
                         case Character.carriage_return:
                             if (!allow_newlines) {
@@ -461,62 +279,62 @@ export const Delimited_Text = (
                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
                                 })
                             }
-                            iterator.old.discard(() => null)
-                            $i['add item']($.code)
+                            iterator.discard(() => null)
+                            $i['add item']($[0].code)
                             break
                         case Character.reverse_solidus: // \ (escape)
-                            iterator.old.discard(() => null)
+                            iterator.discard(() => null)
                             {
-                                const $ = temp_get_current_character_or_null(iterator)
+                                const $ = iterator.look_raw()
                                 if ($ === null) {
                                     return abort({
                                         'range': create_range(iterator, { 'start character': $p['start character'] }),
                                         'type': ['missing character after escape', null]
                                     })
                                 }
-                                switch ($.code) {
+                                switch ($[0].code) {
                                     case Character.quotation_mark:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.quotation_mark)
                                         break
                                     case Character.apostrophe:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.apostrophe)
                                         break
                                     case Character.backtick:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.backtick)
                                         break
                                     case Character.reverse_solidus:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.reverse_solidus)
                                         break
                                     case Character.solidus:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.solidus)
                                         break
                                     case Character.b:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.backspace)
                                         break
                                     case Character.f:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.form_feed)
                                         break
                                     case Character.n:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.line_feed)
                                         break
                                     case Character.r:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.carriage_return)
                                         break
                                     case Character.t:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         $i['add item'](Character.tab)
                                         break
                                     case Character.u:
-                                        iterator.old.discard(() => null)
+                                        iterator.discard(() => null)
                                         const ds_hexadecimal: _pi.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
                                             const characters = $
                                             let result = 0
@@ -582,21 +400,21 @@ export const Delimited_Text = (
                                             _p_list_build_deprecated<number>(
                                                 ($i) => {
                                                     const get_char = () => {
-                                                        const char = temp_get_current_character_or_null(iterator)
+                                                        const char = iterator.look_raw()
                                                         if (char === null) {
                                                             return abort({
                                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                                 'type': ['unterminated unicode escape sequence', null]
                                                             })
                                                         }
-                                                        if (char.code < Character.a || (char.code > Character.f && char.code < Character.A) || char.code > Character.F || char.code < 0x30 || char.code > 0x39) {
+                                                        if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
                                                             return abort({
                                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                                 'type': ['invalid unicode escape sequence', null]
                                                             })
                                                         }
-                                                        iterator.old.discard(() => null)
-                                                        return char.code
+                                                        iterator.discard(() => null)
+                                                        return char[0].code
                                                     }
                                                     $i['add item'](get_char())
                                                     $i['add item'](get_char())
@@ -611,15 +429,15 @@ export const Delimited_Text = (
                                         return abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
                                             'type': ['unknown escape character', {
-                                                'character': $.code
+                                                'character': $[0].code
                                             }]
                                         })
                                 }
                             }
                             break
                         default:
-                            iterator.old.discard(() => null)
-                            $i['add item']($.code)
+                            iterator.discard(() => null)
+                            $i['add item']($[0].code)
                     }
                 }
             }
@@ -630,14 +448,176 @@ export const Delimited_Text = (
 }
 
 export const Tokenizer_Result = (
-    iterator: Temp_Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     abort: _pi.Abort<d_function.Lexer_Error>,
 ): d_out.Tokenizer_Result => ({
     'leading trivia': Trivia(iterator, abort),
-    'tokens': iterator.new.list(
-        ($) => true,
-        ($) => Annotated_Token(iterator, abort, { 'character': $ }),
-        ($) => $
-    ),
-    'end': iterator.new.get_end_info()
+    'tokens': iterator.list({
+        has_more_items: ($) => true,
+        handle: ($) => ({
+            'type': _p.state.block((): d_out.Annotated_Token.type_ => {
+
+                const Character = {
+
+                    open_angle_bracket: 0x3C, // <
+                    open_brace: 0x7B,           // {
+                    open_bracket: 0x5B,         // [
+                    open_paren: 0x28,          // (
+
+                    close_angle_bracket: 0x3E, // >
+                    close_brace: 0x7D,          // }
+                    close_bracket: 0x5D,        // ]
+                    close_paren: 0x29,         // )
+
+                    apostrophe: 0x27,          // '
+                    asterisk: 0x2A,            // *
+                    at: 0x40,                  // @
+                    backtick: 0x60,            // `
+                    bang: 0x21,
+                    colon: 0x3A,                // :
+                    pipe: 0x7C,                // |
+                    quotation_mark: 0x22,       // "
+                    slash: 0x2F,               // /
+                    underscore: 0x5F,           // _
+                    tilde: 0x7E,               // ~
+                    hash: 0x23,                // #
+
+                    space: 0x20,               // space
+                    tab: 0x09,                 // \t
+
+                }
+                switch ($.code) {
+                    case Character.open_brace:
+                        iterator.discard(() => null)
+                        return ['{', null]
+                    case Character.open_bracket:
+                        iterator.discard(() => null)
+                        return ['[', null]
+                    case Character.open_angle_bracket:
+                        iterator.discard(() => null)
+                        return ['<', null]
+                    case Character.open_paren:
+                        iterator.discard(() => null)
+                        return ['(', null]
+                    case Character.close_brace:
+                        iterator.discard(() => null)
+                        return ['}', null]
+                    case Character.close_bracket:
+                        iterator.discard(() => null)
+                        return [']', null]
+                    case Character.close_angle_bracket:
+                        iterator.discard(() => null)
+                        return ['>', null]
+                    case Character.close_paren:
+                        iterator.discard(() => null)
+                        return [')', null]
+
+                    //individuals
+                    case Character.hash:
+                        iterator.discard(() => null)
+                        return ['#', null] // missing data token
+                    case Character.pipe:
+                        iterator.discard(() => null)
+                        return ['|', null] // state value token
+                    case Character.underscore:
+                        iterator.discard(() => null)
+                        return ['_', null] // unset value token
+                    case Character.tilde:
+                        iterator.discard(() => null)
+                        return ['~', null] // unset value token
+                    case Character.asterisk:
+                        iterator.discard(() => null)
+                        return ['*', null] // set value token
+                    case Character.at:
+                        iterator.discard(() => null)
+                        return ['@', null] // include token
+                    case Character.bang:
+                        iterator.discard(() => null)
+                        return ['!', null] // header token
+                    case Character.colon:
+                        iterator.discard(() => null)
+                        return [':', null] // structural token
+                    case Character.quotation_mark:
+                        iterator.discard(() => null)
+                        return ['text', {
+                            'value': Delimited_Text(($) => $ === Character.quotation_mark, true, iterator, abort, { 'start character': $ }),
+                            'type': ['quoted', null],
+                        }]
+                    case Character.backtick:
+                        iterator.discard(() => null)
+                        return ['text', {
+                            'value': Delimited_Text(($) => $ === Character.backtick, false, iterator, abort, { 'start character': $ }),
+                            'type': ['backticked', null],
+                        }]
+                    case Character.apostrophe:
+                        iterator.discard(() => null)
+                        return ['text', {
+                            'value': Delimited_Text(($) => $ === Character.apostrophe, false, iterator, abort, { 'start character': $ }),
+                            'type': ['apostrophed', null],
+                        }]
+
+                    default:
+                        return ['text', {
+                            'type': ['undelimited', null],
+                            'value': _p_text_from_list(
+
+                                iterator.list({
+                                    has_more_items: ($) => {
+                                        const WhitespaceChars = {
+                                            tab: 0x09,                  // \t
+                                            line_feed: 0x0A,            // \n
+                                            carriage_return: 0x0D,      // \r
+                                            space: 0x20,                //
+                                            comma: 0x2C,                // ,
+                                        }
+                                        return $.code !== Character.open_brace &&
+                                            $.code !== Character.close_brace &&
+                                            $.code !== Character.open_bracket &&
+                                            $.code !== Character.close_bracket &&
+                                            $.code !== Character.open_angle_bracket &&
+                                            $.code !== Character.close_angle_bracket &&
+                                            $.code !== Character.open_paren &&
+                                            $.code !== Character.close_paren &&
+                                            $.code !== Character.apostrophe &&
+                                            $.code !== Character.asterisk &&
+                                            $.code !== Character.at &&
+                                            $.code !== Character.backtick &&
+                                            $.code !== Character.bang &&
+                                            $.code !== Character.colon &&
+                                            $.code !== Character.pipe &&
+                                            $.code !== Character.quotation_mark &&
+                                            $.code !== Character.slash &&
+                                            $.code !== Character.tilde &&
+                                            $.code !== WhitespaceChars.comma &&
+                                            $.code !== WhitespaceChars.space &&
+                                            $.code !== WhitespaceChars.tab &&
+                                            $.code !== WhitespaceChars.line_feed &&
+                                            $.code !== WhitespaceChars.carriage_return
+                                    },
+                                    handle: ($) => {
+                                        if (is_control_character($)) {
+                                            iterator.discard(() => null)
+                                            return abort({
+                                                'range': create_range(iterator, { 'start character': $ }),
+                                                'type': ['unexpected control character in text', {
+                                                    'character': $.code,
+                                                }]
+                                            })
+
+                                        }
+                                        iterator.discard(() => null) // discard the character
+                                        return $.code
+                                    },
+                                }),
+                                ($) => $
+                            )
+                        }]
+                }
+            }),
+            'start': $.location,
+            'end': create_range(iterator, { 'start character': $ }).end,
+            'trailing trivia': Trivia(iterator, abort),
+        }),
+    }),
+    'end': iterator.get_end_info()
 })
