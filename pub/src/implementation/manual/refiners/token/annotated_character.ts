@@ -178,9 +178,9 @@ export const Trivia = (
                                             ['end of block comment', null]
                                         ]),
                                     ),
-                                    item: ($, abort) => $.code === 0x2A
+                                    item: ($, abort2) => $.code === 0x2A
                                         ? $
-                                        : abort(),
+                                        : abort2(null),
                                 }),
                                 'solidus': iterator.expect({
                                     abort: abort,
@@ -190,9 +190,9 @@ export const Trivia = (
                                             ['end of block comment', null]
                                         ]),
                                     ),
-                                    item: ($, abort) => $.code === 0x2F
+                                    item: ($, abort2) => $.code === 0x2F
                                         ? $
-                                        : abort(),
+                                        : abort2(null),
                                 }),
                             }),
                         ),
