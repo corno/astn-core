@@ -71,10 +71,14 @@ export const Error: signatures.Error = ($) => {
                     sh.ph.literal(" or "),
                     sh.ph.nothing(),
                 ),
-                sh.ph.literal(", found"),
+                sh.ph.literal(", found "),
                 _p.decide.state($.cause, ($) => {
                     switch ($[0]) {
-                        case 'unexpected token': return _p.ss($, ($) => sh.ph.literal($.found.type[0]))
+                        case 'unexpected token': return _p.ss($, ($) => sh.ph.composed([
+                            sh.ph.literal("'"),
+                            sh.ph.literal($.found.type[0]),
+                            sh.ph.literal("'")
+                        ]))
                         case 'missing token': return _p.ss($, ($) => sh.ph.literal("nothing"))
                         default: return _p.au($[0])
                     }
