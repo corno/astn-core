@@ -39,10 +39,6 @@ export namespace Lexer_Error_ {
             
         }
         
-        export type dangling_slash = {
-            readonly 'at end of input': dangling_slash.at_end_of_input
-        }
-        
         export type invalid_unicode_escape_sequence = null
         
         export type missing_character_after_escape = null
@@ -114,7 +110,6 @@ export namespace Lexer_Error_ {
     }
     
     export type type_ = 
-        | readonly ['dangling slash', type_.dangling_slash]
         | readonly ['invalid unicode escape sequence', type_.invalid_unicode_escape_sequence]
         | readonly ['missing character after escape', type_.missing_character_after_escape]
         | readonly ['unexpected control character', type_.unexpected_control_character]

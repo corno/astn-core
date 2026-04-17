@@ -129,9 +129,9 @@ export const Trivia = (
         },
         handle: (slash_character): d_out.Trivia.comments.L => {
             iterator.discard(() => null) // discard the first slash
-            const next_char = iterator.look_ahead_raw(1)
+            const next_char = iterator.look_raw()
             if (next_char === null) {
-                return _p_unreachable_code_path("we check for the presence of the next character in has_more_items, so this should never happen")
+                return _p_unreachable_code_path("we checked in has_more_items for the presence of the next character, so this should never happen")
             }
             switch (next_char[0].code) {
                 case 0x2F: // /
@@ -201,12 +201,7 @@ export const Trivia = (
                     })
                 }
                 default:
-                    return abort({
-                        'range': create_range(iterator, { 'start character': slash_character }),
-                        'type': ['dangling slash', {
-                            'at end of input': false,
-                        }]
-                    })
+                    return _p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
             }
         },
 

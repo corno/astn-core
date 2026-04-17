@@ -932,16 +932,6 @@
                             `description`: _
                             `value`: | `state` (
                                 `options`: {
-                                    'dangling slash': (
-                                        `constraints`: _
-                                        `description`: _
-                                        `value`: | `group` {
-                                            'at end of input': (
-                                                `description`: _
-                                                `value`: | `simple` | `global` 'boolean'
-                                            )
-                                        }
-                                    )
                                     'invalid unicode escape sequence': (
                                         `constraints`: _
                                         `description`: _

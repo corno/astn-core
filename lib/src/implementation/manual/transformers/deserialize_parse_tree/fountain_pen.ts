@@ -18,7 +18,6 @@ export const Error: signatures.Error = ($) => {
         switch ($[0]) {
             case 'lexer': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
                 switch ($[0]) {
-                    case 'dangling slash': return sh.ph.literal("found dangling slash")
                     case 'invalid unicode escape sequence': return sh.ph.literal("found invalid unicode escape sequence")
                     case 'missing character after escape': return sh.ph.literal("found missing character after escape")
                     // case 'unexpected character': return "found unexpected character"
