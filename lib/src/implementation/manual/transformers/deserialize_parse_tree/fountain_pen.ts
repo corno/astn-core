@@ -16,29 +16,20 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 export const Error: signatures.Error = ($) => {
     const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => _p.decide.state($, ($) => {
         switch ($[0]) {
-            case 'lexer': return _p.ss($, ($) => _p.decide.state($.type, ($) => {
+            case 'lexer': return _p.ss($, ($) => _p.decide.state($.expected, ($) => {
                 switch ($[0]) {
-                    case 'invalid unicode escape sequence': return sh.ph.literal("found invalid unicode escape sequence")
-                    case 'missing character after escape': return sh.ph.literal("found missing character after escape")
-                    // case 'unexpected character': return "found unexpected character"
-                    case 'unexpected control character': return sh.ph.literal("found unexpected control character")
-                    case 'unexpected control character in text': return sh.ph.literal("found unexpected control character in text")
-                    case 'unexpected end of line in delimited text': return sh.ph.literal("found unexpected end of line in delimited text")
-                    case 'unknown escape character': return sh.ph.literal("found unknown escape character")
-                    case 'unterminated block comment': return sh.ph.literal("found unterminated block comment")
-                    case 'unterminated text': return sh.ph.literal("found unterminated text")
-                    case 'unterminated unicode escape sequence': return sh.ph.literal("found unterminated unicode escape sequence")
-                    case 'unexpected': return _p.ss($, ($) => sh.ph.composed([
-                        sh.ph.literal("expected "),
-                        sh.ph.rich(
-                            $.expected.__l_map(($) => sh.ph.literal($[0])),
-                            _p_unreachable_code_path("there should always be at least 1 expected value"),
-                            sh.ph.literal("'"),
-                            sh.ph.literal("' or '"),
-                            sh.ph.literal("'"),
-                        )
-
+                    case 'unicode character': return sh.ph.literal("found invalid unicode escape sequence")
+                    case 'no end of line in text': return _p.ss($, ($) => sh.ph.literal("no end of line in text"))
+                    case 'escape character': return _p.ss($, ($) => sh.ph.composed([
+                        sh.ph.literal("escape character (), but found "),
+                        $.found.__decide(
+                            ($) => sh.ph.serialize(_p.list.literal([$])),
+                            () => sh.ph.literal("nothing")
+                        ),
                     ]))
+                    case 'block comment termination': return _p.ss($, ($) => sh.ph.literal("block comment termination: */"))
+                    case 'text termination': return _p.ss($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
+
                     default: return _p.au($[0])
                 }
             }))

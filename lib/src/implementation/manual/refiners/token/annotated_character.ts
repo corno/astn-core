@@ -17,8 +17,7 @@ import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 const create_error = (
     element: _pi.Optional_Value<d_in.Annotated_Character>,
-    expected: d_function.Lexer_Error.type_.unexpected.expected,
-    // end_info: d_location.Range
+    expected: d_function.Lexer_Error.expected,
 ): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
     ($) => ({
         'range': {
@@ -31,18 +30,10 @@ const create_error = (
                 }
             }
         },
-        'type': ['unexpected', {
-            'expected': expected
-        }]
+        'expected': expected
     }),
     () => _p_unreachable_code_path("implement me")
 )
-
-export const is_control_character = ($: d_in.Annotated_Character): boolean =>
-    $.code < 0x20
-    && $.code !== 0x09 // \t
-    && $.code !== 0x0A // \n
-    && $.code !== 0x0D // \r
 
 const create_range = (
     iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
@@ -93,19 +84,8 @@ export const Whitespace = (
                     iterator.list({
                         has_more_items: ($) => is_whitespace_character($),
                         handle: ($) => {
-                            if (is_control_character($)) {
-                                iterator.discard(() => null)
-                                return abort({
-                                    'range': create_range(iterator, { 'start character': $ }),
-                                    'type': ['unexpected control character', {
-                                        'character': $.code,
-                                    }]
-                                })
-
-                            } else {
-                                iterator.discard(() => null) // discard the character
-                                return $.code
-                            }
+                            iterator.discard(() => null) // discard the character
+                            return $.code
                         },
                     }),
                     ($) => $
@@ -174,9 +154,7 @@ export const Trivia = (
                                     abort: abort,
                                     get_error: ($) => create_error(
                                         $,
-                                        _p.list.literal([
-                                            ['end of block comment', null]
-                                        ]),
+                                        ['block comment termination', null],
                                     ),
                                     item: ($, abort2) => $.code === 0x2A
                                         ? $
@@ -186,9 +164,7 @@ export const Trivia = (
                                     abort: abort,
                                     get_error: ($) => create_error(
                                         $,
-                                        _p.list.literal([
-                                            ['end of block comment', null]
-                                        ]),
+                                        ['block comment termination', null],
                                     ),
                                     item: ($, abort2) => $.code === 0x2F
                                         ? $
@@ -249,17 +225,8 @@ export const Delimited_Text = (
 
                         return abort({
                             'range': create_range(iterator, { 'start character': $p['start character'] }),
-                            'type': ['unterminated text', null]
+                            'expected': ['text termination', null]
                         })
-                    }
-                    if (is_control_character($[0])) {
-                        return abort({
-                            'range': create_range(iterator, { 'start character': $p['start character'] }),
-                            'type': ['unexpected control character in text', {
-                                'character': $[0].code,
-                            }]
-                        })
-
                     }
                     if (is_end_character($[0].code)) {
                         iterator.discard(() => null) // discard the end character
@@ -270,7 +237,7 @@ export const Delimited_Text = (
                         case Character.carriage_return:
                             if (!allow_newlines) {
                                 return abort({
-                                    'type': ['unexpected end of line in delimited text', null],
+                                    'expected': ['no end of line in text', null],
                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
                                 })
                             }
@@ -284,7 +251,7 @@ export const Delimited_Text = (
                                 if ($ === null) {
                                     return abort({
                                         'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                        'type': ['missing character after escape', null]
+                                        'expected': ['escape character', { 'found': _p.optional.literal.not_set() }]
                                     })
                                 }
                                 switch ($[0].code) {
@@ -399,13 +366,13 @@ export const Delimited_Text = (
                                                         if (char === null) {
                                                             return abort({
                                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                'type': ['unterminated unicode escape sequence', null]
+                                                                'expected': ['unicode character', { 'found': _p.optional.literal.not_set() }]
                                                             })
                                                         }
                                                         if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
                                                             return abort({
                                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                'type': ['invalid unicode escape sequence', null]
+                                                                'expected': ['unicode character', { 'found': _p.optional.literal.set(char[0].code) }]
                                                             })
                                                         }
                                                         iterator.discard(() => null)
@@ -423,8 +390,8 @@ export const Delimited_Text = (
                                     default:
                                         return abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                            'type': ['unknown escape character', {
-                                                'character': $[0].code
+                                            'expected': ['escape character', {
+                                                'found': _p.optional.literal.set($[0].code)
                                             }]
                                         })
                                 }
@@ -590,16 +557,6 @@ export const Tokenizer_Result = (
                                             $.code !== WhitespaceChars.carriage_return
                                     },
                                     handle: ($) => {
-                                        if (is_control_character($)) {
-                                            iterator.discard(() => null)
-                                            return abort({
-                                                'range': create_range(iterator, { 'start character': $ }),
-                                                'type': ['unexpected control character in text', {
-                                                    'character': $.code,
-                                                }]
-                                            })
-
-                                        }
                                         iterator.discard(() => null) // discard the character
                                         return $.code
                                     },

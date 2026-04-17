@@ -290,7 +290,7 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                 // case 'concise':
                                 case 'verbose': return _p.ss($, ($) => {
                                     const xxx = _p.dictionary.from.list(
-                                        $.entries,
+                                        $.properties,
                                     ).convert(
                                         ($) => $.id.token.value,
                                         ($) => $,

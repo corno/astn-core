@@ -31,101 +31,60 @@ export namespace Lexer_Error_ {
     
     export type range = i_imports_location.Range
     
-    export namespace type_ {
+    export namespace expected {
         
-        export namespace dangling_slash {
+        export type no_end_of_line_in_text = null
+        
+        export namespace escape_character {
             
-            export type at_end_of_input = boolean
-            
-        }
-        
-        export type invalid_unicode_escape_sequence = null
-        
-        export type missing_character_after_escape = null
-        
-        export namespace unexpected_control_character {
-            
-            export type character = number
-            
-        }
-        
-        export type unexpected_control_character = {
-            readonly 'character': unexpected_control_character.character
-        }
-        
-        export namespace unexpected_control_character_in_text {
-            
-            export type character = number
-            
-        }
-        
-        export type unexpected_control_character_in_text = {
-            readonly 'character': unexpected_control_character_in_text.character
-        }
-        
-        export type unexpected_end_of_line_in_delimited_text = null
-        
-        export namespace unknown_escape_character {
-            
-            export type character = number
-            
-        }
-        
-        export type unknown_escape_character = {
-            readonly 'character': unknown_escape_character.character
-        }
-        
-        export type unterminated_block_comment = null
-        
-        export type unterminated_text = null
-        
-        export type unterminated_unicode_escape_sequence = null
-        
-        export namespace unexpected {
-            
-            export namespace expected {
+            export namespace found {
                 
-                export namespace L {
-                    
-                    export type end_of_block_comment = null
-                    
-                    export type end_of_delimited_text = null
-                    
-                }
-                
-                export type L = 
-                    | readonly ['end of block comment', L.end_of_block_comment]
-                    | readonly ['end of delimited text', L.end_of_delimited_text]
+                export type O = number
                 
             }
             
-            export type expected = _pi.List<expected.L>
+            export type found = _pi.Optional_Value<found.O>
             
         }
         
-        export type unexpected = {
-            readonly 'expected': unexpected.expected
+        export type escape_character = {
+            readonly 'found': escape_character.found
         }
+        
+        export namespace unicode_character {
+            
+            export namespace found {
+                
+                export type O = number
+                
+            }
+            
+            export type found = _pi.Optional_Value<found.O>
+            
+        }
+        
+        export type unicode_character = {
+            readonly 'found': unicode_character.found
+        }
+        
+        export type block_comment_termination = null
+        
+        export type text_termination = null
         
     }
     
-    export type type_ = 
-        | readonly ['invalid unicode escape sequence', type_.invalid_unicode_escape_sequence]
-        | readonly ['missing character after escape', type_.missing_character_after_escape]
-        | readonly ['unexpected control character', type_.unexpected_control_character]
-        | readonly ['unexpected control character in text', type_.unexpected_control_character_in_text]
-        | readonly ['unexpected end of line in delimited text', type_.unexpected_end_of_line_in_delimited_text]
-        | readonly ['unknown escape character', type_.unknown_escape_character]
-        | readonly ['unterminated block comment', type_.unterminated_block_comment]
-        | readonly ['unterminated text', type_.unterminated_text]
-        | readonly ['unterminated unicode escape sequence', type_.unterminated_unicode_escape_sequence]
-        | readonly ['unexpected', type_.unexpected]
+    export type expected = 
+        | readonly ['no end of line in text', expected.no_end_of_line_in_text]
+        | readonly ['escape character', expected.escape_character]
+        | readonly ['unicode character', expected.unicode_character]
+        | readonly ['block comment termination', expected.block_comment_termination]
+        | readonly ['text termination', expected.text_termination]
     
 }
 
 export type Lexer_Error_ = {
     readonly 'range': Lexer_Error_.range
-    readonly 'type': Lexer_Error_.type_
+    readonly 'expected': Lexer_Error_.expected
 }
 
 export namespace Parser_Error_ {

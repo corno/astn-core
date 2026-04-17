@@ -144,7 +144,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                 }]])
                 case '(': return _p.ss($, ($) => ['concrete', ['group', ['verbose', {
                     '(': Guaranteed_Structural_Token(iterator, abort),
-                    'entries': ID_Value_Pairs(iterator, abort, { 'end token': [')', null] }),
+                    'properties': ID_Value_Pairs(iterator, abort, { 'end token': [')', null] }),
                     ')': Possible_Structural_Token(iterator, abort, { 'expected token': [')', null] })
                 }]]])
                 case '[': return _p.ss($, ($): d_out.Value.type_ => ['concrete', ['list', {
@@ -154,7 +154,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                 }]])
                 case '<': return _p.ss($, ($): d_out.Value.type_ => ['concrete', ['group', ['concise', {
                     '<': Guaranteed_Structural_Token(iterator, abort),
-                    'items': Items(iterator, abort, { 'end token': ['>', null] }),
+                    'properties': Items(iterator, abort, { 'end token': ['>', null] }),
                     '>': Possible_Structural_Token(iterator, abort, { 'expected token': ['>', null] })
                 }]]])
                 case '@': return _p.ss($, ($) => ['include', {

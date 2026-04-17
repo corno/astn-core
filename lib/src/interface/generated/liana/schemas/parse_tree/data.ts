@@ -65,7 +65,7 @@ export namespace Value_ {
                     
                     export type $st_ = Structural_Token_
                     
-                    export type items = Items_
+                    export type properties = Items_
                     
                     export type $gt_ = Structural_Token_
                     
@@ -73,7 +73,7 @@ export namespace Value_ {
                 
                 export type concise = {
                     readonly '<': concise.$st_
-                    readonly 'items': concise.items
+                    readonly 'properties': concise.properties
                     readonly '>': concise.$gt_
                 }
                 
@@ -81,7 +81,7 @@ export namespace Value_ {
                     
                     export type $po_ = Structural_Token_
                     
-                    export type entries = ID_Value_Pairs_
+                    export type properties = ID_Value_Pairs_
                     
                     export type $pc_ = Structural_Token_
                     
@@ -89,7 +89,7 @@ export namespace Value_ {
                 
                 export type verbose = {
                     readonly '(': verbose.$po_
-                    readonly 'entries': verbose.entries
+                    readonly 'properties': verbose.properties
                     readonly ')': verbose.$pc_
                 }
                 
