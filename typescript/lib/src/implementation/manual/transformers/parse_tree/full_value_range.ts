@@ -9,48 +9,60 @@ export type Value = _pi.Transformer<d_in.Value, d_out.Range>
 export type Concrete_Value = _pi.Transformer<d_in.Value.type_.concrete, d_out.Range>
 export type ID_Value_Pair = _pi.Transformer<d_in.ID_Value_Pairs.L, d_out.Range>
 export type State = _pi.Transformer<d_in.Value.type_.concrete.state, d_out.Range>
+export type List = _pi.Transformer<d_in.Value.type_.concrete.list, d_out.Range>
+export type Dictionary = _pi.Transformer<d_in.Value.type_.concrete.dictionary, d_out.Range>
+export type Group = _pi.Transformer<d_in.Value.type_.concrete.group, d_out.Range>
+export type Optional = _pi.Transformer<d_in.Value.type_.concrete.optional, d_out.Range>
 
 
 export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _p.decide.state($, ($): d_out.Range => {
     switch ($[0]) {
-        case 'dictionary': return _p.ss($, ($) => ({
-            'start': $['{'].range.start,
-            'end': $['}'].range.end
-        }))
+        case 'dictionary': return _p.ss($, ($) => Dictionary($))
 
-        case 'group': return _p.ss($, ($) => _p.decide.state($, ($) => {
-            switch ($[0]) {
-                case 'concise': return _p.ss($, ($) => ({
-                    'start': $['<'].range.start,
-                    'end': $['>'].range.end
-                }))
-                case 'verbose': return _p.ss($, ($) => ({
-                    'start': $['('].range.start,
-                    'end': $[')'].range.end
-                }))
-                default: return _p.au($[0])
-            }
-        }))
-        case 'list': return _p.ss($, ($) => ({
-            'start': $['['].range.start,
-            'end': $[']'].range.end
-        }))
+        case 'group': return _p.ss($, ($) => Group($))
+        case 'list': return _p.ss($, ($) => List($))
         case 'nothing': return _p.ss($, ($) => $['~'].range)
-        case 'optional': return _p.ss($, ($) => _p.decide.state($, ($) => {
-            switch ($[0]) {
-                case 'set': return _p.ss($, ($) => ({
-                    'start': $['*'].range.start,
-                    'end': Value($['value']).end
-                }))
-                case 'not set': return _p.ss($, ($) => $['_'].range)
-                default: return _p.au($[0])
-            }
-        }))
+        case 'optional': return _p.ss($, ($) => Optional($))
         case 'state': return _p.ss($, ($) => State($))
         case 'text': return _p.ss($, ($) => $.range)
         default: return _p.au($[0])
     }
 }))
+
+export const Dictionary: Dictionary = ($) => ({
+    'start': $['{'].range.start,
+    'end': $['}'].range.end
+})
+
+export const Group: Group = ($) => _p.decide.state($, ($) => {
+    switch ($[0]) {
+        case 'concise': return _p.ss($, ($) => ({
+            'start': $['<'].range.start,
+            'end': $['>'].range.end
+        }))
+        case 'verbose': return _p.ss($, ($) => ({
+            'start': $['('].range.start,
+            'end': $[')'].range.end
+        }))
+        default: return _p.au($[0])
+    }
+})
+
+export const List: List = ($) => ({
+    'start': $['['].range.start,
+    'end': $[']'].range.end
+})
+
+export const Optional: Optional = ($) => _p.decide.state($, ($) => {
+    switch ($[0]) {
+        case 'set': return _p.ss($, ($) => ({
+            'start': $['*'].range.start,
+            'end': Value($['value']).end
+        }))
+        case 'not set': return _p.ss($, ($) => $['_'].range)
+        default: return _p.au($[0])
+    }
+})
 
 export const State: State = ($) => ({
     'start': $['|'].range.start,
