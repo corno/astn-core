@@ -8,6 +8,7 @@ import * as d_out from "../../../../interface/generated/liana/schemas/location/d
 export type Value = _pi.Transformer<d_in.Value, d_out.Range>
 export type Concrete_Value = _pi.Transformer<d_in.Value.type_.concrete, d_out.Range>
 export type ID_Value_Pair = _pi.Transformer<d_in.ID_Value_Pairs.L, d_out.Range>
+export type State = _pi.Transformer<d_in.Value.type_.concrete.state, d_out.Range>
 
 
 export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _p.decide.state($, ($): d_out.Range => {
@@ -41,24 +42,26 @@ export const Concrete_Value: Concrete_Value = ($) => _p.decide.state($, ($) => _
                     'start': $['*'].range.start,
                     'end': Value($['value']).end
                 }))
-                case 'not set': return _p.ss($, ($) => $['_'].range )
+                case 'not set': return _p.ss($, ($) => $['_'].range)
                 default: return _p.au($[0])
             }
         }))
-        case 'state': return _p.ss($, ($) => ({
-            'start': $['|'].range.start,
-            'end': _p.decide.state($.status, ($) => {
-                switch ($[0]) {
-                    case 'missing': return _p.ss($, ($) => $['#'].range.end)
-                    case 'set': return _p.ss($, ($) => Value($['value']).end)
-                    default: return _p.au($[0])
-                }
-            })
-        }))
+        case 'state': return _p.ss($, ($) => State($))
         case 'text': return _p.ss($, ($) => $.range)
         default: return _p.au($[0])
     }
 }))
+
+export const State: State = ($) => ({
+    'start': $['|'].range.start,
+    'end': _p.decide.state($.status, ($) => {
+        switch ($[0]) {
+            case 'missing': return _p.ss($, ($) => $['#'].range.end)
+            case 'set': return _p.ss($, ($) => Value($['value']).end)
+            default: return _p.au($[0])
+        }
+    })
+})
 
 export const Value: Value = ($) => _p.decide.state($.type, ($): d_out.Range => {
     switch ($[0]) {
