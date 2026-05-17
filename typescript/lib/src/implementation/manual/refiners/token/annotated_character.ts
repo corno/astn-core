@@ -176,8 +176,7 @@ export const Trivia = (
                         'trailing whitespace': Whitespace(iterator, abort)
                     })
                 }
-                default:
-                    return _p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
+                default: return _p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
             }
         },
 
