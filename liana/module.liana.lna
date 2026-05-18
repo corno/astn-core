@@ -928,96 +928,44 @@
                                 `results`: _
                             )
                         )
-                        'type': (
+                        'expected': (
                             `description`: _
                             `value`: | `state` (
                                 `options`: {
-                                    'invalid unicode escape sequence': (
+                                    'no end of line in text': (
                                         `constraints`: _
                                         `description`: _
                                         `value`: | `nothing` ~
                                     )
-                                    'missing character after escape': (
-                                        `constraints`: _
-                                        `description`: _
-                                        `value`: | `nothing` ~
-                                    )
-                                    'unexpected control character': (
+                                    'escape character': (
                                         `constraints`: _
                                         `description`: _
                                         `value`: | `group` {
-                                            'character': (
+                                            'found': (
                                                 `description`: _
-                                                `value`: | `simple` | `global` 'Natural'
+                                                `value`: | `optional` | `simple` | `global` 'Natural'
                                             )
                                         }
                                     )
-                                    'unexpected control character in text': (
+                                    'unicode character': (
                                         `constraints`: _
                                         `description`: _
                                         `value`: | `group` {
-                                            'character': (
+                                            'found': (
                                                 `description`: _
-                                                `value`: | `simple` | `global` 'Natural'
+                                                `value`: | `optional` | `simple` | `global` 'Natural'
                                             )
                                         }
                                     )
-                                    'unexpected end of line in delimited text': (
+                                    'block comment termination': (
                                         `constraints`: _
                                         `description`: _
                                         `value`: | `nothing` ~
                                     )
-                                    'unknown escape character': (
-                                        `constraints`: _
-                                        `description`: _
-                                        `value`: | `group` {
-                                            'character': (
-                                                `description`: _
-                                                `value`: | `simple` | `global` 'Natural'
-                                            )
-                                        }
-                                    )
-                                    'unterminated block comment': (
+                                    'text termination': (
                                         `constraints`: _
                                         `description`: _
                                         `value`: | `nothing` ~
-                                    )
-                                    'unterminated text': (
-                                        `constraints`: _
-                                        `description`: _
-                                        `value`: | `nothing` ~
-                                    )
-                                    'unterminated unicode escape sequence': (
-                                        `constraints`: _
-                                        `description`: _
-                                        `value`: | `nothing` ~
-                                    )
-                                    'unexpected': (
-                                        `constraints`: _
-                                        `description`: _
-                                        `value`: | `group` {
-                                            'expected': (
-                                                `description`: _
-                                                `value`: | `list` (
-                                                    `value`: | `state` (
-                                                        `options`: {
-                                                            'end of block comment': (
-                                                                `constraints`: _
-                                                                `description`: _
-                                                                `value`: | `nothing` ~
-                                                            )
-                                                            'end of delimited text': (
-                                                                `constraints`: _
-                                                                `description`: _
-                                                                `value`: | `nothing` ~
-                                                            )
-                                                        }
-                                                        `results`: _
-                                                    )
-                                                    `results`: _
-                                                )
-                                            )
-                                        }
                                     )
                                 }
                                 `results`: _

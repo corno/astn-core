@@ -313,7 +313,7 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                                 () => _p.optional.literal.set($.id.range)
                                             )
                                         )
-                                    ).filter(
+                                    ).map_optionally(
                                         ($) => $
                                     )
                                     if (unexpected_properties.__get_number_of_entries() > 0) {
