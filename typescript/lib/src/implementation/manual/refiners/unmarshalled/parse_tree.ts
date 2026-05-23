@@ -319,7 +319,10 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                     if (unexpected_properties.__get_number_of_entries() > 0) {
                                         return abort({
                                             'range': t_parse_tree_to_location.Value(value),
-                                            'type': ['type', ['unexpected properties', unexpected_properties]]
+                                            'type': ['type', ['unexpected properties', {
+                                                'found': unexpected_properties,
+                                                'expected': $p['expected properties'],
+                                            }]]
                                         })
                                     }
                                     return xxx

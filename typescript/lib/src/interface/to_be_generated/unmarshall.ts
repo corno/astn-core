@@ -26,5 +26,8 @@ export type Dictionary_Error =
 
 export type Type_Error = 
     | ['duplicate property', string]
-    | ['unexpected properties', _pi.Dictionary<d_location.Range>]
+    | ['unexpected properties', {
+        'found': _pi.Dictionary<d_location.Range>
+        'expected': _pi.Dictionary<null>
+    }]
     | ['missing property', string]

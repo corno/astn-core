@@ -37,7 +37,15 @@ export const Error: _pi.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.com
                     case 'unexpected properties': return _p.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("unexpected properties: "),
                         sh.ph.indent(
-                            sh.pg.sentences($.__to_list(($, key) => sh.sentence([
+                            sh.pg.sentences($.found.__to_list(($, key) => sh.sentence([
+                                sh.ph.literal("-'"),
+                                sh.ph.literal(key),
+                                sh.ph.literal("'"),
+                            ])))
+                        ),
+                        sh.ph.literal("expected properties: "),
+                        sh.ph.indent(
+                            sh.pg.sentences($.expected.__to_list(($, key) => sh.sentence([
                                 sh.ph.literal("-'"),
                                 sh.ph.literal(key),
                                 sh.ph.literal("'"),
