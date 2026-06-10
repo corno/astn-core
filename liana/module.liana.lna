@@ -108,6 +108,7 @@
                 `text types`: {
                     'text': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {}
@@ -1108,6 +1109,7 @@
                 `text types`: {
                     'Text Value': (
                         `type`: | `single line` ~
+                        `link`: | `no` ~
                     )
                 }
                 `simple types`: {
