@@ -501,19 +501,37 @@ export const Tokenizer_Result = (
                     case Character.quotation_mark:
                         iterator.discard(() => null)
                         return ['text', {
-                            'value': Delimited_Text(($) => $ === Character.quotation_mark, true, iterator, abort, { 'start character': $ }),
+                            'value': Delimited_Text(
+                                ($) => $ === Character.quotation_mark, 
+                                true,
+                                 iterator,
+                                  abort,
+                                   { 'start character': $ }
+                            ),
                             'type': ['quoted', null],
                         }]
                     case Character.backtick:
                         iterator.discard(() => null)
                         return ['text', {
-                            'value': Delimited_Text(($) => $ === Character.backtick, false, iterator, abort, { 'start character': $ }),
+                            'value': Delimited_Text(
+                                ($) => $ === Character.backtick, 
+                                false,
+                                iterator,
+                                abort,
+                                { 'start character': $ }
+                            ),
                             'type': ['backticked', null],
                         }]
                     case Character.apostrophe:
                         iterator.discard(() => null)
                         return ['text', {
-                            'value': Delimited_Text(($) => $ === Character.apostrophe, false, iterator, abort, { 'start character': $ }),
+                            'value': Delimited_Text(
+                                ($) => $ === Character.apostrophe, 
+                                false,
+                                iterator,
+                                abort,
+                                { 'start character': $ }
+                            ),
                             'type': ['apostrophed', null],
                         }]
 
