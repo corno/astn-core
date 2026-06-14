@@ -1,5 +1,6 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 import * as pt from 'pareto-core/dist/assign'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/to_be_generated/unmarshalled"
@@ -10,31 +11,31 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range"
 
-export type Dictionary = pi.Refiner<
+export type Dictionary = p_ri.Refiner<
     d_out.Dictionary,
     d_function.Error,
     d_in.Value
 >
 
-export type List = pi.Refiner<
+export type List = p_ri.Refiner<
     d_out.List,
     d_function.Error,
     d_in.Value
 >
 
-export type Nothing = pi.Refiner<
+export type Nothing = p_ri.Refiner<
     d_out.Nothing,
     d_function.Error,
     d_in.Value
 >
 
-export type Optional = pi.Refiner<
+export type Optional = p_ri.Refiner<
     d_out.Optional,
     d_function.Error,
     d_in.Value
 >
 
-export type Property = pi.Refiner_With_Parameter<
+export type Property = p_ri.Refiner_With_Parameter<
     d_out.Property,
     d_function.Error,
     d_out.Verbose_Group,
@@ -43,24 +44,24 @@ export type Property = pi.Refiner_With_Parameter<
     }
 >
 
-export type State = pi.Refiner<
+export type State = p_ri.Refiner<
     d_out.State,
     d_function.Error,
     d_in.Value
 >
 
-export type Text = pi.Refiner<
+export type Text = p_ri.Refiner<
     d_out.Text,
     d_function.Error,
     d_in.Value
 >
 
-export type Verbose_Group = pi.Refiner_With_Parameter<
+export type Verbose_Group = p_ri.Refiner_With_Parameter<
     d_out.Verbose_Group,
     d_function.Error,
     d_in.Value,
     {
-        'expected properties': pi.Dictionary<null>
+        'expected properties': p_di.Dictionary<null>
     }
 >
 
@@ -306,7 +307,7 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                             xxx,
                                         ).join(
                                             $p['expected properties'],
-                                            ($, other, id): pi.Optional_Value<d_location.Range> => pt.decide.optional(
+                                            ($, other, id): p_di.Optional_Value<d_location.Range> => pt.decide.optional(
                                                 other,
                                                 () => pt.optional.literal.not_set(),
                                                 () => pt.optional.literal.set($.id.range)

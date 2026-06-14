@@ -1,6 +1,6 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
+import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/location/data"
@@ -15,9 +15,9 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
 export namespace signatures {
-    export type Location = pi.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Parameters>
-    export type Range = pi.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Parameters>
-    export type Possible_Range = pi.Transformer_With_Parameter<d_in.Possible_Range, d_out.Phrase, d_function.Parameters>
+    export type Location = p_ti.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Parameters>
+    export type Range = p_ti.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Parameters>
+    export type Possible_Range = p_ti.Transformer_With_Parameter<d_in.Possible_Range, d_out.Phrase, d_function.Parameters>
 }
 
 

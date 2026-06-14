@@ -1,14 +1,15 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
+import * as p_di from 'pareto-core/dist/data/interface'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
+import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 import * as d_in from "../../../../interface/to_be_generated/primitives"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
-export const Escaped: pi.Transformer<d_in.Escaped, d_out.List_of_Characters> = ($) => pt.list.from.list(
+export const Escaped: p_ti.Transformer<d_in.Escaped, d_out.List_of_Characters> = ($) => pt.list.from.list(
     p_list_from_text($, ($) => $),
 ).flatten(
-    ($): pi.List<number> => {
+    ($): p_di.List<number> => {
         switch ($) {
             //I see no need to escape the slash, as it is not an operator character in JSON, and it is not whitespace
             // case 0x2F: // slash (\/)
@@ -65,7 +66,7 @@ export const Escaped: pi.Transformer<d_in.Escaped, d_out.List_of_Characters> = (
     }
 )
 
-export const Quoted: pi.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_Characters, {
+export const Quoted: p_ti.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_Characters, {
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? pt.list.nested_literal_old([
@@ -81,7 +82,7 @@ export const Quoted: pi.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_Ch
     ])
     : Escaped($)
 
-export const Apostrophed: pi.Transformer_With_Parameter<d_in.Apostrophed, d_out.List_of_Characters, {
+export const Apostrophed: p_ti.Transformer_With_Parameter<d_in.Apostrophed, d_out.List_of_Characters, {
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? pt.list.nested_literal_old([
@@ -97,7 +98,7 @@ export const Apostrophed: pi.Transformer_With_Parameter<d_in.Apostrophed, d_out.
     ])
     : Escaped($)
 
-export const Backticked: pi.Transformer_With_Parameter<d_in.Backticked, d_out.List_of_Characters, {
+export const Backticked: p_ti.Transformer_With_Parameter<d_in.Backticked, d_out.List_of_Characters, {
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? pt.list.nested_literal_old([
@@ -113,7 +114,7 @@ export const Backticked: pi.Transformer_With_Parameter<d_in.Backticked, d_out.Li
     ])
     : Escaped($)
 
-export const Undelimited: pi.Transformer<d_in.Undelimited, d_out.List_of_Characters> = ($) => p_list_from_text(
+export const Undelimited: p_ti.Transformer<d_in.Undelimited, d_out.List_of_Characters> = ($) => p_list_from_text(
     $,
     ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
 ) 

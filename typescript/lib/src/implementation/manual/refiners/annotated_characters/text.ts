@@ -1,4 +1,4 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
 import * as pt from 'pareto-core/dist/assign'
 
 import * as d_out from "../../../../interface/to_be_generated/annotated_characters"
@@ -7,7 +7,7 @@ import * as d_function from "../../../../interface/generated/liana/schemas/deser
 
 export namespace signatures {
 
-    export type Annotated_Characters = pi.Refiner_Without_Error_With_Parameter<
+    export type Annotated_Characters = p_ri.Refiner_Without_Error_With_Parameter<
         d_out.Annotated_Characters,
         d_in.List_of_Characters,
         d_function.Parameters

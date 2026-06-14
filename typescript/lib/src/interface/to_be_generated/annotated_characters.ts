@@ -1,4 +1,4 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as d_location from "../generated/liana/schemas/location/data"
 
@@ -9,6 +9,6 @@ export type Annotated_Character = {
 }
 
 export type Annotated_Characters = {
-    'characters': pi.List<Annotated_Character>,
+    'characters': p_di.List<Annotated_Character>,
     'end': d_location.Location
 }

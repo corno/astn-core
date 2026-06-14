@@ -1,25 +1,25 @@
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as d_parse_tree from "../generated/liana/schemas/parse_tree/data"
 
 export type Dictionary = {
     'value': d_parse_tree.Value
-    'entries': pi.Dictionary<d_parse_tree.ID_Value_Pairs.L>
+    'entries': p_di.Dictionary<d_parse_tree.ID_Value_Pairs.L>
 }
 
 export type Verbose_Group = {
     'value': d_parse_tree.Value
-    'properties': pi.Dictionary<d_parse_tree.ID_Value_Pairs.L>
+    'properties': p_di.Dictionary<d_parse_tree.ID_Value_Pairs.L>
 }
 
 export type List = {
     'value': d_parse_tree.Value
-    'items': pi.List<d_parse_tree.Items.L>
+    'items': p_di.List<d_parse_tree.Items.L>
 }
 
 export type Optional = {
     'value': d_parse_tree.Value
-    'optional': pi.Optional_Value<d_parse_tree.Value>
+    'optional': p_di.Optional_Value<d_parse_tree.Value>
 }
 
 export type Nothing = {

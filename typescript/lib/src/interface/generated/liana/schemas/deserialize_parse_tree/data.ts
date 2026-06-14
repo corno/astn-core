@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as i_imports_parse_tree from "../parse_tree/data"
 
@@ -43,7 +43,7 @@ export namespace Lexer_Error_ {
                 
             }
             
-            export type found = _pi.Optional_Value<found.O>
+            export type found = p_di.Optional_Value<found.O>
             
         }
         
@@ -59,7 +59,7 @@ export namespace Lexer_Error_ {
                 
             }
             
-            export type found = _pi.Optional_Value<found.O>
+            export type found = p_di.Optional_Value<found.O>
             
         }
         
@@ -95,7 +95,7 @@ export namespace Parser_Error_ {
         
     }
     
-    export type expected = _pi.List<expected.L>
+    export type expected = p_di.List<expected.L>
     
     export namespace cause {
         

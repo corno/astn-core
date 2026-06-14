@@ -1,8 +1,11 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
-import p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
-import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
+import * as p_i from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
+import * as p_pi from 'pareto-core/dist/production/interface'
+import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
+import p_list_build_deprecated from 'pareto-core/dist/specials/list_build_deprecated'
+import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
 
 import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
@@ -16,7 +19,7 @@ import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 
 const create_error = (
-    element: pi.Optional_Value<d_in.Annotated_Character>,
+    element: p_di.Optional_Value<d_in.Annotated_Character>,
     expected: d_function.Lexer_Error.expected,
 ): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
     ($) => ({
@@ -36,7 +39,7 @@ const create_error = (
 )
 
 const create_range = (
-    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     $p: {
         'start character': d_in.Annotated_Character
     }
@@ -50,8 +53,8 @@ const create_range = (
 
 
 export const Whitespace = (
-    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: pi.Abort<d_function.Lexer_Error>,
+    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: p_i.Abort<d_function.Lexer_Error>,
 ): d_out.Whitespace => {
 
     const is_whitespace_character = ($: d_in.Annotated_Character) => {
@@ -97,8 +100,8 @@ export const Whitespace = (
 }
 
 export const Trivia = (
-    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: pi.Abort<d_function.Lexer_Error>,
+    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: p_i.Abort<d_function.Lexer_Error>,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
     'comments': iterator.list({
@@ -186,8 +189,8 @@ export const Trivia = (
 export const Delimited_Text = (
     is_end_character: (character: number) => boolean,
     allow_newlines: boolean,
-    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: pi.Abort<d_function.Lexer_Error>,
+    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: p_i.Abort<d_function.Lexer_Error>,
     $p: {
         'start character': d_in.Annotated_Character
     }
@@ -296,7 +299,7 @@ export const Delimited_Text = (
                                         break
                                     case Character.u:
                                         iterator.discard(() => null)
-                                        const ds_hexadecimal: pi.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
+                                        const ds_hexadecimal: p_ri.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
                                             const characters = $
                                             let result = 0
                                             let isNegative = false
@@ -409,8 +412,8 @@ export const Delimited_Text = (
 }
 
 export const Tokenizer_Result = (
-    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: pi.Abort<d_function.Lexer_Error>,
+    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: p_i.Abort<d_function.Lexer_Error>,
 ): d_out.Tokenizer_Result => ({
     'leading trivia': Trivia(iterator, abort),
     'tokens': iterator.list({

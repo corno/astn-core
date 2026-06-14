@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as i_imports_token from "../token/data"
 
@@ -24,7 +24,7 @@ export namespace Document_ {
         
     }
     
-    export type header = _pi.Optional_Value<header.O>
+    export type header = p_di.Optional_Value<header.O>
     
     export type content = Content_
     
@@ -284,7 +284,7 @@ export namespace ID_Value_Pairs_ {
     
 }
 
-export type ID_Value_Pairs_ = _pi.List<ID_Value_Pairs_.L>
+export type ID_Value_Pairs_ = p_di.List<ID_Value_Pairs_.L>
 
 export namespace ID_Value_Pair_ {
     
@@ -302,7 +302,7 @@ export namespace ID_Value_Pair_ {
                 
             }
             
-            export type value = _pi.Optional_Value<value.O>
+            export type value = p_di.Optional_Value<value.O>
             
         }
         
@@ -313,7 +313,7 @@ export namespace ID_Value_Pair_ {
         
     }
     
-    export type assignment = _pi.Optional_Value<assignment.O>
+    export type assignment = p_di.Optional_Value<assignment.O>
     
 }
 
@@ -336,7 +336,7 @@ export namespace Items_ {
     
 }
 
-export type Items_ = _pi.List<Items_.L>
+export type Items_ = p_di.List<Items_.L>
 
 export { 
     Document_ as Document, 

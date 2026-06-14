@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 import * as i_imports_location from "../location/data"
 
@@ -13,7 +13,7 @@ export namespace Tokenizer_Result_ {
         
     }
     
-    export type tokens = _pi.List<tokens.L>
+    export type tokens = p_di.List<tokens.L>
     
     export type end = i_imports_location.Location
     
@@ -116,7 +116,7 @@ export namespace Whitespace_ {
     
 }
 
-export type Whitespace_ = _pi.Optional_Value<Whitespace_.O>
+export type Whitespace_ = p_di.Optional_Value<Whitespace_.O>
 
 export namespace Trivia_ {
     
@@ -155,7 +155,7 @@ export namespace Trivia_ {
         
     }
     
-    export type comments = _pi.List<comments.L>
+    export type comments = p_di.List<comments.L>
     
 }
 

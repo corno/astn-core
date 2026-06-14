@@ -1,14 +1,12 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_list_from_text from 'pareto-core/dist/_p_list_from_text'
-import p_change_context from 'pareto-core/dist/_p_change_context'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/location/data"
 
 export namespace signatures {
-    export type Error = pi.Transformer<d_in.Error, d_out.Possible_Range>
+    export type Error = p_ti.Transformer<d_in.Error, d_out.Possible_Range>
 }
 
 export const Error: signatures.Error = ($) => pt.decide.state($.type, ($) => {

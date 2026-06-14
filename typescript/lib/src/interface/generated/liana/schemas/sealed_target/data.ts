@@ -1,5 +1,5 @@
 
-import * as _pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
 
 export type Document_ = Value_
 
@@ -11,7 +11,7 @@ export namespace Value_ {
         
     }
     
-    export type list = _pi.List<list.L>
+    export type list = p_di.List<list.L>
     
     export namespace dictionary {
         
@@ -19,7 +19,7 @@ export namespace Value_ {
         
     }
     
-    export type dictionary = _pi.Dictionary<dictionary.D>
+    export type dictionary = p_di.Dictionary<dictionary.D>
     
     export namespace group {
         
@@ -29,7 +29,7 @@ export namespace Value_ {
             
         }
         
-        export type verbose = _pi.Dictionary<verbose.D>
+        export type verbose = p_di.Dictionary<verbose.D>
         
     }
     

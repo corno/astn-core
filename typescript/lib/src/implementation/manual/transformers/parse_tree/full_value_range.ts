@@ -1,18 +1,19 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
+import * as p_di from 'pareto-core/dist/data/interface'
+import * as p_ti from 'pareto-core/dist/transformer/interface'
 
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/location/data"
 
-export type Value = pi.Transformer<d_in.Value, d_out.Range>
-export type Concrete_Value = pi.Transformer<d_in.Value.type_.concrete, d_out.Range>
-export type ID_Value_Pair = pi.Transformer<d_in.ID_Value_Pairs.L, d_out.Range>
-export type State = pi.Transformer<d_in.Value.type_.concrete.state, d_out.Range>
-export type List = pi.Transformer<d_in.Value.type_.concrete.list, d_out.Range>
-export type Dictionary = pi.Transformer<d_in.Value.type_.concrete.dictionary, d_out.Range>
-export type Group = pi.Transformer<d_in.Value.type_.concrete.group, d_out.Range>
-export type Optional = pi.Transformer<d_in.Value.type_.concrete.optional, d_out.Range>
+export type Value = p_ti.Transformer<d_in.Value, d_out.Range>
+export type Concrete_Value = p_ti.Transformer<d_in.Value.type_.concrete, d_out.Range>
+export type ID_Value_Pair = p_ti.Transformer<d_in.ID_Value_Pairs.L, d_out.Range>
+export type State = p_ti.Transformer<d_in.Value.type_.concrete.state, d_out.Range>
+export type List = p_ti.Transformer<d_in.Value.type_.concrete.list, d_out.Range>
+export type Dictionary = p_ti.Transformer<d_in.Value.type_.concrete.dictionary, d_out.Range>
+export type Group = p_ti.Transformer<d_in.Value.type_.concrete.group, d_out.Range>
+export type Optional = p_ti.Transformer<d_in.Value.type_.concrete.optional, d_out.Range>
 
 
 export const Concrete_Value: Concrete_Value = ($) => pt.decide.state($, ($) => pt.decide.state($, ($): d_out.Range => {

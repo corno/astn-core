@@ -1,6 +1,5 @@
-import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_iterate from 'pareto-core/dist/_p_iterate'
+import * as p_ri from 'pareto-core/dist/refiner/interface'
+import p_iterate from 'pareto-core/dist/specials/iterate'
 
 
 
@@ -15,7 +14,7 @@ import * as p_authoring_parse_tree from "./token"
 
 export namespace signatures {
 
-    export type Document = pi.Refiner<d_out.Document, d_function.Parser_Error, d_in.Tokenizer_Result>
+    export type Document = p_ri.Refiner<d_out.Document, d_function.Parser_Error, d_in.Tokenizer_Result>
 
 }
 

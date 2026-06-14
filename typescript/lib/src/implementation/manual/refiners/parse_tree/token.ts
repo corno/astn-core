@@ -1,6 +1,8 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as pi from 'pareto-core/dist/interface'
-import p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
+import * as p_di from 'pareto-core/dist/data/interface'
+import * as p_pi from 'pareto-core/dist/production/interface'
+
+import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
 
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
@@ -8,28 +10,28 @@ import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 export namespace signatures {
 
-    export type Document = pi.Production<
+    export type Document = p_pi.Production<
         d_out.Document,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
         d_location.Location
     >
 
-    export type Value = pi.Production<
+    export type Value = p_pi.Production<
         d_out.Value,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
         d_location.Location
     >
 
-    export type Guaranteed_Structural_Token = pi.Production<
+    export type Guaranteed_Structural_Token = p_pi.Production<
         d_out.Structural_Token,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
         d_location.Location
     >
 
-    export type Possible_Structural_Token = pi.Production_With_Parameter<
+    export type Possible_Structural_Token = p_pi.Production_With_Parameter<
         d_out.Structural_Token,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -39,7 +41,7 @@ export namespace signatures {
         }
     >
 
-    export type Text = pi.Production_With_Parameter<
+    export type Text = p_pi.Production_With_Parameter<
         d_out.Text,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -49,7 +51,7 @@ export namespace signatures {
         }
     >
 
-    export type Items = pi.Production_With_Parameter<
+    export type Items = p_pi.Production_With_Parameter<
         d_out.Items,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -59,7 +61,7 @@ export namespace signatures {
         }
     >
 
-    export type Element = pi.Production_With_Parameter<
+    export type Element = p_pi.Production_With_Parameter<
         d_out.Items,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -69,7 +71,7 @@ export namespace signatures {
         }
     >
 
-    export type ID_Value_Pairs = pi.Production_With_Parameter<
+    export type ID_Value_Pairs = p_pi.Production_With_Parameter<
         d_out.ID_Value_Pairs,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -82,8 +84,8 @@ export namespace signatures {
 }
 
 const temp_create_error = (
-    element: pi.Optional_Value<d_in.Annotated_Token>,
-    expected: pi.List<d_choice.Expected>,
+    element: p_di.Optional_Value<d_in.Annotated_Token>,
+    expected: p_di.List<d_choice.Expected>,
     end_info: d_location.Location
 ): d_choice.Parser_Error => ({
     'expected': expected,
