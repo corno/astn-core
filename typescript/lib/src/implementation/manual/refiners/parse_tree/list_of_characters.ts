@@ -1,6 +1,6 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
-import _p_iterate from 'pareto-core/dist/_p_iterate'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
+import p_iterate from 'pareto-core/dist/_p_iterate'
 
 //data types
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
@@ -15,7 +15,7 @@ import * as r_from_token from "./tokenizer_result"
 
 export namespace signatures {
 
-    export type Document = _pi.Refiner_With_Parameter<
+    export type Document = pi.Refiner_With_Parameter<
         d_out.Document,
         d_function.Error,
         d_in.List_of_Characters,
@@ -29,7 +29,7 @@ export const Document: signatures.Document = ($, abort, $p,) => {
         $,
         $p
     )
-    return _p_iterate( //fixme: make this iterate_fully
+    return p_iterate( //fixme: make this iterate_fully
         ann_chars.characters,
         ann_chars.end,
         (iter) => r_from_token.Document(//fixme: make this iterate_fully

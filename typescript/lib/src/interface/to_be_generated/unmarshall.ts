@@ -1,4 +1,4 @@
-import * as _pi from 'pareto-core/dist/interface'
+import * as pi from 'pareto-core/dist/interface'
 
 import * as d_location from "../../interface/generated/liana/schemas/location/data"
 
@@ -27,7 +27,7 @@ export type Dictionary_Error =
 export type Type_Error = 
     | ['duplicate property', string]
     | ['unexpected properties', {
-        'found': _pi.Dictionary<d_location.Range>
-        'expected': _pi.Dictionary<null>
+        'found': pi.Dictionary<d_location.Range>
+        'expected': pi.Dictionary<null>
     }]
     | ['missing property', string]

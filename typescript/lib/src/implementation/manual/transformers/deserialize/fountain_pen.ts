@@ -1,5 +1,5 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
 
 //data types
 import * as d_in from "../../../../interface/to_be_generated/deserialize"
@@ -10,11 +10,11 @@ import * as d_function_loc from "astn-core/dist/interface/to_be_generated/locati
 import * as t_deserialize_parse_tree_to_fountain_pen from "../deserialize_parse_tree/fountain_pen"
 import * as t_unmarshall_to_fountain_pen from "../unmarshall/fountain_pen"
 
-export const Error: _pi.Transformer<d_in.Error, d_out.Phrase> = ($) => _p.decide.state($, ($) => {
+export const Error: pi.Transformer<d_in.Error, d_out.Phrase> = ($) => pt.decide.state($, ($) => {
     switch ($[0]) {
 
-        case 'parse error': return _p.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($))
-        case 'unmarshall error': return _p.ss($, ($) => t_unmarshall_to_fountain_pen.Error($))
-        default: return _p.au($[0])
+        case 'parse error': return pt.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($))
+        case 'unmarshall error': return pt.ss($, ($) => t_unmarshall_to_fountain_pen.Error($))
+        default: return pt.au($[0])
     }
 })

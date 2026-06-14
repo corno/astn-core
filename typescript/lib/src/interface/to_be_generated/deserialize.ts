@@ -1,4 +1,4 @@
-import * as _pi from 'pareto-core/dist/interface'
+import * as pi from 'pareto-core/dist/interface'
 
 import * as d_deserialize_parse_tree from "../generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_unmarshall from "../to_be_generated/unmarshall"

@@ -1,8 +1,8 @@
-import * as _p from 'pareto-core/dist/assign'
-import * as _pi from 'pareto-core/dist/interface'
-import _p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
-import _p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
-import _p_text_from_list from 'pareto-core/dist/_p_text_from_list'
+import * as pt from 'pareto-core/dist/assign'
+import * as pi from 'pareto-core/dist/interface'
+import p_unreachable_code_path from 'pareto-core/dist/_p_unreachable_code_path'
+import p_list_build_deprecated from 'pareto-core/dist/_p_list_build_deprecated'
+import p_text_from_list from 'pareto-core/dist/_p_text_from_list'
 
 import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
@@ -16,7 +16,7 @@ import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schem
 
 
 const create_error = (
-    element: _pi.Optional_Value<d_in.Annotated_Character>,
+    element: pi.Optional_Value<d_in.Annotated_Character>,
     expected: d_function.Lexer_Error.expected,
 ): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
     ($) => ({
@@ -32,11 +32,11 @@ const create_error = (
         },
         'expected': expected
     }),
-    () => _p_unreachable_code_path("implement me")
+    () => p_unreachable_code_path("implement me")
 )
 
 const create_range = (
-    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
     $p: {
         'start character': d_in.Annotated_Character
     }
@@ -50,8 +50,8 @@ const create_range = (
 
 
 export const Whitespace = (
-    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: _pi.Abort<d_function.Lexer_Error>,
+    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: pi.Abort<d_function.Lexer_Error>,
 ): d_out.Whitespace => {
 
     const is_whitespace_character = ($: d_in.Annotated_Character) => {
@@ -73,14 +73,14 @@ export const Whitespace = (
 
     const next = iterator.look_raw()
     if (next === null) {
-        return _p.optional.literal.not_set()
+        return pt.optional.literal.not_set()
     } else {
         if (!is_whitespace_character(next[0])) {
-            return _p.optional.literal.not_set()
+            return pt.optional.literal.not_set()
         } else {
             const start_character = next[0]
-            return _p.optional.literal.set({
-                'value': _p_text_from_list<number>(
+            return pt.optional.literal.set({
+                'value': p_text_from_list<number>(
                     iterator.list({
                         has_more_items: ($) => is_whitespace_character($),
                         handle: ($) => {
@@ -97,8 +97,8 @@ export const Whitespace = (
 }
 
 export const Trivia = (
-    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: _pi.Abort<d_function.Lexer_Error>,
+    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: pi.Abort<d_function.Lexer_Error>,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
     'comments': iterator.list({
@@ -111,14 +111,14 @@ export const Trivia = (
             iterator.discard(() => null) // discard the first slash
             const next_char = iterator.look_raw()
             if (next_char === null) {
-                return _p_unreachable_code_path("we checked in has_more_items for the presence of the next character, so this should never happen")
+                return p_unreachable_code_path("we checked in has_more_items for the presence of the next character, so this should never happen")
             }
             switch (next_char[0].code) {
                 case 0x2F: // /
                     iterator.discard(() => null) // discard the second /
                     return ({
                         'type': ['line', null],
-                        'content': _p_text_from_list(
+                        'content': p_text_from_list(
                             iterator.list({
                                 has_more_items: ($) => $.code !== 0x0A && $.code !== 0x0D, // not a line feed or carriage return
                                 handle: ($) => {
@@ -136,7 +136,7 @@ export const Trivia = (
                     return ({
                         'type': ['block', null],
                         'content': iterator.wrap_up(
-                            () => _p_text_from_list(
+                            () => p_text_from_list(
                                 iterator.list({
                                     has_more_items: ($) => {
                                         const next_char = iterator.look_ahead_raw(1)
@@ -176,7 +176,7 @@ export const Trivia = (
                         'trailing whitespace': Whitespace(iterator, abort)
                     })
                 }
-                default: return _p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
+                default: return p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
             }
         },
 
@@ -186,8 +186,8 @@ export const Trivia = (
 export const Delimited_Text = (
     is_end_character: (character: number) => boolean,
     allow_newlines: boolean,
-    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: _pi.Abort<d_function.Lexer_Error>,
+    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: pi.Abort<d_function.Lexer_Error>,
     $p: {
         'start character': d_in.Annotated_Character
     }
@@ -215,8 +215,8 @@ export const Delimited_Text = (
         F: 0x46,                    // F
 
     }
-    const txt = _p_text_from_list(
-        _p_list_build_deprecated<number>(
+    const txt = p_text_from_list(
+        p_list_build_deprecated<number>(
             ($i) => {
                 while (true) {
                     const $ = iterator.look_raw()
@@ -250,7 +250,7 @@ export const Delimited_Text = (
                                 if ($ === null) {
                                     return abort({
                                         'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                        'expected': ['escape character', { 'found': _p.optional.literal.not_set() }]
+                                        'expected': ['escape character', { 'found': pt.optional.literal.not_set() }]
                                     })
                                 }
                                 switch ($[0].code) {
@@ -296,7 +296,7 @@ export const Delimited_Text = (
                                         break
                                     case Character.u:
                                         iterator.discard(() => null)
-                                        const ds_hexadecimal: _pi.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
+                                        const ds_hexadecimal: pi.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
                                             const characters = $
                                             let result = 0
                                             let isNegative = false
@@ -358,20 +358,20 @@ export const Delimited_Text = (
                                             return isNegative ? -result : result
                                         }
                                         $i['add item'](ds_hexadecimal(
-                                            _p_list_build_deprecated<number>(
+                                            p_list_build_deprecated<number>(
                                                 ($i) => {
                                                     const get_char = () => {
                                                         const char = iterator.look_raw()
                                                         if (char === null) {
                                                             return abort({
                                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                'expected': ['unicode character', { 'found': _p.optional.literal.not_set() }]
+                                                                'expected': ['unicode character', { 'found': pt.optional.literal.not_set() }]
                                                             })
                                                         }
                                                         if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
                                                             return abort({
                                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                'expected': ['unicode character', { 'found': _p.optional.literal.set(char[0].code) }]
+                                                                'expected': ['unicode character', { 'found': pt.optional.literal.set(char[0].code) }]
                                                             })
                                                         }
                                                         iterator.discard(() => null)
@@ -383,14 +383,14 @@ export const Delimited_Text = (
                                                     $i['add item'](get_char())
                                                 }
                                             ),
-                                            () => _p_unreachable_code_path("the number was built in a controlled way")
+                                            () => p_unreachable_code_path("the number was built in a controlled way")
                                         ))
                                         break
                                     default:
                                         return abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
                                             'expected': ['escape character', {
-                                                'found': _p.optional.literal.set($[0].code)
+                                                'found': pt.optional.literal.set($[0].code)
                                             }]
                                         })
                                 }
@@ -409,14 +409,14 @@ export const Delimited_Text = (
 }
 
 export const Tokenizer_Result = (
-    iterator: _pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: _pi.Abort<d_function.Lexer_Error>,
+    iterator: pi.Iterator<d_in.Annotated_Character, d_location.Location>,
+    abort: pi.Abort<d_function.Lexer_Error>,
 ): d_out.Tokenizer_Result => ({
     'leading trivia': Trivia(iterator, abort),
     'tokens': iterator.list({
         has_more_items: ($) => true,
         handle: ($) => ({
-            'type': _p.state.block((): d_out.Annotated_Token.type_ => {
+            'type': pt.state.block((): d_out.Annotated_Token.type_ => {
 
                 const Character = {
 
@@ -538,7 +538,7 @@ export const Tokenizer_Result = (
                     default:
                         return ['text', {
                             'type': ['undelimited', null],
-                            'value': _p_text_from_list(
+                            'value': p_text_from_list(
 
                                 iterator.list({
                                     has_more_items: ($) => {
