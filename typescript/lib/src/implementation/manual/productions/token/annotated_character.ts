@@ -7,7 +7,7 @@ import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/un
 import p_list_build_deprecated from 'pareto-core/dist/implementation/specials/list_build_deprecated'
 import p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
-import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
+import * as d_in from "../../../../interface/data/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"

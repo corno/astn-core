@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_i from 'pareto-core/dist/interface/refiner'
 import * as p_temp from 'pareto-core/dist/assign'
 
-import * as d_out from "../../../../interface/to_be_generated/annotated_characters"
+import * as d_out from "../../../../interface/data/annotated_characters"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 

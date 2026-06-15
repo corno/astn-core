@@ -4,8 +4,8 @@ import * as p_i from 'pareto-core/dist/interface/refiner'
 import * as p_temp from 'pareto-core/dist/assign'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../interface/to_be_generated/unmarshalled"
-import * as d_function from "../../../../interface/to_be_generated/unmarshall"
+import * as d_out from "../../../../interface/data/unmarshalled"
+import * as d_function from "../../../../interface/data/unmarshall"
 
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
