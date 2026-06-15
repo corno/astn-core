@@ -1,5 +1,5 @@
-import * as p_ri from 'pareto-core/dist/refiner/interface'
-import p_iterate from 'pareto-core/dist/specials/iterate'
+import * as p_i from 'pareto-core/dist/interface/refiner'
+import p_iterate from 'pareto-core/dist/implementation/specials/iterate'
 
 //data types
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
@@ -14,7 +14,7 @@ import * as r_from_token from "./tokenizer_result"
 
 export namespace signatures {
 
-    export type Document = p_ri.Refiner_With_Parameter<
+    export type Document = p_i.Refiner_With_Parameter<
         d_out.Document,
         d_function.Error,
         d_in.List_of_Characters,

@@ -1,7 +1,7 @@
-import * as pt from 'pareto-core/dist/assign'
-import * as p_di from 'pareto-core/dist/data/interface'
-import * as p_pi from 'pareto-core/dist/production/interface'
-import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
+import * as p_ from 'pareto-core/dist/implementation/production'
+import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_pi from 'pareto-core/dist/interface/production'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
 
 //data types
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
@@ -10,7 +10,7 @@ import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 
-export namespace signatures {
+export namespace interface_ {
 
     export type Document = p_pi.Production<
         d_out.Document,
@@ -102,36 +102,36 @@ const temp_create_error = (
 })
 
 
-export const Document: signatures.Document = (iterator, abort) => ({
+export const Document: interface_.Document = (iterator, abort) => ({
     'header': iterator.optional({
         item: (token) => token.type[0] === '!' //header token
-            ? pt.literal.set({
+            ? p_.literal.set({
                 '!': Guaranteed_Structural_Token(iterator, abort),
                 'value': Value(iterator, abort)
             })
-            : pt.literal.not_set(),
+            : p_.literal.not_set(),
     }),
     'content': Value(iterator, abort)
 })
 
-export const Value: signatures.Value = (iterator, abort) => iterator.expect({
+export const Value: interface_.Value = (iterator, abort) => iterator.expect({
     abort: abort,
     get_error: ($) => temp_create_error(
         $,
-        pt.literal.list<d_choice.Expected>([
+        p_.literal.list<d_choice.Expected>([
             ['any value', null]
         ]),
         iterator.get_end_info()
     ),
     item: (token, abort2) => ({
-        'type': pt.decide.state(token.type, ($): d_out.Value.type_ => {
+        'type': p_.decide.state(token.type, ($): d_out.Value.type_ => {
             switch ($[0]) {
-                case 'text': return pt.ss($, ($): d_out.Value.type_ => ['concrete',
+                case 'text': return p_.ss($, ($): d_out.Value.type_ => ['concrete',
                     ['text', iterator.expect({
                         abort: abort,
                         get_error: ($) => temp_create_error(
                             $,
-                            pt.literal.list([
+                            p_.literal.list([
                                 ['a text value', null]
                             ]),
                             iterator.get_end_info()
@@ -141,33 +141,33 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                             : abort2(null),
                     })]
                 ])
-                case '{': return pt.ss($, ($) => ['concrete', ['dictionary', {
+                case '{': return p_.ss($, ($) => ['concrete', ['dictionary', {
                     '{': Guaranteed_Structural_Token(iterator, abort),
                     'entries': ID_Value_Pairs(iterator, abort, { 'end token': ['}', null] }),
                     '}': Possible_Structural_Token(iterator, abort, { 'expected token': ['}', null] }),
                 }]])
-                case '(': return pt.ss($, ($) => ['concrete', ['group', ['verbose', {
+                case '(': return p_.ss($, ($) => ['concrete', ['group', ['verbose', {
                     '(': Guaranteed_Structural_Token(iterator, abort),
                     'properties': ID_Value_Pairs(iterator, abort, { 'end token': [')', null] }),
                     ')': Possible_Structural_Token(iterator, abort, { 'expected token': [')', null] })
                 }]]])
-                case '[': return pt.ss($, ($): d_out.Value.type_ => ['concrete', ['list', {
+                case '[': return p_.ss($, ($): d_out.Value.type_ => ['concrete', ['list', {
                     '[': Guaranteed_Structural_Token(iterator, abort),
                     'items': Items(iterator, abort, { 'end token': [']', null] }),
                     ']': Possible_Structural_Token(iterator, abort, { 'expected token': [']', null] })
                 }]])
-                case '<': return pt.ss($, ($): d_out.Value.type_ => ['concrete', ['group', ['concise', {
+                case '<': return p_.ss($, ($): d_out.Value.type_ => ['concrete', ['group', ['concise', {
                     '<': Guaranteed_Structural_Token(iterator, abort),
                     'properties': Items(iterator, abort, { 'end token': ['>', null] }),
                     '>': Possible_Structural_Token(iterator, abort, { 'expected token': ['>', null] })
                 }]]])
-                case '@': return pt.ss($, ($) => ['include', {
+                case '@': return p_.ss($, ($) => ['include', {
                     '@': Guaranteed_Structural_Token(iterator, abort),
                     'path': iterator.expect({
                         abort: abort,
                         get_error: ($) => temp_create_error(
                             $,
-                            pt.literal.list([
+                            p_.literal.list([
                                 ['a text value', null]
                             ]),
                             iterator.get_end_info()
@@ -177,28 +177,28 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                             : abort2(null),
                     })
                 }])
-                case '~': return pt.ss($, ($) => ['concrete', ['nothing', {
+                case '~': return p_.ss($, ($) => ['concrete', ['nothing', {
                     '~': Guaranteed_Structural_Token(iterator, abort),
                 }]])
-                case '|': return pt.ss($, ($) => ['concrete', ['state', {
+                case '|': return p_.ss($, ($) => ['concrete', ['state', {
                     '|': Guaranteed_Structural_Token(iterator, abort),
                     'status': iterator.expect({
                         abort: abort,
                         get_error: ($) => temp_create_error(
                             $,
-                            pt.literal.list([
+                            p_.literal.list([
                                 ['any value', null],
                                 ['#', null]
                             ]),
                             iterator.get_end_info()
                         ),
-                        item: (token, abort2) => pt.decide.state(token.type, ($): d_out.Value.type_.concrete.state.status => {
+                        item: (token, abort2) => p_.decide.state(token.type, ($): d_out.Value.type_.concrete.state.status => {
                             switch ($[0]) {
-                                case 'text': return pt.ss($, ($) => ['set', {
+                                case 'text': return p_.ss($, ($) => ['set', {
                                     'option': Text(iterator, abort, { 'text': $ }),
                                     'value': Value(iterator, abort)
                                 }])
-                                case '#': return pt.ss($, ($) => ['missing', {
+                                case '#': return p_.ss($, ($) => ['missing', {
                                     '#': Guaranteed_Structural_Token(iterator, abort),
                                 }])
 
@@ -207,14 +207,14 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                         }),
                     })
                 }]])
-                case '_': return pt.ss($, ($) => ['concrete', ['optional', ['not set', {
+                case '_': return p_.ss($, ($) => ['concrete', ['optional', ['not set', {
                     '_': Guaranteed_Structural_Token(iterator, abort),
                 }]]])
-                case '*': return pt.ss($, ($) => ['concrete', ['optional', ['set', {
+                case '*': return p_.ss($, ($) => ['concrete', ['optional', ['set', {
                     '*': Guaranteed_Structural_Token(iterator, abort),
                     'value': Value(iterator, abort)
                 }]]])
-                case '#': return pt.ss($, ($) => ['missing', {
+                case '#': return p_.ss($, ($) => ['missing', {
                     '#': Guaranteed_Structural_Token(iterator, abort),
                 }])
 
@@ -245,7 +245,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
     }),
 })
 
-export const Guaranteed_Structural_Token: signatures.Guaranteed_Structural_Token = (iterator) => iterator.consume(
+export const Guaranteed_Structural_Token: interface_.Guaranteed_Structural_Token = (iterator) => iterator.consume(
     (token) => ({
         'trailing trivia': token['trailing trivia'],
         'range': {
@@ -256,11 +256,11 @@ export const Guaranteed_Structural_Token: signatures.Guaranteed_Structural_Token
     () => p_unreachable_code_path("this function should only be called when we are sure there is a structural token to consume")
 )
 
-export const Possible_Structural_Token: signatures.Possible_Structural_Token = (iterator, abort, $p) => iterator.expect({
+export const Possible_Structural_Token: interface_.Possible_Structural_Token = (iterator, abort, $p) => iterator.expect({
     abort: abort,
     get_error: ($) => temp_create_error(
         $,
-        pt.literal.list<d_choice.Expected>([
+        p_.literal.list<d_choice.Expected>([
             $p['expected token']
         ]),
         iterator.get_end_info(),
@@ -277,7 +277,7 @@ export const Possible_Structural_Token: signatures.Possible_Structural_Token = (
     },
 })
 
-export const Text: signatures.Text = (iterator, abort, $p) => iterator.consume(
+export const Text: interface_.Text = (iterator, abort, $p) => iterator.consume(
     (token) => ({
         'range': {
             'start': token['start'],
@@ -290,13 +290,13 @@ export const Text: signatures.Text = (iterator, abort, $p) => iterator.consume(
 
 )
 
-export const Items: signatures.Items = (iterator, abort, $p) => iterator.list({
+export const Items: interface_.Items = (iterator, abort, $p) => iterator.list({
     has_more_items: (current_token) => current_token.type[0] !== $p['end token'][0],
     handle: () => iterator.expect({
         abort: abort,
         get_error: ($) => temp_create_error(
             $,
-            pt.literal.list<d_choice.Expected>([
+            p_.literal.list<d_choice.Expected>([
                 ['any value', null],
                 $p['end token']
             ]),
@@ -308,14 +308,14 @@ export const Items: signatures.Items = (iterator, abort, $p) => iterator.list({
     }),
 })
 
-export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, abort, $p) => iterator.list({
+export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) => iterator.list({
     has_more_items: (current_token) => current_token.type[0] !== $p['end token'][0],
     handle: (): d_out.ID_Value_Pairs.L => ({
         'id': iterator.expect({
             abort: abort,
             get_error: ($) => temp_create_error(
                 $,
-                pt.literal.list<d_choice.Expected>([
+                p_.literal.list<d_choice.Expected>([
                     ['a text value', null],
                     $p['end token'],
                 ]),
@@ -329,22 +329,22 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, abort, $p) =
             abort: abort,
             get_error: ($) => temp_create_error(
                 $,
-                pt.literal.list<d_choice.Expected>([
+                p_.literal.list<d_choice.Expected>([
                     ['a text value', null],
                     [':', null],
                     $p['end token']
                 ]),
                 iterator.get_end_info(),
             ),
-            item: (token, abort2) => pt.decide.state(token.type, ($) => {
+            item: (token, abort2) => p_.decide.state(token.type, ($) => {
                 switch ($[0]) {
-                    case 'text': return pt.ss($, ($) => pt.literal.not_set())
-                    case ':': return pt.ss($, ($) => pt.literal.set({
+                    case 'text': return p_.ss($, ($) => p_.literal.not_set())
+                    case ':': return p_.ss($, ($) => p_.literal.set({
                         ':': Guaranteed_Structural_Token(iterator, abort),
-                        'value': pt.literal.set(Value(iterator, abort)) //FIXME determine if it is set... if the next token is a text, we will need to do an extra lookahead if there is a colon
+                        'value': p_.literal.set(Value(iterator, abort)) //FIXME determine if it is set... if the next token is a text, we will need to do an extra lookahead if there is a colon
                     }))
 
-                    default: return $[0] === $p['end token'][0] ? pt.literal.not_set() : abort2(null)
+                    default: return $[0] === $p['end token'][0] ? p_.literal.not_set() : abort2(null)
                 }
             }),
         }),

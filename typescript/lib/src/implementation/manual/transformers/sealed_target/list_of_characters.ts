@@ -1,4 +1,4 @@
-import * as p_i from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"

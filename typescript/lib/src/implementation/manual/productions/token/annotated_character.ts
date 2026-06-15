@@ -1,10 +1,11 @@
-import * as pt from 'pareto-core/dist/assign'
-import * as p_di from 'pareto-core/dist/data/interface'
-import * as p_ri from 'pareto-core/dist/refiner/interface'
-import * as p_pi from 'pareto-core/dist/production/interface'
-import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
-import p_list_build_deprecated from 'pareto-core/dist/specials/list_build_deprecated'
-import p_text_from_list from 'pareto-core/dist/specials/text_from_list'
+import * as p_ from 'pareto-core/dist/implementation/production'
+import * as p_temp from 'pareto-core/dist/assign'
+import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_ri from 'pareto-core/dist/interface/refiner'
+import * as p_pi from 'pareto-core/dist/interface/production'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
+import p_list_build_deprecated from 'pareto-core/dist/implementation/specials/list_build_deprecated'
+import p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
 
 import * as d_in from "../../../../interface/to_be_generated/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
@@ -85,13 +86,13 @@ export const Whitespace: p_pi.Production<
 
         const next = iterator.look_raw()
         if (next === null) {
-            return pt.literal.not_set()
+            return p_.literal.not_set()
         } else {
             if (!is_whitespace_character(next[0])) {
-                return pt.literal.not_set()
+                return p_.literal.not_set()
             } else {
                 const start_character = next[0]
-                return pt.literal.set({
+                return p_.literal.set({
                     'value': p_text_from_list<number>(
                         iterator.list({
                             has_more_items: ($) => is_whitespace_character($),
@@ -273,7 +274,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                     if ($ === null) {
                                         return abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                            'expected': ['escape character', { 'found': pt.literal.not_set() }]
+                                            'expected': ['escape character', { 'found': p_.literal.not_set() }]
                                         })
                                     }
                                     switch ($[0].code) {
@@ -388,13 +389,13 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                                             if (char === null) {
                                                                 return abort({
                                                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                    'expected': ['unicode character', { 'found': pt.literal.not_set() }]
+                                                                    'expected': ['unicode character', { 'found': p_.literal.not_set() }]
                                                                 })
                                                             }
                                                             if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
                                                                 return abort({
                                                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                    'expected': ['unicode character', { 'found': pt.literal.set(char[0].code) }]
+                                                                    'expected': ['unicode character', { 'found': p_.literal.set(char[0].code) }]
                                                                 })
                                                             }
                                                             iterator.discard(() => null)
@@ -413,7 +414,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                             return abort({
                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                 'expected': ['escape character', {
-                                                    'found': pt.literal.set($[0].code)
+                                                    'found': p_.literal.set($[0].code)
                                                 }]
                                             })
                                     }
@@ -444,7 +445,7 @@ export const Tokenizer_Result: p_pi.Production<
     'tokens': iterator.list({
         has_more_items: ($) => true,
         handle: ($) => ({
-            'type': pt.state.block((): d_out.Annotated_Token.type_ => {
+            'type': p_temp.state.block((): d_out.Annotated_Token.type_ => {
 
                 const Character = {
 
