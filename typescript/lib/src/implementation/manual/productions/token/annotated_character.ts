@@ -85,13 +85,13 @@ export const Whitespace: p_pi.Production<
 
         const next = iterator.look_raw()
         if (next === null) {
-            return pt.optional.literal.not_set()
+            return pt.literal.not_set()
         } else {
             if (!is_whitespace_character(next[0])) {
-                return pt.optional.literal.not_set()
+                return pt.literal.not_set()
             } else {
                 const start_character = next[0]
-                return pt.optional.literal.set({
+                return pt.literal.set({
                     'value': p_text_from_list<number>(
                         iterator.list({
                             has_more_items: ($) => is_whitespace_character($),
@@ -273,7 +273,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                     if ($ === null) {
                                         return abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                            'expected': ['escape character', { 'found': pt.optional.literal.not_set() }]
+                                            'expected': ['escape character', { 'found': pt.literal.not_set() }]
                                         })
                                     }
                                     switch ($[0].code) {
@@ -388,13 +388,13 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                                             if (char === null) {
                                                                 return abort({
                                                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                    'expected': ['unicode character', { 'found': pt.optional.literal.not_set() }]
+                                                                    'expected': ['unicode character', { 'found': pt.literal.not_set() }]
                                                                 })
                                                             }
                                                             if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
                                                                 return abort({
                                                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                    'expected': ['unicode character', { 'found': pt.optional.literal.set(char[0].code) }]
+                                                                    'expected': ['unicode character', { 'found': pt.literal.set(char[0].code) }]
                                                                 })
                                                             }
                                                             iterator.discard(() => null)
@@ -413,7 +413,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                             return abort({
                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                 'expected': ['escape character', {
-                                                    'found': pt.optional.literal.set($[0].code)
+                                                    'found': pt.literal.set($[0].code)
                                                 }]
                                             })
                                     }

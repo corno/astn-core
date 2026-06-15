@@ -170,11 +170,11 @@ export const Optional: Optional = ($, abort) => {
                         switch ($[0]) {
                             case 'set': return pt.ss($, ($) => ({
                                 'value': value,
-                                'optional': pt.optional.literal.set($.value)
+                                'optional': pt.literal.set($.value)
                             }))
                             case 'not set': return pt.ss($, ($) => ({
                                 'value': value,
-                                'optional': pt.optional.literal.not_set()
+                                'optional': pt.literal.not_set()
                             }))
                             default: return abort({
                                 'type': ['wrong value type', {
@@ -309,8 +309,8 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                             $p['expected properties'],
                                             ($, other, id): p_di.Optional_Value<d_location.Range> => pt.decide.optional(
                                                 other,
-                                                () => pt.optional.literal.not_set(),
-                                                () => pt.optional.literal.set($.id.range)
+                                                () => pt.literal.not_set(),
+                                                () => pt.literal.set($.id.range)
                                             )
                                         )
                                     ).map_optionally(

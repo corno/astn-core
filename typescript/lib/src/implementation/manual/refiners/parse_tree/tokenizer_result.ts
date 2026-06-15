@@ -10,7 +10,7 @@ import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
 
 
 //dependencies
-import * as p_authoring_parse_tree from "./token"
+import * as p_authoring_parse_tree from "../../productions/parse_tree/token"
 
 export namespace signatures {
 

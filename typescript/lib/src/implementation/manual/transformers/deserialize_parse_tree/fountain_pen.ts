@@ -21,7 +21,7 @@ export const Error: signatures.Error = ($) => {
                     case 'escape character': return pt.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("escape character (), but found "),
                         $.found.__decide(
-                            ($) => sh.ph.serialize(pt.list.literal([$])),
+                            ($) => sh.ph.serialize(pt.literal.list([$])),
                             () => sh.ph.literal("nothing")
                         ),
                     ]))

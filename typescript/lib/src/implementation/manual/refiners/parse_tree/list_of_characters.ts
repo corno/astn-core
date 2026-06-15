@@ -8,8 +8,8 @@ import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schema
 
 
 //dependencies
-import * as ds_annotated_characters from "../annotated_characters/text"
-import * as tokenize from "../token/annotated_character"
+import * as r_annotated_characters from "../annotated_characters/text"
+import * as pr_tokenize from "../../productions/token/annotated_character"
 import * as r_from_token from "./tokenizer_result"
 
 export namespace signatures {
@@ -24,7 +24,7 @@ export namespace signatures {
 }
 
 export const Document: signatures.Document = ($, abort, $p,) => {
-    const ann_chars = ds_annotated_characters.Annotated_Characters(
+    const ann_chars = r_annotated_characters.Annotated_Characters(
         $,
         $p
     )
@@ -32,7 +32,7 @@ export const Document: signatures.Document = ($, abort, $p,) => {
         ann_chars.characters,
         ann_chars.end,
         (iter) => r_from_token.Document(//fixme: make this iterate_fully
-            tokenize.Tokenizer_Result(
+            pr_tokenize.Tokenizer_Result(
                 iter,
                 ($) => abort({
                     'type': ['lexer', $],

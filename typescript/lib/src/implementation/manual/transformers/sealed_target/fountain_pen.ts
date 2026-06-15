@@ -1,11 +1,8 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_di from 'pareto-core/dist/data/interface'
-import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
-import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
 import * as t_primitives_to_text from "../primitives/text"

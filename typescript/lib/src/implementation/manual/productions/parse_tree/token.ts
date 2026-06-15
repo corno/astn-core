@@ -1,13 +1,15 @@
 import * as pt from 'pareto-core/dist/assign'
 import * as p_di from 'pareto-core/dist/data/interface'
 import * as p_pi from 'pareto-core/dist/production/interface'
-
 import p_unreachable_code_path from 'pareto-core/dist/specials/unreachable_code_path'
 
+//data types
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
 import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+
+
 export namespace signatures {
 
     export type Document = p_pi.Production<
@@ -103,11 +105,11 @@ const temp_create_error = (
 export const Document: signatures.Document = (iterator, abort) => ({
     'header': iterator.optional({
         item: (token) => token.type[0] === '!' //header token
-            ? pt.optional.literal.set({
+            ? pt.literal.set({
                 '!': Guaranteed_Structural_Token(iterator, abort),
                 'value': Value(iterator, abort)
             })
-            : pt.optional.literal.not_set(),
+            : pt.literal.not_set(),
     }),
     'content': Value(iterator, abort)
 })
@@ -116,7 +118,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
     abort: abort,
     get_error: ($) => temp_create_error(
         $,
-        pt.list.literal<d_choice.Expected>([
+        pt.literal.list<d_choice.Expected>([
             ['any value', null]
         ]),
         iterator.get_end_info()
@@ -129,7 +131,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                         abort: abort,
                         get_error: ($) => temp_create_error(
                             $,
-                            pt.list.literal([
+                            pt.literal.list([
                                 ['a text value', null]
                             ]),
                             iterator.get_end_info()
@@ -165,7 +167,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                         abort: abort,
                         get_error: ($) => temp_create_error(
                             $,
-                            pt.list.literal([
+                            pt.literal.list([
                                 ['a text value', null]
                             ]),
                             iterator.get_end_info()
@@ -184,7 +186,7 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
                         abort: abort,
                         get_error: ($) => temp_create_error(
                             $,
-                            pt.list.literal([
+                            pt.literal.list([
                                 ['any value', null],
                                 ['#', null]
                             ]),
@@ -218,22 +220,22 @@ export const Value: signatures.Value = (iterator, abort) => iterator.expect({
 
                 //unexpected tokens
 
-                // case '!': return pt.ss($, ($) => iterator.unexpected_token(token, pt.list.literal([
+                // case '!': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case ':': return pt.ss($, ($) => iterator.unexpected_token(token, pt.list.literal([
+                // case ':': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case ')': return pt.ss($, ($) => iterator.unexpected_token(token, pt.list.literal([
+                // case ')': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case '>': return pt.ss($, ($) => iterator.unexpected_token(token, pt.list.literal([
+                // case '>': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case ']': return pt.ss($, ($) => iterator.unexpected_token(token, pt.list.literal([
+                // case ']': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case '}': return pt.ss($, ($) => iterator.unexpected_token(token, pt.list.literal([
+                // case '}': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
                 //     ['any value', null]
                 // ])))
 
@@ -258,7 +260,7 @@ export const Possible_Structural_Token: signatures.Possible_Structural_Token = (
     abort: abort,
     get_error: ($) => temp_create_error(
         $,
-        pt.list.literal<d_choice.Expected>([
+        pt.literal.list<d_choice.Expected>([
             $p['expected token']
         ]),
         iterator.get_end_info(),
@@ -294,7 +296,7 @@ export const Items: signatures.Items = (iterator, abort, $p) => iterator.list({
         abort: abort,
         get_error: ($) => temp_create_error(
             $,
-            pt.list.literal<d_choice.Expected>([
+            pt.literal.list<d_choice.Expected>([
                 ['any value', null],
                 $p['end token']
             ]),
@@ -313,7 +315,7 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, abort, $p) =
             abort: abort,
             get_error: ($) => temp_create_error(
                 $,
-                pt.list.literal<d_choice.Expected>([
+                pt.literal.list<d_choice.Expected>([
                     ['a text value', null],
                     $p['end token'],
                 ]),
@@ -327,7 +329,7 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, abort, $p) =
             abort: abort,
             get_error: ($) => temp_create_error(
                 $,
-                pt.list.literal<d_choice.Expected>([
+                pt.literal.list<d_choice.Expected>([
                     ['a text value', null],
                     [':', null],
                     $p['end token']
@@ -336,16 +338,16 @@ export const ID_Value_Pairs: signatures.ID_Value_Pairs = (iterator, abort, $p) =
             ),
             item: (token, abort2) => pt.decide.state(token.type, ($) => {
                 switch ($[0]) {
-                    case 'text': return pt.ss($, ($) => pt.optional.literal.not_set())
-                    case ':': return pt.ss($, ($) => pt.optional.literal.set({
+                    case 'text': return pt.ss($, ($) => pt.literal.not_set())
+                    case ':': return pt.ss($, ($) => pt.literal.set({
                         ':': Guaranteed_Structural_Token(iterator, abort),
-                        'value': pt.optional.literal.set(Value(iterator, abort)) //FIXME determine if it is set... if the next token is a text, we will need to do an extra lookahead if there is a colon
+                        'value': pt.literal.set(Value(iterator, abort)) //FIXME determine if it is set... if the next token is a text, we will need to do an extra lookahead if there is a colon
                     }))
 
-                    default: return $[0] === $p['end token'][0] ? pt.optional.literal.not_set() : abort2(null)
+                    default: return $[0] === $p['end token'][0] ? pt.literal.not_set() : abort2(null)
                 }
             }),
         }),
-        // ',': pt.optional.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
+        // ',': pt.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
     }),
 })
