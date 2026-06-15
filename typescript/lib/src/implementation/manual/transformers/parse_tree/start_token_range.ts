@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 
@@ -9,36 +9,36 @@ export type Value = p_i.Transformer<d_in.Value, d_out.Range>
 export type Concrete_Value = p_i.Transformer<d_in.Value.type_.concrete, d_out.Range>
 
 
-export const Concrete_Value: Concrete_Value = ($) => pt.decide.state($, ($) => pt.decide.state($, ($): d_out.Range => {
+export const Concrete_Value: Concrete_Value = ($) => p_.decide.state($, ($) => p_.decide.state($, ($): d_out.Range => {
     switch ($[0]) {
-        case 'dictionary': return pt.ss($, ($) => $['{'].range)
-        case 'group': return pt.ss($, ($) => pt.decide.state($, ($) => {
+        case 'dictionary': return p_.ss($, ($) => $['{'].range)
+        case 'group': return p_.ss($, ($) => p_.decide.state($, ($) => {
             switch ($[0]) {
-                case 'concise': return pt.ss($, ($) => $['<'].range)
-                case 'verbose': return pt.ss($, ($) => $['('].range)
-                default: return pt.au($[0])
+                case 'concise': return p_.ss($, ($) => $['<'].range)
+                case 'verbose': return p_.ss($, ($) => $['('].range)
+                default: return p_.au($[0])
             }
         }))
-        case 'list': return pt.ss($, ($) => $['['].range)
-        case 'nothing': return pt.ss($, ($) => $['~'].range)
-        case 'optional': return pt.ss($, ($) => pt.decide.state($, ($) => {
+        case 'list': return p_.ss($, ($) => $['['].range)
+        case 'nothing': return p_.ss($, ($) => $['~'].range)
+        case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
             switch ($[0]) {
-                case 'set': return pt.ss($, ($) => $['*'].range)
-                case 'not set': return pt.ss($, ($) => $['_'].range)
-                default: return pt.au($[0])
+                case 'set': return p_.ss($, ($) => $['*'].range)
+                case 'not set': return p_.ss($, ($) => $['_'].range)
+                default: return p_.au($[0])
             }
         }))
-        case 'state': return pt.ss($, ($) => $['|'].range)
-        case 'text': return pt.ss($, ($) => $.range)
-        default: return pt.au($[0])
+        case 'state': return p_.ss($, ($) => $['|'].range)
+        case 'text': return p_.ss($, ($) => $.range)
+        default: return p_.au($[0])
     }
 }))
 
-export const Value: Value = ($) => pt.decide.state($.type, ($): d_out.Range => {
+export const Value: Value = ($) => p_.decide.state($.type, ($): d_out.Range => {
     switch ($[0]) {
-        case 'concrete': return pt.ss($, ($) => Concrete_Value($))
-        case 'include': return pt.ss($, ($) => $['@'].range)
-        case 'missing': return pt.ss($, ($) => $['#'].range)
-        default: return pt.au($[0])
+        case 'concrete': return p_.ss($, ($) => Concrete_Value($))
+        case 'include': return p_.ss($, ($) => $['@'].range)
+        case 'missing': return p_.ss($, ($) => $['#'].range)
+        default: return p_.au($[0])
     }
 })

@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -12,31 +12,31 @@ export namespace signatures {
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error: signatures.Error = ($) => {
-    const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => pt.decide.state($, ($) => {
+    const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => p_.decide.state($, ($) => {
         switch ($[0]) {
-            case 'lexer': return pt.ss($, ($) => pt.decide.state($.expected, ($) => {
+            case 'lexer': return p_.ss($, ($) => p_.decide.state($.expected, ($) => {
                 switch ($[0]) {
                     case 'unicode character': return sh.ph.literal("found invalid unicode escape sequence")
-                    case 'no end of line in text': return pt.ss($, ($) => sh.ph.literal("no end of line in text"))
-                    case 'escape character': return pt.ss($, ($) => sh.ph.composed([
+                    case 'no end of line in text': return p_.ss($, ($) => sh.ph.literal("no end of line in text"))
+                    case 'escape character': return p_.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("escape character (), but found "),
                         $.found.__decide(
-                            ($) => sh.ph.serialize(pt.literal.list([$])),
+                            ($) => sh.ph.serialize(p_.literal.list([$])),
                             () => sh.ph.literal("nothing")
                         ),
                     ]))
-                    case 'block comment termination': return pt.ss($, ($) => sh.ph.literal("block comment termination: */"))
-                    case 'text termination': return pt.ss($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
+                    case 'block comment termination': return p_.ss($, ($) => sh.ph.literal("block comment termination: */"))
+                    case 'text termination': return p_.ss($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
 
-                    default: return pt.au($[0])
+                    default: return p_.au($[0])
                 }
             }))
-            case 'parser': return pt.ss($, ($) => sh.ph.composed([
+            case 'parser': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("expected "),
                 sh.ph.rich(
                     $.expected.__l_map(
                         ($) => sh.ph.literal(
-                            pt.decide.state($, ($) => {
+                            p_.decide.state($, ($) => {
                                 switch ($[0]) {
                                     case '!': return "'!'"
                                     case ')': return "')'"
@@ -49,7 +49,7 @@ export const Error: signatures.Error = ($) => {
                                     case 'any value': return "any value"
                                     case '}': return "'}'"
                                     case '#': return "'#'"
-                                    default: return pt.au($[0])
+                                    default: return p_.au($[0])
                                 }
                             })
                         ),
@@ -60,19 +60,19 @@ export const Error: signatures.Error = ($) => {
                     sh.ph.nothing(),
                 ),
                 sh.ph.literal(", found "),
-                pt.decide.state($.cause, ($) => {
+                p_.decide.state($.cause, ($) => {
                     switch ($[0]) {
-                        case 'unexpected token': return pt.ss($, ($) => sh.ph.composed([
+                        case 'unexpected token': return p_.ss($, ($) => sh.ph.composed([
                             sh.ph.literal("'"),
                             sh.ph.literal($.found.type[0]),
                             sh.ph.literal("'")
                         ]))
-                        case 'missing token': return pt.ss($, ($) => sh.ph.literal("nothing"))
-                        default: return pt.au($[0])
+                        case 'missing token': return p_.ss($, ($) => sh.ph.literal("nothing"))
+                        default: return p_.au($[0])
                     }
                 })
             ]))
-            default: return pt.au($[0])
+            default: return p_.au($[0])
         }
     })
     return sh.ph.composed([

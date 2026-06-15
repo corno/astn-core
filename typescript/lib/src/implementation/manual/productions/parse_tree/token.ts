@@ -220,22 +220,22 @@ export const Value: interface_.Value = (iterator, abort) => iterator.expect({
 
                 //unexpected tokens
 
-                // case '!': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
+                // case '!': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case ':': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
+                // case ':': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case ')': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
+                // case ')': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case '>': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
+                // case '>': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case ']': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
+                // case ']': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
                 //     ['any value', null]
                 // ])))
-                // case '}': return pt.ss($, ($) => iterator.unexpected_token(token, pt.literal.list([
+                // case '}': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
                 //     ['any value', null]
                 // ])))
 
@@ -348,6 +348,6 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
                 }
             }),
         }),
-        // ',': pt.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
+        // ',': p_.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
     }),
 })

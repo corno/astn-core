@@ -1,4 +1,4 @@
-import * as pt from 'pareto-core/dist/implementation/transformer'
+import * as p_ from 'pareto-core/dist/implementation/transformer'
 import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
@@ -9,21 +9,21 @@ export namespace signatures {
     export type Error = p_i.Transformer<d_in.Error, d_out.Possible_Range>
 }
 
-export const Error: signatures.Error = ($) => pt.decide.state($.type, ($) => {
+export const Error: signatures.Error = ($) => p_.decide.state($.type, ($) => {
     switch ($[0]) {
-        case 'lexer': return pt.ss($, ($): d_out.Possible_Range => ['range', $.range])
-        case 'parser': return pt.ss($, ($):d_out.Possible_Range => pt.decide.state($.cause, ($) => {
+        case 'lexer': return p_.ss($, ($): d_out.Possible_Range => ['range', $.range])
+        case 'parser': return p_.ss($, ($):d_out.Possible_Range => p_.decide.state($.cause, ($) => {
             switch ($[0]) {
-                case 'missing token': return pt.ss($, ($) => ['end of document', {
+                case 'missing token': return p_.ss($, ($) => ['end of document', {
                     'end': $.end
                 }])
-                case 'unexpected token': return pt.ss($, ($): d_out.Possible_Range => ['range', {
+                case 'unexpected token': return p_.ss($, ($): d_out.Possible_Range => ['range', {
                     'start': $.found.start,
                     'end': $.found.end,
                 }])
-                default: return pt.au($[0])
+                default: return p_.au($[0])
             }
         }))
-        default: return pt.au($[0])
+        default: return p_.au($[0])
     }
 })
