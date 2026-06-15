@@ -1,5 +1,4 @@
 import * as pt from 'pareto-core/dist/assign'
-import * as p_i from 'pareto-core/dist/interface'
 import * as p_di from 'pareto-core/dist/data/interface'
 import * as p_ri from 'pareto-core/dist/refiner/interface'
 import * as p_pi from 'pareto-core/dist/production/interface'
@@ -38,11 +37,16 @@ const create_error = (
     () => p_unreachable_code_path("implement me")
 )
 
-const create_range = (
-    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    $p: {
+const create_range: p_pi.Production_Without_Error_With_Parameter<
+    d_temp_location.Range,
+    d_in.Annotated_Character,
+    d_location.Location,
+    {
         'start character': d_in.Annotated_Character
     }
+> = (
+    iterator,
+    $p
 ): d_temp_location.Range => ({
     'start': $p['start character'].location,
     'end': iterator.look(
@@ -52,56 +56,66 @@ const create_range = (
 })
 
 
-export const Whitespace = (
-    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: p_i.Abort<d_function.Lexer_Error>,
+export const Whitespace: p_pi.Production<
+    d_out.Whitespace,
+    d_function.Lexer_Error,
+    d_in.Annotated_Character,
+    d_location.Location
+> = (
+    iterator,
+    abort,
 ): d_out.Whitespace => {
 
-    const is_whitespace_character = ($: d_in.Annotated_Character) => {
-        switch ($.code) {
-            case 0x09: // \t
-                return true
-            case 0x0A: // \n
-                return true
-            case 0x0D: // \r
-                return true
-            case 0x20: // space
-                return true
-            case 0x2C: // ,
-                return true
-            default:
-                return false
+        const is_whitespace_character = ($: d_in.Annotated_Character) => {
+            switch ($.code) {
+                case 0x09: // \t
+                    return true
+                case 0x0A: // \n
+                    return true
+                case 0x0D: // \r
+                    return true
+                case 0x20: // space
+                    return true
+                case 0x2C: // ,
+                    return true
+                default:
+                    return false
+            }
         }
-    }
 
-    const next = iterator.look_raw()
-    if (next === null) {
-        return pt.optional.literal.not_set()
-    } else {
-        if (!is_whitespace_character(next[0])) {
+        const next = iterator.look_raw()
+        if (next === null) {
             return pt.optional.literal.not_set()
         } else {
-            const start_character = next[0]
-            return pt.optional.literal.set({
-                'value': p_text_from_list<number>(
-                    iterator.list({
-                        has_more_items: ($) => is_whitespace_character($),
-                        handle: ($) => {
-                            iterator.discard(() => null) // discard the character
-                            return $.code
-                        },
-                    }),
-                    ($) => $
-                ),
-                'range': create_range(iterator, { 'start character': start_character }),
-            })
+            if (!is_whitespace_character(next[0])) {
+                return pt.optional.literal.not_set()
+            } else {
+                const start_character = next[0]
+                return pt.optional.literal.set({
+                    'value': p_text_from_list<number>(
+                        iterator.list({
+                            has_more_items: ($) => is_whitespace_character($),
+                            handle: ($) => {
+                                iterator.discard(() => null) // discard the character
+                                return $.code
+                            },
+                        }),
+                        ($) => $
+                    ),
+                    'range': create_range(iterator, { 'start character': start_character }),
+                })
+            }
         }
     }
-}
 
-export const Trivia = (
-    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: p_i.Abort<d_function.Lexer_Error>,
+export const Trivia: p_pi.Production<
+    d_out.Trivia,
+    d_function.Lexer_Error,
+    d_in.Annotated_Character,
+    d_location.Location
+> = (
+    iterator,
+    abort,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator, abort),
     'comments': iterator.list({
@@ -186,235 +200,246 @@ export const Trivia = (
     }),
 })
 
-export const Delimited_Text = (
-    is_end_character: (character: number) => boolean,
-    allow_newlines: boolean,
-    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: p_i.Abort<d_function.Lexer_Error>,
-    $p: {
+export const Delimited_Text: p_pi.Production_With_Parameter<
+    string,
+    d_function.Lexer_Error,
+    d_in.Annotated_Character,
+    d_location.Location,
+    {
+        'allow newlines': boolean,
+        'end character': number,
         'start character': d_in.Annotated_Character
     }
+> = (
+    iterator,
+    abort,
+    $p
 ): string => {
 
-    const Character = {
-        backspace: 0x08,            // \b
-        form_feed: 0x0C,            // \f
-        tab: 0x09,                  // \t
-        line_feed: 0x0A,            // \n
-        carriage_return: 0x0D,      // \r
-        quotation_mark: 0x22,       // "
-        backtick: 0x60,             // `
-        apostrophe: 0x27,           // '
-        reverse_solidus: 0x5C,      // \
-        solidus: 0x2F,              // /
-        a: 0x61,                    // a
-        b: 0x62,                    // b
-        f: 0x66,                    // f
-        n: 0x6E,                    // n
-        r: 0x72,                    // r
-        t: 0x74,                    // t
-        u: 0x75,                    // u
-        A: 0x41,                    // A
-        F: 0x46,                    // F
+        const Character = {
+            backspace: 0x08,            // \b
+            form_feed: 0x0C,            // \f
+            tab: 0x09,                  // \t
+            line_feed: 0x0A,            // \n
+            carriage_return: 0x0D,      // \r
+            quotation_mark: 0x22,       // "
+            backtick: 0x60,             // `
+            apostrophe: 0x27,           // '
+            reverse_solidus: 0x5C,      // \
+            solidus: 0x2F,              // /
+            a: 0x61,                    // a
+            b: 0x62,                    // b
+            f: 0x66,                    // f
+            n: 0x6E,                    // n
+            r: 0x72,                    // r
+            t: 0x74,                    // t
+            u: 0x75,                    // u
+            A: 0x41,                    // A
+            F: 0x46,                    // F
 
-    }
-    const txt = p_text_from_list(
-        p_list_build_deprecated<number>(
-            ($i) => {
-                while (true) {
-                    const $ = iterator.look_raw()
-                    if ($ === null) {
+        }
+        const txt = p_text_from_list(
+            p_list_build_deprecated<number>(
+                ($i) => {
+                    while (true) {
+                        const $ = iterator.look_raw()
+                        if ($ === null) {
 
-                        return abort({
-                            'range': create_range(iterator, { 'start character': $p['start character'] }),
-                            'expected': ['text termination', null]
-                        })
-                    }
-                    if (is_end_character($[0].code)) {
-                        iterator.discard(() => null) // discard the end character
-                        return
-                    }
-                    switch ($[0].code) {
-                        case Character.line_feed:
-                        case Character.carriage_return:
-                            if (!allow_newlines) {
-                                return abort({
-                                    'expected': ['no end of line in text', null],
-                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                })
-                            }
-                            iterator.discard(() => null)
-                            $i['add item']($[0].code)
-                            break
-                        case Character.reverse_solidus: // \ (escape)
-                            iterator.discard(() => null)
-                            {
-                                const $ = iterator.look_raw()
-                                if ($ === null) {
+                            return abort({
+                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                'expected': ['text termination', null]
+                            })
+                        }
+                        if ($[0].code === $p['end character']) {
+                            iterator.discard(() => null) // discard the end character
+                            return
+                        }
+                        switch ($[0].code) {
+                            case Character.line_feed:
+                            case Character.carriage_return:
+                                if (!$p['allow newlines']) {
                                     return abort({
+                                        'expected': ['no end of line in text', null],
                                         'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                        'expected': ['escape character', { 'found': pt.optional.literal.not_set() }]
                                     })
                                 }
-                                switch ($[0].code) {
-                                    case Character.quotation_mark:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.quotation_mark)
-                                        break
-                                    case Character.apostrophe:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.apostrophe)
-                                        break
-                                    case Character.backtick:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.backtick)
-                                        break
-                                    case Character.reverse_solidus:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.reverse_solidus)
-                                        break
-                                    case Character.solidus:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.solidus)
-                                        break
-                                    case Character.b:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.backspace)
-                                        break
-                                    case Character.f:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.form_feed)
-                                        break
-                                    case Character.n:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.line_feed)
-                                        break
-                                    case Character.r:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.carriage_return)
-                                        break
-                                    case Character.t:
-                                        iterator.discard(() => null)
-                                        $i['add item'](Character.tab)
-                                        break
-                                    case Character.u:
-                                        iterator.discard(() => null)
-                                        const ds_hexadecimal: p_ri.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
-                                            const characters = $
-                                            let result = 0
-                                            let isNegative = false
-                                            let startIndex = 0
-
-                                            // Check for empty string
-                                            if (characters.__get_number_of_items() === 0) {
-                                                abort("Empty string is not a valid hexadecimal number")
-                                            }
-
-                                            const get_character_at = (index: number): number => {
-                                                return characters.__deprecated_get_item_at(
-                                                    index,
-                                                    {
-                                                        out_of_bounds: () => abort("index out of bounds")
-                                                    }
-                                                )
-                                            }
-
-                                            // Check for negative sign
-                                            if (characters.__get_number_of_items() > 0 && get_character_at(0) === 45) { // '-'
-                                                isNegative = true
-                                                startIndex = 1
-                                            }
-
-                                            // Check for "0x" prefix - REQUIRE it for hex
-                                            if (characters.__get_number_of_items() <= startIndex + 1 ||
-                                                get_character_at(startIndex) !== 48 || // '0'
-                                                get_character_at(startIndex + 1) !== 120) { // 'x'
-                                                abort("Hexadecimal number must have '0x' prefix")
-                                            }
-                                            startIndex += 2
-
-                                            // Check if there are digits after the prefix
-                                            if (startIndex >= characters.__get_number_of_items()) {
-                                                abort("Hexadecimal number must have digits after '0x' prefix")
-                                            }
-
-                                            // Parse hex digits from left to right
-                                            for (let i = startIndex; i < characters.__get_number_of_items(); i++) {
-                                                const charCode = get_character_at(i)
-                                                let digit: number
-
-                                                // Check if character is a hex digit
-                                                if (charCode >= 48 && charCode <= 57) { // '0'-'9'
-                                                    digit = charCode - 48
-                                                } else if (charCode >= 65 && charCode <= 70) { // 'A'-'F'
-                                                    digit = charCode - 65 + 10
-                                                } else if (charCode >= 97 && charCode <= 102) { // 'a'-'f'
-                                                    digit = charCode - 97 + 10
-                                                } else {
-                                                    // Invalid character
-                                                    return abort("Invalid character in hexadecimal string")
-                                                }
-
-                                                result = result * 16 + digit
-                                            }
-
-                                            return isNegative ? -result : result
-                                        }
-                                        $i['add item'](ds_hexadecimal(
-                                            p_list_build_deprecated<number>(
-                                                ($i) => {
-                                                    const get_char = () => {
-                                                        const char = iterator.look_raw()
-                                                        if (char === null) {
-                                                            return abort({
-                                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                'expected': ['unicode character', { 'found': pt.optional.literal.not_set() }]
-                                                            })
-                                                        }
-                                                        if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
-                                                            return abort({
-                                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                                'expected': ['unicode character', { 'found': pt.optional.literal.set(char[0].code) }]
-                                                            })
-                                                        }
-                                                        iterator.discard(() => null)
-                                                        return char[0].code
-                                                    }
-                                                    $i['add item'](get_char())
-                                                    $i['add item'](get_char())
-                                                    $i['add item'](get_char())
-                                                    $i['add item'](get_char())
-                                                }
-                                            ),
-                                            () => p_unreachable_code_path("the number was built in a controlled way")
-                                        ))
-                                        break
-                                    default:
+                                iterator.discard(() => null)
+                                $i['add item']($[0].code)
+                                break
+                            case Character.reverse_solidus: // \ (escape)
+                                iterator.discard(() => null)
+                                {
+                                    const $ = iterator.look_raw()
+                                    if ($ === null) {
                                         return abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                            'expected': ['escape character', {
-                                                'found': pt.optional.literal.set($[0].code)
-                                            }]
+                                            'expected': ['escape character', { 'found': pt.optional.literal.not_set() }]
                                         })
+                                    }
+                                    switch ($[0].code) {
+                                        case Character.quotation_mark:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.quotation_mark)
+                                            break
+                                        case Character.apostrophe:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.apostrophe)
+                                            break
+                                        case Character.backtick:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.backtick)
+                                            break
+                                        case Character.reverse_solidus:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.reverse_solidus)
+                                            break
+                                        case Character.solidus:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.solidus)
+                                            break
+                                        case Character.b:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.backspace)
+                                            break
+                                        case Character.f:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.form_feed)
+                                            break
+                                        case Character.n:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.line_feed)
+                                            break
+                                        case Character.r:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.carriage_return)
+                                            break
+                                        case Character.t:
+                                            iterator.discard(() => null)
+                                            $i['add item'](Character.tab)
+                                            break
+                                        case Character.u:
+                                            iterator.discard(() => null)
+                                            const ds_hexadecimal: p_ri.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
+                                                const characters = $
+                                                let result = 0
+                                                let isNegative = false
+                                                let startIndex = 0
+
+                                                // Check for empty string
+                                                if (characters.__get_number_of_items() === 0) {
+                                                    abort("Empty string is not a valid hexadecimal number")
+                                                }
+
+                                                const get_character_at = (index: number): number => {
+                                                    return characters.__deprecated_get_item_at(
+                                                        index,
+                                                        {
+                                                            out_of_bounds: () => abort("index out of bounds")
+                                                        }
+                                                    )
+                                                }
+
+                                                // Check for negative sign
+                                                if (characters.__get_number_of_items() > 0 && get_character_at(0) === 45) { // '-'
+                                                    isNegative = true
+                                                    startIndex = 1
+                                                }
+
+                                                // Check for "0x" prefix - REQUIRE it for hex
+                                                if (characters.__get_number_of_items() <= startIndex + 1 ||
+                                                    get_character_at(startIndex) !== 48 || // '0'
+                                                    get_character_at(startIndex + 1) !== 120) { // 'x'
+                                                    abort("Hexadecimal number must have '0x' prefix")
+                                                }
+                                                startIndex += 2
+
+                                                // Check if there are digits after the prefix
+                                                if (startIndex >= characters.__get_number_of_items()) {
+                                                    abort("Hexadecimal number must have digits after '0x' prefix")
+                                                }
+
+                                                // Parse hex digits from left to right
+                                                for (let i = startIndex; i < characters.__get_number_of_items(); i++) {
+                                                    const charCode = get_character_at(i)
+                                                    let digit: number
+
+                                                    // Check if character is a hex digit
+                                                    if (charCode >= 48 && charCode <= 57) { // '0'-'9'
+                                                        digit = charCode - 48
+                                                    } else if (charCode >= 65 && charCode <= 70) { // 'A'-'F'
+                                                        digit = charCode - 65 + 10
+                                                    } else if (charCode >= 97 && charCode <= 102) { // 'a'-'f'
+                                                        digit = charCode - 97 + 10
+                                                    } else {
+                                                        // Invalid character
+                                                        return abort("Invalid character in hexadecimal string")
+                                                    }
+
+                                                    result = result * 16 + digit
+                                                }
+
+                                                return isNegative ? -result : result
+                                            }
+                                            $i['add item'](ds_hexadecimal(
+                                                p_list_build_deprecated<number>(
+                                                    ($i) => {
+                                                        const get_char = () => {
+                                                            const char = iterator.look_raw()
+                                                            if (char === null) {
+                                                                return abort({
+                                                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                                    'expected': ['unicode character', { 'found': pt.optional.literal.not_set() }]
+                                                                })
+                                                            }
+                                                            if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
+                                                                return abort({
+                                                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                                    'expected': ['unicode character', { 'found': pt.optional.literal.set(char[0].code) }]
+                                                                })
+                                                            }
+                                                            iterator.discard(() => null)
+                                                            return char[0].code
+                                                        }
+                                                        $i['add item'](get_char())
+                                                        $i['add item'](get_char())
+                                                        $i['add item'](get_char())
+                                                        $i['add item'](get_char())
+                                                    }
+                                                ),
+                                                () => p_unreachable_code_path("the number was built in a controlled way")
+                                            ))
+                                            break
+                                        default:
+                                            return abort({
+                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                'expected': ['escape character', {
+                                                    'found': pt.optional.literal.set($[0].code)
+                                                }]
+                                            })
+                                    }
                                 }
-                            }
-                            break
-                        default:
-                            iterator.discard(() => null)
-                            $i['add item']($[0].code)
+                                break
+                            default:
+                                iterator.discard(() => null)
+                                $i['add item']($[0].code)
+                        }
                     }
                 }
-            }
-        ),
-        ($) => $
-    )
-    return txt
-}
+            ),
+            ($) => $
+        )
+        return txt
+    }
 
-export const Tokenizer_Result = (
-    iterator: p_pi.Iterator<d_in.Annotated_Character, d_location.Location>,
-    abort: p_i.Abort<d_function.Lexer_Error>,
-): d_out.Tokenizer_Result => ({
+export const Tokenizer_Result: p_pi.Production<
+    d_out.Tokenizer_Result,
+    d_function.Lexer_Error,
+    d_in.Annotated_Character,
+    d_location.Location
+> = (
+    iterator,
+    abort,
+) => ({
     'leading trivia': Trivia(iterator, abort),
     'tokens': iterator.list({
         has_more_items: ($) => true,
@@ -505,11 +530,13 @@ export const Tokenizer_Result = (
                         iterator.discard(() => null)
                         return ['text', {
                             'value': Delimited_Text(
-                                ($) => $ === Character.quotation_mark, 
-                                true,
-                                 iterator,
-                                  abort,
-                                   { 'start character': $ }
+                                iterator,
+                                abort,
+                                {
+                                    'start character': $,
+                                    'end character': Character.quotation_mark,
+                                    'allow newlines': true,
+                                }
                             ),
                             'type': ['quoted', null],
                         }]
@@ -517,11 +544,13 @@ export const Tokenizer_Result = (
                         iterator.discard(() => null)
                         return ['text', {
                             'value': Delimited_Text(
-                                ($) => $ === Character.backtick, 
-                                false,
                                 iterator,
                                 abort,
-                                { 'start character': $ }
+                                {
+                                    'start character': $,
+                                    'end character': Character.backtick,
+                                    'allow newlines': false,
+                                }
                             ),
                             'type': ['backticked', null],
                         }]
@@ -529,11 +558,13 @@ export const Tokenizer_Result = (
                         iterator.discard(() => null)
                         return ['text', {
                             'value': Delimited_Text(
-                                ($) => $ === Character.apostrophe, 
-                                false,
                                 iterator,
                                 abort,
-                                { 'start character': $ }
+                                {
+                                    'start character': $,
+                                    'end character': Character.apostrophe,
+                                    'allow newlines': false,
+                                }
                             ),
                             'type': ['apostrophed', null],
                         }]
