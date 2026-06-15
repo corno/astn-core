@@ -1,5 +1,5 @@
 import * as pt from 'pareto-core/dist/transformer/implementation'
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 import p_list_from_text from 'pareto-core/dist/specials/list_from_text'
 
 //data types
@@ -15,9 +15,9 @@ import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 
 export namespace signatures {
-    export type Location = p_ti.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Parameters>
-    export type Range = p_ti.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Parameters>
-    export type Possible_Range = p_ti.Transformer_With_Parameter<d_in.Possible_Range, d_out.Phrase, d_function.Parameters>
+    export type Location = p_i.Transformer_With_Parameter<d_in.Location, d_out.Phrase, d_function.Parameters>
+    export type Range = p_i.Transformer_With_Parameter<d_in.Range, d_out.Phrase, d_function.Parameters>
+    export type Possible_Range = p_i.Transformer_With_Parameter<d_in.Possible_Range, d_out.Phrase, d_function.Parameters>
 }
 
 

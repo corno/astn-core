@@ -1,4 +1,4 @@
-import * as p_ti from 'pareto-core/dist/transformer/interface'
+import * as p_i from 'pareto-core/dist/transformer/interface'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
@@ -11,11 +11,11 @@ import * as t_to_fp from "./fountain_pen"
 import * as t_fp_to_characters from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
 
 
-export const Document: p_ti.Transformer_With_Parameter<d_in.Document, d_out.List_of_Characters, d_function_fp.Parameters> = ($, $p) => t_fp_to_characters.Paragraph(
+export const Document: p_i.Transformer_With_Parameter<d_in.Document, d_out.List_of_Characters, d_function_fp.Parameters> = ($, $p) => t_fp_to_characters.Paragraph(
     t_to_fp.Document($),
     $p
 )
-export const Value: p_ti.Transformer_With_Parameter<d_in.Value, d_out.List_of_Characters, d_function_fp.Parameters> = ($, $p) => t_fp_to_characters.Phrase(
+export const Value: p_i.Transformer_With_Parameter<d_in.Value, d_out.List_of_Characters, d_function_fp.Parameters> = ($, $p) => t_fp_to_characters.Phrase(
     t_to_fp.Value($),
     $p
 )
