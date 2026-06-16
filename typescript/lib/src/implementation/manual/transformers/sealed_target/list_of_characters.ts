@@ -3,7 +3,7 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
-import * as d_function_fp from "pareto-fountain-pen/dist/interface/to_be_generated/prose_serialize"
+import * as d_function_fp from "pareto-fountain-pen/dist/interface/data/prose_serialize"
 
 
 //dependencies
