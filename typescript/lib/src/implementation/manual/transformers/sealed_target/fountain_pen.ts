@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/transformer'
+import * as p_i from 'pareto-core/dist/interface/transformer'
 
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
@@ -10,18 +11,13 @@ import * as t_primitives_to_text from "../primitives/text"
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Document = (
-    $: d_in.Document
-
-): d_out.Paragraph => sh.pg.sentences([
+export const Document: p_i.Transformer<d_in.Document, d_out.Paragraph> = ($) => sh.pg.sentences([
     sh.sentence([
         Value($),
     ])
 ])
 
-export const Value = (
-    $: d_in.Value,
-): d_out.Phrase => sh.ph.composed([
+export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.composed([
     p_.decide.state($, ($) => {
         switch ($[0]) {
             case 'dictionary': return p_.ss($, ($) => sh.ph.composed([
