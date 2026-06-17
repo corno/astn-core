@@ -2,6 +2,7 @@ import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_i from 'pareto-core/dist/interface/refiner'
 import * as p_temp from 'pareto-core/dist/assign'
+import p_assert from 'pareto-core/dist/implementation/specials/assert'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/data/unmarshalled"
@@ -303,30 +304,37 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                         },
                                     )
 
-                                    const unexpected_properties = p_temp.dictionary.from.dictionary(
-                                        p_temp.dictionary.from.dictionary(
-                                            xxx,
-                                        ).join(
-                                            $p['expected properties'],
-                                            ($, other, id): p_di.Optional_Value<d_location.Range> => p_.decide.optional(
-                                                other,
-                                                () => p_.literal.not_set(),
-                                                () => p_.literal.set($.id.range)
+
+                                    return p_assert(
+                                        abort,
+                                        () => {
+                                            const unexpected_properties = p_temp.dictionary.from.dictionary(
+                                                p_temp.dictionary.from.dictionary(
+                                                    xxx,
+                                                ).join(
+                                                    $p['expected properties'],
+                                                    ($, other, id): p_di.Optional_Value<d_location.Range> => p_.decide.optional(
+                                                        other,
+                                                        () => p_.literal.not_set(),
+                                                        () => p_.literal.set($.id.range)
+                                                    )
+                                                )
+                                            ).map_optionally(
+                                                ($) => $
                                             )
-                                        )
-                                    ).map_optionally(
-                                        ($) => $
+
+                                            return unexpected_properties.__get_number_of_entries() > 0
+                                                ? p_.literal.not_set()
+                                                : p_.literal.set({
+                                                    'range': t_parse_tree_to_location.Value(value),
+                                                    'type': ['type', ['unexpected properties', {
+                                                        'found': unexpected_properties,
+                                                        'expected': $p['expected properties'],
+                                                    }]]
+                                                })
+                                        },
+                                        () => xxx
                                     )
-                                    if (unexpected_properties.__get_number_of_entries() > 0) {
-                                        return abort({
-                                            'range': t_parse_tree_to_location.Value(value),
-                                            'type': ['type', ['unexpected properties', {
-                                                'found': unexpected_properties,
-                                                'expected': $p['expected properties'],
-                                            }]]
-                                        })
-                                    }
-                                    return xxx
                                 })
                                 default: return abort({
                                     'type': ['wrong value type', {

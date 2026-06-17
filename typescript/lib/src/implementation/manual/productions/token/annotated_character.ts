@@ -18,25 +18,6 @@ import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schem
 //dependencies
 
 
-const create_error = (
-    element: p_di.Optional_Value<d_in.Annotated_Character>,
-    expected: d_function.Lexer_Error.expected,
-): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
-    ($) => ({
-        'range': {
-            'start': $.location,
-            'end': {
-                'absolute': $.location.absolute + 1,
-                'relative': {
-                    'line': $.location.relative.line,
-                    'column': $.location.relative.column + 1,
-                }
-            }
-        },
-        'expected': expected
-    }),
-    () => p_unreachable_code_path("implement me")
-)
 
 const create_range: p_pi.Production_Without_Error_With_Parameter<
     d_temp_location.Range,
@@ -57,14 +38,12 @@ const create_range: p_pi.Production_Without_Error_With_Parameter<
 })
 
 
-export const Whitespace: p_pi.Production<
+export const Whitespace: p_pi.Production_Without_Error<
     d_out.Whitespace,
-    d_function.Lexer_Error,
     d_in.Annotated_Character,
     d_location.Location
 > = (
     iterator,
-    abort,
 ): d_out.Whitespace => {
 
         const is_whitespace_character = ($: d_in.Annotated_Character) => {
@@ -118,7 +97,7 @@ export const Trivia: p_pi.Production<
     iterator,
     abort,
 ): d_out.Trivia => ({
-    'leading whitespace': Whitespace(iterator, abort),
+    'leading whitespace': Whitespace(iterator),
     'comments': iterator.list({
         has_more_items: (current) => {
             const next = iterator.look_ahead_raw(1)
@@ -147,11 +126,32 @@ export const Trivia: p_pi.Production<
                             ($) => $
                         ),
                         'range': create_range(iterator, { 'start character': slash_character }),
-                        'trailing whitespace': Whitespace(iterator, abort)
+                        'trailing whitespace': Whitespace(iterator)
                     })
                 case 0x2A: {// *
                     iterator.discard(() => null) // discard the asterisk
-                    return ({
+
+
+                    const create_error = (
+                        element: p_di.Optional_Value<d_in.Annotated_Character>,
+                        expected: d_function.Lexer_Error.expected,
+                    ): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
+                        ($) => ({
+                            'range': {
+                                'start': $.location,
+                                'end': {
+                                    'absolute': $.location.absolute + 1,
+                                    'relative': {
+                                        'line': $.location.relative.line,
+                                        'column': $.location.relative.column + 1,
+                                    }
+                                }
+                            },
+                            'expected': expected
+                        }),
+                        () => p_unreachable_code_path("implement me")
+                    )
+                    return {
                         'type': ['block', null],
                         'content': iterator.wrap_up(
                             () => p_text_from_list(
@@ -191,8 +191,8 @@ export const Trivia: p_pi.Production<
                             }),
                         ),
                         'range': create_range(iterator, { 'start character': slash_character }),
-                        'trailing whitespace': Whitespace(iterator, abort)
-                    })
+                        'trailing whitespace': Whitespace(iterator)
+                    }
                 }
                 default: return p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
             }
