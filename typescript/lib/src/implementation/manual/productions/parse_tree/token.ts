@@ -124,7 +124,7 @@ export const Value: interface_.Value = (iterator, abort) => iterator.expect({
         iterator.get_end_info()
     ),
     item: (token, abort2) => ({
-        'type': p_.decide.state(token.type, ($): d_out.Value.type_ => {
+        'type': p_.from.state(token.type).decide(($): d_out.Value.type_ => {
             switch ($[0]) {
                 case 'text': return p_.ss($, ($): d_out.Value.type_ => ['concrete',
                     ['text', iterator.expect({
@@ -192,7 +192,7 @@ export const Value: interface_.Value = (iterator, abort) => iterator.expect({
                             ]),
                             iterator.get_end_info()
                         ),
-                        item: (token, abort2) => p_.decide.state(token.type, ($): d_out.Value.type_.concrete.state.status => {
+                        item: (token, abort2) => p_.from.state(token.type).decide(($): d_out.Value.type_.concrete.state.status => {
                             switch ($[0]) {
                                 case 'text': return p_.ss($, ($) => ['set', {
                                     'option': Text(iterator, abort, { 'text': $ }),
@@ -336,7 +336,7 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
                 ]),
                 iterator.get_end_info(),
             ),
-            item: (token, abort2) => p_.decide.state(token.type, ($) => {
+            item: (token, abort2) => p_.from.state(token.type).decide(($) => {
                 switch ($[0]) {
                     case 'text': return p_.ss($, ($) => p_.literal.not_set())
                     case ':': return p_.ss($, ($) => p_.literal.set({

@@ -15,7 +15,7 @@ export type Group = p_i.Transformer<d_in.Value.type_.concrete.group, d_out.Range
 export type Optional = p_i.Transformer<d_in.Value.type_.concrete.optional, d_out.Range>
 
 
-export const Concrete_Value: Concrete_Value = ($) => p_.decide.state($, ($) => p_.decide.state($, ($): d_out.Range => {
+export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(($) => p_.from.state($).decide(($): d_out.Range => {
     switch ($[0]) {
         case 'dictionary': return p_.ss($, ($) => Dictionary($))
 
@@ -34,7 +34,7 @@ export const Dictionary: Dictionary = ($) => ({
     'end': $['}'].range.end
 })
 
-export const Group: Group = ($) => p_.decide.state($, ($) => {
+export const Group: Group = ($) => p_.from.state($).decide(($) => {
     switch ($[0]) {
         case 'concise': return p_.ss($, ($) => ({
             'start': $['<'].range.start,
@@ -53,7 +53,7 @@ export const List: List = ($) => ({
     'end': $[']'].range.end
 })
 
-export const Optional: Optional = ($) => p_.decide.state($, ($) => {
+export const Optional: Optional = ($) => p_.from.state($).decide(($) => {
     switch ($[0]) {
         case 'set': return p_.ss($, ($) => ({
             'start': $['*'].range.start,
@@ -66,7 +66,7 @@ export const Optional: Optional = ($) => p_.decide.state($, ($) => {
 
 export const State: State = ($) => ({
     'start': $['|'].range.start,
-    'end': p_.decide.state($.status, ($) => {
+    'end': p_.from.state($.status).decide(($) => {
         switch ($[0]) {
             case 'missing': return p_.ss($, ($) => $['#'].range.end)
             case 'set': return p_.ss($, ($) => Value($['value']).end)
@@ -75,7 +75,7 @@ export const State: State = ($) => ({
     })
 })
 
-export const Value: Value = ($) => p_.decide.state($.type, ($): d_out.Range => {
+export const Value: Value = ($) => p_.from.state($.type).decide(($): d_out.Range => {
     switch ($[0]) {
         case 'concrete': return p_.ss($, ($) => Concrete_Value($))
         case 'include': return p_.ss($, ($) => ({

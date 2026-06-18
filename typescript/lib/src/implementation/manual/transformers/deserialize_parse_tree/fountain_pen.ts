@@ -12,9 +12,9 @@ export namespace signatures {
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error: signatures.Error = ($) => {
-    const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => p_.decide.state($, ($) => {
+    const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => p_.from.state($).decide(($) => {
         switch ($[0]) {
-            case 'lexer': return p_.ss($, ($) => p_.decide.state($.expected, ($) => {
+            case 'lexer': return p_.ss($, ($) => p_.from.state($.expected).decide(($) => {
                 switch ($[0]) {
                     case 'unicode character': return sh.ph.literal("found invalid unicode escape sequence")
                     case 'no end of line in text': return p_.ss($, ($) => sh.ph.literal("no end of line in text"))
@@ -34,9 +34,9 @@ export const Error: signatures.Error = ($) => {
             case 'parser': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("expected "),
                 sh.ph.rich(
-                    $.expected.__l_map(
+                    $.expected.__l_map_deprecated(
                         ($) => sh.ph.literal(
-                            p_.decide.state($, ($) => {
+                            p_.from.state($).decide(($) => {
                                 switch ($[0]) {
                                     case '!': return "'!'"
                                     case ')': return "')'"
@@ -60,7 +60,7 @@ export const Error: signatures.Error = ($) => {
                     sh.ph.nothing(),
                 ),
                 sh.ph.literal(", found "),
-                p_.decide.state($.cause, ($) => {
+                p_.from.state($.cause).decide(($) => {
                     switch ($[0]) {
                         case 'unexpected token': return p_.ss($, ($) => sh.ph.composed([
                             sh.ph.literal("'"),

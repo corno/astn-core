@@ -1,6 +1,6 @@
+import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_i from 'pareto-core/dist/interface/refiner'
 import * as p_ti from 'pareto-core/dist/interface/transformer'
-import * as p_temp from 'pareto-core/dist/assign'
 
 import * as d_out from "../../../../interface/data/annotated_characters"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
@@ -32,7 +32,7 @@ type My_State = {
  * Creates a string iterator that allows iterating over characters in a string,
  * while keeping track of line numbers, columns, and line indentation.
  */
-export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => p_temp.list.from.list($).map_with_state(
+export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => p_.from.list($).map_with_state(
     {
         'location': {
             'absolute': 0,

@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/production'
+import * as p_t from 'pareto-core/dist/implementation/transformer'
 import * as p_temp from 'pareto-core/dist/assign'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_ri from 'pareto-core/dist/interface/refiner'
@@ -6,6 +7,7 @@ import * as p_pi from 'pareto-core/dist/interface/production'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
 import p_list_build_deprecated from 'pareto-core/dist/implementation/specials/list_build_deprecated'
 import p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
+import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
 
 import * as d_in from "../../../../interface/data/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
@@ -327,7 +329,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                                 let startIndex = 0
 
                                                 // Check for empty string
-                                                if (characters.__get_number_of_items() === 0) {
+                                                if (p_t.from.list(characters).amount_of_items() === 0) {
                                                     abort("Empty string is not a valid hexadecimal number")
                                                 }
 
@@ -341,13 +343,13 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                                 }
 
                                                 // Check for negative sign
-                                                if (characters.__get_number_of_items() > 0 && get_character_at(0) === 45) { // '-'
+                                                if (p_t.from.list(characters).amount_of_items() > 0 && get_character_at(0) === 45) { // '-'
                                                     isNegative = true
                                                     startIndex = 1
                                                 }
 
                                                 // Check for "0x" prefix - REQUIRE it for hex
-                                                if (characters.__get_number_of_items() <= startIndex + 1 ||
+                                                if (p_t.from.list(characters).amount_of_items() <= startIndex + 1 ||
                                                     get_character_at(startIndex) !== 48 || // '0'
                                                     get_character_at(startIndex + 1) !== 120) { // 'x'
                                                     abort("Hexadecimal number must have '0x' prefix")
@@ -355,12 +357,12 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                                 startIndex += 2
 
                                                 // Check if there are digits after the prefix
-                                                if (startIndex >= characters.__get_number_of_items()) {
+                                                if (startIndex >= p_t.from.list(characters).amount_of_items()) {
                                                     abort("Hexadecimal number must have digits after '0x' prefix")
                                                 }
 
                                                 // Parse hex digits from left to right
-                                                for (let i = startIndex; i < characters.__get_number_of_items(); i++) {
+                                                for (let i = startIndex; i < p_t.from.list(characters).amount_of_items(); i++) {
                                                     const charCode = get_character_at(i)
                                                     let digit: number
 
@@ -445,7 +447,7 @@ export const Tokenizer_Result: p_pi.Production<
     'tokens': iterator.list({
         has_more_items: ($) => true,
         handle: ($) => ({
-            'type': p_temp.state.block((): d_out.Annotated_Token.type_ => {
+            'type': p_change_context(null, (): d_out.Annotated_Token.type_ => {
 
                 const Character = {
 

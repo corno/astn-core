@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/dist/implementation/refiner'
+import * as p_t from 'pareto-core/dist/implementation/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_i from 'pareto-core/dist/interface/refiner'
-import * as p_temp from 'pareto-core/dist/assign'
 import p_assert from 'pareto-core/dist/implementation/specials/assert'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
@@ -69,15 +69,15 @@ export type Verbose_Group = p_i.Refiner_With_Parameter<
 
 export const Dictionary: Dictionary = ($, abort) => {
     const value = $
-    return p_.decide.state($.type, ($) => {
+    return p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
                         'value': value,
-                        'entries': p_temp.dictionary.from.list(
+                        'entries': p_.from.list(
                             $.entries,
-                        ).convert(
+                        ).convert_to_dictionary(
                             ($) => $.id.token.value,
                             ($) => $,
                             {
@@ -108,9 +108,9 @@ export const Dictionary: Dictionary = ($, abort) => {
 
 export const List: List = ($, abort) => {
     const value = $
-    return p_.decide.state($.type, ($) => {
+    return p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'list': return p_.ss($, ($) => ({
                         'value': value,
@@ -136,9 +136,9 @@ export const List: List = ($, abort) => {
 
 export const Nothing: Nothing = ($, abort) => {
     const value = $
-    return p_.decide.state($.type, ($) => {
+    return p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'nothing': return p_.ss($, ($) => ({
                         'value': value,
@@ -164,11 +164,11 @@ export const Nothing: Nothing = ($, abort) => {
 
 export const Optional: Optional = ($, abort) => {
     const value = $
-    return p_.decide.state($.type, ($) => {
+    return p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
-                    case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                    case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => ({
                                 'value': value,
@@ -221,11 +221,11 @@ export const Property: Property = ($, abort, $p) => {
 
 export const State: State = ($, abort) => {
     const value = $
-    return p_.decide.state($.type, ($) => {
+    return p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
-                    case 'state': return p_.ss($, ($) => p_.decide.state($.status, ($) => {
+                    case 'state': return p_.ss($, ($) => p_.from.state($.status).decide(($) => {
                         switch ($[0]) {
                             case 'set': return p_.ss($, ($) => $)
                             default: return abort({
@@ -256,9 +256,9 @@ export const State: State = ($, abort) => {
 
 export const Text: Text = ($, abort) => {
     const value = $
-    return p_.decide.state($.type, ($) => {
+    return p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'text': return p_.ss($, ($) => $)
                     default: return abort({
@@ -283,17 +283,17 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
     const value = $
     return {
         'value': $,
-        'properties': p_.decide.state($.type, ($) => {
+        'properties': p_.from.state($.type).decide(($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                     switch ($[0]) {
-                        case 'group': return p_.ss($, ($) => p_.decide.state($, ($) => {
+                        case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                             switch ($[0]) {
                                 // case 'concise':
                                 case 'verbose': return p_.ss($, ($) => {
-                                    const xxx = p_temp.dictionary.from.list(
+                                    const xxx = p_.from.list(
                                         $.properties,
-                                    ).convert(
+                                    ).convert_to_dictionary(
                                         ($) => $.id.token.value,
                                         ($) => $,
                                         {
@@ -308,30 +308,32 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                     return p_assert(
                                         abort,
                                         () => {
-                                            const unexpected_properties = p_temp.dictionary.from.dictionary(
-                                                p_temp.dictionary.from.dictionary(
-                                                    xxx,
-                                                ).join(
-                                                    $p['expected properties'],
-                                                    ($, other, id): p_di.Optional_Value<d_location.Range> => p_.decide.optional(
-                                                        other,
-                                                        () => p_.literal.not_set(),
-                                                        () => p_.literal.set($.id.range)
-                                                    )
-                                                )
-                                            ).map_optionally(
-                                                ($) => $
-                                            )
 
-                                            return unexpected_properties.__get_number_of_entries() > 0
-                                                ? p_.literal.not_set()
-                                                : p_.literal.set({
+                                            return p_t.from.dictionary(
+                                                p_t.from.dictionary(
+                                                    p_t.from.dictionary(
+                                                        xxx,
+                                                    ).join(
+                                                        $p['expected properties'],
+                                                        ($, other, id): p_di.Optional_Value<d_location.Range> => p_t.from.optional(other).decide(
+                                                            ($) => p_.literal.not_set(),
+                                                            () => p_.literal.set($.id.range)
+                                                        )
+                                                    )
+                                                ).map_optionally(
+                                                    ($) => $
+                                                ),
+                                            ).on_has_entries(
+                                                ($) => p_.literal.set({
                                                     'range': t_parse_tree_to_location.Value(value),
                                                     'type': ['type', ['unexpected properties', {
-                                                        'found': unexpected_properties,
+                                                        'found': $,
                                                         'expected': $p['expected properties'],
                                                     }]]
-                                                })
+                                                }),
+                                                () => p_.literal.not_set()
+                                            )
+
                                         },
                                         () => xxx
                                     )

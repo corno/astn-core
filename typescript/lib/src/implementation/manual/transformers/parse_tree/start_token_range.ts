@@ -9,10 +9,10 @@ export type Value = p_i.Transformer<d_in.Value, d_out.Range>
 export type Concrete_Value = p_i.Transformer<d_in.Value.type_.concrete, d_out.Range>
 
 
-export const Concrete_Value: Concrete_Value = ($) => p_.decide.state($, ($) => p_.decide.state($, ($): d_out.Range => {
+export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(($) => p_.from.state($).decide(($): d_out.Range => {
     switch ($[0]) {
         case 'dictionary': return p_.ss($, ($) => $['{'].range)
-        case 'group': return p_.ss($, ($) => p_.decide.state($, ($) => {
+        case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'concise': return p_.ss($, ($) => $['<'].range)
                 case 'verbose': return p_.ss($, ($) => $['('].range)
@@ -21,7 +21,7 @@ export const Concrete_Value: Concrete_Value = ($) => p_.decide.state($, ($) => p
         }))
         case 'list': return p_.ss($, ($) => $['['].range)
         case 'nothing': return p_.ss($, ($) => $['~'].range)
-        case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
+        case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
             switch ($[0]) {
                 case 'set': return p_.ss($, ($) => $['*'].range)
                 case 'not set': return p_.ss($, ($) => $['_'].range)
@@ -34,7 +34,7 @@ export const Concrete_Value: Concrete_Value = ($) => p_.decide.state($, ($) => p
     }
 }))
 
-export const Value: Value = ($) => p_.decide.state($.type, ($): d_out.Range => {
+export const Value: Value = ($) => p_.from.state($.type).decide(($): d_out.Range => {
     switch ($[0]) {
         case 'concrete': return p_.ss($, ($) => Concrete_Value($))
         case 'include': return p_.ss($, ($) => $['@'].range)

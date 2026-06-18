@@ -18,12 +18,12 @@ export const Document: p_i.Transformer<d_in.Document, d_out.Paragraph> = ($) => 
 ])
 
 export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.composed([
-    p_.decide.state($, ($) => {
+    p_.from.state($).decide(($) => {
         switch ($[0]) {
             case 'dictionary': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("{"),
                 sh.ph.indent(
-                    sh.pg.sentences(p_.list.from.dictionary($).convert(($, id) => sh.sentence([
+                    sh.pg.sentences(p_.from.dictionary($).convert_to_list(($, id) => sh.sentence([
                         sh.ph.serialize(t_primitives_to_text.Apostrophed(id, {
                             'add delimiters': true
                         })),
@@ -33,13 +33,13 @@ export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.com
                 ),
                 sh.ph.literal("}"),
             ]))
-            case 'group': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'verbose': return p_.ss($, ($) => sh.ph.composed([
                         sh.ph.composed([
                             sh.ph.literal("("),
                             sh.ph.indent(
-                                sh.pg.sentences($.__to_list(($, id) => sh.sentence([
+                                sh.pg.sentences(p_.from.dictionary($).convert_to_list(($, id) => sh.sentence([
                                     sh.ph.serialize(t_primitives_to_text.Backticked(id, {
                                         'add delimiters': true
                                     })),
@@ -55,14 +55,14 @@ export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.com
             }))
             case 'list': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("["),
-                sh.ph.composed($.__l_map(($) => sh.ph.composed([
+                sh.ph.composed($.__l_map_deprecated(($) => sh.ph.composed([
                     sh.ph.literal(" "),
                     Value($),
                 ]))),
                 sh.ph.literal(" ]"),
             ]))
             case 'nothing': return p_.ss($, ($) => sh.ph.literal("~"))
-            case 'optional': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'not set': return p_.ss($, ($) => sh.ph.literal("_"))
                     case 'set': return p_.ss($, ($) => sh.ph.composed([
@@ -83,7 +83,7 @@ export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.com
             ]))
             case 'text': return p_.ss($, ($) => {
                 const value = $.value
-                return p_.decide.state($.delimiter, ($) => {
+                return p_.from.state($.delimiter).decide(($) => {
                     switch ($[0]) {
                         case 'apostrophe': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Apostrophed(value, {
                             'add delimiters': true

@@ -9,9 +9,9 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
 export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.composed([
-    p_.decide.state($.type, ($) => {
+    p_.from.state($.type).decide(($) => {
         switch ($[0]) {
-            case 'dictionary': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'dictionary': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'duplicate entry': return p_.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("duplicate entry: '"),
@@ -22,7 +22,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.com
                     default: return p_.au($[0])
                 }
             }))
-            case 'type': return p_.ss($, ($) => p_.decide.state($, ($) => {
+            case 'type': return p_.ss($, ($) => p_.from.state($).decide(($) => {
                 switch ($[0]) {
                     case 'duplicate property': return p_.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("duplicate property: '"),
@@ -37,7 +37,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.com
                     case 'unexpected properties': return p_.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("unexpected properties: "),
                         sh.ph.indent(
-                            sh.pg.sentences($.found.__to_list(($, key) => sh.sentence([
+                            sh.pg.sentences( p_.from.dictionary($.found).convert_to_list(($, key) => sh.sentence([
                                 sh.ph.literal("-'"),
                                 sh.ph.literal(key),
                                 sh.ph.literal("'"),
@@ -45,7 +45,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.com
                         ),
                         sh.ph.literal("expected properties: "),
                         sh.ph.indent(
-                            sh.pg.sentences($.expected.__to_list(($, key) => sh.sentence([
+                            sh.pg.sentences(p_.from.dictionary($.expected).convert_to_list(($, key) => sh.sentence([
                                 sh.ph.literal("-'"),
                                 sh.ph.literal(key),
                                 sh.ph.literal("'"),
@@ -58,7 +58,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.com
             }))
             case 'wrong value type': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("wrong value type, expected: "),
-                p_.decide.state($.expected, ($) => {
+                p_.from.state($.expected).decide(($) => {
                     switch ($[0]) {
                         case 'optional': return p_.ss($, ($) => sh.ph.literal("an optional"))
                         case 'nothing': return p_.ss($, ($) => sh.ph.literal("a nothing"))
@@ -78,7 +78,7 @@ export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => sh.ph.com
 
 ])
 
-// export const Error = ($: d_in.Error): d_out.Phrase => p_.decide.state($, ($) => {
+// export const Error = ($: d_in.Error): d_out.Phrase => p_.from.state($).decide(($) => {
 //     switch ($[0]) {
 
 //         case 'expected a dictionary': return p_.ss($, ($) => sh.ph.composed([

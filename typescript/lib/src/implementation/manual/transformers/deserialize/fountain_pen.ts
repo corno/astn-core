@@ -9,7 +9,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as t_deserialize_parse_tree_to_fountain_pen from "../deserialize_parse_tree/fountain_pen"
 import * as t_unmarshall_to_fountain_pen from "../unmarshall/fountain_pen"
 
-export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => p_.decide.state($, ($) => {
+export const Error: p_i.Transformer<d_in.Error, d_out.Phrase> = ($) => p_.from.state($).decide(($) => {
     switch ($[0]) {
 
         case 'parse error': return p_.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($))
