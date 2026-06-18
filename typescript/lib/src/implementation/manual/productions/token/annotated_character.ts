@@ -1,6 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/production'
 import * as p_t from 'pareto-core/dist/implementation/transformer'
-import * as p_temp from 'pareto-core/dist/assign'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_ri from 'pareto-core/dist/interface/refiner'
 import * as p_pi from 'pareto-core/dist/interface/production'
