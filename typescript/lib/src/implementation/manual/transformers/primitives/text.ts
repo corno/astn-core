@@ -6,7 +6,10 @@ import * as d_in from "../../../../interface/data/primitives"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
 export const Escaped: p_i.Transformer<d_in.Escaped, d_out.List_of_Characters> = ($) => p_.list.from.list(
-    p_list_from_text($, ($) => $),
+    p_list_from_text(
+        $,
+        ($) => $
+    ),
 ).flatten(
     ($) => {
         switch ($) {

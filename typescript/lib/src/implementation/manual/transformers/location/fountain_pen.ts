@@ -22,7 +22,10 @@ export namespace signatures {
 
 
 const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {
-    return p_list_from_text(`${n}`, ($) => $)
+    return p_list_from_text(
+        `${n}`,
+        ($) => $
+    )
 }
 
 export const Range: signatures.Range = ($, $p) => sh.ph.composed([

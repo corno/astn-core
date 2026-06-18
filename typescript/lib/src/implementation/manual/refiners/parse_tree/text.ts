@@ -17,7 +17,10 @@ export type Document = p_i.Refiner_With_Parameter<
 >
 
 export const Document: Document = ($, abort, $p,) => r_from_list_of_characters.Document(
-    p_list_from_text($, ($) => $),
+    p_list_from_text(
+        $,
+        ($) => $
+    ),
     abort,
     $p,
 )

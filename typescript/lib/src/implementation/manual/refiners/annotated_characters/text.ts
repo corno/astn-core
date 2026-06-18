@@ -1,4 +1,5 @@
 import * as p_i from 'pareto-core/dist/interface/refiner'
+import * as p_ti from 'pareto-core/dist/interface/transformer'
 import * as p_temp from 'pareto-core/dist/assign'
 
 import * as d_out from "../../../../interface/data/annotated_characters"
@@ -7,9 +8,9 @@ import * as d_function from "../../../../interface/generated/liana/schemas/deser
 
 export namespace signatures {
 
-    export type Annotated_Characters = p_i.Refiner_Without_Error_With_Parameter<
-        d_out.Annotated_Characters,
+    export type Annotated_Characters = p_ti.Transformer_With_Parameter<
         d_in.List_of_Characters,
+        d_out.Annotated_Characters,
         d_function.Parameters
     >
 
