@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_t from 'pareto-core/dist/implementation/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_i from 'pareto-core/dist/interface/refiner'
-import p_assert from 'pareto-core/dist/implementation/specials/assert'
+import p_assert from 'pareto-core/dist/implementation/refiner/specials/assert'
 
 import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_out from "../../../../interface/data/unmarshalled"

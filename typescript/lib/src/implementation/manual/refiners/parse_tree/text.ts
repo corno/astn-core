@@ -1,5 +1,5 @@
 import * as p_i from 'pareto-core/dist/interface/refiner'
-import p_list_from_text from 'pareto-core/dist/implementation/specials/list_from_text'
+import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/list_from_text'
 
 //data types
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"

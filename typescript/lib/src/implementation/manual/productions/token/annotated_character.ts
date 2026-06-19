@@ -3,10 +3,10 @@ import * as p_t from 'pareto-core/dist/implementation/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_ri from 'pareto-core/dist/interface/refiner'
 import * as p_pi from 'pareto-core/dist/interface/production'
-import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
-import p_list_build_deprecated from 'pareto-core/dist/implementation/specials/list_build_deprecated'
-import p_text_from_list from 'pareto-core/dist/implementation/specials/text_from_list'
-import p_change_context from 'pareto-core/dist/implementation/specials/change_context'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
+import p_list_build_deprecated from 'pareto-core/dist/implementation/refiner/specials/list_build_deprecated'
+import p_text_from_list from 'pareto-core/dist/implementation/transformer/specials/text_from_list'
+import p_change_context from 'pareto-core/dist/implementation/refiner/specials/change_context'
 
 import * as d_in from "../../../../interface/data/annotated_characters"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data"

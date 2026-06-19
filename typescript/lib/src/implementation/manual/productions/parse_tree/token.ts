@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/dist/implementation/production'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_pi from 'pareto-core/dist/interface/production'
-import p_unreachable_code_path from 'pareto-core/dist/implementation/specials/unreachable_code_path'
+import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
 
 //data types
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
