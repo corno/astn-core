@@ -321,7 +321,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                             break
                                         case Character.u:
                                             iterator.discard(() => null)
-                                            const ds_hexadecimal: p_ri.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
+                                            const r_hexadecimal: p_ri.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
                                                 const characters = $
                                                 let result = 0
                                                 let isNegative = false
@@ -382,7 +382,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
 
                                                 return isNegative ? -result : result
                                             }
-                                            $i['add item'](ds_hexadecimal(
+                                            $i['add item'](r_hexadecimal(
                                                 p_list_build_deprecated<number>(
                                                     ($i) => {
                                                         const get_char = () => {

@@ -72,15 +72,15 @@ export const Quoted: p_i.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_C
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? p_.literal.nested_list([
-        [
+        p_.literal.list([
             0x22, // "
-        ],
+        ]),
         Escaped(
             $,
         ),
-        [
+        p_.literal.list([
             0x22, // "
-        ]
+        ])
     ])
     : Escaped($)
 
@@ -88,15 +88,15 @@ export const Apostrophed: p_i.Transformer_With_Parameter<d_in.Apostrophed, d_out
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? p_.literal.nested_list([
-        [
+        p_.literal.list([
             0x27, // '
-        ],
+        ]),
         Escaped(
             $,
         ),
-        [
+        p_.literal.list([
             0x27, // '
-        ]
+        ])
     ])
     : Escaped($)
 
@@ -104,15 +104,15 @@ export const Backticked: p_i.Transformer_With_Parameter<d_in.Backticked, d_out.L
     'add delimiters': boolean
 }> = ($, $p) => $p['add delimiters']
     ? p_.literal.nested_list([
-        [
+        p_.literal.list([
             0x60, // `
-        ],
+        ]),
         Escaped(
             $,
         ),
-        [
+        p_.literal.list([
             0x60, // `
-        ]
+        ])
     ])
     : Escaped($)
 
