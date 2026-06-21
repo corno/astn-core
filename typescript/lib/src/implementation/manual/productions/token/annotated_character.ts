@@ -329,14 +329,14 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
 
                                                 // Check for empty string
                                                 if (p_t.from.list(characters).amount_of_items() === 0) {
-                                                    abort("Empty string is not a valid hexadecimal number")
+                                                    abort("empty string is not a valid hexadecimal number")
                                                 }
 
                                                 const get_character_at = (index: number): number => {
                                                     return characters.__deprecated_get_item_at(
                                                         index,
                                                         {
-                                                            out_of_bounds: () => abort("index out of bounds")
+                                                            out_of_bounds: () => p_unreachable_code_path("this function is only called with valid indices, so this should never happen"),
                                                         }
                                                     )
                                                 }

@@ -55,7 +55,7 @@ export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.com
             }))
             case 'list': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("["),
-                sh.ph.composed($.__l_map_deprecated(($) => sh.ph.composed([
+                sh.ph.composed(p_.from.list($).map(($) => sh.ph.composed([
                     sh.ph.literal(" "),
                     Value($),
                 ]))),

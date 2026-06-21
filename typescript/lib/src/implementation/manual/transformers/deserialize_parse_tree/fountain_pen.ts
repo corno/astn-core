@@ -20,7 +20,7 @@ export const Error: signatures.Error = ($) => {
                     case 'no end of line in text': return p_.ss($, ($) => sh.ph.literal("no end of line in text"))
                     case 'escape character': return p_.ss($, ($) => sh.ph.composed([
                         sh.ph.literal("escape character (), but found "),
-                        $.found.__decide(
+                        p_.from.optional($.found).decide(
                             ($) => sh.ph.serialize(p_.literal.list([$])),
                             () => sh.ph.literal("nothing")
                         ),
@@ -34,7 +34,7 @@ export const Error: signatures.Error = ($) => {
             case 'parser': return p_.ss($, ($) => sh.ph.composed([
                 sh.ph.literal("expected "),
                 sh.ph.rich(
-                    $.expected.__l_map_deprecated(
+                    p_.from.list($.expected).map(
                         ($) => sh.ph.literal(
                             p_.from.state($).decide(($) => {
                                 switch ($[0]) {
