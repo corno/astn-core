@@ -69,115 +69,131 @@ export type Verbose_Group = p_i.Refiner_With_Parameter<
 
 export const Dictionary: Dictionary = ($, abort) => {
     const value = $
-    return p_.from.state($.type).decide(($) => {
-        switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
-                        'value': value,
-                        'entries': p_.from.list(
-                            $.entries,
-                        ).convert_to_dictionary(
-                            ($) => $.id.token.value,
-                            ($) => $,
-                            {
-                                duplicate_id: ($) => abort({
-                                    'type': ['dictionary', ['duplicate entry', $]],
-                                    'range': t_parse_tree_to_location.Value(value),
-                                })
-                            },
-                        )
+    return p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
+                                'value': value,
+                                'entries': p_.from.list($.entries,
+                                ).convert_to_dictionary(
+                                    ($) => $.id.token.value,
+                                    ($) => $,
+                                    {
+                                        duplicate_id: ($) => abort({
+                                            'type': ['dictionary', ['duplicate entry', $]],
+                                            'range': t_parse_tree_to_location.Value(value),
+                                        })
+                                    },
+                                )
+                            }))
+                            default: return abort({
+                                'type': ['wrong value type', {
+                                    'expected': ['dictionary', null],
+                                }],
+                                'range': t_parse_tree_to_location.Value(value),
+                            })
+                        }
                     }))
-                    default: return abort({
-                        'type': ['wrong value type', {
-                            'expected': ['dictionary', null],
-                        }],
-                        'range': t_parse_tree_to_location.Value(value),
-                    })
-                }
-            }))
-            default: return abort({
-                'type': ['wrong value type', {
-                    'expected': ['dictionary', null],
-                }],
-                'range': t_parse_tree_to_location.Value(value),
-            })
-        }
-    })
+                default: return abort({
+                    'type': ['wrong value type', {
+                        'expected': ['dictionary', null],
+                    }],
+                    'range': t_parse_tree_to_location.Value(value),
+                })
+            }
+        })
 }
 
 export const List: List = ($, abort) => {
     const value = $
-    return p_.from.state($.type).decide(($) => {
-        switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'list': return p_.ss($, ($) => ({
-                        'value': value,
-                        'items': $.items
+    return p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'list': return p_.ss($, ($) => ({
+                                'value': value,
+                                'items': $.items
+                            }))
+                            default: return abort({
+                                'type': ['wrong value type', {
+                                    'expected': ['list', null],
+                                }],
+                                'range': t_parse_tree_to_location.Value(value),
+                            })
+                        }
                     }))
-                    default: return abort({
-                        'type': ['wrong value type', {
-                            'expected': ['list', null],
-                        }],
-                        'range': t_parse_tree_to_location.Value(value),
-                    })
-                }
-            }))
-            default: return abort({
-                'type': ['wrong value type', {
-                    'expected': ['list', null],
-                }],
-                'range': t_parse_tree_to_location.Value(value),
-            })
-        }
-    })
+                default: return abort({
+                    'type': ['wrong value type', {
+                        'expected': ['list', null],
+                    }],
+                    'range': t_parse_tree_to_location.Value(value),
+                })
+            }
+        })
 }
 
 export const Nothing: Nothing = ($, abort) => {
     const value = $
-    return p_.from.state($.type).decide(($) => {
-        switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'nothing': return p_.ss($, ($) => ({
-                        'value': value,
-                        'null': null
+    return p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'nothing': return p_.ss($, ($) => ({
+                                'value': value,
+                                'null': null
+                            }))
+                            default: return abort({
+                                'type': ['wrong value type', {
+                                    'expected': ['nothing', null],
+                                }],
+                                'range': t_parse_tree_to_location.Value(value),
+                            })
+                        }
                     }))
-                    default: return abort({
-                        'type': ['wrong value type', {
-                            'expected': ['nothing', null],
-                        }],
-                        'range': t_parse_tree_to_location.Value(value),
-                    })
-                }
-            }))
-            default: return abort({
-                'type': ['wrong value type', {
-                    'expected': ['nothing', null],
-                }],
-                'range': t_parse_tree_to_location.Value(value),
-            })
-        }
-    })
+                default: return abort({
+                    'type': ['wrong value type', {
+                        'expected': ['nothing', null],
+                    }],
+                    'range': t_parse_tree_to_location.Value(value),
+                })
+            }
+        })
 }
 
 export const Optional: Optional = ($, abort) => {
     const value = $
-    return p_.from.state($.type).decide(($) => {
-        switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
+    return p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
                         switch ($[0]) {
-                            case 'set': return p_.ss($, ($) => ({
-                                'value': value,
-                                'optional': p_.literal.set($.value)
-                            }))
-                            case 'not set': return p_.ss($, ($) => ({
-                                'value': value,
-                                'optional': p_.literal.not_set()
-                            }))
+                            case 'optional': return p_.ss($, ($) => p_.from.state($).decide(
+                                ($) => {
+                                    switch ($[0]) {
+                                        case 'set': return p_.ss($, ($) => ({
+                                            'value': value,
+                                            'optional': p_.literal.set($.value)
+                                        }))
+                                        case 'not set': return p_.ss($, ($) => ({
+                                            'value': value,
+                                            'optional': p_.literal.not_set()
+                                        }))
+                                        default: return abort({
+                                            'type': ['wrong value type', {
+                                                'expected': ['optional', null],
+                                            }],
+                                            'range': t_parse_tree_to_location.Value(value),
+                                        })
+                                    }
+                                }))
                             default: return abort({
                                 'type': ['wrong value type', {
                                     'expected': ['optional', null],
@@ -186,22 +202,14 @@ export const Optional: Optional = ($, abort) => {
                             })
                         }
                     }))
-                    default: return abort({
-                        'type': ['wrong value type', {
-                            'expected': ['optional', null],
-                        }],
-                        'range': t_parse_tree_to_location.Value(value),
-                    })
-                }
-            }))
-            default: return abort({
-                'type': ['wrong value type', {
-                    'expected': ['optional', null],
-                }],
-                'range': t_parse_tree_to_location.Value(value),
-            })
-        }
-    })
+                default: return abort({
+                    'type': ['wrong value type', {
+                        'expected': ['optional', null],
+                    }],
+                    'range': t_parse_tree_to_location.Value(value),
+                })
+            }
+        })
 }
 
 export const Property: Property = ($, abort, $p) => {
@@ -219,13 +227,24 @@ export const Property: Property = ($, abort, $p) => {
 
 export const State: State = ($, abort) => {
     const value = $
-    return p_.from.state($.type).decide(($) => {
-        switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'state': return p_.ss($, ($) => p_.from.state($.status).decide(($) => {
+    return p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
                         switch ($[0]) {
-                            case 'set': return p_.ss($, ($) => $)
+                            case 'state': return p_.ss($, ($) => p_.from.state($.status).decide(
+                                ($) => {
+                                    switch ($[0]) {
+                                        case 'set': return p_.ss($, ($) => $)
+                                        default: return abort({
+                                            'type': ['wrong value type', {
+                                                'expected': ['state', null],
+                                            }],
+                                            'range': t_parse_tree_to_location.Value(value),
+                                        })
+                                    }
+                                }))
                             default: return abort({
                                 'type': ['wrong value type', {
                                     'expected': ['state', null],
@@ -234,108 +253,109 @@ export const State: State = ($, abort) => {
                             })
                         }
                     }))
-                    default: return abort({
-                        'type': ['wrong value type', {
-                            'expected': ['state', null],
-                        }],
-                        'range': t_parse_tree_to_location.Value(value),
-                    })
-                }
-            }))
-            default: return abort({
-                'type': ['wrong value type', {
-                    'expected': ['state', null],
-                }],
-                'range': t_parse_tree_to_location.Value(value),
-            })
-        }
-    })
+                default: return abort({
+                    'type': ['wrong value type', {
+                        'expected': ['state', null],
+                    }],
+                    'range': t_parse_tree_to_location.Value(value),
+                })
+            }
+        })
 }
 
 export const Text: Text = ($, abort) => {
     const value = $
-    return p_.from.state($.type).decide(($) => {
-        switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'text': return p_.ss($, ($) => $)
-                    default: return abort({
-                        'type': ['wrong value type', {
-                            'expected': ['text', null],
-                        }],
-                        'range': t_parse_tree_to_location.Value(value),
-                    })
-                }
-            }))
-            default: return abort({
-                'type': ['wrong value type', {
-                    'expected': ['text', null],
-                }],
-                'range': t_parse_tree_to_location.Value(value),
-            })
-        }
-    })
+    return p_.from.state($.type).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'text': return p_.ss($, ($) => $)
+                            default: return abort({
+                                'type': ['wrong value type', {
+                                    'expected': ['text', null],
+                                }],
+                                'range': t_parse_tree_to_location.Value(value),
+                            })
+                        }
+                    }))
+                default: return abort({
+                    'type': ['wrong value type', {
+                        'expected': ['text', null],
+                    }],
+                    'range': t_parse_tree_to_location.Value(value),
+                })
+            }
+        })
 }
 
 export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
     const value = $
     return {
         'value': $,
-        'properties': p_.from.state($.type).decide(($) => {
-            switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                    switch ($[0]) {
-                        case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
+        'properties': p_.from.state($.type).decide(
+            ($) => {
+                switch ($[0]) {
+                    case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                        ($) => {
                             switch ($[0]) {
-                                // case 'concise':
-                                case 'verbose': return p_.ss($, ($) => {
-                                    const xxx = p_.from.list(
-                                        $.properties,
-                                    ).convert_to_dictionary(
-                                        ($) => $.id.token.value,
-                                        ($) => $,
-                                        {
-                                            duplicate_id: ($) => abort({
-                                                'type': ['type', ['duplicate property', $]],
+                                case 'group': return p_.ss($, ($) => p_.from.state($).decide(
+                                    ($) => {
+                                        switch ($[0]) {
+                                            // case 'concise':
+                                            case 'verbose': return p_.ss($, ($) => {
+                                                const xxx = p_.from.list($.properties,
+                                                ).convert_to_dictionary(
+                                                    ($) => $.id.token.value,
+                                                    ($) => $,
+                                                    {
+                                                        duplicate_id: ($) => abort({
+                                                            'type': ['type', ['duplicate property', $]],
+                                                            'range': t_parse_tree_to_location.Value(value),
+                                                        })
+                                                    },
+                                                )
+
+
+                                                return p_assert(
+                                                    abort,
+                                                    () => {
+
+                                                        return p_t.from.dictionary(p_t.from.dictionary(p_t.from.dictionary(xxx,
+                                                                ).join(
+                                                                    $p['expected properties'],
+                                                                    ($, other, id): p_di.Optional_Value<d_location.Range> => p_t.from.optional(other).decide(
+                                                                        ($) => p_.literal.not_set(),
+                                                                        () => p_.literal.set($.id.range)
+                                                                    )
+                                                                )
+                                                            ).map_optionally(
+                                                                ($) => $
+                                                            ),
+                                                        ).on_has_entries(
+                                                            ($) => p_.literal.set({
+                                                                'range': t_parse_tree_to_location.Value(value),
+                                                                'type': ['type', ['unexpected properties', {
+                                                                    'found': $,
+                                                                    'expected': $p['expected properties'],
+                                                                }]]
+                                                            }),
+                                                            () => p_.literal.not_set()
+                                                        )
+
+                                                    },
+                                                    () => xxx
+                                                )
+                                            })
+                                            default: return abort({
+                                                'type': ['wrong value type', {
+                                                    'expected': ['verbose group', null],
+                                                }],
                                                 'range': t_parse_tree_to_location.Value(value),
                                             })
-                                        },
-                                    )
-
-
-                                    return p_assert(
-                                        abort,
-                                        () => {
-
-                                            return p_t.from.dictionary(
-                                                p_t.from.dictionary(
-                                                    p_t.from.dictionary(
-                                                        xxx,
-                                                    ).join(
-                                                        $p['expected properties'],
-                                                        ($, other, id): p_di.Optional_Value<d_location.Range> => p_t.from.optional(other).decide(
-                                                            ($) => p_.literal.not_set(),
-                                                            () => p_.literal.set($.id.range)
-                                                        )
-                                                    )
-                                                ).map_optionally(
-                                                    ($) => $
-                                                ),
-                                            ).on_has_entries(
-                                                ($) => p_.literal.set({
-                                                    'range': t_parse_tree_to_location.Value(value),
-                                                    'type': ['type', ['unexpected properties', {
-                                                        'found': $,
-                                                        'expected': $p['expected properties'],
-                                                    }]]
-                                                }),
-                                                () => p_.literal.not_set()
-                                            )
-
-                                        },
-                                        () => xxx
-                                    )
-                                })
+                                        }
+                                    }))
                                 default: return abort({
                                     'type': ['wrong value type', {
                                         'expected': ['verbose group', null],
@@ -344,21 +364,13 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                 })
                             }
                         }))
-                        default: return abort({
-                            'type': ['wrong value type', {
-                                'expected': ['verbose group', null],
-                            }],
-                            'range': t_parse_tree_to_location.Value(value),
-                        })
-                    }
-                }))
-                default: return abort({
-                    'type': ['wrong value type', {
-                        'expected': ['verbose group', null],
-                    }],
-                    'range': t_parse_tree_to_location.Value(value),
-                })
-            }
-        })
+                    default: return abort({
+                        'type': ['wrong value type', {
+                            'expected': ['verbose group', null],
+                        }],
+                        'range': t_parse_tree_to_location.Value(value),
+                    })
+                }
+            })
     }
 }

@@ -18,85 +18,92 @@ export const Document: p_i.Transformer<d_in.Document, d_out.Paragraph> = ($) => 
 ])
 
 export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.composed([
-    p_.from.state($).decide(($) => {
-        switch ($[0]) {
-            case 'dictionary': return p_.ss($, ($) => sh.ph.composed([
-                sh.ph.literal("{"),
-                sh.ph.indent(
-                    sh.pg.sentences(p_.from.dictionary($).convert_to_list(($, id) => sh.sentence([
-                        sh.ph.serialize(t_primitives_to_text.Apostrophed(id, {
-                            'add delimiters': true
-                        })),
-                        sh.ph.literal(": "),
-                        Value($),
-                    ]))),
-                ),
-                sh.ph.literal("}"),
-            ]))
-            case 'group': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'verbose': return p_.ss($, ($) => sh.ph.composed([
-                        sh.ph.composed([
-                            sh.ph.literal("("),
-                            sh.ph.indent(
-                                sh.pg.sentences(p_.from.dictionary($).convert_to_list(($, id) => sh.sentence([
-                                    sh.ph.serialize(t_primitives_to_text.Backticked(id, {
-                                        'add delimiters': true
-                                    })),
-                                    sh.ph.literal(": "),
-                                    Value($),
-                                ]))),
-                            ),
-                            sh.ph.literal(")"),
-                        ])
-                    ]))
-                    default: return p_.au($[0])
-                }
-            }))
-            case 'list': return p_.ss($, ($) => sh.ph.composed([
-                sh.ph.literal("["),
-                sh.ph.composed(p_.from.list($).map(($) => sh.ph.composed([
-                    sh.ph.literal(" "),
-                    Value($),
-                ]))),
-                sh.ph.literal(" ]"),
-            ]))
-            case 'nothing': return p_.ss($, ($) => sh.ph.literal("~"))
-            case 'optional': return p_.ss($, ($) => p_.from.state($).decide(($) => {
-                switch ($[0]) {
-                    case 'not set': return p_.ss($, ($) => sh.ph.literal("_"))
-                    case 'set': return p_.ss($, ($) => sh.ph.composed([
-                        sh.ph.literal("* "),
-                        Value($),
-                    ]))
+    p_.from.state($).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'dictionary': return p_.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("{"),
+                    sh.ph.indent(
+                        sh.pg.sentences(p_.from.dictionary($).convert_to_list(
+                            ($, id) => sh.sentence([
+                                sh.ph.serialize(t_primitives_to_text.Apostrophed(id, {
+                                    'add delimiters': true
+                                })),
+                                sh.ph.literal(": "),
+                                Value($),
+                            ]))),
+                    ),
+                    sh.ph.literal("}"),
+                ]))
+                case 'group': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'verbose': return p_.ss($, ($) => sh.ph.composed([
+                                sh.ph.composed([
+                                    sh.ph.literal("("),
+                                    sh.ph.indent(
+                                        sh.pg.sentences(p_.from.dictionary($).convert_to_list(
+                                            ($, id) => sh.sentence([
+                                                sh.ph.serialize(t_primitives_to_text.Backticked(id, {
+                                                    'add delimiters': true
+                                                })),
+                                                sh.ph.literal(": "),
+                                                Value($),
+                                            ]))),
+                                    ),
+                                    sh.ph.literal(")"),
+                                ])
+                            ]))
+                            default: return p_.au($[0])
+                        }
+                    }))
+                case 'list': return p_.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("["),
+                    sh.ph.composed(p_.from.list($).map(
+                        ($) => sh.ph.composed([
+                            sh.ph.literal(" "),
+                            Value($),
+                        ]))),
+                    sh.ph.literal(" ]"),
+                ]))
+                case 'nothing': return p_.ss($, ($) => sh.ph.literal("~"))
+                case 'optional': return p_.ss($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'not set': return p_.ss($, ($) => sh.ph.literal("_"))
+                            case 'set': return p_.ss($, ($) => sh.ph.composed([
+                                sh.ph.literal("* "),
+                                Value($),
+                            ]))
 
-                    default: return p_.au($[0])
-                }
-            }))
-            case 'state': return p_.ss($, ($) => sh.ph.composed([
-                sh.ph.literal("| "),
-                sh.ph.serialize(t_primitives_to_text.Backticked($.option, {
-                    'add delimiters': true
-                })),
-                sh.ph.literal(" "),
-                Value($.value),
-            ]))
-            case 'text': return p_.ss($, ($) => {
-                const value = $.value
-                return p_.from.state($.delimiter).decide(($) => {
-                    switch ($[0]) {
-                        case 'apostrophe': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Apostrophed(value, {
-                            'add delimiters': true
-                        })))
-                        case 'quote': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Quoted(value, {
-                            'add delimiters': true
-                        })))
-                        case 'none': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Undelimited(value)))
-                        default: return p_.au($[0])
-                    }
+                            default: return p_.au($[0])
+                        }
+                    }))
+                case 'state': return p_.ss($, ($) => sh.ph.composed([
+                    sh.ph.literal("| "),
+                    sh.ph.serialize(t_primitives_to_text.Backticked($.option, {
+                        'add delimiters': true
+                    })),
+                    sh.ph.literal(" "),
+                    Value($.value),
+                ]))
+                case 'text': return p_.ss($, ($) => {
+                    const value = $.value
+                    return p_.from.state($.delimiter).decide(
+                        ($) => {
+                            switch ($[0]) {
+                                case 'apostrophe': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Apostrophed(value, {
+                                    'add delimiters': true
+                                })))
+                                case 'quote': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Quoted(value, {
+                                    'add delimiters': true
+                                })))
+                                case 'none': return p_.ss($, ($) => sh.ph.serialize(t_primitives_to_text.Undelimited(value)))
+                                default: return p_.au($[0])
+                            }
+                        })
                 })
-            })
-            default: return p_.au($[0])
-        }
-    })
+                default: return p_.au($[0])
+            }
+        })
 ])

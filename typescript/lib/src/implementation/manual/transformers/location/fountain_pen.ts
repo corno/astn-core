@@ -29,27 +29,34 @@ const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {
 }
 
 export const Range: signatures.Range = ($, $p) => sh.ph.composed([
-    sh.ph.serialize(temp_serialize_number($.start.relative.line + p_.from.state($p['character location reporting']).decide(($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.ph.serialize(temp_serialize_number($.start.relative.line + p_.from.state($p['character location reporting']).decide(
+        ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.ph.literal(":"),
-    sh.ph.serialize(temp_serialize_number($.start.relative.column + p_.from.state($p['character location reporting']).decide(($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.ph.serialize(temp_serialize_number($.start.relative.column + p_.from.state($p['character location reporting']).decide(
+        ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.ph.literal("-"),
-    sh.ph.serialize(temp_serialize_number($.end.relative.line + p_.from.state($p['character location reporting']).decide(($) => ($[0] === 'zero based' ? 0 : 1)))),
+    sh.ph.serialize(temp_serialize_number($.end.relative.line + p_.from.state($p['character location reporting']).decide(
+        ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.ph.literal(":"),
-    sh.ph.serialize(temp_serialize_number($.end.relative.column + p_.from.state($p['character location reporting']).decide(($) => ($[0] === 'zero based' ? 0 : 1))))
+    sh.ph.serialize(temp_serialize_number($.end.relative.column + p_.from.state($p['character location reporting']).decide(
+        ($) => ($[0] === 'zero based' ? 0 : 1))))
 ])
 
-export const Possible_Range: signatures.Possible_Range = ($, $p) => p_.from.state($).decide(($) => {
-    switch ($[0]) {
-        case 'range': return p_.ss($, ($) => Range($, $p))
-        case 'end of document': return p_.ss($, ($) => Location($.end, $p))
-        default: return p_.au($[0])
-    }
-})
+export const Possible_Range: signatures.Possible_Range = ($, $p) => p_.from.state($).decide(
+    ($) => {
+        switch ($[0]) {
+            case 'range': return p_.ss($, ($) => Range($, $p))
+            case 'end of document': return p_.ss($, ($) => Location($.end, $p))
+            default: return p_.au($[0])
+        }
+    })
 
 export const Location: signatures.Location = ($, $p) => {
     return sh.ph.composed([
-        sh.ph.serialize(temp_serialize_number($.relative.line + p_.from.state($p['character location reporting']).decide(($) => ($[0] === 'zero based' ? 0 : 1)))),
+        sh.ph.serialize(temp_serialize_number($.relative.line + p_.from.state($p['character location reporting']).decide(
+            ($) => ($[0] === 'zero based' ? 0 : 1)))),
         sh.ph.literal(":"),
-        sh.ph.serialize(temp_serialize_number($.relative.column + p_.from.state($p['character location reporting']).decide(($) => ($[0] === 'zero based' ? 0 : 1)))),
+        sh.ph.serialize(temp_serialize_number($.relative.column + p_.from.state($p['character location reporting']).decide(
+            ($) => ($[0] === 'zero based' ? 0 : 1)))),
     ])
 }
