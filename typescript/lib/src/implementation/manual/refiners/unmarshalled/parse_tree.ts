@@ -205,13 +205,11 @@ export const Optional: Optional = ($, abort) => {
 }
 
 export const Property: Property = ($, abort, $p) => {
-    const value = $
-    return p_.select.entry(
-        $.properties,
+    return p_.from.dictionary($.properties).get_entry(
         $p.id,
         {
-            no_such_entry: ($) => abort({
-                'range': t_parse_tree_to_location.Value(value.value),
+            no_such_entry: () => abort({
+                'range': t_parse_tree_to_location.Value($.value),
                 'type': ['type', ['missing property', $p.id]]
             })
         }
