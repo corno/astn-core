@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/dist/implementation/production'
+import * as p_t from 'pareto-core/dist/implementation/transformer'
 import * as p_di from 'pareto-core/dist/interface/data'
 import * as p_pi from 'pareto-core/dist/interface/production'
 import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
@@ -91,7 +92,7 @@ const temp_create_error = (
     end_info: d_location.Location
 ): d_choice.Parser_Error => ({
     'expected': expected,
-    'cause': element.__decide<d_choice.Parser_Error.cause>(
+    'cause': p_t.from.optional(element).decide<d_choice.Parser_Error.cause>(
         ($) => ['unexpected token', {
             'found': $,
         }],

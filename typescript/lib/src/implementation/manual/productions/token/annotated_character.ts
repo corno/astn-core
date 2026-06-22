@@ -136,7 +136,7 @@ export const Trivia: p_pi.Production<
                     const create_error = (
                         element: p_di.Optional_Value<d_in.Annotated_Character>,
                         expected: d_function.Lexer_Error.expected,
-                    ): d_function.Lexer_Error => element.__decide<d_function.Lexer_Error>(
+                    ): d_function.Lexer_Error => p_t.from.optional(element).decide<d_function.Lexer_Error>(
                         ($) => ({
                             'range': {
                                 'start': $.location,
