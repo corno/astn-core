@@ -11,7 +11,7 @@ d_in.Error, d_out.Phrase
 }
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
+import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 export const Error: signatures.Error = ($) => {
     const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => p_.from.state($).decide(

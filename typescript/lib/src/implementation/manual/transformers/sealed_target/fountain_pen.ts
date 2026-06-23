@@ -9,7 +9,7 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as t_primitives_to_text from "../primitives/text"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
+import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
 
 export const Document: p_i.Transformer<
 d_in.Document, d_out.Paragraph
