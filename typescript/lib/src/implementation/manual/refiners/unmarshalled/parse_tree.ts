@@ -77,8 +77,7 @@ export const Dictionary: Dictionary = ($, abort) => {
                         switch ($[0]) {
                             case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
                                 'value': value,
-                                'entries': p_.from.list($.entries,
-                                ).convert_to_dictionary(
+                                'entries': p_.from.list($.entries).convert_to_dictionary(
                                     ($) => $.id.token.value,
                                     ($) => $,
                                     {
@@ -305,8 +304,7 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                         switch ($[0]) {
                                             // case 'concise':
                                             case 'verbose': return p_.ss($, ($) => {
-                                                const xxx = p_.from.list($.properties,
-                                                ).convert_to_dictionary(
+                                                const xxx = p_.from.list($.properties).convert_to_dictionary(
                                                     ($) => $.id.token.value,
                                                     ($) => $,
                                                     {
@@ -322,8 +320,9 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
                                                     abort,
                                                     () => {
 
-                                                        return p_t.from.dictionary(p_t.from.dictionary(p_t.from.dictionary(xxx,
-                                                                ).join(
+                                                        return p_t.from.dictionary(
+                                                            p_t.from.dictionary(
+                                                                p_t.from.dictionary(xxx).join(
                                                                     $p['expected properties'],
                                                                     ($, other, id): p_di.Optional_Value<d_location.Range> => p_t.from.optional(other).decide(
                                                                         ($) => p_.literal.not_set(),
