@@ -14,7 +14,9 @@ import * as pr_authoring_parse_tree from "../../productions/parse_tree/token"
 
 export namespace signatures {
 
-    export type Document = p_i.Refiner<d_out.Document, d_function.Parser_Error, d_in.Tokenizer_Result>
+    export type Document = p_i.Refiner<
+d_out.Document, d_function.Parser_Error, d_in.Tokenizer_Result
+>
 
 }
 

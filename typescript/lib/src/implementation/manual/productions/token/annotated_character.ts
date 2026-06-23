@@ -341,7 +341,9 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                         case Character.u:
                                             iterator.discard(
                                                 () => null)
-                                            const r_hexadecimal: p_ri.Refiner<number, string, d_loc.List_of_Characters> = ($, abort) => {
+                                            const r_hexadecimal: p_ri.Refiner<
+number, string, d_loc.List_of_Characters
+> = ($, abort) => {
                                                 const characters = $
                                                 let result = 0
                                                 let isNegative = false
