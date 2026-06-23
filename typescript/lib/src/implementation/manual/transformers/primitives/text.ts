@@ -5,10 +5,12 @@ import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/l
 import * as d_in from "../../../../interface/data/primitives"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 
-export const Escaped: p_i.Transformer<d_in.Escaped, d_out.List_of_Characters> = ($) => p_.from.list(p_list_from_text(
-        $,
-        ($) => $
-    ),
+export const Escaped: p_i.Transformer<
+d_in.Escaped, d_out.List_of_Characters
+> = ($) => p_.from.list(p_list_from_text(
+    $,
+    ($) => $
+),
 ).flatten(
     ($) => {
         switch ($) {
@@ -67,9 +69,13 @@ export const Escaped: p_i.Transformer<d_in.Escaped, d_out.List_of_Characters> = 
     }
 )
 
-export const Quoted: p_i.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_Characters, {
-    'add delimiters': boolean
-}> = ($, $p) => $p['add delimiters']
+export const Quoted: p_i.Transformer_With_Parameter<
+    d_in.Quoted,
+    d_out.List_of_Characters,
+    {
+        'add delimiters': boolean
+    }
+> = ($, $p) => $p['add delimiters']
     ? p_.literal.segmented_list([
         p_.literal.list([
             0x22, // "
@@ -83,9 +89,13 @@ export const Quoted: p_i.Transformer_With_Parameter<d_in.Quoted, d_out.List_of_C
     ])
     : Escaped($)
 
-export const Apostrophed: p_i.Transformer_With_Parameter<d_in.Apostrophed, d_out.List_of_Characters, {
-    'add delimiters': boolean
-}> = ($, $p) => $p['add delimiters']
+export const Apostrophed: p_i.Transformer_With_Parameter<
+    d_in.Apostrophed,
+    d_out.List_of_Characters,
+    {
+        'add delimiters': boolean
+    }
+> = ($, $p) => $p['add delimiters']
     ? p_.literal.segmented_list([
         p_.literal.list([
             0x27, // '
@@ -99,9 +109,13 @@ export const Apostrophed: p_i.Transformer_With_Parameter<d_in.Apostrophed, d_out
     ])
     : Escaped($)
 
-export const Backticked: p_i.Transformer_With_Parameter<d_in.Backticked, d_out.List_of_Characters, {
-    'add delimiters': boolean
-}> = ($, $p) => $p['add delimiters']
+export const Backticked: p_i.Transformer_With_Parameter<
+    d_in.Backticked,
+    d_out.List_of_Characters,
+    {
+        'add delimiters': boolean
+    }
+> = ($, $p) => $p['add delimiters']
     ? p_.literal.segmented_list([
         p_.literal.list([
             0x60, // `
@@ -115,7 +129,10 @@ export const Backticked: p_i.Transformer_With_Parameter<d_in.Backticked, d_out.L
     ])
     : Escaped($)
 
-export const Undelimited: p_i.Transformer<d_in.Undelimited, d_out.List_of_Characters> = ($) => p_list_from_text(
+export const Undelimited: p_i.Transformer<
+    d_in.Undelimited,
+    d_out.List_of_Characters
+> = ($) => p_list_from_text(
     $,
     ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
 ) 

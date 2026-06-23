@@ -5,4 +5,6 @@ import * as d_in from "../../../../interface/data/unmarshall"
 import * as d_out from "../../../../interface/generated/liana/schemas/location/data"
 
 
-export const Error: p_i.Transformer<d_in.Error, d_out.Range> = ($) => $.range
+export const Error: p_i.Transformer<
+d_in.Error, d_out.Range
+> = ($) => $.range

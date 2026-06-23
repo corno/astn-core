@@ -11,13 +11,17 @@ import * as t_primitives_to_text from "../primitives/text"
 //shorthands
 import * as sh from "pareto-fountain-pen/dist/shorthands/prose"
 
-export const Document: p_i.Transformer<d_in.Document, d_out.Paragraph> = ($) => sh.pg.sentences([
+export const Document: p_i.Transformer<
+d_in.Document, d_out.Paragraph
+> = ($) => sh.pg.sentences([
     sh.sentence([
         Value($),
     ])
 ])
 
-export const Value: p_i.Transformer<d_in.Value, d_out.Phrase> = ($) => sh.ph.composed([
+export const Value: p_i.Transformer<
+d_in.Value, d_out.Phrase
+> = ($) => sh.ph.composed([
     p_.from.state($).decide(
         ($) => {
             switch ($[0]) {
