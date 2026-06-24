@@ -78,7 +78,8 @@ export const Whitespace: p_pi.Production_Without_Error<
                             has_more_items: ($) => is_whitespace_character($),
                             handle: ($) => {
                                 iterator.discard(
-                                    () => null) // discard the character
+                                    () => null
+                                ) // discard the character
                                 return $.code
                             },
                         }),
@@ -93,6 +94,7 @@ export const Whitespace: p_pi.Production_Without_Error<
 export const Trivia: p_pi.Production<
     d_out.Trivia,
     d_function.Lexer_Error,
+    d_function.Lexer_Error.expected,
     d_in.Annotated_Character,
     d_location.Location
 > = (
@@ -107,7 +109,8 @@ export const Trivia: p_pi.Production<
         },
         handle: (slash_character): d_out.Trivia.comments.L => {
             iterator.discard(
-                () => null) // discard the first slash
+                () => null
+            ) // discard the first slash
             const next_char = iterator.look_raw()
             if (next_char === null) {
                 return p_unreachable_code_path("we checked in has_more_items for the presence of the next character, so this should never happen")
@@ -115,7 +118,8 @@ export const Trivia: p_pi.Production<
             switch (next_char[0].code) {
                 case 0x2F: // /
                     iterator.discard(
-                        () => null) // discard the second /
+                        () => null
+                    ) // discard the second /
                     return ({
                         'type': ['line', null],
                         'content': p_text_from_list(
@@ -123,7 +127,8 @@ export const Trivia: p_pi.Production<
                                 has_more_items: ($) => $.code !== 0x0A && $.code !== 0x0D, // not a line feed or carriage return
                                 handle: ($) => {
                                     iterator.discard(
-                                        () => null) // discard the character
+                                        () => null
+                                    ) // discard the character
                                     return $.code
                                 },
                             }),
@@ -134,7 +139,8 @@ export const Trivia: p_pi.Production<
                     })
                 case 0x2A: {// *
                     iterator.discard(
-                        () => null) // discard the asterisk
+                        () => null
+                    ) // discard the asterisk
 
 
                     const create_error = (
@@ -167,7 +173,8 @@ export const Trivia: p_pi.Production<
                                     },
                                     handle: ($) => {
                                         iterator.discard(
-                                            () => null) // discard the character
+                                            () => null
+                                        ) // discard the character
                                         return $.code
                                     },
                                 }),
@@ -175,19 +182,13 @@ export const Trivia: p_pi.Production<
                             ),
                             () => ({
                                 'asterisk': iterator.expect({
-                                    get_error: ($) => create_error(
-                                        $,
-                                        ['block comment termination', null],
-                                    ),
+                                    expected: ['block comment termination', null],
                                     item: ($, abort2) => $.code === 0x2A
                                         ? $
                                         : abort2(null),
                                 }),
                                 'solidus': iterator.expect({
-                                    get_error: ($) => create_error(
-                                        $,
-                                        ['block comment termination', null],
-                                    ),
+                                    expected: ['block comment termination', null],
                                     item: ($, abort2) => $.code === 0x2F
                                         ? $
                                         : abort2(null),
@@ -208,6 +209,7 @@ export const Trivia: p_pi.Production<
 export const Delimited_Text: p_pi.Production_With_Parameter<
     string,
     d_function.Lexer_Error,
+    d_function.Lexer_Error.expected,
     d_in.Annotated_Character,
     d_location.Location,
     {
@@ -256,7 +258,8 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                         }
                         if ($[0].code === $p['end character']) {
                             iterator.discard(
-                                () => null) // discard the end character
+                                () => null
+                            ) // discard the end character
                             return
                         }
                         switch ($[0].code) {
@@ -269,12 +272,14 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                     })
                                 }
                                 iterator.discard(
-                                    () => null)
+                                    () => null
+                                )
                                 $i['add item']($[0].code)
                                 break
                             case Character.reverse_solidus: // \ (escape)
                                 iterator.discard(
-                                    () => null)
+                                    () => null
+                                )
                                 {
                                     const $ = iterator.look_raw()
                                     if ($ === null) {
@@ -286,57 +291,68 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                     switch ($[0].code) {
                                         case Character.quotation_mark:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.quotation_mark)
                                             break
                                         case Character.apostrophe:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.apostrophe)
                                             break
                                         case Character.backtick:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.backtick)
                                             break
                                         case Character.reverse_solidus:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.reverse_solidus)
                                             break
                                         case Character.solidus:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.solidus)
                                             break
                                         case Character.b:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.backspace)
                                             break
                                         case Character.f:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.form_feed)
                                             break
                                         case Character.n:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.line_feed)
                                             break
                                         case Character.r:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.carriage_return)
                                             break
                                         case Character.t:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             $i['add item'](Character.tab)
                                             break
                                         case Character.u:
                                             iterator.discard(
-                                                () => null)
+                                                () => null
+                                            )
                                             const r_hexadecimal: p_ri.Refiner<
                                                 number, string, d_loc.List_of_Characters
                                             > = ($, abort) => {
@@ -418,7 +434,8 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                                                 })
                                                             }
                                                             iterator.discard(
-                                                                () => null)
+                                                                () => null
+                                                            )
                                                             return char[0].code
                                                         }
                                                         $i['add item'](get_char())
@@ -442,7 +459,8 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                 break
                             default:
                                 iterator.discard(
-                                    () => null)
+                                    () => null
+                                )
                                 $i['add item']($[0].code)
                         }
                     }
@@ -456,6 +474,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
 export const Tokenizer_Result: p_pi.Production_With_Parameter<
     d_out.Tokenizer_Result,
     d_function.Lexer_Error,
+    d_function.Lexer_Error.expected,
     d_in.Annotated_Character,
     d_location.Location,
     {
@@ -503,73 +522,90 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                 switch ($.code) {
                     case Character.open_brace:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['{', null]
                     case Character.open_bracket:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['[', null]
                     case Character.open_angle_bracket:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['<', null]
                     case Character.open_paren:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['(', null]
                     case Character.close_brace:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['}', null]
                     case Character.close_bracket:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return [']', null]
                     case Character.close_angle_bracket:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['>', null]
                     case Character.close_paren:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return [')', null]
 
                     //individuals
                     case Character.hash:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['#', null] // missing data token
                     case Character.pipe:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['|', null] // state value token
                     case Character.underscore:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['_', null] // unset value token
                     case Character.tilde:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['~', null] // unset value token
                     case Character.asterisk:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['*', null] // set value token
                     case Character.at:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['@', null] // include token
                     case Character.bang:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['!', null] // header token
                     case Character.colon:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return [':', null] // structural token
                     case Character.quotation_mark:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['text', {
                             'value': Delimited_Text(
                                 iterator,
@@ -583,7 +619,8 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                         }]
                     case Character.backtick:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['text', {
                             'value': Delimited_Text(
                                 iterator,
@@ -597,7 +634,8 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                         }]
                     case Character.apostrophe:
                         iterator.discard(
-                            () => null)
+                            () => null
+                        )
                         return ['text', {
                             'value': Delimited_Text(
                                 iterator,
@@ -650,7 +688,8 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                                     },
                                     handle: ($) => {
                                         iterator.discard(
-                                            () => null) // discard the character
+                                            () => null
+                                        ) // discard the character
                                         return $.code
                                     },
                                 }),

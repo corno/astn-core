@@ -10,5 +10,7 @@ export type Annotated_Character = {
 
 export type Annotated_Characters = {
     'characters': p_.List<Annotated_Character>,
-    'end': d_location.Location
+    'end': End
 }
+
+export type End = d_location.Location

@@ -6,12 +6,13 @@ import p_iterate from 'pareto-core/dist/implementation/refiner/specials/iterate'
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
-
+import * as d_annotated_characters from "../../../../interface/data/annotated_characters"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
 import * as r_annotated_characters from "../annotated_characters/text"
 import * as pr_tokenize from "../../productions/token/annotated_character"
-import * as r_from_token from "./tokenizer_result"
+import * as r_from_tokenizer_result from "./tokenizer_result"
 
 export namespace signatures {
 
@@ -29,16 +30,40 @@ export const Document: signatures.Document = ($, abort, $p,) => {
         $,
         $p
     )
-    return p_iterate( //fixme: make this iterate_fully
-        ann_chars.characters,
-        ann_chars.end,
-        () => p_.literal.not_set<d_function.Error>(),
-        abort,
-        (iter) => r_from_token.Document(//fixme: make this iterate_fully
+    return p_iterate<
+        d_out.Document,
+        d_function.Lexer_Error,
+        d_function.Lexer_Error.expected,
+        d_annotated_characters.Annotated_Character,
+        d_annotated_characters.End
+    >({
+        list: ann_chars.characters,
+        end_info: ann_chars.end,
+        create_dangling_item_error: () => p_.literal.not_set<d_function.Lexer_Error>(),//fixme: make this iterate_fully
+        create_expectation_error: (expected, found) => ({
+            'expected': expected,
+            'range': p_.from.state(found).decide(
+                ($): d_location.Range => {
+                    switch ($[0]) {
+                        case 'end': return p_.ss($, ($) => ({
+                            'start': ann_chars.end,
+                            'end': ann_chars.end
+                        }))
+                        case 'item': return p_.ss($, ($) => ({
+                            'start': $.location,
+                            'end': $.location, //shouldn't this be incremented by 1?
+                        }))
+                        default: return p_.au($[0])
+                    }
+                }
+            ),
+        }),
+        abort: ($) => abort({
+            'type': ['lexer', $],
+        }),
+        assign: (iterator) => r_from_tokenizer_result.Document(//fixme: make this iterate_fully
             pr_tokenize.Tokenizer_Result(
-                iter.to_new_iterator(($) => ({
-                    'type': ['lexer', $],
-                })),
+                iterator,
                 {
                     'end info': ann_chars.end,
                 }
@@ -47,5 +72,5 @@ export const Document: signatures.Document = ($, abort, $p,) => {
                 'type': ['parser', $],
             })
         )
-    )
+    })
 }
