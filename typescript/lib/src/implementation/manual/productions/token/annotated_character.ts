@@ -97,7 +97,6 @@ export const Trivia: p_pi.Production<
     d_location.Location
 > = (
     iterator,
-    abort,
 ): d_out.Trivia => ({
     'leading whitespace': Whitespace(iterator),
     'comments': iterator.list({
@@ -176,7 +175,6 @@ export const Trivia: p_pi.Production<
                             ),
                             () => ({
                                 'asterisk': iterator.expect({
-                                    abort: abort,
                                     get_error: ($) => create_error(
                                         $,
                                         ['block comment termination', null],
@@ -186,7 +184,6 @@ export const Trivia: p_pi.Production<
                                         : abort2(null),
                                 }),
                                 'solidus': iterator.expect({
-                                    abort: abort,
                                     get_error: ($) => create_error(
                                         $,
                                         ['block comment termination', null],
@@ -220,7 +217,6 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
     }
 > = (
     iterator,
-    abort,
     $p
 ): string => {
 
@@ -253,7 +249,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                         const $ = iterator.look_raw()
                         if ($ === null) {
 
-                            return abort({
+                            return iterator.abort({
                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
                                 'expected': ['text termination', null]
                             })
@@ -267,7 +263,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                             case Character.line_feed:
                             case Character.carriage_return:
                                 if (!$p['allow newlines']) {
-                                    return abort({
+                                    return iterator.abort({
                                         'expected': ['no end of line in text', null],
                                         'range': create_range(iterator, { 'start character': $p['start character'] }),
                                     })
@@ -282,7 +278,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                 {
                                     const $ = iterator.look_raw()
                                     if ($ === null) {
-                                        return abort({
+                                        return iterator.abort({
                                             'range': create_range(iterator, { 'start character': $p['start character'] }),
                                             'expected': ['escape character', { 'found': p_.literal.not_set() }]
                                         })
@@ -342,8 +338,8 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                             iterator.discard(
                                                 () => null)
                                             const r_hexadecimal: p_ri.Refiner<
-number, string, d_loc.List_of_Characters
-> = ($, abort) => {
+                                                number, string, d_loc.List_of_Characters
+                                            > = ($, abort) => {
                                                 const characters = $
                                                 let result = 0
                                                 let isNegative = false
@@ -410,13 +406,13 @@ number, string, d_loc.List_of_Characters
                                                         const get_char = () => {
                                                             const char = iterator.look_raw()
                                                             if (char === null) {
-                                                                return abort({
+                                                                return iterator.abort({
                                                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                                     'expected': ['unicode character', { 'found': p_.literal.not_set() }]
                                                                 })
                                                             }
                                                             if (char[0].code < Character.a || (char[0].code > Character.f && char[0].code < Character.A) || char[0].code > Character.F || char[0].code < 0x30 || char[0].code > 0x39) {
-                                                                return abort({
+                                                                return iterator.abort({
                                                                     'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                                     'expected': ['unicode character', { 'found': p_.literal.set(char[0].code) }]
                                                                 })
@@ -435,7 +431,7 @@ number, string, d_loc.List_of_Characters
                                             ))
                                             break
                                         default:
-                                            return abort({
+                                            return iterator.abort({
                                                 'range': create_range(iterator, { 'start character': $p['start character'] }),
                                                 'expected': ['escape character', {
                                                     'found': p_.literal.set($[0].code)
@@ -457,16 +453,19 @@ number, string, d_loc.List_of_Characters
         return txt
     }
 
-export const Tokenizer_Result: p_pi.Production<
+export const Tokenizer_Result: p_pi.Production_With_Parameter<
     d_out.Tokenizer_Result,
     d_function.Lexer_Error,
     d_in.Annotated_Character,
-    d_location.Location
+    d_location.Location,
+    {
+        'end info': d_location.Location
+    }
 > = (
     iterator,
-    abort,
+    $p
 ) => ({
-    'leading trivia': Trivia(iterator, abort),
+    'leading trivia': Trivia(iterator),
     'tokens': iterator.list({
         has_more_items: ($) => true,
         handle: ($) => ({
@@ -574,7 +573,6 @@ export const Tokenizer_Result: p_pi.Production<
                         return ['text', {
                             'value': Delimited_Text(
                                 iterator,
-                                abort,
                                 {
                                     'start character': $,
                                     'end character': Character.quotation_mark,
@@ -589,7 +587,6 @@ export const Tokenizer_Result: p_pi.Production<
                         return ['text', {
                             'value': Delimited_Text(
                                 iterator,
-                                abort,
                                 {
                                     'start character': $,
                                     'end character': Character.backtick,
@@ -604,7 +601,6 @@ export const Tokenizer_Result: p_pi.Production<
                         return ['text', {
                             'value': Delimited_Text(
                                 iterator,
-                                abort,
                                 {
                                     'start character': $,
                                     'end character': Character.apostrophe,
@@ -665,8 +661,8 @@ export const Tokenizer_Result: p_pi.Production<
             }),
             'start': $.location,
             'end': create_range(iterator, { 'start character': $ }).end,
-            'trailing trivia': Trivia(iterator, abort),
+            'trailing trivia': Trivia(iterator),
         }),
     }),
-    'end': iterator.get_end_info()
+    'end': $p['end info']
 })

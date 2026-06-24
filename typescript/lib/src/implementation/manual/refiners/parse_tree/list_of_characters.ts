@@ -1,3 +1,4 @@
+import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_i from 'pareto-core/dist/interface/refiner'
 import p_iterate from 'pareto-core/dist/implementation/refiner/specials/iterate'
 
@@ -31,12 +32,16 @@ export const Document: signatures.Document = ($, abort, $p,) => {
     return p_iterate( //fixme: make this iterate_fully
         ann_chars.characters,
         ann_chars.end,
+        p_.literal.not_set<d_function.Error>(),
+        abort,
         (iter) => r_from_token.Document(//fixme: make this iterate_fully
             pr_tokenize.Tokenizer_Result(
-                iter,
-                ($) => abort({
+                iter.to_new_iterator(($) => ({
                     'type': ['lexer', $],
-                }),
+                })),
+                {
+                    'end info': ann_chars.end,
+                }
             ),
             ($) => abort({
                 'type': ['parser', $],
