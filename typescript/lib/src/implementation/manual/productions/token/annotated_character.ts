@@ -182,12 +182,14 @@ export const Trivia: p_pi.Production<
                             ),
                             () => ({
                                 'asterisk': iterator.expect({
+                                    discard: false,
                                     expected: ['block comment termination', null],
                                     item: ($, abort2) => $.code === 0x2A
                                         ? $
                                         : abort2(null),
                                 }),
                                 'solidus': iterator.expect({
+                                    discard: false,
                                     expected: ['block comment termination', null],
                                     item: ($, abort2) => $.code === 0x2F
                                         ? $

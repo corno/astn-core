@@ -113,6 +113,7 @@ export const Document: interface_.Document = (iterator) => ({
 })
 
 export const Value: interface_.Value = (iterator) => iterator.expect({
+    discard: false,
     expected: p_.literal.list<d_choice.Expected>([
         ['any value', null]
     ]),
@@ -164,6 +165,7 @@ export const Value: interface_.Value = (iterator) => iterator.expect({
                             { 'token': token }
                         ),
                         'path': iterator.expect({
+                            discard: false,
                             expected: p_.literal.list([
                                 ['a text value', null]
                             ]),
@@ -184,6 +186,7 @@ export const Value: interface_.Value = (iterator) => iterator.expect({
                             { 'token': token }
                         ),
                         'status': iterator.expect({
+                            discard: false,
                             expected: p_.literal.list([
                                 ['any value', null],
                                 ['#', null]
@@ -265,6 +268,7 @@ export const Guaranteed_Structural_Token: interface_.Guaranteed_Structural_Token
 )
 
 export const Possible_Structural_Token: interface_.Possible_Structural_Token = (iterator, $p) => iterator.expect({
+    discard: false,
     expected: p_.literal.list<d_choice.Expected>([
         $p['expected token']
     ]),
@@ -301,6 +305,7 @@ export const Text: interface_.Text = (iterator, $p) => iterator.consume(
 export const Items: interface_.Items = (iterator, $p) => iterator.list({
     has_more_items: (current_token) => current_token.type[0] !== $p['end token'][0],
     handle: () => iterator.expect({
+        discard: false,
         expected: p_.literal.list<d_choice.Expected>([
             ['any value', null],
             $p['end token']
@@ -315,6 +320,7 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, $p) => itera
     has_more_items: (current_token) => current_token.type[0] !== $p['end token'][0],
     handle: (): d_out.ID_Value_Pairs.L => ({
         'id': iterator.expect({
+            discard: false,
             expected: p_.literal.list<d_choice.Expected>([
                 ['a text value', null],
                 $p['end token'],
@@ -324,6 +330,7 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, $p) => itera
                 : abort2(null),
         }),
         'assignment': iterator.expect({
+            discard: false,
             expected: p_.literal.list<d_choice.Expected>([
                 ['a text value', null],
                 [':', null],
