@@ -27,7 +27,7 @@ export const Document: signatures.Document = ($, abort) => p_iterate(
     $.tokens,
     $.end,
     //p_.literal.set<d_function.Parser_Error>(ss), //FIX enable checking for too many tokens
-    p_.literal.not_set<d_function.Parser_Error>(),
+    () => p_.literal.not_set<d_function.Parser_Error>(),
     abort,
     (iter) => pr_authoring_parse_tree.Document(
         iter,

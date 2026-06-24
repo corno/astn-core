@@ -32,7 +32,7 @@ export const Document: signatures.Document = ($, abort, $p,) => {
     return p_iterate( //fixme: make this iterate_fully
         ann_chars.characters,
         ann_chars.end,
-        p_.literal.not_set<d_function.Error>(),
+        () => p_.literal.not_set<d_function.Error>(),
         abort,
         (iter) => r_from_token.Document(//fixme: make this iterate_fully
             pr_tokenize.Tokenizer_Result(
