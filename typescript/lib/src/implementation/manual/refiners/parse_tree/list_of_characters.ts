@@ -32,38 +32,36 @@ export const Document: signatures.Document = ($, abort, $p,) => {
     )
     return p_iterate<
         d_out.Document,
-        d_function.Lexer_Error,
-        d_function.Lexer_Error.expected,
         d_annotated_characters.Annotated_Character,
         d_annotated_characters.End
     >({
         list: ann_chars.characters,
         end_info: ann_chars.end,
-        create_dangling_item_error: () => p_.literal.not_set<d_function.Lexer_Error>(),//fixme: make this iterate_fully
-        create_expectation_error: (expected, found) => ({
-            'expected': expected,
-            'range': p_.from.state(found).decide(
-                ($): d_location.Range => {
-                    switch ($[0]) {
-                        case 'end': return p_.ss($, ($) => ({
-                            'start': ann_chars.end,
-                            'end': ann_chars.end
-                        }))
-                        case 'item': return p_.ss($, ($) => ({
-                            'start': $.location,
-                            'end': $.location, //shouldn't this be incremented by 1?
-                        }))
-                        default: return p_.au($[0])
-                    }
-                }
-            ),
-        }),
-        abort: ($) => abort({
-            'type': ['lexer', $],
-        }),
+        on_dangling_item: null,//fixme: make this iterate_fully
+        // create_expectation_error: (expected, found) => ({
+        //     'expected': expected,
+        //     'range': p_.from.state(found).decide(
+        //         ($): d_location.Range => {
+        //             switch ($[0]) {
+        //                 case 'end': return p_.ss($, ($) => ({
+        //                     'start': ann_chars.end,
+        //                     'end': ann_chars.end
+        //                 }))
+        //                 case 'item': return p_.ss($, ($) => ({
+        //                     'start': $.location,
+        //                     'end': $.location, //shouldn't this be incremented by 1?
+        //                 }))
+        //                 default: return p_.au($[0])
+        //             }
+        //         }
+        //     ),
+        // }),
         assign: (iterator) => r_from_tokenizer_result.Document(//fixme: make this iterate_fully
             pr_tokenize.Tokenizer_Result(
                 iterator,
+                ($) => abort({
+                    'type': ['lexer', $],
+                }),
                 {
                     'end info': ann_chars.end,
                 }
