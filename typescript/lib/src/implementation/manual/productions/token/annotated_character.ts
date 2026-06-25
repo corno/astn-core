@@ -31,8 +31,8 @@ const create_range: p_pi.Production_Without_Error_With_Parameter<
 ): d_temp_location.Range => ({
     'start': $p['start character'].location,
     'end': iterator.peek(
-        (next) => next.location,
-        (end_info) => end_info
+        ($) => $,
+        ($) => $.location,
     )
 })
 
@@ -63,6 +63,7 @@ export const Whitespace: p_pi.Production_Without_Error<
         }
 
         return iterator.peek(
+            () => p_.literal.not_set(),
             ($) => {
                 if (!is_whitespace_character($)) {
                     return p_.literal.not_set()
@@ -72,9 +73,9 @@ export const Whitespace: p_pi.Production_Without_Error<
                         'value': p_text_from_list<number>(
                             iterator.build_list({
                                 has_more_items: ($) => is_whitespace_character($),
-                                handle: () => iterator.consume.number(
+                                handle: () => iterator.consume(
+                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen"),
                                     ($) => $.code,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
                                 ),
                             }),
                             ($) => $
@@ -89,7 +90,6 @@ export const Whitespace: p_pi.Production_Without_Error<
                 }
 
             },
-            () => p_.literal.not_set()
         )
     }
 
@@ -106,139 +106,113 @@ export const Trivia: p_pi.Production<
             return current.code === 0x2F
                 && iterator.peek_ahead(
                     1,
+                    () => false,
                     ($) => $.code === 0x2F || $.code === 0x2A, // slash or asterisk
-                    () => false
                 )
         },
         handle: (): d_out.Trivia.comments.L => {
-            iterator.consume.nothing( // discard the first slash
-                ($) => null,
-                () => p_unreachable_code_path("has_more_items -> true")
-            )
-            return iterator.peek(
-                ($) => {
-                    switch ($.code) {
-                        case 0x2F: // /
-                            iterator.consume.nothing(// discard the second /
-                                () => null,
-                                () => p_unreachable_code_path("has_more_items -> true")
-
-                            )
-                            return ({
-                                'type': ['line', null],
-                                'content': p_text_from_list(
-                                    iterator.build_list({
-                                        has_more_items: ($) => $.code !== 0x0A && $.code !== 0x0D, // not a line feed or carriage return
-                                        handle: () => iterator.consume.number(
-                                            ($) => $.code,
-                                            () => p_unreachable_code_path("has_more_items -> true")
+            return iterator.consume( // discard the first slash
+                () => p_unreachable_code_path("has_more_items -> true"),
+                ($) => iterator.peek(
+                    () => p_unreachable_code_path("has_more_items -> true"),
+                    ($) => {
+                        switch ($.code) {
+                            case 0x2F: // /
+                                return iterator.consume(// discard the second /
+                                    () => p_unreachable_code_path("has_more_items -> true"),
+                                    () => ({
+                                        'type': ['line', null],
+                                        'content': p_text_from_list(
+                                            iterator.build_list({
+                                                has_more_items: ($) => $.code !== 0x0A && $.code !== 0x0D, // not a line feed or carriage return
+                                                handle: () => iterator.consume(
+                                                    () => p_unreachable_code_path("has_more_items -> true"),
+                                                    ($) => $.code,
+                                                ),
+                                            }),
+                                            ($) => $
                                         ),
+                                        'range': create_range(iterator, { 'start character': $ }),
+                                        'trailing whitespace': Whitespace(iterator)
                                     }),
-                                    ($) => $
-                                ),
-                                'range': create_range(iterator, { 'start character': $ }),
-                                'trailing whitespace': Whitespace(iterator)
-                            })
-                        case 0x2A: {// *
-                            iterator.consume.nothing(// discard the asterisk
-                                () => null,
-                                () => p_unreachable_code_path("has_more_items -> true")
 
-                            )
+                                )
+                            case 0x2A: {// *
+                                return iterator.consume(// discard the asterisk
+                                    () => p_unreachable_code_path("has_more_items -> true"),
+                                    () => ({
+                                        'type': ['block', null],
+                                        'content': p_variables(() => {
+                                            const $p_temp_content = p_text_from_list(
+                                                iterator.build_list({
+                                                    has_more_items: ($) => {
+                                                        // not an asterisk followed by a solidus (end of block comment)
+                                                        return $.code !== 0x2A
+                                                            || iterator.peek_ahead(
+                                                                1,
+                                                                () => true, // the asterisk needs to be processed, so, yes, there are more items
+                                                                ($) => $.code !== 0x2F, // not a solidus
+                                                            )
+                                                    },
+                                                    handle: () => iterator.consume(
+                                                        () => p_unreachable_code_path("has_more_items -> true"),
+                                                        ($) => $.code,
+                                                    ),
+                                                }),
+                                                ($) => $
+                                            )
+                                            iterator.consume( // discard the asterisk
+                                                ($) => abort({
+                                                    'expected': ['block comment termination', null],
+                                                    'range': {
+                                                        'start': $,
+                                                        'end': $,
+                                                    }
+                                                }),
+                                                ($) => $.code === 0x2A
+                                                    ? null
+                                                    : abort({
+                                                        'expected': ['block comment termination', null],
+                                                        'range': {
+                                                            'start': $.location,
+                                                            'end': $.location,
+                                                        }
+                                                    }),
+                                            )
+                                            iterator.consume( // discard the solidus
+                                                ($) => abort({
+                                                    'expected': ['block comment termination', null],
+                                                    'range': {
+                                                        'start': $,
+                                                        'end': $,
+                                                    }
+                                                }),
+                                                ($) => $.code === 0x2F
+                                                    ? null
+                                                    : abort({
+                                                        'expected': ['block comment termination', null],
+                                                        'range': {
+                                                            'start': $.location,
+                                                            'end': $.location,
+                                                        }
+                                                    }),
+                                            )
 
+                                            return $p_temp_content
+                                        }
+                                        ),
+                                        'range': create_range(iterator, { 'start character': $ }),
+                                        'trailing whitespace': Whitespace(iterator)
+                                    }),
 
-                            // const create_error = (
-                            //     element: p_di.Optional_Value<d_in.Annotated_Character>,
-                            //     expected: d_function.Lexer_Error.expected,
-                            // ): d_function.Lexer_Error => p_t.from.optional(element).decide<d_function.Lexer_Error>(
-                            //     ($) => ({
-                            //         'range': {
-                            //             'start': $.location,
-                            //             'end': {
-                            //                 'absolute': $.location.absolute + 1,
-                            //                 'relative': {
-                            //                     'line': $.location.relative.line,
-                            //                     'column': $.location.relative.column + 1,
-                            //                 }
-                            //             }
-                            //         },
-                            //         'expected': expected
-                            //     }),
-                            //     () => p_unreachable_code_path("implement me")
-                            // )
-                            return {
-                                'type': ['block', null],
-                                'content': p_variables(() => {
-                                    const $p_temp_content = p_text_from_list(
-                                        iterator.build_list({
-                                            has_more_items: ($) => {
-                                                // not an asterisk followed by a solidus (end of block comment)
-                                                return $.code !== 0x2A
-                                                    || iterator.peek_ahead(
-                                                        1,
-                                                        ($) => $.code !== 0x2F, // not a solidus
-                                                        () => true // the asterisk needs to be processed, so, yes, there are more items
-                                                    )
-                                            },
-                                            handle: () => iterator.consume.number(
-                                                ($) => $.code,
-                                                () => p_unreachable_code_path("has_more_items -> true")
-                                            ),
-                                        }),
-                                        ($) => $
-                                    )
-                                    iterator.consume.nothing( // discard the asterisk
-                                        ($) => $.code === 0x2A
-                                            ? null
-                                            : abort({
-                                                'expected': ['block comment termination', null],
-                                                'range': {
-                                                    'start': $.location,
-                                                    'end': $.location,
-                                                }
-                                            }),
-                                        (end_info) => abort({
-                                            'expected': ['block comment termination', null],
-                                            'range': {
-                                                'start': end_info,
-                                                'end': end_info,
-                                            }
-                                        })
-                                    )
-                                    iterator.consume.nothing( // discard the solidus
-                                        ($) => $.code === 0x2F
-                                            ? null
-                                            : abort({
-                                                'expected': ['block comment termination', null],
-                                                'range': {
-                                                    'start': $.location,
-                                                    'end': $.location,
-                                                }
-                                            }),
-                                        (end_info,) => abort({
-                                            'expected': ['block comment termination', null],
-                                            'range': {
-                                                'start': end_info,
-                                                'end': end_info,
-                                            }
-                                        })
-                                    )
-
-                                    return $p_temp_content
-                                }
-                                ),
-                                'range': create_range(iterator, { 'start character': $ }),
-                                'trailing whitespace': Whitespace(iterator)
+                                )
                             }
+                            default: return p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
                         }
-                        default: return p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
-                    }
-
-                },
-                () => p_unreachable_code_path("has_more_items -> true")
+                    },
+                ),
             )
         },
-
     }),
 })
 
@@ -252,182 +226,174 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
         'end character': number,
         'start character': d_in.Annotated_Character
     }
-> = (
-    iterator,
-    abort,
-    $p
-): string => {
+> = (iterator, abort, $p) => {
+    const $p_content = p_text_from_list(
+        iterator.build_list({
+            has_more_items: ($) => $.code !== $p['end character'],
+            handle: (): number => iterator.consume(
+                () => p_unreachable_code_path("has_more_items -> true"),
+                ($) => {
+                    const Character = {
+                        backspace: 0x08,            // \b
+                        form_feed: 0x0C,            // \f
+                        tab: 0x09,                  // \t
+                        line_feed: 0x0A,            // \n
+                        carriage_return: 0x0D,      // \r
+                        quotation_mark: 0x22,       // "
+                        backtick: 0x60,             // `
+                        apostrophe: 0x27,           // '
+                        reverse_solidus: 0x5C,      // \
+                        solidus: 0x2F,              // /
+                        a: 0x61,                    // a
+                        b: 0x62,                    // b
+                        f: 0x66,                    // f
+                        n: 0x6E,                    // n
+                        r: 0x72,                    // r
+                        t: 0x74,                    // t
+                        u: 0x75,                    // u
+                        A: 0x41,                    // A
+                        F: 0x46,                    // F
 
-        const Character = {
-            backspace: 0x08,            // \b
-            form_feed: 0x0C,            // \f
-            tab: 0x09,                  // \t
-            line_feed: 0x0A,            // \n
-            carriage_return: 0x0D,      // \r
-            quotation_mark: 0x22,       // "
-            backtick: 0x60,             // `
-            apostrophe: 0x27,           // '
-            reverse_solidus: 0x5C,      // \
-            solidus: 0x2F,              // /
-            a: 0x61,                    // a
-            b: 0x62,                    // b
-            f: 0x66,                    // f
-            n: 0x6E,                    // n
-            r: 0x72,                    // r
-            t: 0x74,                    // t
-            u: 0x75,                    // u
-            A: 0x41,                    // A
-            F: 0x46,                    // F
+                    }
+                    switch ($.code) {
+                        case Character.line_feed: return $p['allow newlines']
+                            ? $.code
+                            : abort({
+                                'expected': ['no end of line in text', null],
+                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                            })
+                        case Character.carriage_return: return $p['allow newlines']
+                            ? $.code
+                            : abort({
+                                'expected': ['no end of line in text', null],
+                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                            })
+                        case Character.reverse_solidus: return iterator.consume(
+                            ($) => abort({
+                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                'expected': ['escape character', { 'found': p_.literal.not_set() }]
+                            }),
+                            ($) => {
+                                switch ($.code) {
+                                    case Character.quotation_mark: return Character.quotation_mark
+                                    case Character.apostrophe: return Character.apostrophe
+                                    case Character.backtick: return Character.backtick
+                                    case Character.reverse_solidus: return Character.reverse_solidus
+                                    case Character.solidus: return Character.solidus
 
-        }
-        return p_text_from_list(
-            iterator.build_list({
-                has_more_items: ($) => $.code !== $p['end character'],
-                handle: (): number => iterator.consume.number(
-                    ($) => {
-                        switch ($.code) {
-                            case Character.line_feed: return $p['allow newlines']
-                                ? $.code
-                                : abort({
-                                    'expected': ['no end of line in text', null],
-                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                })
-                            case Character.carriage_return: return $p['allow newlines']
-                                ? $.code
-                                : abort({
-                                    'expected': ['no end of line in text', null],
-                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                })
-                            case Character.reverse_solidus: return iterator.consume.number(
-                                ($) => {
-                                    switch ($.code) {
-                                        case Character.quotation_mark:
-                                            return Character.quotation_mark
-                                        case Character.apostrophe:
-                                            return Character.apostrophe
-                                        case Character.backtick:
-                                            return Character.backtick
-                                        case Character.reverse_solidus:
-                                            return Character.reverse_solidus
-                                        case Character.solidus:
-                                            return Character.solidus
-                                        case Character.b:
-                                            return Character.backspace
-                                        case Character.f:
-                                            return Character.form_feed
-                                        case Character.n:
-                                            return Character.line_feed
-                                        case Character.r:
-                                            return Character.carriage_return
-                                        case Character.t:
-                                            return Character.tab
-                                        case Character.u:
-                                            const r_hexadecimal: p_ri.Refiner<
-                                                number, string, d_loc.List_of_Characters
-                                            > = ($, abort) => {
-                                                const characters = $
-                                                let result = 0
-                                                let isNegative = false
-                                                let startIndex = 0
+                                    case Character.b: return Character.backspace
+                                    case Character.f: return Character.form_feed
+                                    case Character.n: return Character.line_feed
+                                    case Character.r: return Character.carriage_return
+                                    case Character.t: return Character.tab
+                                    case Character.u:
+                                        const r_hexadecimal: p_ri.Refiner<
+                                            number, string, d_loc.List_of_Characters
+                                        > = ($, abort) => {
+                                            const characters = $
+                                            let result = 0
+                                            let isNegative = false
+                                            let startIndex = 0
 
-                                                // Check for empty string
-                                                if (p_t.from.list(characters).amount_of_items() === 0) {
-                                                    abort("empty string is not a valid hexadecimal number")
-                                                }
-
-                                                const get_character_at = (index: number): number => {
-                                                    return characters.__deprecated_get_item_at(
-                                                        index,
-                                                        {
-                                                            out_of_bounds: () => p_unreachable_code_path("this function is only called with valid indices, so this should never happen"),
-                                                        }
-                                                    )
-                                                }
-
-                                                // Check for negative sign
-                                                if (p_t.from.list(characters).amount_of_items() > 0 && get_character_at(0) === 45) { // '-'
-                                                    isNegative = true
-                                                    startIndex = 1
-                                                }
-
-                                                // Check for "0x" prefix - REQUIRE it for hex
-                                                if (p_t.from.list(characters).amount_of_items() <= startIndex + 1 ||
-                                                    get_character_at(startIndex) !== 48 || // '0'
-                                                    get_character_at(startIndex + 1) !== 120) { // 'x'
-                                                    abort("Hexadecimal number must have '0x' prefix")
-                                                }
-                                                startIndex += 2
-
-                                                // Check if there are digits after the prefix
-                                                if (startIndex >= p_t.from.list(characters).amount_of_items()) {
-                                                    abort("Hexadecimal number must have digits after '0x' prefix")
-                                                }
-
-                                                // Parse hex digits from left to right
-                                                for (let i = startIndex; i < p_t.from.list(characters).amount_of_items(); i++) {
-                                                    const charCode = get_character_at(i)
-                                                    let digit: number
-
-                                                    // Check if character is a hex digit
-                                                    if (charCode >= 48 && charCode <= 57) { // '0'-'9'
-                                                        digit = charCode - 48
-                                                    } else if (charCode >= 65 && charCode <= 70) { // 'A'-'F'
-                                                        digit = charCode - 65 + 10
-                                                    } else if (charCode >= 97 && charCode <= 102) { // 'a'-'f'
-                                                        digit = charCode - 97 + 10
-                                                    } else {
-                                                        // Invalid character
-                                                        return abort("Invalid character in hexadecimal string")
-                                                    }
-
-                                                    result = result * 16 + digit
-                                                }
-
-                                                return isNegative ? -result : result
+                                            // Check for empty string
+                                            if (p_t.from.list(characters).amount_of_items() === 0) {
+                                                abort("empty string is not a valid hexadecimal number")
                                             }
-                                            const get_char = () => {
-                                                return iterator.consume.number(
-                                                    ($) => $.code,
-                                                    (end_info) => abort({
-                                                        'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                        'expected': ['unicode character', { 'found': p_.literal.not_set() }]
-                                                    })
+
+                                            const get_character_at = (index: number): number => {
+                                                return characters.__deprecated_get_item_at(
+                                                    index,
+                                                    {
+                                                        out_of_bounds: () => p_unreachable_code_path("this function is only called with valid indices, so this should never happen"),
+                                                    }
                                                 )
                                             }
-                                            return r_hexadecimal(
-                                                p_.literal.list([
-                                                    get_char(),
-                                                    get_char(),
-                                                    get_char(),
-                                                    get_char()
-                                                ]),
-                                                ($) => abort({
-                                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                                    'expected': ['unicode character', { 'found': p_.literal.set(42) }] //FIXME: should be unicode *value*
-                                                })
-                                            )
-                                        default: return abort({
-                                            'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                            'expected': ['escape character', {
-                                                'found': p_.literal.set($.code)
-                                            }]
-                                        })
-                                    }
-                                },
-                                (end_info) => abort({
-                                    'range': create_range(iterator, { 'start character': $p['start character'] }),
-                                    'expected': ['escape character', { 'found': p_.literal.not_set() }]
-                                })
-                            )
-                            default: return $.code
-                        }
-                    },
-                    () => p_unreachable_code_path("has_more_items -> true")
-                )
-            }),
-            ($) => $
-        )
-    }
+
+                                            // Check for negative sign
+                                            if (p_t.from.list(characters).amount_of_items() > 0 && get_character_at(0) === 45) { // '-'
+                                                isNegative = true
+                                                startIndex = 1
+                                            }
+
+                                            // Check for "0x" prefix - REQUIRE it for hex
+                                            if (p_t.from.list(characters).amount_of_items() <= startIndex + 1 ||
+                                                get_character_at(startIndex) !== 48 || // '0'
+                                                get_character_at(startIndex + 1) !== 120) { // 'x'
+                                                abort("Hexadecimal number must have '0x' prefix")
+                                            }
+                                            startIndex += 2
+
+                                            // Check if there are digits after the prefix
+                                            if (startIndex >= p_t.from.list(characters).amount_of_items()) {
+                                                abort("Hexadecimal number must have digits after '0x' prefix")
+                                            }
+
+                                            // Parse hex digits from left to right
+                                            for (let i = startIndex; i < p_t.from.list(characters).amount_of_items(); i++) {
+                                                const charCode = get_character_at(i)
+                                                let digit: number
+
+                                                // Check if character is a hex digit
+                                                if (charCode >= 48 && charCode <= 57) { // '0'-'9'
+                                                    digit = charCode - 48
+                                                } else if (charCode >= 65 && charCode <= 70) { // 'A'-'F'
+                                                    digit = charCode - 65 + 10
+                                                } else if (charCode >= 97 && charCode <= 102) { // 'a'-'f'
+                                                    digit = charCode - 97 + 10
+                                                } else {
+                                                    // Invalid character
+                                                    return abort("Invalid character in hexadecimal string")
+                                                }
+
+                                                result = result * 16 + digit
+                                            }
+
+                                            return isNegative ? -result : result
+                                        }
+                                        const consume_char = (): number => iterator.consume(
+                                            ($) => abort({
+                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                'expected': ['unicode character', { 'found': p_.literal.not_set() }]
+                                            }),
+                                            ($) => $.code,
+                                        )
+                                        return r_hexadecimal(
+                                            p_.literal.list([
+                                                consume_char(),
+                                                consume_char(),
+                                                consume_char(),
+                                                consume_char()
+                                            ]),
+                                            ($) => abort({
+                                                'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                                'expected': ['unicode character', { 'found': p_.literal.set(42) }] //FIXME: should be unicode *value*
+                                            })
+                                        )
+                                    default: return abort({
+                                        'range': create_range(iterator, { 'start character': $p['start character'] }),
+                                        'expected': ['escape character', {
+                                            'found': p_.literal.set($.code)
+                                        }]
+                                    })
+                                }
+                            },
+                        )
+                        default: return $.code
+                    }
+                },
+            )
+        }),
+        ($) => $
+    )
+    iterator.consume( //discard the end character
+        () => abort({
+            'expected': ['text termination', null],
+            'range': create_range(iterator, { 'start character': $p['start character'] }),
+        }),
+        () => null
+    )
+    return $p_content
+}
 
 export const Tokenizer_Result: p_pi.Production_With_Parameter<
     d_out.Tokenizer_Result,
@@ -447,12 +413,13 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
         has_more_items: ($) => true,
         handle: () => {
             const $p_start = iterator.peek(
+                () => p_unreachable_code_path("has_more_items -> true"),
                 ($) => $,
-                () => p_unreachable_code_path("has_more_items -> true")
             )
             return ({
                 'start': $p_start.location,
                 'type': iterator.peek(
+                    () => p_unreachable_code_path("has_more_items -> true"),
                     ($) => {
 
                         const Character = {
@@ -485,110 +452,76 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
 
                         }
                         switch ($.code) {
-                            case Character.open_brace:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['{', null]
-                            case Character.open_bracket:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['[', null]
-                            case Character.open_angle_bracket:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['<', null]
-                            case Character.open_paren:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['(', null]
-                            case Character.close_brace:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['}', null]
-                            case Character.close_bracket:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return [']', null]
-                            case Character.close_angle_bracket:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['>', null]
-                            case Character.close_paren:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return [')', null]
+                            case Character.open_brace: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['{', null],
+                            )
+                            case Character.open_bracket: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['[', null],
+                            )
+                            case Character.open_angle_bracket: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['<', null],
+                            )
+                            case Character.open_paren: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['(', null],
+                            )
+                            case Character.close_brace: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['}', null],
+                            )
+                            case Character.close_bracket: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => [']', null],
+                            )
+                            case Character.close_angle_bracket: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['>', null],
+                            )
+                            case Character.close_paren: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => [')', null],
+                            )
+
 
                             //individuals
-                            case Character.hash:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['#', null] // missing data token
-                            case Character.pipe:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['|', null] // state value token
-                            case Character.underscore:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['_', null] // unset value token
-                            case Character.tilde:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['~', null] // unset value token
-                            case Character.asterisk:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['*', null] // set value token
-                            case Character.at:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['@', null] // include token
-                            case Character.bang:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['!', null] // header token
-                            case Character.colon:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return [':', null] // structural token
-                            case Character.quotation_mark:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['text', {
+                            case Character.hash: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['#', null] // missing data token
+                            )
+                            case Character.pipe: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['|', null] // state value token
+                            )
+                            case Character.underscore: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['_', null] // unset value token
+                            )
+                            case Character.tilde: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['~', null] // unset value token
+                            )
+                            case Character.asterisk: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['*', null] // set value token
+                            )
+                            case Character.at: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['@', null] // include token
+                            )
+                            case Character.bang: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['!', null] // header token
+                            )
+                            case Character.colon: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => [':', null] // structural token
+                            )
+                            case Character.quotation_mark: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['text', {
                                     'value': Delimited_Text(
                                         iterator,
                                         abort,
@@ -599,13 +532,11 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                                         }
                                     ),
                                     'type': ['quoted', null],
-                                }]
-                            case Character.backtick:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['text', {
+                                }],
+                            )
+                            case Character.backtick: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['text', {
                                     'value': Delimited_Text(
                                         iterator,
                                         abort,
@@ -616,13 +547,11 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                                         }
                                     ),
                                     'type': ['backticked', null],
-                                }]
-                            case Character.apostrophe:
-                                iterator.consume.nothing(
-                                    ($) => null,
-                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                )
-                                return ['text', {
+                                }],
+                            )
+                            case Character.apostrophe: return iterator.consume(
+                                () => p_unreachable_code_path("peeked"),
+                                ($) => ['text', {
                                     'value': Delimited_Text(
                                         iterator,
                                         abort,
@@ -633,61 +562,58 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                                         }
                                     ),
                                     'type': ['apostrophed', null],
-                                }]
+                                }],
+                            )
 
-                            default:
-                                return ['text', {
-                                    'type': ['undelimited', null],
-                                    'value': p_text_from_list(
+                            default: return ['text', {
+                                'type': ['undelimited', null],
+                                'value': p_text_from_list(
 
-                                        iterator.build_list({
-                                            has_more_items: ($) => {
-                                                const WhitespaceChars = {
-                                                    tab: 0x09,                  // \t
-                                                    line_feed: 0x0A,            // \n
-                                                    carriage_return: 0x0D,      // \r
-                                                    space: 0x20,                //
-                                                    comma: 0x2C,                // ,
-                                                }
-                                                return $.code !== Character.open_brace &&
-                                                    $.code !== Character.close_brace &&
-                                                    $.code !== Character.open_bracket &&
-                                                    $.code !== Character.close_bracket &&
-                                                    $.code !== Character.open_angle_bracket &&
-                                                    $.code !== Character.close_angle_bracket &&
-                                                    $.code !== Character.open_paren &&
-                                                    $.code !== Character.close_paren &&
-                                                    $.code !== Character.apostrophe &&
-                                                    $.code !== Character.asterisk &&
-                                                    $.code !== Character.at &&
-                                                    $.code !== Character.backtick &&
-                                                    $.code !== Character.bang &&
-                                                    $.code !== Character.colon &&
-                                                    $.code !== Character.pipe &&
-                                                    $.code !== Character.quotation_mark &&
-                                                    $.code !== Character.slash &&
-                                                    $.code !== Character.tilde &&
-                                                    $.code !== WhitespaceChars.comma &&
-                                                    $.code !== WhitespaceChars.space &&
-                                                    $.code !== WhitespaceChars.tab &&
-                                                    $.code !== WhitespaceChars.line_feed &&
-                                                    $.code !== WhitespaceChars.carriage_return
-                                            },
-                                            handle: () => {
-                                                return iterator.consume.number(
-                                                    ($) => $.code,
-                                                    () => p_unreachable_code_path("we checked that there is a next character, so this should never happen")
-                                                )
-                                            },
-                                        }),
-                                        ($) => $
-                                    )
-                                }]
+                                    iterator.build_list({
+                                        has_more_items: ($) => {
+                                            const WhitespaceChars = {
+                                                tab: 0x09,                  // \t
+                                                line_feed: 0x0A,            // \n
+                                                carriage_return: 0x0D,      // \r
+                                                space: 0x20,                //
+                                                comma: 0x2C,                // ,
+                                            }
+                                            return $.code !== Character.open_brace &&
+                                                $.code !== Character.close_brace &&
+                                                $.code !== Character.open_bracket &&
+                                                $.code !== Character.close_bracket &&
+                                                $.code !== Character.open_angle_bracket &&
+                                                $.code !== Character.close_angle_bracket &&
+                                                $.code !== Character.open_paren &&
+                                                $.code !== Character.close_paren &&
+                                                $.code !== Character.apostrophe &&
+                                                $.code !== Character.asterisk &&
+                                                $.code !== Character.at &&
+                                                $.code !== Character.backtick &&
+                                                $.code !== Character.bang &&
+                                                $.code !== Character.colon &&
+                                                $.code !== Character.pipe &&
+                                                $.code !== Character.quotation_mark &&
+                                                $.code !== Character.slash &&
+                                                $.code !== Character.tilde &&
+                                                $.code !== WhitespaceChars.comma &&
+                                                $.code !== WhitespaceChars.space &&
+                                                $.code !== WhitespaceChars.tab &&
+                                                $.code !== WhitespaceChars.line_feed &&
+                                                $.code !== WhitespaceChars.carriage_return
+                                        },
+                                        handle: () => iterator.consume(
+                                            () => p_unreachable_code_path("has_more_items -> true"),
+                                            ($) => $.code,
+                                        ),
+                                    }),
+                                    ($) => $
+                                )
+                            }]
                         }
 
 
                     },
-                    () => p_unreachable_code_path("has_more_items -> true")
                 ),
                 'end': create_range(iterator, { 'start character': $p_start }).end,
                 'trailing trivia': Trivia(iterator, abort),
