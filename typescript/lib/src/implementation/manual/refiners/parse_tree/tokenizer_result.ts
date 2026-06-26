@@ -34,25 +34,9 @@ export const Document: signatures.Document = ($, abort) => p_iterate<
 >({
     list: $.tokens,
     end_info: $.end,
-    on_dangling_item: null, //FIX enable checking for too many tokens
-    // create_expectation_error: (expected, found) => ({
-    //     'expected': expected,
-    //     'cause': p_.from.state(found).decide(
-    //         ($) => {
-    //             switch ($[0]) {
-    //                 case 'end': return p_.ss($, ($) => ['missing token', {
-    //                     'end': $,
-    //                 }])
-    //                 case 'item': return p_.ss($, ($) => ['unexpected token', {
-    //                     'found': $,
-    //                 }])
-    //                 default: return p_.au($[0])
-    //             }
-    //         }
-    //     )
-    // }),
     assign: (iterator) => pr_authoring_parse_tree.Document(
         iterator,
         abort,
-    )
+    ),
+    on_dangling_item: null, //FIX enable checking for too many tokens
 })

@@ -37,25 +37,6 @@ export const Document: signatures.Document = ($, abort, $p,) => {
     >({
         list: ann_chars.characters,
         end_info: ann_chars.end,
-        on_dangling_item: null,//fixme: make this iterate_fully
-        // create_expectation_error: (expected, found) => ({
-        //     'expected': expected,
-        //     'range': p_.from.state(found).decide(
-        //         ($): d_location.Range => {
-        //             switch ($[0]) {
-        //                 case 'end': return p_.ss($, ($) => ({
-        //                     'start': ann_chars.end,
-        //                     'end': ann_chars.end
-        //                 }))
-        //                 case 'item': return p_.ss($, ($) => ({
-        //                     'start': $.location,
-        //                     'end': $.location, //shouldn't this be incremented by 1?
-        //                 }))
-        //                 default: return p_.au($[0])
-        //             }
-        //         }
-        //     ),
-        // }),
         assign: (iterator) => r_from_tokenizer_result.Document(//fixme: make this iterate_fully
             pr_tokenize.Tokenizer_Result(
                 iterator,
@@ -69,6 +50,7 @@ export const Document: signatures.Document = ($, abort, $p,) => {
             ($) => abort({
                 'type': ['parser', $],
             })
-        )
+        ),
+        on_dangling_item: null,//fixme: make this iterate_fully
     })
 }
