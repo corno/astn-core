@@ -110,7 +110,7 @@ export const Trivia: p_pi.Production<
                     ($) => $.code === 0x2F || $.code === 0x2A, // slash or asterisk
                 )
         },
-        handle: (): d_out.Trivia.comments.L => {
+        handle: ()=> {
             return iterator.consume( // discard the first slash
                 () => p_unreachable_code_path("has_more_items -> true"),
                 ($) => iterator.peek(
@@ -230,7 +230,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
     const $p_content = p_text_from_list(
         iterator.build_list({
             has_more_items: ($) => $.code !== $p['end character'],
-            handle: (): number => iterator.consume(
+            handle: () => iterator.consume(
                 () => p_unreachable_code_path("has_more_items -> true"),
                 ($) => {
                     const Character = {

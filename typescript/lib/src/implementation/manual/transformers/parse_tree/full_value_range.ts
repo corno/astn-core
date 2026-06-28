@@ -33,7 +33,7 @@ d_in.Value.type_.concrete.optional, d_out.Range
 
 export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(
     ($) => p_.from.state($).decide(
-        ($): d_out.Range => {
+        ($) => {
             switch ($[0]) {
                 case 'dictionary': return p_.ss($, ($) => Dictionary($))
 
@@ -97,7 +97,7 @@ export const State: State = ($) => ({
 })
 
 export const Value: Value = ($) => p_.from.state($.type).decide(
-    ($): d_out.Range => {
+    ($) => {
         switch ($[0]) {
             case 'concrete': return p_.ss($, ($) => Concrete_Value($))
             case 'include': return p_.ss($, ($) => ({

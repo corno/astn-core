@@ -1,5 +1,4 @@
 import * as p_ from 'pareto-core/dist/implementation/refiner'
-import * as p_i from 'pareto-core/dist/interface/refiner'
 import * as p_ti from 'pareto-core/dist/interface/transformer'
 
 import * as d_out from "../../../../interface/data/annotated_characters"
@@ -95,7 +94,7 @@ export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => 
                     'found carriage return before': value.code === 0x0D /* carriage return */,
                 }
     },
-    (final_list, final_state): d_out.Annotated_Characters => ({
+    (final_list, final_state) => ({
         'characters': final_list,
         'end': final_state.location,
     })

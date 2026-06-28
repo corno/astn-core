@@ -144,9 +144,9 @@ export const Value: interface_.Value = (iterator, abort) => ({
         ($, expected) => {
             const token = $
             return p_.from.state($.type).decide(
-                ($): d_out.Value.type_ => {
+                ($) => {
                     switch ($[0]) {
-                        case 'text': return p_.ss($, ($): d_out.Value.type_ => ['concrete',
+                        case 'text': return p_.ss($, ($) => ['concrete',
                             ['text', Text(
                                 iterator,
                                 abort,
@@ -183,7 +183,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort,
                                 { 'expected token': [')', null] })
                         }]]])
-                        case '[': return p_.ss($, ($): d_out.Value.type_ => ['concrete', ['list', {
+                        case '[': return p_.ss($, ($) => ['concrete', ['list', {
                             '[': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -198,7 +198,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort,
                                 { 'expected token': [']', null] })
                         }]])
-                        case '<': return p_.ss($, ($): d_out.Value.type_ => ['concrete', ['group', ['concise', {
+                        case '<': return p_.ss($, ($) => ['concrete', ['group', ['concise', {
                             '<': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,

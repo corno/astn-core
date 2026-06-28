@@ -1,8 +1,6 @@
 
 import * as p_di from 'pareto-core/dist/interface/data'
 
-import * as i_imports_parse_tree from "../parse_tree/data"
-
 import * as i_imports_token from "../token/data"
 
 import * as i_imports_location from "../location/data"

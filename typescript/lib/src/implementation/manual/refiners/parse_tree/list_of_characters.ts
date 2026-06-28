@@ -1,4 +1,3 @@
-import * as p_ from 'pareto-core/dist/implementation/refiner'
 import * as p_i from 'pareto-core/dist/interface/refiner'
 import p_iterate from 'pareto-core/dist/implementation/refiner/specials/iterate'
 
@@ -7,7 +6,6 @@ import * as d_function from "../../../../interface/generated/liana/schemas/deser
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 import * as d_annotated_characters from "../../../../interface/data/annotated_characters"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
 
 //dependencies
 import * as r_annotated_characters from "../annotated_characters/text"
