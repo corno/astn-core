@@ -35,14 +35,14 @@ export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(
     ($) => p_.from.state($).decide(
         ($) => {
             switch ($[0]) {
-                case 'dictionary': return p_.ss($, ($) => Dictionary($))
+                case 'dictionary': return p_.option($, ($) => Dictionary($))
 
-                case 'group': return p_.ss($, ($) => Group($))
-                case 'list': return p_.ss($, ($) => List($))
-                case 'nothing': return p_.ss($, ($) => $['~'].range)
-                case 'optional': return p_.ss($, ($) => Optional($))
-                case 'state': return p_.ss($, ($) => State($))
-                case 'text': return p_.ss($, ($) => $.range)
+                case 'group': return p_.option($, ($) => Group($))
+                case 'list': return p_.option($, ($) => List($))
+                case 'nothing': return p_.option($, ($) => $['~'].range)
+                case 'optional': return p_.option($, ($) => Optional($))
+                case 'state': return p_.option($, ($) => State($))
+                case 'text': return p_.option($, ($) => $.range)
                 default: return p_.au($[0])
             }
         }))
@@ -55,11 +55,11 @@ export const Dictionary: Dictionary = ($) => ({
 export const Group: Group = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
-            case 'concise': return p_.ss($, ($) => ({
+            case 'concise': return p_.option($, ($) => ({
                 'start': $['<'].range.start,
                 'end': $['>'].range.end
             }))
-            case 'verbose': return p_.ss($, ($) => ({
+            case 'verbose': return p_.option($, ($) => ({
                 'start': $['('].range.start,
                 'end': $[')'].range.end
             }))
@@ -75,11 +75,11 @@ export const List: List = ($) => ({
 export const Optional: Optional = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
-            case 'set': return p_.ss($, ($) => ({
+            case 'set': return p_.option($, ($) => ({
                 'start': $['*'].range.start,
                 'end': Value($['value']).end
             }))
-            case 'not set': return p_.ss($, ($) => $['_'].range)
+            case 'not set': return p_.option($, ($) => $['_'].range)
             default: return p_.au($[0])
         }
     })
@@ -89,8 +89,8 @@ export const State: State = ($) => ({
     'end': p_.from.state($.status).decide(
         ($) => {
             switch ($[0]) {
-                case 'missing': return p_.ss($, ($) => $['#'].range.end)
-                case 'set': return p_.ss($, ($) => Value($['value']).end)
+                case 'missing': return p_.option($, ($) => $['#'].range.end)
+                case 'set': return p_.option($, ($) => Value($['value']).end)
                 default: return p_.au($[0])
             }
         })
@@ -99,12 +99,12 @@ export const State: State = ($) => ({
 export const Value: Value = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
-            case 'concrete': return p_.ss($, ($) => Concrete_Value($))
-            case 'include': return p_.ss($, ($) => ({
+            case 'concrete': return p_.option($, ($) => Concrete_Value($))
+            case 'include': return p_.option($, ($) => ({
                 'start': $['@'].range.start,
                 'end': $.path.range.end
             }))
-            case 'missing': return p_.ss($, ($) => ($['#'].range))
+            case 'missing': return p_.option($, ($) => ($['#'].range))
             default: return p_.au($[0])
         }
     })

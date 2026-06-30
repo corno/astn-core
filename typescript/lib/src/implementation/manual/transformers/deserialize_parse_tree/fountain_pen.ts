@@ -17,25 +17,25 @@ export const Error: signatures.Error = ($) => {
     const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => p_.from.state($).decide(
         ($) => {
             switch ($[0]) {
-                case 'lexer': return p_.ss($, ($) => p_.from.state($.expected).decide(
+                case 'lexer': return p_.option($, ($) => p_.from.state($.expected).decide(
                     ($) => {
                         switch ($[0]) {
                             case 'unicode character': return sh.ph.literal("found invalid unicode escape sequence")
-                            case 'no end of line in text': return p_.ss($, ($) => sh.ph.literal("no end of line in text"))
-                            case 'escape character': return p_.ss($, ($) => sh.ph.composed([
+                            case 'no end of line in text': return p_.option($, ($) => sh.ph.literal("no end of line in text"))
+                            case 'escape character': return p_.option($, ($) => sh.ph.composed([
                                 sh.ph.literal("escape character (), but found "),
                                 p_.from.optional($.found).decide(
                                     ($) => sh.ph.serialize(p_.literal.list([$])),
                                     () => sh.ph.literal("nothing")
                                 ),
                             ]))
-                            case 'block comment termination': return p_.ss($, ($) => sh.ph.literal("block comment termination: */"))
-                            case 'text termination': return p_.ss($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
+                            case 'block comment termination': return p_.option($, ($) => sh.ph.literal("block comment termination: */"))
+                            case 'text termination': return p_.option($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
 
                             default: return p_.au($[0])
                         }
                     }))
-                case 'parser': return p_.ss($, ($) => sh.ph.composed([
+                case 'parser': return p_.option($, ($) => sh.ph.composed([
                     sh.ph.literal("expected "),
                     sh.ph.rich(
                         p_.from.list($.expected).map(
@@ -68,12 +68,12 @@ export const Error: signatures.Error = ($) => {
                     p_.from.state($.cause).decide(
                         ($) => {
                             switch ($[0]) {
-                                case 'unexpected token': return p_.ss($, ($) => sh.ph.composed([
+                                case 'unexpected token': return p_.option($, ($) => sh.ph.composed([
                                     sh.ph.literal("'"),
                                     sh.ph.literal($.found.type[0]),
                                     sh.ph.literal("'")
                                 ]))
-                                case 'missing token': return p_.ss($, ($) => sh.ph.literal("nothing"))
+                                case 'missing token': return p_.option($, ($) => sh.ph.literal("nothing"))
                                 default: return p_.au($[0])
                             }
                         })

@@ -72,10 +72,10 @@ export const Dictionary: Dictionary = ($, abort) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'dictionary': return p_.ss($, ($): d_out.Dictionary => ({
+                            case 'dictionary': return p_.option($, ($): d_out.Dictionary => ({
                                 'value': value,
                                 'entries': p_.from.list($.entries).convert_to_dictionary(
                                     ($) => $.id.token.value,
@@ -111,10 +111,10 @@ export const List: List = ($, abort) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'list': return p_.ss($, ($) => ({
+                            case 'list': return p_.option($, ($) => ({
                                 'value': value,
                                 'items': $.items
                             }))
@@ -141,10 +141,10 @@ export const Nothing: Nothing = ($, abort) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'nothing': return p_.ss($, ($) => ({
+                            case 'nothing': return p_.option($, ($) => ({
                                 'value': value,
                                 'null': null
                             }))
@@ -171,17 +171,17 @@ export const Optional: Optional = ($, abort) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'optional': return p_.ss($, ($) => p_.from.state($).decide(
+                            case 'optional': return p_.option($, ($) => p_.from.state($).decide(
                                 ($) => {
                                     switch ($[0]) {
-                                        case 'set': return p_.ss($, ($) => ({
+                                        case 'set': return p_.option($, ($) => ({
                                             'value': value,
                                             'optional': p_.literal.set($.value)
                                         }))
-                                        case 'not set': return p_.ss($, ($) => ({
+                                        case 'not set': return p_.option($, ($) => ({
                                             'value': value,
                                             'optional': p_.literal.not_set()
                                         }))
@@ -229,13 +229,13 @@ export const State: State = ($, abort) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'state': return p_.ss($, ($) => p_.from.state($.status).decide(
+                            case 'state': return p_.option($, ($) => p_.from.state($.status).decide(
                                 ($) => {
                                     switch ($[0]) {
-                                        case 'set': return p_.ss($, ($) => $)
+                                        case 'set': return p_.option($, ($) => $)
                                         default: return abort({
                                             'type': ['wrong value type', {
                                                 'expected': ['state', null],
@@ -267,10 +267,10 @@ export const Text: Text = ($, abort) => {
     return p_.from.state($.type).decide(
         ($) => {
             switch ($[0]) {
-                case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'text': return p_.ss($, ($) => $)
+                            case 'text': return p_.option($, ($) => $)
                             default: return abort({
                                 'type': ['wrong value type', {
                                     'expected': ['text', null],
@@ -296,14 +296,14 @@ export const Verbose_Group: Verbose_Group = ($, abort, $p) => {
         'properties': p_.from.state($.type).decide(
             ($) => {
                 switch ($[0]) {
-                    case 'concrete': return p_.ss($, ($) => p_.from.state($).decide(
+                    case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                         ($) => {
                             switch ($[0]) {
-                                case 'group': return p_.ss($, ($) => p_.from.state($).decide(
+                                case 'group': return p_.option($, ($) => p_.from.state($).decide(
                                     ($) => {
                                         switch ($[0]) {
                                             // case 'concise':
-                                            case 'verbose': return p_.ss($, ($) => {
+                                            case 'verbose': return p_.option($, ($) => {
                                                 const xxx = p_.from.list($.properties).convert_to_dictionary(
                                                     ($) => $.id.token.value,
                                                     ($) => $,

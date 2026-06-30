@@ -14,8 +14,8 @@ d_in.Error, d_out.Possible_Range
 > = ($) => p_.from.state($).decide(
     ($): d_out.Possible_Range => {
         switch ($[0]) {
-            case 'parse error': return p_.ss($, ($) => t_deserialize_parse_tree_to_location.Error($))
-            case 'unmarshall error': return p_.ss($, ($) => ['range', t_unmarshall_to_location.Error($)])
+            case 'parse error': return p_.option($, ($) => t_deserialize_parse_tree_to_location.Error($))
+            case 'unmarshall error': return p_.option($, ($) => ['range', t_unmarshall_to_location.Error($)])
             default: return p_.au($[0])
         }
     })

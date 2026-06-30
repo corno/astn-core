@@ -61,8 +61,8 @@ export const Range: signatures.Range = ($, $p) => sh.ph.composed([
 export const Possible_Range: signatures.Possible_Range = ($, $p) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
-            case 'range': return p_.ss($, ($) => Range($, $p))
-            case 'end of document': return p_.ss($, ($) => Location($.end, $p))
+            case 'range': return p_.option($, ($) => Range($, $p))
+            case 'end of document': return p_.option($, ($) => Location($.end, $p))
             default: return p_.au($[0])
         }
     })

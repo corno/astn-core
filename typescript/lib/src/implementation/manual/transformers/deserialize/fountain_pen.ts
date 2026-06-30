@@ -15,8 +15,8 @@ d_in.Error, d_out.Phrase
     ($) => {
         switch ($[0]) {
 
-            case 'parse error': return p_.ss($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($))
-            case 'unmarshall error': return p_.ss($, ($) => t_unmarshall_to_fountain_pen.Error($))
+            case 'parse error': return p_.option($, ($) => t_deserialize_parse_tree_to_fountain_pen.Error($))
+            case 'unmarshall error': return p_.option($, ($) => t_unmarshall_to_fountain_pen.Error($))
             default: return p_.au($[0])
         }
     })

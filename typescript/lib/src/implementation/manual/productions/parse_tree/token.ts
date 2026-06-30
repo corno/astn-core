@@ -146,14 +146,14 @@ export const Value: interface_.Value = (iterator, abort) => ({
             return p_.from.state($.type).decide(
                 ($) => {
                     switch ($[0]) {
-                        case 'text': return p_.ss($, ($) => ['concrete',
+                        case 'text': return p_.option($, ($) => ['concrete',
                             ['text', Text(
                                 iterator,
                                 abort,
                                 { 'token': token, 'text': $ }
                             )]
                         ])
-                        case '{': return p_.ss($, ($) => ['concrete', ['dictionary', {
+                        case '{': return p_.option($, ($) => ['concrete', ['dictionary', {
                             '{': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -168,7 +168,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort,
                                 { 'expected token': ['}', null] }),
                         }]])
-                        case '(': return p_.ss($, ($) => ['concrete', ['group', ['verbose', {
+                        case '(': return p_.option($, ($) => ['concrete', ['group', ['verbose', {
                             '(': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -183,7 +183,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort,
                                 { 'expected token': [')', null] })
                         }]]])
-                        case '[': return p_.ss($, ($) => ['concrete', ['list', {
+                        case '[': return p_.option($, ($) => ['concrete', ['list', {
                             '[': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -198,7 +198,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort,
                                 { 'expected token': [']', null] })
                         }]])
-                        case '<': return p_.ss($, ($) => ['concrete', ['group', ['concise', {
+                        case '<': return p_.option($, ($) => ['concrete', ['group', ['concise', {
                             '<': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -213,7 +213,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort,
                                 { 'expected token': ['>', null] })
                         }]]])
-                        case '@': return p_.ss($, ($) => ['include', {
+                        case '@': return p_.option($, ($) => ['include', {
                             '@': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -232,14 +232,14 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                     : abort(create_unexpected_token(expected, { 'found': $ })),
                             )
                         }])
-                        case '~': return p_.ss($, ($) => ['concrete', ['nothing', {
+                        case '~': return p_.option($, ($) => ['concrete', ['nothing', {
                             '~': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
                                 { 'token': token }
                             ),
                         }]])
-                        case '|': return p_.ss($, ($) => ['concrete', ['state', {
+                        case '|': return p_.option($, ($) => ['concrete', ['state', {
                             '|': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -256,7 +256,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                     return p_.from.state($.type).decide(
                                         ($) => {
                                             switch ($[0]) {
-                                                case 'text': return p_.ss($, ($) => ['set', {
+                                                case 'text': return p_.option($, ($) => ['set', {
                                                     'option': Text(
                                                         iterator,
                                                         abort,
@@ -266,7 +266,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                                         abort
                                                     )
                                                 }])
-                                                case '#': return p_.ss($, ($) => ['missing', {
+                                                case '#': return p_.option($, ($) => ['missing', {
                                                     '#': Guaranteed_Structural_Token(
                                                         iterator,
                                                         abort,
@@ -281,14 +281,14 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 },
                             )
                         }]])
-                        case '_': return p_.ss($, ($) => ['concrete', ['optional', ['not set', {
+                        case '_': return p_.option($, ($) => ['concrete', ['optional', ['not set', {
                             '_': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
                                 { 'token': token }
                             ),
                         }]]])
-                        case '*': return p_.ss($, ($) => ['concrete', ['optional', ['set', {
+                        case '*': return p_.option($, ($) => ['concrete', ['optional', ['set', {
                             '*': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -299,7 +299,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 abort
                             )
                         }]]])
-                        case '#': return p_.ss($, ($) => ['missing', {
+                        case '#': return p_.option($, ($) => ['missing', {
                             '#': Guaranteed_Structural_Token(
                                 iterator,
                                 abort,
@@ -309,22 +309,22 @@ export const Value: interface_.Value = (iterator, abort) => ({
 
                         //unexpected tokens
 
-                        // case '!': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
+                        // case '!': return p_.option($, ($) => iterator.unexpected_token(token, p_.literal.list([
                         //     ['any value', null]
                         // ])))
-                        // case ':': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
+                        // case ':': return p_.option($, ($) => iterator.unexpected_token(token, p_.literal.list([
                         //     ['any value', null]
                         // ])))
-                        // case ')': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
+                        // case ')': return p_.option($, ($) => iterator.unexpected_token(token, p_.literal.list([
                         //     ['any value', null]
                         // ])))
-                        // case '>': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
+                        // case '>': return p_.option($, ($) => iterator.unexpected_token(token, p_.literal.list([
                         //     ['any value', null]
                         // ])))
-                        // case ']': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
+                        // case ']': return p_.option($, ($) => iterator.unexpected_token(token, p_.literal.list([
                         //     ['any value', null]
                         // ])))
-                        // case '}': return p_.ss($, ($) => iterator.unexpected_token(token, p_.literal.list([
+                        // case '}': return p_.option($, ($) => iterator.unexpected_token(token, p_.literal.list([
                         //     ['any value', null]
                         // ])))
 
@@ -444,8 +444,8 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
                 return p_.from.state($.type).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'text': return p_.ss($, ($) => p_.literal.not_set())
-                            case ':': return p_.ss($, ($) => p_.literal.set({
+                            case 'text': return p_.option($, ($) => p_.literal.not_set())
+                            case ':': return p_.option($, ($) => p_.literal.set({
                                 ':': Guaranteed_Structural_Token(
                                     iterator,
                                     abort,
