@@ -7,7 +7,7 @@ import * as d_function_fp from "pareto-fountain-pen/dist/interface/data/prose_se
 
 
 //dependencies
-import * as t_to_fp from "./prose"
+import * as t_to_prose from "./prose"
 import * as t_fp_to_characters from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
 
 
@@ -16,7 +16,7 @@ export const Document: p_i.Transformer_With_Parameter<
     d_out.List_of_Characters, 
     d_function_fp.Parameters
 > = ($, $p) => t_fp_to_characters.Paragraph(
-    t_to_fp.Document($),
+    t_to_prose.Document($),
     $p
 )
 export const Value: p_i.Transformer_With_Parameter<
@@ -24,6 +24,6 @@ export const Value: p_i.Transformer_With_Parameter<
     d_out.List_of_Characters, 
     d_function_fp.Parameters
 > = ($, $p) => t_fp_to_characters.Phrase(
-    t_to_fp.Value($),
+    t_to_prose.Value($),
     $p
 )

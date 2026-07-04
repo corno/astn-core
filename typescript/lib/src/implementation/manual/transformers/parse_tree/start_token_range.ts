@@ -6,10 +6,12 @@ import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/
 import * as d_out from "../../../../interface/generated/liana/schemas/location/data"
 
 export type Value = p_i.Transformer<
-d_in.Value, d_out.Range
+    d_in.Value,
+    d_out.Range
 >
 export type Concrete_Value = p_i.Transformer<
-d_in.Value.type_.concrete, d_out.Range
+    d_in.Value.type_.concrete,
+    d_out.Range
 >
 
 

@@ -6,5 +6,6 @@ import * as d_out from "../../../../interface/generated/liana/schemas/location/d
 
 
 export const Error: p_i.Transformer<
-d_in.Error, d_out.Range
+    d_in.Error,
+    d_out.Range
 > = ($) => $.range

@@ -10,7 +10,8 @@ import * as t_deserialize_parse_tree_to_location from "../deserialize_parse_tree
 import * as t_unmarshall_to_location from "../unmarshall/location"
 
 export const Error: p_i.Transformer<
-d_in.Error, d_out.Possible_Range
+    d_in.Error,
+    d_out.Possible_Range
 > = ($) => p_.from.state($).decide(
     ($): d_out.Possible_Range => {
         switch ($[0]) {

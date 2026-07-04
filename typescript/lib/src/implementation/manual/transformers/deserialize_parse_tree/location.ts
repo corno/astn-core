@@ -7,8 +7,9 @@ import * as d_out from "../../../../interface/generated/liana/schemas/location/d
 
 export namespace signatures {
     export type Error = p_i.Transformer<
-d_in.Error, d_out.Possible_Range
->
+        d_in.Error,
+        d_out.Possible_Range
+    >
 }
 
 export const Error: signatures.Error = ($) => p_.from.state($.type).decide(
