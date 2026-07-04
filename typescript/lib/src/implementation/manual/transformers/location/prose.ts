@@ -5,7 +5,7 @@ import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/l
 //data types
 import * as d_in from "../../../../interface/generated/liana/schemas/location/data"
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
-import * as d_function from "../../../../interface/data/location_to_fountain_pen"
+import * as d_function from "../../../../interface/data/location_to_prose"
 
 import * as d_temp_text from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 

@@ -7,7 +7,7 @@ import * as d_function_fp from "pareto-fountain-pen/dist/interface/data/prose_se
 
 
 //dependencies
-import * as t_to_fp from "./fountain_pen"
+import * as t_to_fp from "./prose"
 import * as t_fp_to_characters from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
 
 
