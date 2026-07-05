@@ -77,6 +77,7 @@ export const Whitespace: p_pi.Production_Without_Error<
                                     () => p_unreachable_code_path("we checked that there is a next character, so this should never happen"),
                                     ($) => $.code,
                                 ),
+                                on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
                             }),
                             ($) => $
                         ),
@@ -129,6 +130,7 @@ export const Trivia: p_pi.Production<
                                                     () => p_unreachable_code_path("has_more_items -> true"),
                                                     ($) => $.code,
                                                 ),
+                                                on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
                                             }),
                                             ($) => $
                                         ),
@@ -158,6 +160,7 @@ export const Trivia: p_pi.Production<
                                                         () => p_unreachable_code_path("has_more_items -> true"),
                                                         ($) => $.code,
                                                     ),
+                                                    on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
                                                 }),
                                                 ($) => $
                                             )
@@ -213,6 +216,7 @@ export const Trivia: p_pi.Production<
                 ),
             )
         },
+        on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
     }),
 })
 
@@ -381,7 +385,8 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                         default: return $.code
                     }
                 },
-            )
+            ),
+            on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
         }),
         ($) => $
     )
@@ -606,6 +611,7 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                                             () => p_unreachable_code_path("has_more_items -> true"),
                                             ($) => $.code,
                                         ),
+                                        on_no_progression: () =>p_unreachable_code_path("handle consumes directly"),
                                     }),
                                     ($) => $
                                 )
@@ -619,6 +625,7 @@ export const Tokenizer_Result: p_pi.Production_With_Parameter<
                 'trailing trivia': Trivia(iterator, abort),
             })
         },
+        on_no_progression: () =>p_unreachable_code_path("handle is expected to always consume at least one character, so this should never happen"),
     }),
     'end': $p['end info']
 })
