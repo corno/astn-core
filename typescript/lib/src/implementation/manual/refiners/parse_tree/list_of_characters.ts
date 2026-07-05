@@ -5,14 +5,13 @@ import p_iterate from 'pareto-core/dist/implementation/refiner/specials/iterate'
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
-import * as d_annotated_characters from "../../../../interface/data/annotated_characters"
 
 //dependencies
 import * as r_annotated_characters from "../annotated_characters/text"
-import * as pr_tokenize from "../../productions/token/annotated_character"
+import * as r_tokenize from "../../productions/token/annotated_character"
 import * as r_from_tokenizer_result from "./tokenizer_result"
 
-export namespace signatures {
+export namespace interface_ {
 
     export type Document = p_i.Refiner_With_Parameter<
         d_out.Document,
@@ -23,20 +22,16 @@ export namespace signatures {
 
 }
 
-export const Document: signatures.Document = ($, abort, $p,) => {
+export const Document: interface_.Document = ($, abort, $p,) => {
     const ann_chars = r_annotated_characters.Annotated_Characters(
         $,
         $p
     )
-    return p_iterate<
-        d_out.Document,
-        d_annotated_characters.Annotated_Character,
-        d_annotated_characters.End
-    >({
+    return p_iterate({
         list: ann_chars.characters,
         end_info: ann_chars.end,
         assign: (iterator) => r_from_tokenizer_result.Document(//fixme: make this iterate_fully
-            pr_tokenize.Tokenizer_Result(
+            r_tokenize.Tokenizer_Result(
                 iterator,
                 ($) => abort({
                     'type': ['lexer', $],

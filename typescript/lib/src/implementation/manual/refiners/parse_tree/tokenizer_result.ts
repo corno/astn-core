@@ -13,7 +13,7 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 //dependencies
 import * as pr_authoring_parse_tree from "../../productions/parse_tree/token"
 
-export namespace signatures {
+export namespace interface_ {
 
     export type Document = p_i.Refiner<
         d_out.Document,
@@ -25,7 +25,7 @@ export namespace signatures {
 
 
 
-export const Document: signatures.Document = ($, abort) => p_iterate<
+export const Document: interface_.Document = ($, abort) => p_iterate<
     d_out.Document,
     d_in.Tokenizer_Result.tokens.L,
     d_location.Location

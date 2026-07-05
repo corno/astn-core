@@ -6,24 +6,29 @@ import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schem
 import * as d_function_fp from "pareto-fountain-pen/dist/interface/data/prose_serialize"
 
 
+export namespace interface_ {
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        d_out.List_of_Characters,
+        d_function_fp.Parameters
+    >
+    export type Value = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        d_out.List_of_Characters,
+        d_function_fp.Parameters
+    >
+}
+
 //dependencies
 import * as t_to_prose from "./prose"
 import * as t_fp_to_characters from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
 
 
-export const Document: p_i.Transformer_With_Parameter<
-    d_in.Document, 
-    d_out.List_of_Characters, 
-    d_function_fp.Parameters
-> = ($, $p) => t_fp_to_characters.Paragraph(
+export const Document: interface_.Document = ($, $p) => t_fp_to_characters.Paragraph(
     t_to_prose.Document($),
     $p
 )
-export const Value: p_i.Transformer_With_Parameter<
-    d_in.Value, 
-    d_out.List_of_Characters, 
-    d_function_fp.Parameters
-> = ($, $p) => t_fp_to_characters.Phrase(
+export const Value: interface_.Value = ($, $p) => t_fp_to_characters.Phrase(
     t_to_prose.Value($),
     $p
 )

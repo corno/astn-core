@@ -5,26 +5,30 @@ import * as d_in from "../../../../interface/generated/liana/schemas/sealed_targ
 import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/text/data"
 import * as d_function_fp from "pareto-fountain-pen/dist/interface/data/prose_serialize"
 
+export namespace interface_ {
+    export type Document = p_i.Transformer_With_Parameter<
+        d_in.Document,
+        d_out.Text,
+        d_function_fp.Parameters
+    >
+    export type Value = p_i.Transformer_With_Parameter<
+        d_in.Value,
+        d_out.Text,
+        d_function_fp.Parameters
+    >
+}
 
 //dependencies
 import * as t_to_prose from "./prose"
-import * as t_fp_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
+import * as t_prose_to_text from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/text"
 
 
-export const Document: p_i.Transformer_With_Parameter<
-    d_in.Document,
-    d_out.Text,
-    d_function_fp.Parameters
-> = ($, $p) => t_fp_to_text.Paragraph(
+export const Document: interface_.Document = ($, $p) => t_prose_to_text.Paragraph(
     t_to_prose.Document($),
     $p
 )
 
-export const Value: p_i.Transformer_With_Parameter<
-    d_in.Value,
-    d_out.Text,
-    d_function_fp.Parameters
-> = ($, $p) => t_fp_to_text.Phrase(
+export const Value: interface_.Value = ($, $p) => t_prose_to_text.Phrase(
     t_to_prose.Value($),
     $p
 )

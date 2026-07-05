@@ -5,14 +5,18 @@ import * as p_i from 'pareto-core/dist/interface/transformer'
 import * as d_in from "../../../../interface/data/deserialize"
 import * as d_out from "../../../../interface/generated/liana/schemas/location/data"
 
+export namespace interface_ {
+    export type Error = p_i.Transformer<
+        d_in.Error,
+        d_out.Possible_Range
+    >
+}
+
 //dependencies
 import * as t_deserialize_parse_tree_to_location from "../deserialize_parse_tree/location"
 import * as t_unmarshall_to_location from "../unmarshall/location"
 
-export const Error: p_i.Transformer<
-    d_in.Error,
-    d_out.Possible_Range
-> = ($) => p_.from.state($).decide(
+export const Error: interface_.Error = ($) => p_.from.state($).decide(
     ($): d_out.Possible_Range => {
         switch ($[0]) {
             case 'parse error': return p_.option($, ($) => t_deserialize_parse_tree_to_location.Error($))

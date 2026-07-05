@@ -5,7 +5,7 @@ import * as d_out from "../../../../interface/data/annotated_characters"
 import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
 
-export namespace signatures {
+export namespace interface_ {
 
     export type Annotated_Characters = p_ti.Transformer_With_Parameter<
         d_in.List_of_Characters,
@@ -31,7 +31,7 @@ type My_State = {
  * Creates a string iterator that allows iterating over characters in a string,
  * while keeping track of line numbers, columns, and line indentation.
  */
-export const Annotated_Characters: signatures.Annotated_Characters = ($, $p) => p_.from.list($).map_with_state(
+export const Annotated_Characters: interface_.Annotated_Characters = ($, $p) => p_.from.list($).map_with_state(
     {
         'location': {
             'absolute': 0,
