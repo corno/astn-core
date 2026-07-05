@@ -403,7 +403,7 @@ export const Items: interface_.Items = (iterator, abort, $p) => iterator.build_l
             'value': Value(iterator, abort)
         }),
     ),
-    on_no_progression: p_unreachable_code_path("'handle' is expected to always consume at least one token, so this should never happen"),
+    on_no_progression: () =>p_unreachable_code_path("'handle' is expected to always consume at least one token, so this should never happen"),
 })
 
 export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) => iterator.build_list({
@@ -470,5 +470,5 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
         ),
         // ',': p_.literal.not_set() //FIXME implement optional comma (or keep it as 'whitespace' but then remove this property)
     }),
-    on_no_progression: p_unreachable_code_path("'handle' is expected to always consume at least one token, so this should never happen"),
+    on_no_progression: () => p_unreachable_code_path("'handle' is expected to always consume at least one token, so this should never happen"),
 })
