@@ -1,13 +1,13 @@
 
-import * as d_deserialize_parse_tree from "../generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_unmarshall from "../data/unmarshall"
+import * as d_deserialize_parse_tree from "../generated/liana/schemas/deserialize_parse_tree/data.js"
+import * as d_unmarshall from "../data/unmarshall.js"
 
 
 export type Error_ = 
     | ['parse error', d_deserialize_parse_tree.Error]
     | ['unmarshall error', d_unmarshall.Error]
 
-export { 
+export type { 
     Error_ as Error, 
 }
 

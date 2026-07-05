@@ -1,5 +1,5 @@
 
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_di from 'pareto-core/interface/data'
 
 export type Document_ = Value_
 
@@ -100,7 +100,7 @@ export type Value_ =
     | readonly ['state', Value_.state]
     | readonly ['text', Value_.text]
 
-export { 
+export type { 
     Document_ as Document, 
     Value_ as Value, 
 }

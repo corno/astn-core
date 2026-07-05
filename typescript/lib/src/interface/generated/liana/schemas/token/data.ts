@@ -1,7 +1,7 @@
 
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../location/data.js"
 
 export namespace Tokenizer_Result_ {
     
@@ -195,7 +195,7 @@ export type Text_Type_ =
     | readonly ['undelimited', Text_Type_.undelimited]
     | readonly ['backticked', Text_Type_.backticked]
 
-export { 
+export type { 
     Tokenizer_Result_ as Tokenizer_Result, 
     Annotated_Token_ as Annotated_Token, 
     Whitespace_ as Whitespace, 

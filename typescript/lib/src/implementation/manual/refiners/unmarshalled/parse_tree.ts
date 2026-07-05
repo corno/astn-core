@@ -1,17 +1,17 @@
-import * as p_ from 'pareto-core/dist/implementation/refiner'
-import * as p_t from 'pareto-core/dist/implementation/transformer'
-import * as p_di from 'pareto-core/dist/interface/data'
-import * as p_i from 'pareto-core/dist/interface/refiner'
-import p_assert from 'pareto-core/dist/implementation/refiner/specials/assert'
+import * as p_ from 'pareto-core/implementation/refiner'
+import * as p_t from 'pareto-core/implementation/transformer'
+import * as p_di from 'pareto-core/interface/data'
+import * as p_i from 'pareto-core/interface/refiner'
+import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 
-import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_out from "../../../../interface/data/unmarshalled"
-import * as d_function from "../../../../interface/data/unmarshall"
+import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
+import * as d_out from "../../../../interface/data/unmarshalled.js"
+import * as d_function from "../../../../interface/data/unmarshall.js"
 
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
 //dependencies
-import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range"
+import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range.js"
 
 export type Dictionary = p_i.Refiner<
     d_out.Dictionary,

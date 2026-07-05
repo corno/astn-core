@@ -59,7 +59,7 @@ export type Relative_Location_ = {
     readonly 'column': Relative_Location_.column
 }
 
-export { 
+export type { 
     Range_ as Range, 
     Possible_Range_ as Possible_Range, 
     Location_ as Location, 

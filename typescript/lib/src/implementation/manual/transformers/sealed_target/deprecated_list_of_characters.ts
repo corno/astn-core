@@ -1,9 +1,9 @@
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
-import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
-import * as d_function_fp from "pareto-fountain-pen/dist/interface/data/prose_serialize"
+import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data.js"
+import * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_function_fp from "pareto-fountain-pen/interface/data/prose_serialize"
 
 
 export namespace interface_ {
@@ -20,8 +20,8 @@ export namespace interface_ {
 }
 
 //dependencies
-import * as t_to_prose from "./prose"
-import * as t_fp_to_characters from "pareto-fountain-pen/dist/implementation/manual/transformers/prose/list_of_characters"
+import * as t_to_prose from "./prose.js"
+import * as t_fp_to_characters from "pareto-fountain-pen/implementation/manual/transformers/prose/list_of_characters"
 
 
 export const Document: interface_.Document = ($, $p) => t_fp_to_characters.Paragraph(

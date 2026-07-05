@@ -1,9 +1,9 @@
 
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_token from "../token/data"
+import * as i_imports_token from "../token/data.js"
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../location/data.js"
 
 export namespace Document_ {
     
@@ -338,7 +338,7 @@ export namespace Items_ {
 
 export type Items_ = p_di.List<Items_.L>
 
-export { 
+export type { 
     Document_ as Document, 
     Content_ as Content, 
     Value_ as Value, 

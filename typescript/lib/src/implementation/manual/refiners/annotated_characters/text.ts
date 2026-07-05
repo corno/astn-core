@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/dist/implementation/refiner'
-import * as p_ti from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/refiner'
+import * as p_ti from 'pareto-core/interface/transformer'
 
-import * as d_out from "../../../../interface/data/annotated_characters"
-import * as d_in from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
-import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
+import * as d_out from "../../../../interface/data/annotated_characters.js"
+import * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
 
 export namespace interface_ {
 

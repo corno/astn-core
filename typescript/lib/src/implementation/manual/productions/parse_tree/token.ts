@@ -1,13 +1,13 @@
-import * as p_ from 'pareto-core/dist/implementation/production'
-import * as p_ti from 'pareto-core/dist/interface/transformer'
-import * as p_pi from 'pareto-core/dist/interface/production'
-import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
+import * as p_ from 'pareto-core/implementation/production'
+import * as p_ti from 'pareto-core/interface/transformer'
+import * as p_pi from 'pareto-core/interface/production'
+import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //data types
-import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data"
-import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_in from "../../../../interface/generated/liana/schemas/token/data"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
+import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
+import * as d_in from "../../../../interface/generated/liana/schemas/token/data.js"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
 
 export namespace interface_ {

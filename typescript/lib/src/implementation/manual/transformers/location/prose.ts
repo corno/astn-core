@@ -1,16 +1,16 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
-import p_list_from_text from 'pareto-core/dist/implementation/refiner/specials/list_from_text'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
+import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
 //data types
-import * as d_in from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
-import * as d_function from "../../../../interface/data/location_to_prose"
+import * as d_in from "../../../../interface/generated/liana/schemas/location/data.js"
+import * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/prose/data"
+import * as d_function from "../../../../interface/data/location_to_prose.js"
 
-import * as d_temp_text from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_temp_text from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
 

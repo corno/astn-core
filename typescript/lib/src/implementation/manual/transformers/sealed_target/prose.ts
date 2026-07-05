@@ -1,9 +1,9 @@
-import * as p_ from 'pareto-core/dist/implementation/transformer'
-import * as p_i from 'pareto-core/dist/interface/transformer'
+import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_i from 'pareto-core/interface/transformer'
 
 //data types
-import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data"
-import * as d_out from "pareto-fountain-pen/dist/interface/generated/liana/schemas/prose/data"
+import * as d_in from "../../../../interface/generated/liana/schemas/sealed_target/data.js"
+import * as d_out from "pareto-fountain-pen/interface/generated/liana/schemas/prose/data"
 
 export namespace interface_ {
     export type Document = p_i.Transformer<
@@ -17,10 +17,10 @@ export namespace interface_ {
 }
 
 //dependencies
-import * as t_primitives_to_text from "../primitives/text"
+import * as t_primitives_to_text from "../primitives/text.js"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/dist/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 export const Document: interface_.Document = ($) => sh.pg.sentences([
     sh.sentence([

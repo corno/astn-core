@@ -1,9 +1,9 @@
 
-import * as p_di from 'pareto-core/dist/interface/data'
+import * as p_di from 'pareto-core/interface/data'
 
-import * as i_imports_token from "../token/data"
+import * as i_imports_token from "../token/data.js"
 
-import * as i_imports_location from "../location/data"
+import * as i_imports_location from "../location/data.js"
 
 export namespace Error_ {
     
@@ -179,7 +179,7 @@ export type Parameters_ = {
     readonly 'tab size': Parameters_.tab_size
 }
 
-export { 
+export type { 
     Error_ as Error, 
     Lexer_Error_ as Lexer_Error, 
     Parser_Error_ as Parser_Error, 

@@ -1,18 +1,18 @@
-import * as p_ from 'pareto-core/dist/implementation/production'
-import * as p_t from 'pareto-core/dist/implementation/transformer'
-import * as p_ri from 'pareto-core/dist/interface/refiner'
-import * as p_pi from 'pareto-core/dist/interface/production'
-import p_unreachable_code_path from 'pareto-core/dist/implementation/transformer/specials/unreachable_code_path'
-import p_variables from 'pareto-core/dist/implementation/transformer/specials/variables'
-import p_text_from_list from 'pareto-core/dist/implementation/transformer/specials/text_from_list'
+import * as p_ from 'pareto-core/implementation/production'
+import * as p_t from 'pareto-core/implementation/transformer'
+import * as p_ri from 'pareto-core/interface/refiner'
+import * as p_pi from 'pareto-core/interface/production'
+import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
+import p_variables from 'pareto-core/implementation/transformer/specials/variables'
+import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
-import * as d_in from "../../../../interface/data/annotated_characters"
-import * as d_out from "../../../../interface/generated/liana/schemas/token/data"
-import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data"
+import * as d_in from "../../../../interface/data/annotated_characters.js"
+import * as d_out from "../../../../interface/generated/liana/schemas/token/data.js"
+import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
+import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
-import * as d_temp_location from "../../../../interface/generated/liana/schemas/location/data"
-import * as d_loc from "pareto-fountain-pen/dist/interface/generated/liana/schemas/list_of_characters/data"
+import * as d_temp_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import * as d_loc from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
 

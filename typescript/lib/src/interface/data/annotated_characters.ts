@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/dist/interface/data'
+import * as p_ from 'pareto-core/interface/data'
 
-import * as d_location from "../generated/liana/schemas/location/data"
+import * as d_location from "../generated/liana/schemas/location/data.js"
 
 export type Annotated_Character = {
     'code': number
