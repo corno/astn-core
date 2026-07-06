@@ -16,11 +16,13 @@ export type Document = p_i.Refiner_With_Parameter<
     d_function.Parameters
 >
 
-export const Document: Document = ($, abort, $p,) => r_from_list_of_characters.Document(
-    p_list_from_text(
-        $,
-        ($) => $
-    ),
-    abort,
-    $p,
-)
+export const Document: Document = ($, abort, $p) => {
+    return r_from_list_of_characters.Document(
+        p_list_from_text(
+            $,
+            ($) => $
+        ),
+        abort,
+        $p,
+    )
+}

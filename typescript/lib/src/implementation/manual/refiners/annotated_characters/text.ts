@@ -15,18 +15,6 @@ export namespace interface_ {
 
 }
 
-type My_State = {
-    'location': {
-        'absolute': number
-        'relative': {
-            'line': number
-            'column': number
-        }
-    },
-    'line indentation': number | null
-    'found carriage return before': boolean
-}
-
 /**
  * Creates a string iterator that allows iterating over characters in a string,
  * while keeping track of line numbers, columns, and line indentation.
@@ -42,7 +30,17 @@ export const Annotated_Characters: interface_.Annotated_Characters = ($, $p) => 
         },
         'line indentation': null,
         'found carriage return before': false,
-    } as My_State,
+    } as {
+        'location': {
+            'absolute': number
+            'relative': {
+                'line': number
+                'column': number
+            }
+        },
+        'line indentation': number | null
+        'found carriage return before': boolean
+    },
     (value, state) => ({
         'code': value,
         'location': state.location,
