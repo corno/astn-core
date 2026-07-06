@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/implementation/production'
+import * as p_ from 'pareto-core/implementation/refiner'
 import * as p_ti from 'pareto-core/interface/transformer'
-import * as p_pi from 'pareto-core/interface/production'
+import * as p_i from 'pareto-core/interface/refiner'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //data types
@@ -12,21 +12,21 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 
 export namespace interface_ {
 
-    export type Document = p_pi.Production<
+    export type Document = p_i.Production<
         d_out.Document,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
         d_location.Location
     >
 
-    export type Value = p_pi.Production<
+    export type Value = p_i.Production<
         d_out.Value,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
         d_location.Location
     >
 
-    export type Guaranteed_Structural_Token = p_pi.Production_With_Parameter<
+    export type Guaranteed_Structural_Token = p_i.Production_With_Parameter<
         d_out.Structural_Token,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -36,7 +36,7 @@ export namespace interface_ {
         }
     >
 
-    export type Possible_Structural_Token = p_pi.Production_With_Parameter<
+    export type Possible_Structural_Token = p_i.Production_With_Parameter<
         d_out.Structural_Token,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -46,7 +46,7 @@ export namespace interface_ {
         }
     >
 
-    export type Text = p_pi.Production_With_Parameter<
+    export type Text = p_i.Production_With_Parameter<
         d_out.Text,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -57,7 +57,7 @@ export namespace interface_ {
         }
     >
 
-    export type Items = p_pi.Production_With_Parameter<
+    export type Items = p_i.Production_With_Parameter<
         d_out.Items,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -67,7 +67,7 @@ export namespace interface_ {
         }
     >
 
-    export type Element = p_pi.Production_With_Parameter<
+    export type Element = p_i.Production_With_Parameter<
         d_out.Items,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -77,7 +77,7 @@ export namespace interface_ {
         }
     >
 
-    export type ID_Value_Pairs = p_pi.Production_With_Parameter<
+    export type ID_Value_Pairs = p_i.Production_With_Parameter<
         d_out.ID_Value_Pairs,
         d_choice.Parser_Error,
         d_in.Annotated_Token,

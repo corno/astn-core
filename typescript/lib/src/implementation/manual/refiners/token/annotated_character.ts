@@ -1,11 +1,11 @@
-import * as p_ from 'pareto-core/implementation/production'
+import * as p_ from 'pareto-core/implementation/refiner'
+import * as p_i from 'pareto-core/interface/refiner'
 import * as p_t from 'pareto-core/implementation/transformer'
-import * as p_ri from 'pareto-core/interface/refiner'
-import * as p_pi from 'pareto-core/interface/production'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 import p_variables from 'pareto-core/implementation/transformer/specials/variables'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
+//data types
 import * as d_in from "../../../../interface/data/annotated_characters.js"
 import * as d_out from "../../../../interface/generated/liana/schemas/token/data.js"
 import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
@@ -18,7 +18,7 @@ import * as d_loc from "pareto-fountain-pen/interface/generated/liana/schemas/li
 
 
 
-const create_range: p_pi.Production_Without_Error_With_Parameter<
+const create_range: p_i.Production_Without_Error_With_Parameter<
     d_temp_location.Range,
     d_in.Annotated_Character,
     d_location.Location,
@@ -37,7 +37,7 @@ const create_range: p_pi.Production_Without_Error_With_Parameter<
 })
 
 
-export const Whitespace: p_pi.Production_Without_Error<
+export const Whitespace: p_i.Production_Without_Error<
     d_out.Whitespace,
     d_in.Annotated_Character,
     d_location.Location
@@ -94,7 +94,7 @@ export const Whitespace: p_pi.Production_Without_Error<
         )
     }
 
-export const Trivia: p_pi.Production<
+export const Trivia: p_i.Production<
     d_out.Trivia,
     d_function.Lexer_Error,
     d_in.Annotated_Character,
@@ -220,7 +220,7 @@ export const Trivia: p_pi.Production<
     }),
 })
 
-export const Delimited_Text: p_pi.Production_With_Parameter<
+export const Delimited_Text: p_i.Production_With_Parameter<
     string,
     d_function.Lexer_Error,
     d_in.Annotated_Character,
@@ -291,7 +291,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
                                     case Character.r: return Character.carriage_return
                                     case Character.t: return Character.tab
                                     case Character.u:
-                                        const r_hexadecimal: p_ri.Refiner<
+                                        const r_hexadecimal: p_i.Refiner<
                                             number, string, d_loc.List_of_Characters
                                         > = ($, abort) => {
                                             const characters = $
@@ -400,7 +400,7 @@ export const Delimited_Text: p_pi.Production_With_Parameter<
     return $p_content
 }
 
-export const Tokenizer_Result: p_pi.Production_With_Parameter<
+export const Tokenizer_Result: p_i.Production_With_Parameter<
     d_out.Tokenizer_Result,
     d_function.Lexer_Error,
     d_in.Annotated_Character,

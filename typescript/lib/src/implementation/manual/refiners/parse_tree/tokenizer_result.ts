@@ -11,7 +11,7 @@ import * as d_location from "../../../../interface/generated/liana/schemas/locat
 
 
 //dependencies
-import * as pr_authoring_parse_tree from "../../productions/parse_tree/token.js"
+import * as pr_authoring_parse_tree from "./token.js"
 
 export namespace interface_ {
 

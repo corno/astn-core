@@ -8,7 +8,7 @@ import * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/lis
 
 //dependencies
 import * as r_annotated_characters from "../annotated_characters/text.js"
-import * as r_tokenize from "../../productions/token/annotated_character.js"
+import * as r_tokenize from "../token/annotated_character.js"
 import * as r_from_tokenizer_result from "./tokenizer_result.js"
 
 export namespace interface_ {
