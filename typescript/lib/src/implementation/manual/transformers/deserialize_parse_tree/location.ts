@@ -26,9 +26,9 @@ export const Error: signatures.Error = ($) => p_.from.state($.type).decide(
                             'start': $.found.start,
                             'end': $.found.end,
                         }])
-                        default: return p_.au($[0])
+                        default: return p_.exhaustive($[0])
                     }
                 }))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

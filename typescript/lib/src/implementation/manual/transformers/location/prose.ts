@@ -63,7 +63,7 @@ export const Possible_Range: signatures.Possible_Range = ($, $p) => p_.from.stat
         switch ($[0]) {
             case 'range': return p_.option($, ($) => Range($, $p))
             case 'end of document': return p_.option($, ($) => Location($.end, $p))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
 

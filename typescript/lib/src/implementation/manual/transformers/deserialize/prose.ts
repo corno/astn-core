@@ -22,6 +22,6 @@ export const Error: interface_.Error = ($) => p_.from.state($).decide(
 
             case 'parse error': return p_.option($, ($) => t_deserialize_parse_tree_to_prose.Error($))
             case 'unmarshall error': return p_.option($, ($) => t_unmarshall_to_prose.Error($))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

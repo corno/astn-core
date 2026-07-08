@@ -21,6 +21,6 @@ export const Error: interface_.Error = ($) => p_.from.state($).decide(
         switch ($[0]) {
             case 'parse error': return p_.option($, ($) => t_deserialize_parse_tree_to_location.Error($))
             case 'unmarshall error': return p_.option($, ($) => ['range', t_unmarshall_to_location.Error($)])
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })

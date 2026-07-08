@@ -51,7 +51,7 @@ export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(
                 case 'optional': return p_.option($, ($) => Optional($))
                 case 'state': return p_.option($, ($) => State($))
                 case 'text': return p_.option($, ($) => $.range)
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         }))
 
@@ -71,7 +71,7 @@ export const Group: Group = ($) => p_.from.state($).decide(
                 'start': $['('].range.start,
                 'end': $[')'].range.end
             }))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
 
@@ -88,7 +88,7 @@ export const Optional: Optional = ($) => p_.from.state($).decide(
                 'end': Value($['value']).end
             }))
             case 'not set': return p_.option($, ($) => $['_'].range)
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
 
@@ -99,7 +99,7 @@ export const State: State = ($) => ({
             switch ($[0]) {
                 case 'missing': return p_.option($, ($) => $['#'].range.end)
                 case 'set': return p_.option($, ($) => Value($['value']).end)
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 })
@@ -113,7 +113,7 @@ export const Value: Value = ($) => p_.from.state($.type).decide(
                 'end': $.path.range.end
             }))
             case 'missing': return p_.option($, ($) => ($['#'].range))
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
 

@@ -33,7 +33,7 @@ export const Error: signatures.Error = ($) => {
                             case 'block comment termination': return p_.option($, ($) => sh.ph.literal("block comment termination: */"))
                             case 'text termination': return p_.option($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'parser': return p_.option($, ($) => sh.ph.composed([
@@ -55,7 +55,7 @@ export const Error: signatures.Error = ($) => {
                                             case 'any value': return "any value"
                                             case '}': return "'}'"
                                             case '#': return "'#'"
-                                            default: return p_.au($[0])
+                                            default: return p_.exhaustive($[0])
                                         }
                                     })
                             ),
@@ -75,11 +75,11 @@ export const Error: signatures.Error = ($) => {
                                     sh.ph.literal("'")
                                 ]))
                                 case 'missing token': return p_.option($, ($) => sh.ph.literal("nothing"))
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         })
                 ]))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
     return sh.ph.composed([

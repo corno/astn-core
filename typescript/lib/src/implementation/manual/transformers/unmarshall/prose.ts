@@ -28,7 +28,7 @@ export const Error: interface_.Error = ($) => sh.ph.composed([
                                 sh.ph.literal("'")
                             ]))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'type': return p_.option($, ($) => p_.from.state($).decide(
@@ -65,7 +65,7 @@ export const Error: interface_.Error = ($) => sh.ph.composed([
                                 ),
                             ]))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'wrong value type': return p_.option($, ($) => sh.ph.composed([
@@ -80,12 +80,12 @@ export const Error: interface_.Error = ($) => sh.ph.composed([
                                 case 'list': return p_.option($, ($) => sh.ph.literal("a list"))
                                 case 'state': return p_.option($, ($) => sh.ph.literal("a state"))
                                 case 'text': return p_.option($, ($) => sh.ph.literal("a text"))
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         }),
                     sh.ph.literal(" value")
                 ]))
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         }
     ),

@@ -69,7 +69,7 @@ export const Value: interface_.Value = ($) => sh.ph.composed([
                                     sh.ph.literal(")"),
                                 ])
                             ]))
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'list': return p_.option($, ($) => sh.ph.composed([
@@ -91,7 +91,7 @@ export const Value: interface_.Value = ($) => sh.ph.composed([
                                 Value($),
                             ]))
 
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'state': return p_.option($, ($) => sh.ph.composed([
@@ -114,11 +114,11 @@ export const Value: interface_.Value = ($) => sh.ph.composed([
                                     'add delimiters': true
                                 })))
                                 case 'none': return p_.option($, ($) => sh.ph.serialize(t_primitives_to_text.Undelimited(value)))
-                                default: return p_.au($[0])
+                                default: return p_.exhaustive($[0])
                             }
                         })
                 })
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         })
 ])

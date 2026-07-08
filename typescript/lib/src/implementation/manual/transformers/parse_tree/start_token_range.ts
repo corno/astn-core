@@ -25,7 +25,7 @@ export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(
                         switch ($[0]) {
                             case 'concise': return p_.option($, ($) => $['<'].range)
                             case 'verbose': return p_.option($, ($) => $['('].range)
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'list': return p_.option($, ($) => $['['].range)
@@ -35,12 +35,12 @@ export const Concrete_Value: Concrete_Value = ($) => p_.from.state($).decide(
                         switch ($[0]) {
                             case 'set': return p_.option($, ($) => $['*'].range)
                             case 'not set': return p_.option($, ($) => $['_'].range)
-                            default: return p_.au($[0])
+                            default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'state': return p_.option($, ($) => $['|'].range)
                 case 'text': return p_.option($, ($) => $.range)
-                default: return p_.au($[0])
+                default: return p_.exhaustive($[0])
             }
         }))
 
@@ -50,6 +50,6 @@ export const Value: Value = ($) => p_.from.state($.type).decide(
             case 'concrete': return p_.option($, ($) => Concrete_Value($))
             case 'include': return p_.option($, ($) => $['@'].range)
             case 'missing': return p_.option($, ($) => $['#'].range)
-            default: return p_.au($[0])
+            default: return p_.exhaustive($[0])
         }
     })
