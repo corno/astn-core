@@ -1,6 +1,6 @@
 
-import * as d_deserialize_parse_tree from "../generated/liana/schemas/deserialize_parse_tree/data.js"
-import * as d_unmarshall from "../data/unmarshall.js"
+import type * as d_deserialize_parse_tree from "../generated/liana/schemas/deserialize_parse_tree/data.js"
+import type * as d_unmarshall from "../data/unmarshall.js"
 
 
 export type Error_ = 

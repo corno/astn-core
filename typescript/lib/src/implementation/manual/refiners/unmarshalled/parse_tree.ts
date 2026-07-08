@@ -4,11 +4,11 @@ import * as p_di from 'pareto-core/interface/data'
 import * as p_i from 'pareto-core/interface/refiner'
 import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 
-import * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
-import * as d_out from "../../../../interface/data/unmarshalled.js"
-import * as d_function from "../../../../interface/data/unmarshall.js"
+import type * as d_in from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
+import type * as d_out from "../../../../interface/data/unmarshalled.js"
+import type * as d_function from "../../../../interface/data/unmarshall.js"
 
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range.js"

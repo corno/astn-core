@@ -6,11 +6,11 @@ import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //data types
-import * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
-import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
-import * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
-import * as d_in from "../../../../interface/generated/liana/schemas/token/data.js"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_choice from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
+import type * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
+import type * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
+import type * as d_in from "../../../../interface/generated/liana/schemas/token/data.js"
+import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
 
 //dependencies

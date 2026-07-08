@@ -6,13 +6,13 @@ import p_variables from 'pareto-core/implementation/transformer/specials/variabl
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //data types
-import * as d_in from "../../../../interface/data/annotated_characters.js"
-import * as d_out from "../../../../interface/generated/liana/schemas/token/data.js"
-import * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
-import * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_in from "../../../../interface/data/annotated_characters.js"
+import type * as d_out from "../../../../interface/generated/liana/schemas/token/data.js"
+import type * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
+import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
-import * as d_temp_location from "../../../../interface/generated/liana/schemas/location/data.js"
-import * as d_loc from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+import type * as d_temp_location from "../../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_loc from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
 

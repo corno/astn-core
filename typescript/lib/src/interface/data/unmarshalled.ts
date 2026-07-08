@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/data'
 
-import * as d_parse_tree from "../generated/liana/schemas/parse_tree/data.js"
+import type * as d_parse_tree from "../generated/liana/schemas/parse_tree/data.js"
 
 export type Dictionary = {
     'value': d_parse_tree.Value

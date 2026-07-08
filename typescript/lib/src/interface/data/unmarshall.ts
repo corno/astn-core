@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/data'
 
-import * as d_location from "../../interface/generated/liana/schemas/location/data.js"
+import type * as d_location from "../../interface/generated/liana/schemas/location/data.js"
 
 export type Error = {
     'type': Error_Type
