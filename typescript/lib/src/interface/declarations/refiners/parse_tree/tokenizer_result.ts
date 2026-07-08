@@ -8,11 +8,6 @@ import type * as d_out from "../../../generated/liana/schemas/parse_tree/data.js
 import type * as d_in from "../../../generated/liana/schemas/token/data.js"
 import type * as d_location from "../../../generated/liana/schemas/location/data.js"
 
-
-//dependencies
-
-
-
 export type Document = p_.Refiner<
     d_out.Document,
     d_function.Parser_Error,
