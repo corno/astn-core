@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 import type * as interface_ from "../../../../interface/declarations/transformers/primitives/text.js"
 
-export namespace d_function {
+namespace d_function {
 
     export type Parameters = {  
         'add delimiters': boolean
