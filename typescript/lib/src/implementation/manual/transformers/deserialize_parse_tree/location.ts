@@ -5,14 +5,14 @@ import * as p_i from 'pareto-core/interface/transformer'
 import type * as d_in from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
 import type * as d_out from "../../../../interface/generated/liana/schemas/location/data.js"
 
-export namespace signatures {
+export namespace interface_ {
     export type Error = p_i.Transformer<
         d_in.Error,
         d_out.Possible_Range
     >
 }
 
-export const Error: signatures.Error = ($) => p_.from.state($.type).decide(
+export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'lexer': return p_.option($, ($) => ['range', $.range])

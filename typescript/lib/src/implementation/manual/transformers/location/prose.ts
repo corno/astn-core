@@ -14,7 +14,7 @@ import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
 
-export namespace signatures {
+export namespace interface_ {
 
     export type Location = p_i.Transformer_With_Parameter<
         d_in.Location,
@@ -44,7 +44,7 @@ const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {
     )
 }
 
-export const Range: signatures.Range = ($, $p) => sh.ph.composed([
+export const Range: interface_.Range = ($, $p) => sh.ph.composed([
     sh.ph.serialize(temp_serialize_number($.start.relative.line + p_.from.state($p['character location reporting']).decide(
         ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.ph.literal(":"),
@@ -58,7 +58,7 @@ export const Range: signatures.Range = ($, $p) => sh.ph.composed([
         ($) => ($[0] === 'zero based' ? 0 : 1))))
 ])
 
-export const Possible_Range: signatures.Possible_Range = ($, $p) => p_.from.state($).decide(
+export const Possible_Range: interface_.Possible_Range = ($, $p) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'range': return p_.option($, ($) => Range($, $p))
@@ -67,7 +67,7 @@ export const Possible_Range: signatures.Possible_Range = ($, $p) => p_.from.stat
         }
     })
 
-export const Location: signatures.Location = ($, $p) => {
+export const Location: interface_.Location = ($, $p) => {
     return sh.ph.composed([
         sh.ph.serialize(temp_serialize_number($.relative.line + p_.from.state($p['character location reporting']).decide(
             ($) => ($[0] === 'zero based' ? 0 : 1)))),
