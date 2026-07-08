@@ -6,8 +6,8 @@ import type * as d_in from "../../../generated/liana/schemas/deserialize_parse_t
 import type * as d_out from "../../../generated/liana/schemas/location/data.js"
 
 
-    export type Error = p_.Transformer<
-        d_in.Error,
-        d_out.Possible_Range
-    >
+export type Error = p_.Transformer<
+    d_in.Error,
+    d_out.Possible_Range
+>
 

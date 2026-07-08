@@ -7,10 +7,10 @@ import type * as d_function from "../../../generated/liana/schemas/deserialize_p
 
 
 
-    export type Annotated_Characters = p_ti.Transformer_With_Parameter<
-        d_in.List_of_Characters,
-        d_out.Annotated_Characters,
-        d_function.Parameters
-    >
+export type Annotated_Characters = p_ti.Transformer_With_Parameter<
+    d_in.List_of_Characters,
+    d_out.Annotated_Characters,
+    d_function.Parameters
+>
 
 

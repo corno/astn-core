@@ -375,9 +375,6 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
     on_no_progression: () => p_unreachable_code_path("'handle' is expected to always consume at least one token, so this should never happen"),
 })
 
-
-
-
 export const Document: interface_.Document = ($, abort) => p_iterate<
     d_out.Document,
     d_in.Tokenizer_Result.tokens.L,
