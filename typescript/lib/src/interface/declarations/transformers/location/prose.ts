@@ -1,5 +1,5 @@
 
-import type * as p_i from 'pareto-core/interface/transformer'
+import type * as p_ from 'pareto-core/interface/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
 //data types
@@ -16,19 +16,19 @@ import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
 
-    export type Location = p_i.Transformer_With_Parameter<
+    export type Location = p_.Transformer_With_Parameter<
         d_in.Location,
         d_out.Phrase,
         d_function.Parameters
     >
 
-    export type Range = p_i.Transformer_With_Parameter<
+    export type Range = p_.Transformer_With_Parameter<
         d_in.Range,
         d_out.Phrase,
         d_function.Parameters
     >
 
-    export type Possible_Range = p_i.Transformer_With_Parameter<
+    export type Possible_Range = p_.Transformer_With_Parameter<
         d_in.Possible_Range,
         d_out.Phrase,
         d_function.Parameters

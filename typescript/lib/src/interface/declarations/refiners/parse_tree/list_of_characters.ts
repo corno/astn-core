@@ -1,4 +1,4 @@
-import type * as p_i from 'pareto-core/interface/refiner'
+import type * as p_ from 'pareto-core/interface/refiner'
 import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 
 //data types
@@ -13,7 +13,7 @@ import * as r_from_tokenizer_result from "./tokenizer_result.js"
 
 
 
-    export type Document = p_i.Refiner_With_Parameter<
+    export type Document = p_.Refiner_With_Parameter<
         d_out.Document,
         d_function.Error,
         d_in.List_of_Characters,

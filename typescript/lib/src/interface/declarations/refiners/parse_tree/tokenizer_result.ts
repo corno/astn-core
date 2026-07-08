@@ -1,5 +1,5 @@
 
-import type * as p_i from 'pareto-core/interface/refiner'
+import type * as p_ from 'pareto-core/interface/refiner'
 import type * as p_ti from 'pareto-core/interface/transformer'
 
 import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
@@ -17,20 +17,20 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
 
 
 
-    export type Document = p_i.Refiner<
+    export type Document = p_.Refiner<
         d_out.Document,
         d_function.Parser_Error,
         d_in.Tokenizer_Result
     >
 
-    export type Value = p_i.Production<
+    export type Value = p_.Production<
         d_out.Value,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
         d_location.Location
     >
 
-    export type Guaranteed_Structural_Token = p_i.Production_With_Parameter<
+    export type Guaranteed_Structural_Token = p_.Production_With_Parameter<
         d_out.Structural_Token,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -40,7 +40,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
         }
     >
 
-    export type Possible_Structural_Token = p_i.Production_With_Parameter<
+    export type Possible_Structural_Token = p_.Production_With_Parameter<
         d_out.Structural_Token,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -50,7 +50,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
         }
     >
 
-    export type Text = p_i.Production_With_Parameter<
+    export type Text = p_.Production_With_Parameter<
         d_out.Text,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -61,7 +61,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
         }
     >
 
-    export type Items = p_i.Production_With_Parameter<
+    export type Items = p_.Production_With_Parameter<
         d_out.Items,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -71,7 +71,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
         }
     >
 
-    export type Element = p_i.Production_With_Parameter<
+    export type Element = p_.Production_With_Parameter<
         d_out.Items,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
@@ -81,7 +81,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
         }
     >
 
-    export type ID_Value_Pairs = p_i.Production_With_Parameter<
+    export type ID_Value_Pairs = p_.Production_With_Parameter<
         d_out.ID_Value_Pairs,
         d_choice.Parser_Error,
         d_in.Annotated_Token,
