@@ -18,6 +18,7 @@ export namespace interface_ {
         d_function_fp.Parameters
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/sealed_target/deprecated_list_of_characters.js"
 
 //dependencies
 import * as t_to_prose from "./prose.js"

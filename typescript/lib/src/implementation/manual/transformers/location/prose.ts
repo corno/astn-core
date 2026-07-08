@@ -35,6 +35,7 @@ export namespace interface_ {
     >
     
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/location/prose.js"
 
 
 const temp_serialize_number = (n: number): d_temp_text.List_of_Characters => {

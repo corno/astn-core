@@ -17,6 +17,7 @@ export namespace interface_ {
         d_function.Parameters
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/refiners/parse_tree/text.js"
 
 export const Document: interface_.Document = ($, abort, $p) => {
     return r_from_list_of_characters.Document(

@@ -14,6 +14,7 @@ export namespace interface_ {
     >
 
 }
+import * as temp_interface_ from "../../../../interface/declarations/refiners/annotated_characters/text.js"
 
 /**
  * Creates a string iterator that allows iterating over characters in a string,

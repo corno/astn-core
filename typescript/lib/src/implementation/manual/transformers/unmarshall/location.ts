@@ -10,5 +10,6 @@ export namespace interface_ {
         d_out.Range
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/unmarshall/location.js"
 
 export const Error: interface_.Error = ($) => $.range

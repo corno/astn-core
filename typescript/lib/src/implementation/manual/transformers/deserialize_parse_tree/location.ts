@@ -11,6 +11,7 @@ export namespace interface_ {
         d_out.Possible_Range
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/deserialize_parse_tree/location.js"
 
 export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
     ($) => {

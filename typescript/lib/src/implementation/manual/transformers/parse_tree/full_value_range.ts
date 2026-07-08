@@ -39,6 +39,7 @@ export namespace interface_ {
         d_out.Range
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/parse_tree/full_value_range.js"
 
 
 export const Concrete_Value: interface_.Concrete_Value = ($) => p_.from.state($).decide(

@@ -15,6 +15,7 @@ export namespace interface_ {
         d_out.Phrase
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/sealed_target/prose.js"
 
 //dependencies
 import * as t_primitives_to_text from "../primitives/text.js"

@@ -68,6 +68,7 @@ export namespace interface_ {
         }
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/refiners/unmarshalled/parse_tree.js"
 
 export const Dictionary: interface_.Dictionary = ($, abort) => {
     const value = $

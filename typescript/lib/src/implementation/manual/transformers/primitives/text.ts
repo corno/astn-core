@@ -38,6 +38,7 @@ export namespace interface_ {
         d_out.List_of_Characters
     >
 }
+import * as temp_interface_ from "../../../../interface/declarations/transformers/primitives/text.js"
 
 export const Escaped: interface_.Escaped = ($) => p_.from.list(p_list_from_text(
     $,

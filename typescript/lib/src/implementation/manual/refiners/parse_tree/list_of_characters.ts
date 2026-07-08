@@ -21,6 +21,7 @@ export namespace interface_ {
     >
 
 }
+import * as temp_interface_ from "../../../../interface/declarations/refiners/parse_tree/list_of_characters.js"
 
 export const Document: interface_.Document = ($, abort, $p,) => {
     const ann_chars = r_annotated_characters.Annotated_Characters(

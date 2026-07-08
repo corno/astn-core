@@ -92,6 +92,7 @@ export namespace interface_ {
     >
 
 }
+import * as temp_interface_ from "../../../../interface/declarations/refiners/parse_tree/tokenizer_result.js"
 
 export const create_missing_token: p_ti.Transformer_With_Parameter<
     d_choice.Parser_Error.expected,
