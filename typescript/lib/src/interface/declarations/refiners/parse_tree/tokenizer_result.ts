@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/refiner'
+
 import type * as p_i from 'pareto-core/interface/refiner'
 import type * as p_ti from 'pareto-core/interface/transformer'
 
@@ -15,7 +15,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
 
 //dependencies
 
-export namespace interface_ {
+
 
     export type Document = p_i.Refiner<
         d_out.Document,
@@ -91,4 +91,4 @@ export namespace interface_ {
         }
     >
 
-}
+

@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/refiner'
+
 import * as p_t from 'pareto-core/implementation/transformer'
 import type * as p_di from 'pareto-core/interface/data'
 import type * as p_i from 'pareto-core/interface/refiner'
@@ -13,7 +13,7 @@ import type * as d_location from "../../../generated/liana/schemas/location/data
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range.js"
 
-export namespace interface_ {
+
     export type Dictionary = p_i.Refiner<
         d_out.Dictionary,
         d_function.Error,
@@ -67,4 +67,4 @@ export namespace interface_ {
             'expected properties': p_di.Dictionary<null>
         }
     >
-}
+

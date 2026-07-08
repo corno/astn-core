@@ -9,11 +9,11 @@ import type * as d_in from "pareto-fountain-pen/interface/generated/liana/schema
 //dependencies
 import * as r_from_list_of_characters from "./list_of_characters.js"
 
-export namespace interface_ {
+
     export type Document = p_i.Refiner_With_Parameter<
         d_out.Document,
         d_function.Error,
         d_in.Text,
         d_function.Parameters
     >
-}
+

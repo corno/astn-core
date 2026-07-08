@@ -11,7 +11,7 @@ import * as r_annotated_characters from "../annotated_characters/text.js"
 import * as r_tokenize from "../token/annotated_character.js"
 import * as r_from_tokenizer_result from "./tokenizer_result.js"
 
-export namespace interface_ {
+
 
     export type Document = p_i.Refiner_With_Parameter<
         d_out.Document,
@@ -20,4 +20,4 @@ export namespace interface_ {
         d_function.Parameters
     >
 
-}
+

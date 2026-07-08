@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+
 import type * as p_i from 'pareto-core/interface/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
@@ -14,7 +14,7 @@ import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
 
-export namespace interface_ {
+
 
     export type Location = p_i.Transformer_With_Parameter<
         d_in.Location,
@@ -34,4 +34,4 @@ export namespace interface_ {
         d_function.Parameters
     >
     
-}
+
