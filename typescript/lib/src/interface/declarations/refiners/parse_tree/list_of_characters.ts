@@ -2,8 +2,8 @@ import type * as p_i from 'pareto-core/interface/refiner'
 import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 
 //data types
-import type * as d_function from "../../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
-import type * as d_out from "../../../../interface/generated/liana/schemas/parse_tree/data.js"
+import type * as d_function from "../../../generated/liana/schemas/deserialize_parse_tree/data.js"
+import type * as d_out from "../../../generated/liana/schemas/parse_tree/data.js"
 import type * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
 
 //dependencies
