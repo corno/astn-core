@@ -1,5 +1,5 @@
 import * as p_ from 'pareto-core/implementation/refiner'
-import * as p_ti from 'pareto-core/interface/transformer'
+import type * as p_ti from 'pareto-core/interface/transformer'
 
 import type * as d_out from "../../../../interface/data/annotated_characters.js"
 import type * as d_in from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
