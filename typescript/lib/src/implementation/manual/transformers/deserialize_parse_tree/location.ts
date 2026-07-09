@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/deserialize_parse_tree/location.js"
+import type * as interface_ from "../../../../declarations/transformers/deserialize_parse_tree/location.js"
 
 export const Error: interface_.Error = ($) => p_.from.state($.type).decide(
     ($) => {

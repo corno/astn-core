@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/sealed_target/prose.js"
+import type * as interface_ from "../../../../declarations/transformers/sealed_target/prose.js"
 
 //dependencies
 import * as t_primitives_to_text from "../primitives/text.js"

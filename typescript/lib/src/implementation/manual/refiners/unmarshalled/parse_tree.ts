@@ -3,7 +3,7 @@ import * as p_t from 'pareto-core/implementation/transformer'
 import type * as p_di from 'pareto-core/interface/data'
 import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 
-import type * as interface_ from "../../../../interface/declarations/refiners/unmarshalled/parse_tree.js"
+import type * as interface_ from "../../../../declarations/refiners/unmarshalled/parse_tree.js"
 
 //data types
 import type * as d_out from "../../../../interface/data/unmarshalled.js"

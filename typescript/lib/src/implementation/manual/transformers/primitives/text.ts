@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
-import type * as interface_ from "../../../../interface/declarations/transformers/primitives/text.js"
+import type * as interface_ from "../../../../declarations/transformers/primitives/text.js"
 
 namespace d_function {
 

@@ -1,5 +1,5 @@
 
-import type * as interface_ from "../../../../interface/declarations/transformers/sealed_target/text.js"
+import type * as interface_ from "../../../../declarations/transformers/sealed_target/text.js"
 
 //dependencies
 import * as t_to_prose from "./prose.js"

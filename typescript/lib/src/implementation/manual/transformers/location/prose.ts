@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/location/prose.js"
+import type * as interface_ from "../../../../declarations/transformers/location/prose.js"
 
 //data types
 import type * as d_temp_text from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"

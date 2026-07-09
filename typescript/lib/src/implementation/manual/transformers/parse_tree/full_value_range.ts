@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../../interface/declarations/transformers/parse_tree/full_value_range.js"
+import type * as interface_ from "../../../../declarations/transformers/parse_tree/full_value_range.js"
 
 
 export const Concrete_Value: interface_.Concrete_Value = ($) => p_.from.state($).decide(

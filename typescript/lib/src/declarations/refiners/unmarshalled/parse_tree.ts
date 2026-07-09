@@ -2,9 +2,9 @@
 import type * as p_di from 'pareto-core/interface/data'
 import type * as p_ from 'pareto-core/interface/refiner'
 
-import type * as d_in from "../../../generated/liana/schemas/parse_tree/data.js"
-import type * as d_out from "../../../data/unmarshalled.js"
-import type * as d_function from "../../../data/unmarshall.js"
+import type * as d_in from "../../../interface/generated/liana/schemas/parse_tree/data.js"
+import type * as d_out from "../../../interface/data/unmarshalled.js"
+import type * as d_function from "../../../interface/data/unmarshall.js"
 
 export type Dictionary = p_.Refiner<
     d_out.Dictionary,

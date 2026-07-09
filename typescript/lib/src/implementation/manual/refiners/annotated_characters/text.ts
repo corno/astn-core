@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
-import type * as interface_ from "../../../../interface/declarations/refiners/annotated_characters/text.js"
+import type * as interface_ from "../../../../declarations/refiners/annotated_characters/text.js"
 
 /**
  * Creates a string iterator that allows iterating over characters in a string,

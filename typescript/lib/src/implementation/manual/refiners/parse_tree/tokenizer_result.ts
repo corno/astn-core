@@ -9,7 +9,7 @@ import type * as d_out from "../../../../interface/generated/liana/schemas/parse
 import type * as d_in from "../../../../interface/generated/liana/schemas/token/data.js"
 import type * as d_location from "../../../../interface/generated/liana/schemas/location/data.js"
 
-import type * as interface_ from "../../../../interface/declarations/refiners/parse_tree/tokenizer_result.js"
+import type * as interface_ from "../../../../declarations/refiners/parse_tree/tokenizer_result.js"
 
 export const create_missing_token: p_ti.Transformer_With_Parameter<
     d_choice.Parser_Error.expected,

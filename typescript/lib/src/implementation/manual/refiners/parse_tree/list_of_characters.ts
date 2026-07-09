@@ -5,7 +5,7 @@ import * as r_annotated_characters from "../annotated_characters/text.js"
 import * as r_tokenize from "../token/annotated_character.js"
 import * as r_from_tokenizer_result from "./tokenizer_result.js"
 
-import type * as interface_ from "../../../../interface/declarations/refiners/parse_tree/list_of_characters.js"
+import type * as interface_ from "../../../../declarations/refiners/parse_tree/list_of_characters.js"
 
 export const Document: interface_.Document = ($, abort, $p,) => {
     const ann_chars = r_annotated_characters.Annotated_Characters(
