@@ -3,7 +3,7 @@ import type * as interface_ from "../../../declarations/transformers/sealed_targ
 
 //dependencies
 import * as t_to_prose from "./prose.js"
-import * as t_prose_to_text from "pareto-fountain-pen/implementation/manual/transformers/prose/text"
+import * as t_prose_to_text from "pareto-fountain-pen/implementation/transformers/prose/text"
 
 
 export const Document: interface_.Document = ($, $p) => t_prose_to_text.Paragraph(
