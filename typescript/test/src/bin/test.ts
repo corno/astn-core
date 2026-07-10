@@ -2,7 +2,7 @@
 
 // import * as p_h from 'pareto-host-nodejs/index'
 
-// import type * as d_read_directory from "pareto-resources/interface/generated/liana/schemas/read_directory/data"
+// import type * as d_read_directory from "pareto-resources/interface/data/read_directory"
 
 
 
