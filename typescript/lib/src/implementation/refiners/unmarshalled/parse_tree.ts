@@ -7,7 +7,7 @@ import type * as interface_ from "../../../declarations/refiners/unmarshalled/pa
 
 //data types
 import type * as d_out from "../../../interface/data/unmarshalled.js"
-import type * as d_location from "../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_location from "../../../interface/data/location.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range.js"

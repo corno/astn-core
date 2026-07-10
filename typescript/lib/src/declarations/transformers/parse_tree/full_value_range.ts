@@ -2,8 +2,8 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 
-import type * as d_in from "../../../interface/generated/liana/schemas/parse_tree/data.js"
-import type * as d_out from "../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_in from "../../../interface/data/parse_tree.js"
+import type * as d_out from "../../../interface/data/location.js"
 
 
 export type Value = p_.Transformer<

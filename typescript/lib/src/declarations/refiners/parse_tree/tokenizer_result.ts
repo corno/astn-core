@@ -2,11 +2,11 @@
 import type * as p_ from 'pareto-core/interface/refiner'
 
 //data types
-import type * as d_choice from "../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
-import type * as d_function from "../../../interface/generated/liana/schemas/deserialize_parse_tree/data.js"
-import type * as d_out from "../../../interface/generated/liana/schemas/parse_tree/data.js"
-import type * as d_in from "../../../interface/generated/liana/schemas/token/data.js"
-import type * as d_location from "../../../interface/generated/liana/schemas/location/data.js"
+import type * as d_choice from "../../../interface/data/deserialize_parse_tree.js"
+import type * as d_function from "../../../interface/data/deserialize_parse_tree.js"
+import type * as d_out from "../../../interface/data/parse_tree.js"
+import type * as d_in from "../../../interface/data/token.js"
+import type * as d_location from "../../../interface/data/location.js"
 
 export type Document = p_.Refiner<
     d_out.Document,
