@@ -12,7 +12,7 @@ import type * as d_function from "../../../interface/data/deserialize_parse_tree
 import type * as d_location from "../../../interface/data/location.js"
 
 import type * as d_temp_location from "../../../interface/data/location.js"
-import type * as d_loc from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+import type * as d_loc from "pareto-fountain-pen/interface/data/list_of_characters"
 
 //dependencies
 

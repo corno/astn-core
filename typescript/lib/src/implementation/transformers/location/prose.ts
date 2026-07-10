@@ -4,7 +4,7 @@ import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_f
 import type * as interface_ from "../../../declarations/transformers/location/prose.js"
 
 //data types
-import type * as d_temp_text from "pareto-fountain-pen/interface/generated/liana/schemas/list_of_characters/data"
+import type * as d_temp_text from "pareto-fountain-pen/interface/data/list_of_characters"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
