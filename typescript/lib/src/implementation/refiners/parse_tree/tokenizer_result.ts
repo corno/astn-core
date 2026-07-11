@@ -4,18 +4,18 @@ import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //data types
-import type * as d_choice from "../../../interface/schemas/deserialize_parse_tree.js"
-import type * as d_out from "../../../interface/schemas/parse_tree.js"
-import type * as d_in from "../../../interface/schemas/token.js"
-import type * as d_location from "../../../interface/schemas/location.js"
+import type * as s_choice from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_out from "../../../interface/schemas/parse_tree.js"
+import type * as s_in from "../../../interface/schemas/token.js"
+import type * as s_location from "../../../interface/schemas/location.js"
 
 import type * as interface_ from "../../../declarations/refiners/parse_tree/tokenizer_result.js"
 
 export const create_missing_token: p_ti.Transformer_With_Parameter<
-    d_choice.Parser_Error.expected,
-    d_choice.Parser_Error,
+    s_choice.Parser_Error.expected,
+    s_choice.Parser_Error,
     {
-        'end location': d_location.Location
+        'end location': s_location.Location
     }
 > = ($, $p) => ({
     'expected': $,
@@ -25,10 +25,10 @@ export const create_missing_token: p_ti.Transformer_With_Parameter<
 })
 
 export const create_unexpected_token: p_ti.Transformer_With_Parameter<
-    d_choice.Parser_Error.expected,
-    d_choice.Parser_Error,
+    s_choice.Parser_Error.expected,
+    s_choice.Parser_Error,
     {
-        'found': d_in.Annotated_Token
+        'found': s_in.Annotated_Token
     }
 > = ($, $p) => ({
     'expected': $,
@@ -39,7 +39,7 @@ export const create_unexpected_token: p_ti.Transformer_With_Parameter<
 
 export const Value: interface_.Value = (iterator, abort) => ({
     'type': iterator.peek_with_expectation(
-        p_.literal.list<d_choice.Expected>([
+        p_.literal.list<s_choice.Expected>([
             ['any value', null]
         ]),
         ($, expected) => abort(create_missing_token(expected, { 'end location': $ })),
@@ -122,7 +122,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 { 'token': token }
                             ),
                             'path': iterator.peek_with_expectation(
-                                p_.literal.list<d_choice.Expected>([
+                                p_.literal.list<s_choice.Expected>([
                                     ['a text value', null]
                                 ]),
                                 (end_info, expected) => abort(create_missing_token(expected, { 'end location': end_info })),
@@ -148,7 +148,7 @@ export const Value: interface_.Value = (iterator, abort) => ({
                                 { 'token': token }
                             ),
                             'status': iterator.peek_with_expectation(
-                                p_.literal.list<d_choice.Expected>([
+                                p_.literal.list<s_choice.Expected>([
                                     ['a text value', null],
                                     ['#', null]
                                 ]),
@@ -253,7 +253,7 @@ export const Guaranteed_Structural_Token: interface_.Guaranteed_Structural_Token
 }
 
 export const Possible_Structural_Token: interface_.Possible_Structural_Token = (iterator, abort, $p) => iterator.peek_with_expectation(
-    p_.literal.list<d_choice.Expected>([
+    p_.literal.list<s_choice.Expected>([
         $p['expected token']
     ]),
     ($, expected) => abort(create_missing_token(expected, { 'end location': $ })),
@@ -295,7 +295,7 @@ export const Items: interface_.Items = (iterator, abort, $p) => iterator.build_l
     has_more_items: (current_token) => current_token.type[0] !== $p['end token'][0],
     handle: () => iterator.peek( //for the proper error message (any value or end token) we peek instead of processing the token directly
         ($) => abort(create_missing_token(
-            p_.literal.list<d_choice.Expected>([
+            p_.literal.list<s_choice.Expected>([
                 ['any value', null],
                 $p['end token']
             ]),
@@ -310,7 +310,7 @@ export const Items: interface_.Items = (iterator, abort, $p) => iterator.build_l
 
 export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) => iterator.build_list({
     has_more_items: ($) => $.type[0] !== $p['end token'][0],
-    handle: (): d_out.ID_Value_Pairs.L => ({
+    handle: (): s_out.ID_Value_Pairs.L => ({
         'id': iterator.peek( //to get a better error message (a text value or end token) we peek instead of processing the Text token directly
             () => p_unreachable_code_path("has more items is true"),
             ($) => $.type[0] === 'text'
@@ -324,7 +324,7 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
                 )
                 : abort(
                     create_unexpected_token(
-                        p_.literal.list<d_choice.Expected>([
+                        p_.literal.list<s_choice.Expected>([
                             ['a text value', null],
                             $p['end token'],
                         ]),
@@ -333,8 +333,8 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
                 ),
         ),
         'assignment': iterator.peek_with_expectation<
-            d_out.ID_Value_Pair.assignment,
-            d_choice.Parser_Error.expected
+            s_out.ID_Value_Pair.assignment,
+            s_choice.Parser_Error.expected
         >(
             p_.literal.list([
                 ['a text value', null],
@@ -376,9 +376,9 @@ export const ID_Value_Pairs: interface_.ID_Value_Pairs = (iterator, abort, $p) =
 })
 
 export const Document: interface_.Document = ($, abort) => p_iterate<
-    d_out.Document,
-    d_in.Tokenizer_Result.tokens.L,
-    d_location.Location
+    s_out.Document,
+    s_in.Tokenizer_Result.tokens.L,
+    s_location.Location
 
 >({
     list: $.tokens,

@@ -1,8 +1,8 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 //data types
-import type * as d_in from "../../../interface/schemas/deserialize_parse_tree.js"
-import type * as d_out from "pareto-fountain-pen/interface/data/prose"
+import type * as s_in from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_out from "pareto-fountain-pen/interface/data/prose"
 
 import type * as interface_ from "../../../declarations/transformers/deserialize_parse_tree/prose.js"
 
@@ -10,7 +10,7 @@ import type * as interface_ from "../../../declarations/transformers/deserialize
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 export const Error: interface_.Error = ($) => {
-    const Parse_Error_Type = ($: d_in.Error.type_): d_out.Phrase => p_.from.state($).decide(
+    const Parse_Error_Type = ($: s_in.Error.type_): s_out.Phrase => p_.from.state($).decide(
         ($) => {
             switch ($[0]) {
                 case 'lexer': return p_.option($, ($) => p_.from.state($.expected).decide(

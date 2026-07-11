@@ -1,10 +1,10 @@
 import * as p_ from 'pareto-core/interface/data'
 
-import type * as d_location from "../../interface/schemas/location.js"
+import type * as s_location from "../../interface/schemas/location.js"
 
 export type Error = {
     'type': Error_Type
-    'range': d_location.Range
+    'range': s_location.Range
 }
 
 export type Error_Type =
@@ -27,7 +27,7 @@ export type Dictionary_Error =
 export type Type_Error = 
     | ['duplicate property', string]
     | ['unexpected properties', {
-        'found': p_.Dictionary<d_location.Range>
+        'found': p_.Dictionary<s_location.Range>
         'expected': p_.Dictionary<null>
     }]
     | ['missing property', string]

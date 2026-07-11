@@ -6,8 +6,8 @@ import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 import type * as interface_ from "../../../declarations/refiners/unmarshalled/parse_tree.js"
 
 //data types
-import type * as d_out from "../../../interface/schemas/unmarshalled.js"
-import type * as d_location from "../../../interface/schemas/location.js"
+import type * as s_out from "../../../interface/schemas/unmarshalled.js"
+import type * as s_location from "../../../interface/schemas/location.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range.js"
@@ -20,7 +20,7 @@ export const Dictionary: interface_.Dictionary = ($, abort) => {
                 case 'concrete': return p_.option($, ($) => p_.from.state($).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'dictionary': return p_.option($, ($): d_out.Dictionary => ({
+                            case 'dictionary': return p_.option($, ($): s_out.Dictionary => ({
                                 'value': value,
                                 'entries': p_.from.list($.entries).convert_to_dictionary(
                                     ($) => $.id.token.value,
@@ -268,7 +268,7 @@ export const Verbose_Group: interface_.Verbose_Group = ($, abort, $p) => {
                                                             p_t.from.dictionary(
                                                                 p_t.from.dictionary(xxx).join(
                                                                     $p['expected properties'],
-                                                                    ($, other, id): p_di.Optional_Value<d_location.Range> => p_t.from.optional(other).decide(
+                                                                    ($, other, id): p_di.Optional_Value<s_location.Range> => p_t.from.optional(other).decide(
                                                                         ($) => p_.literal.not_set(),
                                                                         () => p_.literal.set($.id.range)
                                                                     )

@@ -6,29 +6,29 @@ import p_variables from 'pareto-core/implementation/transformer/specials/variabl
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //data types
-import type * as d_in from "../../../interface/schemas/annotated_characters.js"
-import type * as d_out from "../../../interface/schemas/token.js"
-import type * as d_function from "../../../interface/schemas/deserialize_parse_tree.js"
-import type * as d_location from "../../../interface/schemas/location.js"
+import type * as s_in from "../../../interface/schemas/annotated_characters.js"
+import type * as s_out from "../../../interface/schemas/token.js"
+import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_location from "../../../interface/schemas/location.js"
 
-import type * as d_temp_location from "../../../interface/schemas/location.js"
-import type * as d_loc from "pareto-fountain-pen/interface/data/list_of_characters"
+import type * as s_temp_location from "../../../interface/schemas/location.js"
+import type * as s_loc from "pareto-fountain-pen/interface/data/list_of_characters"
 
 //dependencies
 
 
 
 const create_range: p_i.Production_Without_Error_With_Parameter<
-    d_temp_location.Range,
-    d_in.Annotated_Character,
-    d_location.Location,
+    s_temp_location.Range,
+    s_in.Annotated_Character,
+    s_location.Location,
     {
-        'start character': d_in.Annotated_Character
+        'start character': s_in.Annotated_Character
     }
 > = (
     iterator,
     $p
-): d_temp_location.Range => ({
+): s_temp_location.Range => ({
     'start': $p['start character'].location,
     'end': iterator.peek(
         ($) => $,
@@ -38,14 +38,14 @@ const create_range: p_i.Production_Without_Error_With_Parameter<
 
 
 export const Whitespace: p_i.Production_Without_Error<
-    d_out.Whitespace,
-    d_in.Annotated_Character,
-    d_location.Location
+    s_out.Whitespace,
+    s_in.Annotated_Character,
+    s_location.Location
 > = (
     iterator,
-): d_out.Whitespace => {
+): s_out.Whitespace => {
 
-        const is_whitespace_character = ($: d_in.Annotated_Character) => {
+        const is_whitespace_character = ($: s_in.Annotated_Character) => {
             switch ($.code) {
                 case 0x09: // \t
                     return true
@@ -95,11 +95,11 @@ export const Whitespace: p_i.Production_Without_Error<
     }
 
 export const Trivia: p_i.Production<
-    d_out.Trivia,
-    d_function.Lexer_Error,
-    d_in.Annotated_Character,
-    d_location.Location
-> = (iterator, abort): d_out.Trivia => ({
+    s_out.Trivia,
+    s_function.Lexer_Error,
+    s_in.Annotated_Character,
+    s_location.Location
+> = (iterator, abort): s_out.Trivia => ({
     'leading whitespace': Whitespace(iterator),
     'comments': iterator.build_list({
         has_more_items: (current) => {
@@ -222,13 +222,13 @@ export const Trivia: p_i.Production<
 
 export const Delimited_Text: p_i.Production_With_Parameter<
     string,
-    d_function.Lexer_Error,
-    d_in.Annotated_Character,
-    d_location.Location,
+    s_function.Lexer_Error,
+    s_in.Annotated_Character,
+    s_location.Location,
     {
         'allow newlines': boolean,
         'end character': number,
-        'start character': d_in.Annotated_Character
+        'start character': s_in.Annotated_Character
     }
 > = (iterator, abort, $p) => {
     const $p_content = p_text_from_list(
@@ -292,7 +292,7 @@ export const Delimited_Text: p_i.Production_With_Parameter<
                                     case Character.t: return Character.tab
                                     case Character.u:
                                         const r_hexadecimal: p_i.Refiner<
-                                            number, string, d_loc.List_of_Characters
+                                            number, string, s_loc.List_of_Characters
                                         > = ($, abort) => {
                                             const characters = $
                                             let result = 0
@@ -401,12 +401,12 @@ export const Delimited_Text: p_i.Production_With_Parameter<
 }
 
 export const Tokenizer_Result: p_i.Production_With_Parameter<
-    d_out.Tokenizer_Result,
-    d_function.Lexer_Error,
-    d_in.Annotated_Character,
-    d_location.Location,
+    s_out.Tokenizer_Result,
+    s_function.Lexer_Error,
+    s_in.Annotated_Character,
+    s_location.Location,
     {
-        'end info': d_location.Location
+        'end info': s_location.Location
     }
 > = (
     iterator,
