@@ -6,8 +6,8 @@ import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 import type * as interface_ from "../../../declarations/refiners/unmarshalled/parse_tree.js"
 
 //data types
-import type * as d_out from "../../../interface/data/unmarshalled.js"
-import type * as d_location from "../../../interface/data/location.js"
+import type * as d_out from "../../../interface/schemas/unmarshalled.js"
+import type * as d_location from "../../../interface/schemas/location.js"
 
 //dependencies
 import * as t_parse_tree_to_location from "../../transformers/parse_tree/start_token_range.js"

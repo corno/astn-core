@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 //data types
-import type * as d_out from "../../../interface/data/location.js"
+import type * as d_out from "../../../interface/schemas/location.js"
 
 import type * as interface_ from "../../../declarations/transformers/deserialize/location.js"
 

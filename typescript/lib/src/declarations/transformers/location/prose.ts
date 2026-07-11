@@ -2,9 +2,9 @@
 import type * as p_ from 'pareto-core/interface/transformer'
 
 //data types
-import type * as d_in from "../../../interface/data/location.js"
+import type * as d_in from "../../../interface/schemas/location.js"
 import type * as d_out from "pareto-fountain-pen/interface/data/prose"
-import type * as d_function from "../../../interface/data/location_to_prose.js"
+import type * as d_function from "../../../interface/schemas/location_to_prose.js"
 
 export type Location = p_.Transformer_With_Parameter<
     d_in.Location,

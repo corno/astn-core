@@ -1,7 +1,7 @@
 
 import type * as p_ from 'pareto-core/interface/transformer'
 
-import type * as d_in from "../../../interface/data/primitives.js"
+import type * as d_in from "../../../interface/schemas/primitives.js"
 import type * as d_out from "pareto-fountain-pen/interface/data/list_of_characters"
 
 export namespace d_function {
