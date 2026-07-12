@@ -1,8 +1,21 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/parse_tree/start_token_range.js"
+//schemas
+import type * as s_in from "../../../interface/schemas/parse_tree.js"
+import type * as s_out from "../../../interface/schemas/location.js"
 
-export const Concrete_Value: interface_.Concrete_Value = ($) => p_.from.state($).decide(
+namespace declarations {
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Range
+    >
+    export type Concrete_Value = p_.Transformer<
+        s_in.Value.type_.concrete,
+        s_out.Range
+    >
+}
+
+export const Concrete_Value: declarations.Concrete_Value = ($) => p_.from.state($).decide(
     ($) => p_.from.state($).decide(
         ($) => {
             switch ($[0]) {
@@ -31,7 +44,7 @@ export const Concrete_Value: interface_.Concrete_Value = ($) => p_.from.state($)
             }
         }))
 
-export const Value: interface_.Value = ($) => p_.from.state($.type).decide(
+export const Value: declarations.Value = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'concrete': return p_.option($, ($) => Concrete_Value($))

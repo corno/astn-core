@@ -1,8 +1,36 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
-import type * as interface_ from "../../../declarations/transformers/primitives/text.js"
 
-namespace s_function {
+//schemas
+import type * as s_out from "../../../interface/schemas/list_of_characters.js"
+import type * as s_in from "../../../interface/schemas/primitives.js"
+namespace declarations {
+    export type Escaped = p_.Transformer<
+        s_in.Escaped,
+        s_out.List_of_Characters
+    >
+    export type Quoted = p_.Transformer_With_Parameter<
+        s_in.Quoted,
+        s_out.List_of_Characters,
+        s_parameters.Parameters
+    >
+    export type Apostrophed = p_.Transformer_With_Parameter<
+        s_in.Apostrophed,
+        s_out.List_of_Characters,
+        s_parameters.Parameters
+    >
+    export type Backticked = p_.Transformer_With_Parameter<
+        s_in.Backticked,
+        s_out.List_of_Characters,
+        s_parameters.Parameters
+    >
+    export type Undelimited = p_.Transformer<
+        s_in.Undelimited,
+        s_out.List_of_Characters
+    >
+}
+
+namespace s_parameters {
 
     export type Parameters = {  
         'add delimiters': boolean
@@ -11,7 +39,7 @@ namespace s_function {
 }
 
 
-export const Escaped: interface_.Escaped = ($) => p_.from.list(p_list_from_text(
+export const Escaped: declarations.Escaped = ($) => p_.from.list(p_list_from_text(
     $,
     ($) => $
 ),
@@ -73,7 +101,7 @@ export const Escaped: interface_.Escaped = ($) => p_.from.list(p_list_from_text(
     }
 )
 
-export const Quoted: interface_.Quoted = ($, $p) => $p['add delimiters']
+export const Quoted: declarations.Quoted = ($, $p) => $p['add delimiters']
     ? p_.literal.segmented_list([
         p_.literal.list([
             0x22, // "
@@ -87,7 +115,7 @@ export const Quoted: interface_.Quoted = ($, $p) => $p['add delimiters']
     ])
     : Escaped($)
 
-export const Apostrophed: interface_.Apostrophed = ($, $p) => $p['add delimiters']
+export const Apostrophed: declarations.Apostrophed = ($, $p) => $p['add delimiters']
     ? p_.literal.segmented_list([
         p_.literal.list([
             0x27, // '
@@ -101,7 +129,7 @@ export const Apostrophed: interface_.Apostrophed = ($, $p) => $p['add delimiters
     ])
     : Escaped($)
 
-export const Backticked: interface_.Backticked = ($, $p) => $p['add delimiters']
+export const Backticked: declarations.Backticked = ($, $p) => $p['add delimiters']
     ? p_.literal.segmented_list([
         p_.literal.list([
             0x60, // `
@@ -115,7 +143,7 @@ export const Backticked: interface_.Backticked = ($, $p) => $p['add delimiters']
     ])
     : Escaped($)
 
-export const Undelimited: interface_.Undelimited = ($) => p_list_from_text(
+export const Undelimited: declarations.Undelimited = ($) => p_list_from_text(
     $,
     ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
 ) 

@@ -12,7 +12,7 @@ import type * as s_function from "../../../interface/schemas/deserialize_parse_t
 import type * as s_location from "../../../interface/schemas/location.js"
 
 import type * as s_temp_location from "../../../interface/schemas/location.js"
-import type * as s_loc from "pareto-fountain-pen/interface/data/list_of_characters"
+import type * as s_loc from "../../../interface/schemas/list_of_characters.js"
 
 //dependencies
 

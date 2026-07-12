@@ -1,6 +1,19 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/sealed_target/prose.js"
+//schemas
+import type * as s_in from "../../../interface/schemas/sealed_target.js"
+import type * as s_out from "../../../interface/schemas/prose.js"
+
+namespace declarations {
+    export type Document = p_.Transformer<
+        s_in.Document,
+        s_out.Paragraph
+    >
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Phrase
+    >
+}
 
 //dependencies
 import * as t_primitives_to_text from "../primitives/text.js"
@@ -8,13 +21,13 @@ import * as t_primitives_to_text from "../primitives/text.js"
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const Document: interface_.Document = ($) => sh.pg.sentences([
+export const Document: declarations.Document = ($) => sh.pg.sentences([
     sh.sentence([
         Value($),
     ])
 ])
 
-export const Value: interface_.Value = ($) => sh.ph.composed([
+export const Value: declarations.Value = ($) => sh.ph.composed([
     p_.from.state($).decide(
         ($) => {
             switch ($[0]) {

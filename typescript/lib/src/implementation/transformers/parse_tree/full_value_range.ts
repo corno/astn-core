@@ -1,9 +1,45 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
-import type * as interface_ from "../../../declarations/transformers/parse_tree/full_value_range.js"
+//schemas
+import type * as s_in from "../../../interface/schemas/parse_tree.js"
+import type * as s_out from "../../../interface/schemas/location.js"
+namespace declarations {
+    export type Value = p_.Transformer<
+        s_in.Value,
+        s_out.Range
+    >
+    export type Concrete_Value = p_.Transformer<
+        s_in.Value.type_.concrete,
+        s_out.Range
+    >
+    export type ID_Value_Pair = p_.Transformer<
+        s_in.ID_Value_Pairs.L,
+        s_out.Range
+    >
+    export type State = p_.Transformer<
+        s_in.Value.type_.concrete.state,
+        s_out.Range
+    >
+    export type List = p_.Transformer<
+        s_in.Value.type_.concrete.list,
+        s_out.Range
+    >
+    export type Dictionary = p_.Transformer<
+        s_in.Value.type_.concrete.dictionary,
+        s_out.Range
+    >
+    export type Group = p_.Transformer<
+        s_in.Value.type_.concrete.group,
+        s_out.Range
+    >
+    export type Optional = p_.Transformer<
+        s_in.Value.type_.concrete.optional,
+        s_out.Range
+    >
+}
 
 
-export const Concrete_Value: interface_.Concrete_Value = ($) => p_.from.state($).decide(
+export const Concrete_Value: declarations.Concrete_Value = ($) => p_.from.state($).decide(
     ($) => p_.from.state($).decide(
         ($) => {
             switch ($[0]) {
@@ -19,12 +55,12 @@ export const Concrete_Value: interface_.Concrete_Value = ($) => p_.from.state($)
             }
         }))
 
-export const Dictionary: interface_.Dictionary = ($) => ({
+export const Dictionary: declarations.Dictionary = ($) => ({
     'start': $['{'].range.start,
     'end': $['}'].range.end
 })
 
-export const Group: interface_.Group = ($) => p_.from.state($).decide(
+export const Group: declarations.Group = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'concise': return p_.option($, ($) => ({
@@ -39,12 +75,12 @@ export const Group: interface_.Group = ($) => p_.from.state($).decide(
         }
     })
 
-export const List: interface_.List = ($) => ({
+export const List: declarations.List = ($) => ({
     'start': $['['].range.start,
     'end': $[']'].range.end
 })
 
-export const Optional: interface_.Optional = ($) => p_.from.state($).decide(
+export const Optional: declarations.Optional = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'set': return p_.option($, ($) => ({
@@ -56,7 +92,7 @@ export const Optional: interface_.Optional = ($) => p_.from.state($).decide(
         }
     })
 
-export const State: interface_.State = ($) => ({
+export const State: declarations.State = ($) => ({
     'start': $['|'].range.start,
     'end': p_.from.state($.status).decide(
         ($) => {
@@ -68,7 +104,7 @@ export const State: interface_.State = ($) => ({
         })
 })
 
-export const Value: interface_.Value = ($) => p_.from.state($.type).decide(
+export const Value: declarations.Value = ($) => p_.from.state($.type).decide(
     ($) => {
         switch ($[0]) {
             case 'concrete': return p_.option($, ($) => Concrete_Value($))
@@ -81,7 +117,7 @@ export const Value: interface_.Value = ($) => p_.from.state($.type).decide(
         }
     })
 
-export const ID_Value_Pair: interface_.ID_Value_Pair = ($) => ({
+export const ID_Value_Pair: declarations.ID_Value_Pair = ($) => ({
     'start': $.id.range.start,
     'end': p_.from.optional($.assignment).decide(
         ($) => p_.from.optional($.value).decide(

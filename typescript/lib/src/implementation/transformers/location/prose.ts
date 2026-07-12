@@ -1,16 +1,35 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
-import type * as interface_ from "../../../declarations/transformers/location/prose.js"
-
 //schemas
-import type * as s_temp_text from "pareto-fountain-pen/interface/data/list_of_characters"
+import type * as s_in from "../../../interface/schemas/location.js"
+import type * as s_out from "../../../interface/schemas/prose.js"
+import type * as s_parameters from "../../../interface/schemas/location_to_prose.js"
+
+namespace declarations {
+    export type Location = p_.Transformer_With_Parameter<
+        s_in.Location,
+        s_out.Phrase,
+        s_parameters.Parameters
+    >
+    export type Range = p_.Transformer_With_Parameter<
+        s_in.Range,
+        s_out.Phrase,
+        s_parameters.Parameters
+    >
+    export type Possible_Range = p_.Transformer_With_Parameter<
+        s_in.Possible_Range,
+        s_out.Phrase,
+        s_parameters.Parameters
+    >
+}
+
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
-
+import type * as s_temp_text from "pareto-fountain-pen/interface/schemas/list_of_characters"
 const temp_serialize_number = (n: number): s_temp_text.List_of_Characters => {
     return p_list_from_text(
         `${n}`,
@@ -18,7 +37,7 @@ const temp_serialize_number = (n: number): s_temp_text.List_of_Characters => {
     )
 }
 
-export const Range: interface_.Range = ($, $p) => sh.ph.composed([
+export const Range: declarations.Range = ($, $p) => sh.ph.composed([
     sh.ph.serialize(temp_serialize_number($.start.relative.line + p_.from.state($p['character location reporting']).decide(
         ($) => ($[0] === 'zero based' ? 0 : 1)))),
     sh.ph.literal(":"),
@@ -32,7 +51,7 @@ export const Range: interface_.Range = ($, $p) => sh.ph.composed([
         ($) => ($[0] === 'zero based' ? 0 : 1))))
 ])
 
-export const Possible_Range: interface_.Possible_Range = ($, $p) => p_.from.state($).decide(
+export const Possible_Range: declarations.Possible_Range = ($, $p) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
             case 'range': return p_.option($, ($) => Range($, $p))
@@ -41,7 +60,7 @@ export const Possible_Range: interface_.Possible_Range = ($, $p) => p_.from.stat
         }
     })
 
-export const Location: interface_.Location = ($, $p) => {
+export const Location: declarations.Location = ($, $p) => {
     return sh.ph.composed([
         sh.ph.serialize(temp_serialize_number($.relative.line + p_.from.state($p['character location reporting']).decide(
             ($) => ($[0] === 'zero based' ? 0 : 1)))),
