@@ -2,7 +2,7 @@
 
 // import * as p_h from 'pareto-host-nodejs/index'
 
-// import type * as s_read_directory from "pareto-resources/interface/data/read_directory"
+// import type * as s_read_directory from "../../../interface/schemas/read_directory"
 
 
 
