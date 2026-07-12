@@ -3,7 +3,7 @@ import type * as p_ti from 'pareto-core/interface/transformer'
 import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
-//data types
+//schemas
 import type * as s_choice from "../../../interface/schemas/deserialize_parse_tree.js"
 import type * as s_out from "../../../interface/schemas/parse_tree.js"
 import type * as s_in from "../../../interface/schemas/token.js"

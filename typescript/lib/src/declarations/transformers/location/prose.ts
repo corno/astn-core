@@ -1,7 +1,7 @@
 
 import type * as p_ from 'pareto-core/interface/transformer'
 
-//data types
+//schemas
 import type * as s_in from "../../../interface/schemas/location.js"
 import type * as s_out from "pareto-fountain-pen/interface/data/prose"
 import type * as s_function from "../../../interface/schemas/location_to_prose.js"

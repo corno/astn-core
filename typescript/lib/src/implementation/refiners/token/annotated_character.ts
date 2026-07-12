@@ -5,7 +5,7 @@ import p_unreachable_code_path from 'pareto-core/implementation/transformer/spec
 import p_variables from 'pareto-core/implementation/transformer/specials/variables'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
-//data types
+//schemas
 import type * as s_in from "../../../interface/schemas/annotated_characters.js"
 import type * as s_out from "../../../interface/schemas/token.js"
 import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"

@@ -1,7 +1,7 @@
 
 import type * as p_ from 'pareto-core/interface/refiner'
 
-//data types
+//schemas
 import type * as s_choice from "../../../interface/schemas/deserialize_parse_tree.js"
 import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
 import type * as s_out from "../../../interface/schemas/parse_tree.js"

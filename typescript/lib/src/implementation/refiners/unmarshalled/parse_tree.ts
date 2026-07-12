@@ -5,7 +5,7 @@ import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 
 import type * as interface_ from "../../../declarations/refiners/unmarshalled/parse_tree.js"
 
-//data types
+//schemas
 import type * as s_out from "../../../interface/schemas/unmarshalled.js"
 import type * as s_location from "../../../interface/schemas/location.js"
 
