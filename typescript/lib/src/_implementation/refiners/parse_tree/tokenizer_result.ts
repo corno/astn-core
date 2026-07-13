@@ -4,8 +4,8 @@ import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 
 //schemas
-import type * as s_choice from "../../../interface/schemas/deserialize_parse_tree.js"
-import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_choice from "../../../interface/schemas/parse_tree_deserialization.js"
+import type * as s_function from "../../../interface/schemas/parse_tree_deserialization.js"
 import type * as s_in from "../../../interface/schemas/token.js"
 import type * as s_location from "../../../interface/schemas/location.js"
 import type * as s_out from "../../../interface/schemas/parse_tree.js"

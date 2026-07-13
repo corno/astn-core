@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/serializer'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_in from "../../interface/schemas/parse_tree_deserialization.js"
 
 namespace declarations {
     export type Error = p_.Serializer<

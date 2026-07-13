@@ -1,0 +1,25 @@
+import * as p_ from 'pareto-core/implementation/transformer'
+
+//schemas
+import type * as s_in from "../../../interface/schemas/unmarshalling.js"
+import type * as s_out from "../../../interface/schemas/location.js"
+
+namespace declarations {
+    export type Error = p_.Transformer<
+        s_in.Error,
+        s_out.Possible_Range
+    >
+}
+
+//dependencies
+import * as t_deserialize_parse_tree_to_location from "../parse_tree_deserialization/location.js"
+import * as t_unmarshall_to_location from "../unmarshalling_from_parse_tree/location.js"
+
+export const Error: declarations.Error = ($) => p_.from.state($).decide(
+    ($): s_out.Possible_Range => {
+        switch ($[0]) {
+            case 'deserialize': return p_.option($, ($) => t_deserialize_parse_tree_to_location.Error($))
+            case 'unmarshall parse tree': return p_.option($, ($) => ['range', t_unmarshall_to_location.Error($)])
+            default: return p_.exhaustive($[0])
+        }
+    })

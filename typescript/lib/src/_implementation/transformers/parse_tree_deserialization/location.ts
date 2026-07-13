@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_in from "../../../interface/schemas/parse_tree_deserialization.js"
 import type * as s_out from "../../../interface/schemas/location.js"
 
 namespace declarations {

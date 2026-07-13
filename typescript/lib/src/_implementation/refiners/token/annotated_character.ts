@@ -8,7 +8,7 @@ import p_text_from_list from 'pareto-core/implementation/transformer/specials/te
 //schemas
 import type * as s_in from "../../../private_schemas/annotated_characters.js"
 import type * as s_out from "../../../interface/schemas/token.js"
-import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_function from "../../../interface/schemas/parse_tree_deserialization.js"
 import type * as s_location from "../../../interface/schemas/location.js"
 
 import type * as s_temp_location from "../../../interface/schemas/location.js"

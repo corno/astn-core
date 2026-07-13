@@ -7,7 +7,7 @@ import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 import type * as s_out from "../../../interface/schemas/unmarshalled.js"
 import type * as s_location from "../../../interface/schemas/location.js"
 import type * as s_in from "../../../interface/schemas/parse_tree.js"
-import type * as s_function from "../../../interface/schemas/unmarshall.js"
+import type * as s_function from "../../../interface/schemas/unmarshalling_from_parse_tree.js"
 
 namespace declarations {
     export type Dictionary = p_.Refiner<

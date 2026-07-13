@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/serializer'
 
 //schemas
-import type * as s_in from "../../interface/schemas/unmarshall.js"
+import type * as s_in from "../../interface/schemas/unmarshalling_from_parse_tree.js"
 
 namespace declarations {
     export type Error = p_.Serializer<

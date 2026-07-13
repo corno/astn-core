@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 
 import type * as s_out from "../../../private_schemas/annotated_characters.js"
-import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_function from "../../../interface/schemas/parse_tree_deserialization.js"
 import type * as s_in from "../../../interface/schemas/list_of_characters.js"
 
 
