@@ -1,5 +1,6 @@
 import * as p_ from 'pareto-core/implementation/refiner'
-import type * as p_i from 'pareto-core/interface/refiner'
+import * as p_d from 'pareto-core/implementation/deserializer'
+import * as p_schema from 'pareto-core/interface/schema'
 import * as p_t from 'pareto-core/implementation/transformer'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
 import p_variables from 'pareto-core/implementation/transformer/specials/variables'
@@ -12,13 +13,12 @@ import type * as s_function from "../../../interface/schemas/deserialize_parse_t
 import type * as s_location from "../../../interface/schemas/location.js"
 
 import type * as s_temp_location from "../../../interface/schemas/location.js"
-import type * as s_loc from "../../../interface/schemas/list_of_characters.js"
 
 //dependencies
 
 
 
-const create_range: p_i.Production_Without_Error_With_Parameter<
+const create_range: p_.Production_Without_Error_With_Parameter<
     s_temp_location.Range,
     s_in.Annotated_Character,
     s_location.Location,
@@ -37,7 +37,7 @@ const create_range: p_i.Production_Without_Error_With_Parameter<
 })
 
 
-export const Whitespace: p_i.Production_Without_Error<
+export const Whitespace: p_.Production_Without_Error<
     s_out.Whitespace,
     s_in.Annotated_Character,
     s_location.Location
@@ -94,7 +94,7 @@ export const Whitespace: p_i.Production_Without_Error<
         )
     }
 
-export const Trivia: p_i.Production<
+export const Trivia: p_.Production<
     s_out.Trivia,
     s_function.Lexer_Error,
     s_in.Annotated_Character,
@@ -111,7 +111,7 @@ export const Trivia: p_i.Production<
                     ($) => $.code === 0x2F || $.code === 0x2A, // slash or asterisk
                 )
         },
-        handle: ()=> {
+        handle: () => {
             return iterator.consume( // discard the first slash
                 () => p_unreachable_code_path("has_more_items -> true"),
                 ($) => iterator.peek(
@@ -220,7 +220,7 @@ export const Trivia: p_i.Production<
     }),
 })
 
-export const Delimited_Text: p_i.Production_With_Parameter<
+export const Delimited_Text: p_.Production_With_Parameter<
     string,
     s_function.Lexer_Error,
     s_in.Annotated_Character,
@@ -291,8 +291,10 @@ export const Delimited_Text: p_i.Production_With_Parameter<
                                     case Character.r: return Character.carriage_return
                                     case Character.t: return Character.tab
                                     case Character.u:
-                                        const r_hexadecimal: p_i.Refiner<
-                                            number, string, s_loc.List_of_Characters
+                                        const r_hexadecimal: p_.Refiner<
+                                            number,
+                                            string,
+                                            p_schema.List<number>
                                         > = ($, abort) => {
                                             const characters = $
                                             let result = 0
@@ -400,7 +402,7 @@ export const Delimited_Text: p_i.Production_With_Parameter<
     return $p_content
 }
 
-export const Tokenizer_Result: p_i.Production_With_Parameter<
+export const Tokenizer_Result: p_.Production_With_Parameter<
     s_out.Tokenizer_Result,
     s_function.Lexer_Error,
     s_in.Annotated_Character,
@@ -611,7 +613,7 @@ export const Tokenizer_Result: p_i.Production_With_Parameter<
                                             () => p_unreachable_code_path("has_more_items -> true"),
                                             ($) => $.code,
                                         ),
-                                        on_no_progression: () =>p_unreachable_code_path("handle consumes directly"),
+                                        on_no_progression: () => p_unreachable_code_path("handle consumes directly"),
                                     }),
                                     ($) => $
                                 )
@@ -625,7 +627,7 @@ export const Tokenizer_Result: p_i.Production_With_Parameter<
                 'trailing trivia': Trivia(iterator, abort),
             })
         },
-        on_no_progression: () =>p_unreachable_code_path("handle is expected to always consume at least one character, so this should never happen"),
+        on_no_progression: () => p_unreachable_code_path("handle is expected to always consume at least one character, so this should never happen"),
     }),
     'end': $p['end info']
 })

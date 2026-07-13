@@ -1,16 +1,13 @@
-import * as p_ from 'pareto-core/implementation/refiner'
-import * as p_temp from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/implementation/deserializer'
 
-import type * as s_out from "../../../private_schemas/annotated_characters.js"
-import type * as s_in from "../../../interface/schemas/list_of_characters.js"
-import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_out from "../private_schemas/annotated_characters.js"
+import type * as s_function from "../interface/schemas/deserialize_parse_tree.js"
 
 
 
 namespace declarations {
 
-    export type Annotated_Characters = p_temp.Transformer_With_Parameter<
-        s_in.List_of_Characters,
+    export type Annotated_Characters = p_.Deserializer_Without_Error_With_Parameter<
         s_out.Annotated_Characters,
         s_function.Parameters
     >
@@ -23,7 +20,9 @@ namespace declarations {
  * Creates a string iterator that allows iterating over characters in a string,
  * while keeping track of line numbers, columns, and line indentation.
  */
-export const Annotated_Characters: declarations.Annotated_Characters = ($, $p) => p_.from.list($).map_with_state(
+export const Annotated_Characters: declarations.Annotated_Characters = ($, $p) => p_.from.list(
+    p_.list_from_list_of_characters($, ($) => $),
+).map_with_state(
     {
         'location': {
             'absolute': 0,

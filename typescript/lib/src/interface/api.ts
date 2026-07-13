@@ -1,9 +1,10 @@
 import * as p_t from 'pareto-core/interface/transformer'
 import * as p_r from 'pareto-core/interface/refiner'
+import * as p_s from 'pareto-core/implementation/serializer'
+import * as p_d from 'pareto-core/implementation/deserializer'
 
 import * as s_deserialize from "./schemas/deserialize_parse_tree.js"
 import * as s_full_value_range from "./schemas/full_value_range.js"
-import * as s_list_of_characters from "./schemas/list_of_characters.js"
 import * as s_parse_tree from "./schemas/parse_tree.js"
 import * as s_sealed_target from "./schemas/sealed_target.js"
 import * as s_serialize_prose from "./schemas/serialize_prose.js"
@@ -12,16 +13,22 @@ import * as s_unmarshall from "./schemas/unmarshall.js"
 import * as s_unmarshalled from "./schemas/unmarshalled.js"
 
 export type API = {
-    'transformers': {
+    'serializers': {
         'sealed target': {
-            'list of characters': {
-                'Document': p_t.Transformer_With_Parameter<
-                    s_sealed_target.Document,
-                    s_list_of_characters.List_of_Characters,
-                    s_serialize_prose.Parameters
-                >
-            }
+            'Document': p_s.Serializer_With_Parameter<
+                s_sealed_target.Document,
+                s_serialize_prose.Parameters
+            >
         },
+        'deserialize parse tree': {
+            'Error': p_s.Serializer_With_Parameter<
+                s_deserialize.Error,
+                s_serialize_prose.Parameters
+            >
+        },
+
+    },
+    'transformers': {
         'parse tree': {
             'full value range': {
                 'Value': p_t.Transformer<
@@ -36,27 +43,18 @@ export type API = {
                 >
             },
         },
-        'deserialize parse tree': {
-            'list of characters': {
-                'Error': p_t.Transformer_With_Parameter<
-                    s_deserialize.Error,
-                    s_list_of_characters.List_of_Characters,
-                    s_serialize_prose.Parameters
-                >
-            }
+    },
+    'deserializers': {
+        'parse tree': {
+            'Document': p_d.Deserializer_With_Parameter<
+                s_parse_tree.Document,
+                s_deserialize.Error,
+                s_deserialize.Parameters
+            >
         },
+
     },
     'refiners': {
-        'parse tree': {
-            'list of characters': {
-                'Document': p_r.Refiner_With_Parameter<
-                    s_parse_tree.Document,
-                    s_deserialize.Error,
-                    s_list_of_characters.List_of_Characters,
-                    s_deserialize.Parameters
-                >
-            }
-        },
         'unmarshalled': {
             'parse tree': {
                 'Dictionary': p_r.Refiner<

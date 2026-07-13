@@ -1,4 +1,6 @@
 import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_s from 'pareto-core/implementation/serializer'
+import * as p_d from 'pareto-core/implementation/deserializer'
 
 //schemas
 import type * as s_in from "../../../interface/schemas/deserialize_parse_tree.js"
@@ -26,7 +28,16 @@ export const Error: declarations.Error = ($) => {
                             case 'escape character': return p_.option($, ($) => sh.ph.composed([
                                 sh.ph.literal("escape character (), but found "),
                                 p_.from.optional($.found).decide(
-                                    ($) => sh.ph.serialize(p_.literal.list([$])),
+                                    ($) => sh.ph.literal(
+                                        p_s.text_from_list_of_characters(
+                                            p_s.list_of_characters_from_list(
+                                                p_.literal.list([$]),
+                                                ($) => $,
+                                            ),
+                                        
+                                        )
+
+                                    ),
                                     () => sh.ph.literal("nothing")
                                 ),
                             ]))

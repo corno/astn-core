@@ -1,48 +1,45 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/implementation/serializer'
+import * as p_t from 'pareto-core/implementation/transformer'
+import type * as p_schema from 'pareto-core/interface/schema'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
 //schemas
-import type * as s_out from "../../../interface/schemas/list_of_characters.js"
-import type * as s_in from "../../../private_schemas/primitives.js"
+import type * as s_in from "../../private_schemas/primitives.js"
 namespace declarations {
-    export type Escaped = p_.Transformer<
-        s_in.Escaped,
-        s_out.List_of_Characters
-    >
-    export type Quoted = p_.Transformer_With_Parameter<
+    export type Quoted = p_.Serializer_With_Parameter<
         s_in.Quoted,
-        s_out.List_of_Characters,
         s_parameters.Parameters
     >
-    export type Apostrophed = p_.Transformer_With_Parameter<
+    export type Apostrophed = p_.Serializer_With_Parameter<
         s_in.Apostrophed,
-        s_out.List_of_Characters,
         s_parameters.Parameters
     >
-    export type Backticked = p_.Transformer_With_Parameter<
+    export type Backticked = p_.Serializer_With_Parameter<
         s_in.Backticked,
-        s_out.List_of_Characters,
         s_parameters.Parameters
     >
-    export type Undelimited = p_.Transformer<
-        s_in.Undelimited,
-        s_out.List_of_Characters
+    export type Undelimited = p_.Serializer<
+        s_in.Undelimited
     >
 }
 
 namespace s_parameters {
 
-    export type Parameters = {  
+    export type Parameters = {
         'add delimiters': boolean
     }
 
 }
 
 
-export const Escaped: declarations.Escaped = ($) => p_.from.list(p_list_from_text(
-    $,
-    ($) => $
-),
+export const Escaped: p_t.Transformer<
+    s_in.Escaped,
+    p_schema.List<number>
+> = ($) => p_.from.list(
+    p_list_from_text(
+        $,
+        ($) => $
+    ),
 ).flatten(
     ($) => {
         switch ($) {
@@ -101,49 +98,61 @@ export const Escaped: declarations.Escaped = ($) => p_.from.list(p_list_from_tex
     }
 )
 
-export const Quoted: declarations.Quoted = ($, $p) => $p['add delimiters']
-    ? p_.literal.segmented_list([
-        p_.literal.list([
-            0x22, // "
-        ]),
-        Escaped(
-            $,
-        ),
-        p_.literal.list([
-            0x22, // "
+export const Quoted: declarations.Quoted = ($, $p) => p_.list_of_characters_from_list(
+    $p['add delimiters']
+        ? p_.literal.segmented_list([
+            p_.literal.list([
+                0x22, // "
+            ]),
+            Escaped(
+                $,
+            ),
+            p_.literal.list([
+                0x22, // "
+            ])
         ])
-    ])
-    : Escaped($)
+        : Escaped($),
+    ($) => $
+)
 
-export const Apostrophed: declarations.Apostrophed = ($, $p) => $p['add delimiters']
-    ? p_.literal.segmented_list([
-        p_.literal.list([
-            0x27, // '
-        ]),
-        Escaped(
-            $,
-        ),
-        p_.literal.list([
-            0x27, // '
+export const Apostrophed: declarations.Apostrophed = ($, $p) => p_.list_of_characters_from_list(
+    $p['add delimiters']
+        ? p_.literal.segmented_list([
+            p_.literal.list([
+                0x27, // '
+            ]),
+            Escaped(
+                $,
+            ),
+            p_.literal.list([
+                0x27, // '
+            ])
         ])
-    ])
-    : Escaped($)
+        : Escaped($),
+    ($) => $
+)
 
-export const Backticked: declarations.Backticked = ($, $p) => $p['add delimiters']
-    ? p_.literal.segmented_list([
-        p_.literal.list([
-            0x60, // `
-        ]),
-        Escaped(
-            $,
-        ),
-        p_.literal.list([
-            0x60, // `
+export const Backticked: declarations.Backticked = ($, $p) => p_.list_of_characters_from_list(
+    $p['add delimiters']
+        ? p_.literal.segmented_list([
+            p_.literal.list([
+                0x60, // `
+            ]),
+            Escaped(
+                $,
+            ),
+            p_.literal.list([
+                0x60, // `
+            ])
         ])
-    ])
-    : Escaped($)
+        : Escaped($),
+    ($) => $
+)
 
-export const Undelimited: declarations.Undelimited = ($) => p_list_from_text(
-    $,
-    ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
-) 
+export const Undelimited: declarations.Undelimited = ($) => p_.list_of_characters_from_list(
+    p_list_from_text(
+        $,
+        ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
+    ),
+    ($) => $
+)

@@ -29,7 +29,6 @@ namespace declarations {
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
 
-import type * as s_temp_text from "../../../interface/schemas/list_of_characters.js"
 const temp_serialize_number = (n: number): string => {
     return `${n}`
 }

@@ -1,4 +1,5 @@
 import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_s from 'pareto-core/implementation/serializer'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //schemas
@@ -17,7 +18,7 @@ namespace declarations {
 }
 
 //dependencies
-import * as t_primitives_to_text from "../primitives/text.js"
+import * as t_primitives_to_text from "../../serializers/primitives.js"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
@@ -39,11 +40,13 @@ export const Value: declarations.Value = ($) => sh.ph.composed([
                             ($, id) => sh.sentence(
                                 p_.literal.list([
                                     sh.ph.literal(
-                                        p_text_from_list(
-                                            t_primitives_to_text.Apostrophed(id, {
-                                                'add delimiters': true
-                                            }),
-                                            ($) => $
+                                        p_s.text_from_list_of_characters(
+                                            t_primitives_to_text.Apostrophed(
+                                                id,
+                                                {
+                                                    'add delimiters': true
+                                                }
+                                            )
                                         )
                                     ),
                                     sh.ph.literal(": "),
@@ -64,11 +67,10 @@ export const Value: declarations.Value = ($) => sh.ph.composed([
                                             ($, id) => sh.sentence(
                                                 p_.literal.list([
                                                     sh.ph.literal(
-                                                        p_text_from_list(
+                                                        p_s.text_from_list_of_characters(
                                                             t_primitives_to_text.Backticked(id, {
                                                                 'add delimiters': true
-                                                            }),
-                                                            ($) => $
+                                                            })
                                                         )
                                                     ),
                                                     sh.ph.literal(": "),
@@ -107,14 +109,13 @@ export const Value: declarations.Value = ($) => sh.ph.composed([
                 case 'state': return p_.option($, ($) => sh.ph.composed([
                     sh.ph.literal("| "),
                     sh.ph.literal(
-                        p_text_from_list(
+                        p_s.text_from_list_of_characters(
                             t_primitives_to_text.Backticked(
                                 $.option,
                                 {
                                     'add delimiters': true
                                 }
-                            ),
-                            ($) => $,
+                            )
                         )
                     ),
                     sh.ph.literal(" "),
@@ -126,33 +127,30 @@ export const Value: declarations.Value = ($) => sh.ph.composed([
                         ($) => {
                             switch ($[0]) {
                                 case 'apostrophe': return p_.option($, ($) => sh.ph.literal(
-                                    p_text_from_list(
+                                    p_s.text_from_list_of_characters(
                                         t_primitives_to_text.Apostrophed(
                                             value,
                                             {
                                                 'add delimiters': true
                                             }
                                         ),
-                                        ($) => $
                                     )
                                 ))
                                 case 'quote': return p_.option($, ($) => sh.ph.literal(
-                                    p_text_from_list(
+                                    p_s.text_from_list_of_characters(
                                         t_primitives_to_text.Quoted(
                                             value,
                                             {
                                                 'add delimiters': true
                                             }
                                         ),
-                                        ($) => $
                                     )
                                 ))
                                 case 'none': return p_.option($, ($) => sh.ph.literal(
-                                    p_text_from_list(
+                                    p_s.text_from_list_of_characters(
                                         t_primitives_to_text.Undelimited(
                                             value
                                         ),
-                                        ($) => $,
                                     )
                                 ))
                                 default: return p_.exhaustive($[0])
