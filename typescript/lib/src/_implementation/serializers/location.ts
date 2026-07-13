@@ -3,7 +3,7 @@ import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_f
 
 //schemas
 import type * as s_in from "../../interface/schemas/location.js"
-import type * as s_parameters from "../../private_schemas/location_to_prose.js"
+import type * as s_parameters from "../../interface/schemas/location_serialization.js"
 
 namespace declarations {
     export type Location = p_.Serializer_With_Parameter<

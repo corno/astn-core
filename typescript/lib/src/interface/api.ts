@@ -4,12 +4,14 @@ import * as p_s from 'pareto-core/implementation/serializer'
 
 import * as s_deserialize from "./schemas/deserialize_parse_tree.js"
 import * as s_full_value_range from "./schemas/full_value_range.js"
+import * as s_list_of_characters from "./schemas/list_of_characters.js"
+import * as s_location from "./schemas/location.js"
+import * as s_location_serialization from "./schemas/location_serialization.js"
 import * as s_parse_tree from "./schemas/parse_tree.js"
 import * as s_sealed_target from "./schemas/sealed_target.js"
 import * as s_start_token_range from "./schemas/start_token_range.js"
 import * as s_unmarshall from "./schemas/unmarshall.js"
 import * as s_unmarshalled from "./schemas/unmarshalled.js"
-import * as s_list_of_characters from "./schemas/list_of_characters.js"
 
 export type API = {
     'serializers': {
@@ -23,6 +25,16 @@ export type API = {
                 s_deserialize.Error
             >
         },
+        'location': {
+            'Range': p_s.Serializer_With_Parameter<
+                s_location.Range,
+                s_location_serialization.Parameters
+            >
+            'Possible Range': p_s.Serializer_With_Parameter<
+                s_location.Possible_Range,
+                s_location_serialization.Parameters
+            >
+        }
 
     },
     'transformers': {

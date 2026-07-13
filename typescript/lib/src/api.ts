@@ -2,19 +2,24 @@ import * as interface_ from "./interface/api.js"
 
 import * as r_parse_tree_from_list_of_characters from "./_implementation/refiners/parse_tree/list_of_characters.js"
 import * as r_unmarshalled_from_parse_tree from "./_implementation/refiners/unmarshalled/parse_tree.js"
-import * as t_deserialize_parse_tree_to_list_of_characters from "./_implementation/serializers/deserialize_parse_tree.js"
+import * as ser_deserialize_parse_tree from "./_implementation/serializers/deserialize_parse_tree.js"
+import * as ser_location from "./_implementation/serializers/location.js"
 import * as t_parse_tree_to_full_value_range from "./_implementation/transformers/parse_tree/full_value_range.js"
 import * as t_parse_tree_to_start_token_range from "./_implementation/transformers/parse_tree/start_token_range.js"
-import * as t_sealed_target_to_list_of_characters from "./_implementation/serializers/sealed_target.js"
+import * as ser_sealed_target from "./_implementation/serializers/sealed_target.js"
 
 export const api: interface_.API = {
     'serializers': {
         'deserialize parse tree': {
-            'Error': t_deserialize_parse_tree_to_list_of_characters.Error,
+            'Error': ser_deserialize_parse_tree.Error,
         },
         'sealed target': {
-            'Document': t_sealed_target_to_list_of_characters.Document,
+            'Document': ser_sealed_target.Document,
         },
+        'location': {
+            'Range': ser_location.Range,
+            'Possible Range': ser_location.Possible_Range,
+        }
 
     },
     'transformers': {
