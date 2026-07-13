@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/implementation/refiner'
 import * as p_t from 'pareto-core/implementation/transformer'
-import type * as p_di from 'pareto-core/interface/data'
+import type * as p_di from 'pareto-core/interface/schema'
 import p_assert from 'pareto-core/implementation/refiner/specials/assert'
 
 import type * as interface_ from "../../../declarations/refiners/unmarshalled/parse_tree.js"

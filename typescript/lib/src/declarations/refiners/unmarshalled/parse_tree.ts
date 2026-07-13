@@ -1,5 +1,5 @@
 
-import type * as p_di from 'pareto-core/interface/data'
+import type * as p_di from 'pareto-core/interface/schema'
 import type * as p_ from 'pareto-core/interface/refiner'
 
 import type * as s_in from "../../../interface/schemas/parse_tree.js"
