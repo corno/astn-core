@@ -5,9 +5,10 @@ import * as r_unmarshalled_from_parse_tree from "./_implementation/refiners/unma
 import * as ser_deserialize_parse_tree from "./_implementation/serializers/parse_tree_deserialization.js"
 import * as ser_location from "./_implementation/serializers/location.js"
 import * as ser_sealed_target from "./_implementation/serializers/sealed_target.js"
+import * as ser_value_unmarshalling from "./_implementation/serializers/value_unmarshalling.js"
+import * as t_parse_tree_deserialization_to_location from "./_implementation/transformers/parse_tree_deserialization/location.js"
 import * as t_parse_tree_to_full_value_range from "./_implementation/transformers/parse_tree/full_value_range.js"
 import * as t_parse_tree_to_start_token_range from "./_implementation/transformers/parse_tree/start_token_range.js"
-import * as t_parse_tree_deserialization_to_location from "./_implementation/transformers/parse_tree_deserialization/location.js"
 
 export const api: interface_.API = {
     'serializers': {
@@ -20,6 +21,9 @@ export const api: interface_.API = {
         'location': {
             'Range': ser_location.Range,
             'Possible Range': ser_location.Possible_Range,
+        },
+        'value unmarshalling': {
+            'Error': ser_value_unmarshalling.Error,
         }
 
     },

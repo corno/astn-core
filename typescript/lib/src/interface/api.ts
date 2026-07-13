@@ -25,6 +25,11 @@ export type API = {
                 import("./schemas/location_serialization.js").Parameters
             >
         }
+        'value unmarshalling': {
+            'Error': p_s.Serializer<
+                import("./schemas/value_unmarshalling.js").Error
+            >
+        }
     },
     'transformers': {
         'parse tree': {
