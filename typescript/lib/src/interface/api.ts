@@ -35,8 +35,16 @@ export type API = {
                     s_start_token_range.Range
                 >
             },
-            
-        }
+        },
+        'deserialize parse tree': {
+            'list of characters': {
+                'Error': p_t.Transformer_With_Parameter<
+                    s_deserialize.Error,
+                    s_list_of_characters.List_of_Characters,
+                    s_serialize_prose.Parameters
+                >
+            }
+        },
     },
     'refiners': {
         'parse tree': {
