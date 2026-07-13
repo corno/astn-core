@@ -2,37 +2,27 @@ import * as p_t from 'pareto-core/interface/transformer'
 import * as p_r from 'pareto-core/interface/refiner'
 import * as p_s from 'pareto-core/implementation/serializer'
 
-import * as s_deserialize from "./schemas/parse_tree_deserialization.js"
-import * as s_full_value_range from "./schemas/full_value_range.js"
-import * as s_list_of_characters from "./schemas/list_of_characters.js"
-import * as s_location from "./schemas/location.js"
-import * as s_location_serialization from "./schemas/location_serialization.js"
-import * as s_parse_tree from "./schemas/parse_tree.js"
-import * as s_sealed_target from "./schemas/sealed_target.js"
-import * as s_start_token_range from "./schemas/start_token_range.js"
-import * as s_unmarshall from "./schemas/unmarshalling_from_parse_tree.js"
-import * as s_unmarshalled from "./schemas/unmarshalled.js"
 
 export type API = {
     'serializers': {
         'sealed target': {
             'Document': p_s.Serializer<
-                s_sealed_target.Document
+                import("./schemas/sealed_target.js").Document
             >
         },
         'deserialize parse tree': {
             'Error': p_s.Serializer<
-                s_deserialize.Error
+                import("./schemas/parse_tree_deserialization.js").Error
             >
         },
         'location': {
             'Range': p_s.Serializer_With_Parameter<
-                s_location.Range,
-                s_location_serialization.Parameters
+                import("./schemas/location.js").Range,
+                import("./schemas/location_serialization.js").Parameters
             >
             'Possible Range': p_s.Serializer_With_Parameter<
-                s_location.Possible_Range,
-                s_location_serialization.Parameters
+                import("./schemas/location.js").Possible_Range,
+                import("./schemas/location_serialization.js").Parameters
             >
         }
 
@@ -41,23 +31,23 @@ export type API = {
         'parse tree': {
             'full value range': {
                 'Value': p_t.Transformer<
-                    s_parse_tree.Value,
-                    s_full_value_range.Range
+                    import("./schemas/parse_tree.js").Value,
+                    import("./schemas/full_value_range.js").Range
                 >
             },
             'start token range': {
                 'Value': p_t.Transformer<
-                    s_parse_tree.Value,
-                    s_start_token_range.Range
+                    import("./schemas/parse_tree.js").Value,
+                    import("./schemas/start_token_range.js").Range
                 >
             },
         },
-        'deserialize parse tree': {
+        'parse tree deserialization': {
             'location': {
-                // 'Value': p_t.Transformer<
-                //     s_deserialize.Value,
-                //     s_location.Possible_Range
-                // >
+                'Error': p_t.Transformer<
+                    import("./schemas/parse_tree_deserialization.js").Error,
+                    import("./schemas/location.js").Possible_Range
+                >
             }
         }
     },
@@ -66,50 +56,50 @@ export type API = {
             'list of characters': {
 
                 'Document': p_r.Refiner_With_Parameter<
-                    s_parse_tree.Document,
-                    s_deserialize.Error,
-                    s_list_of_characters.List_Of_Characters,
-                    s_deserialize.Parameters
+                    import("./schemas/parse_tree.js").Document,
+                    import("./schemas/parse_tree_deserialization.js").Error,
+                    import("./schemas/list_of_characters.js").List_Of_Characters,
+                    import("./schemas/parse_tree_deserialization.js").Parameters
                 >
             }
         },
         'unmarshalled': {
             'parse tree': {
                 'Dictionary': p_r.Refiner<
-                    s_unmarshalled.Dictionary,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value
+                    import("./schemas/unmarshalled.js").Dictionary,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value
                 >
                 'List': p_r.Refiner<
-                    s_unmarshalled.List,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value
+                    import("./schemas/unmarshalled.js").List,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value
                 >
                 'Nothing': p_r.Refiner<
-                    s_unmarshalled.Nothing,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value
+                    import("./schemas/unmarshalled.js").Nothing,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value
                 >
                 'Optional': p_r.Refiner<
-                    s_unmarshalled.Optional,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value
+                    import("./schemas/unmarshalled.js").Optional,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value
                 >
                 'State': p_r.Refiner<
-                    s_unmarshalled.State,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value
+                    import("./schemas/unmarshalled.js").State,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value
                 >
                 'Text': p_r.Refiner<
-                    s_unmarshalled.Text,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value
+                    import("./schemas/unmarshalled.js").Text,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value
                 >
                 'Verbose Group': p_r.Refiner_With_Parameter<
-                    s_unmarshalled.Verbose_Group,
-                    s_unmarshall.Error,
-                    s_parse_tree.Value,
-                    s_unmarshall.Verbose_Group_Parameters
+                    import("./schemas/unmarshalled.js").Verbose_Group,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Error,
+                    import("./schemas/parse_tree.js").Value,
+                    import("./schemas/unmarshalling_from_parse_tree.js").Verbose_Group_Parameters
                 >
             }
         }

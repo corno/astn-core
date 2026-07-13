@@ -7,6 +7,7 @@ import * as ser_location from "./_implementation/serializers/location.js"
 import * as ser_sealed_target from "./_implementation/serializers/sealed_target.js"
 import * as t_parse_tree_to_full_value_range from "./_implementation/transformers/parse_tree/full_value_range.js"
 import * as t_parse_tree_to_start_token_range from "./_implementation/transformers/parse_tree/start_token_range.js"
+import * as t_parse_tree_deserialization_to_location from "./_implementation/transformers/parse_tree_deserialization/location.js"
 
 export const api: interface_.API = {
     'serializers': {
@@ -31,9 +32,9 @@ export const api: interface_.API = {
                 'Value': t_parse_tree_to_start_token_range.Value,
             },
         },
-        'deserialize parse tree': {
+        'parse tree deserialization': {
             'location': {
-                // 'Error': t_
+                'Error': t_parse_tree_deserialization_to_location.Error,
             }
         }
 
