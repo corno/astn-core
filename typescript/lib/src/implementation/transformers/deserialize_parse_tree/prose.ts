@@ -38,7 +38,7 @@ export const Error: declarations.Error = ($) => {
                     }))
                 case 'parser': return p_.option($, ($) => sh.ph.composed([
                     sh.ph.literal("expected "),
-                    sh.ph.rich(
+                    sh.ph.rich_phrase(
                         p_.from.list($.expected).map(
                             ($) => sh.ph.literal(
                                 p_.from.state($).decide(
