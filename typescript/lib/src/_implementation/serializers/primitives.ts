@@ -15,19 +15,19 @@ namespace s_parameters {
 }
 
 namespace declarations {
-    export type Quoted = p_.Serializer_With_Parameter<
+    export type Quoted = p_.Phrase_Serializer_With_Parameter<
         s_in.Quoted,
         s_parameters.Parameters
     >
-    export type Apostrophed = p_.Serializer_With_Parameter<
+    export type Apostrophed = p_.Phrase_Serializer_With_Parameter<
         s_in.Apostrophed,
         s_parameters.Parameters
     >
-    export type Backticked = p_.Serializer_With_Parameter<
+    export type Backticked = p_.Phrase_Serializer_With_Parameter<
         s_in.Backticked,
         s_parameters.Parameters
     >
-    export type Undelimited = p_.Serializer<
+    export type Undelimited = p_.Phrase_Serializer<
         s_in.Undelimited
     >
 }

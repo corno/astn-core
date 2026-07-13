@@ -4,10 +4,10 @@ import * as p_ from 'pareto-core/implementation/serializer'
 import type * as s_in from "../../interface/schemas/sealed_target.js"
 
 namespace declarations {
-    export type Document = p_.Serializer<
+    export type Document = p_.Paragraph_Serializer<
         s_in.Document
     >
-    export type Value = p_.Serializer<
+    export type Value = p_.Phrase_Serializer<
         s_in.Value
     >
 }
@@ -18,7 +18,7 @@ import * as ser_primitives from "./primitives.js"
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const Document: declarations.Document = ($) => Value($)
+export const Document: declarations.Document = ($) => sh.pg.sentences([sh.sentence([Value($)])])
 
 export const Value: declarations.Value = ($) => sh.ph.composed([
     p_.from.state($).decide(

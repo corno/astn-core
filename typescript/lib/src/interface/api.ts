@@ -6,27 +6,27 @@ import * as p_s from 'pareto-core/implementation/serializer'
 export type API = {
     'serializers': {
         'sealed target': {
-            'Document': p_s.Serializer<
+            'Document': p_s.Paragraph_Serializer<
                 import("./schemas/sealed_target.js").Document
             >
         },
         'parse tree deserialization': {
-            'Error': p_s.Serializer<
+            'Error': p_s.Phrase_Serializer<
                 import("./schemas/parse_tree_deserialization.js").Error
             >
         },
         'location': {
-            'Range': p_s.Serializer_With_Parameter<
+            'Range': p_s.Phrase_Serializer_With_Parameter<
                 import("./schemas/location.js").Range,
                 import("./schemas/location_serialization.js").Parameters
             >
-            'Possible Range': p_s.Serializer_With_Parameter<
+            'Possible Range': p_s.Phrase_Serializer_With_Parameter<
                 import("./schemas/location.js").Possible_Range,
                 import("./schemas/location_serialization.js").Parameters
             >
         }
         'value unmarshalling': {
-            'Error': p_s.Serializer<
+            'Error': p_s.Phrase_Serializer<
                 import("./schemas/value_unmarshalling.js").Error
             >
         }

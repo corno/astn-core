@@ -5,7 +5,7 @@ import p_text_from_list from 'pareto-core/implementation/transformer/specials/te
 import type * as s_in from "../../interface/schemas/parse_tree_deserialization.js"
 
 namespace declarations {
-    export type Error = p_.Serializer<
+    export type Error = p_.Phrase_Serializer<
         s_in.Error
     >
 }

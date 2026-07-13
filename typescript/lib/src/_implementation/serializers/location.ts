@@ -6,15 +6,15 @@ import type * as s_in from "../../interface/schemas/location.js"
 import type * as s_parameters from "../../interface/schemas/location_serialization.js"
 
 namespace declarations {
-    export type Location = p_.Serializer_With_Parameter<
+    export type Location = p_.Phrase_Serializer_With_Parameter<
         s_in.Location,
         s_parameters.Parameters
     >
-    export type Range = p_.Serializer_With_Parameter<
+    export type Range = p_.Phrase_Serializer_With_Parameter<
         s_in.Range,
         s_parameters.Parameters
     >
-    export type Possible_Range = p_.Serializer_With_Parameter<
+    export type Possible_Range = p_.Phrase_Serializer_With_Parameter<
         s_in.Possible_Range,
         s_parameters.Parameters
     >

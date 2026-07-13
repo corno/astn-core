@@ -4,7 +4,7 @@ import * as p_ from 'pareto-core/implementation/serializer'
 import type * as s_in from "../../interface/schemas/value_unmarshalling.js"
 
 namespace declarations {
-    export type Error = p_.Serializer<
+    export type Error = p_.Phrase_Serializer<
         s_in.Error
     >
 }
