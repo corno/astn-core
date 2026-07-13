@@ -1,5 +1,4 @@
 import * as p_ from 'pareto-core/implementation/refiner'
-import * as p_d from 'pareto-core/implementation/deserializer'
 import * as p_schema from 'pareto-core/interface/schema'
 import * as p_t from 'pareto-core/implementation/transformer'
 import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'

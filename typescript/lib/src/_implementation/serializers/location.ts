@@ -1,25 +1,21 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/implementation/serializer'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
 //schemas
-import type * as s_in from "../../../interface/schemas/location.js"
-import type * as s_out from "../../../private_schemas/prose.js"
-import type * as s_parameters from "../../../private_schemas/location_to_prose.js"
+import type * as s_in from "../../interface/schemas/location.js"
+import type * as s_parameters from "../../private_schemas/location_to_prose.js"
 
 namespace declarations {
-    export type Location = p_.Transformer_With_Parameter<
+    export type Location = p_.Serializer_With_Parameter<
         s_in.Location,
-        s_out.Phrase,
         s_parameters.Parameters
     >
-    export type Range = p_.Transformer_With_Parameter<
+    export type Range = p_.Serializer_With_Parameter<
         s_in.Range,
-        s_out.Phrase,
         s_parameters.Parameters
     >
-    export type Possible_Range = p_.Transformer_With_Parameter<
+    export type Possible_Range = p_.Serializer_With_Parameter<
         s_in.Possible_Range,
-        s_out.Phrase,
         s_parameters.Parameters
     >
 }

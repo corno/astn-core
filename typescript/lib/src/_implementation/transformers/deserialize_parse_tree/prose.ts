@@ -1,17 +1,16 @@
-import * as p_ from 'pareto-core/implementation/transformer'
-import * as p_s from 'pareto-core/implementation/serializer'
-import * as p_d from 'pareto-core/implementation/deserializer'
+import * as p_ from 'pareto-core/implementation/serializer'
+import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //schemas
 import type * as s_in from "../../../interface/schemas/deserialize_parse_tree.js"
-import type * as s_out from "../../../private_schemas/prose.js"
 
 namespace declarations {
-    export type Error = p_.Transformer<
-        s_in.Error,
-        s_out.Phrase
+    export type Error = p_.Serializer<
+        s_in.Error
     >
 }
+
+import * as s_out from "pareto-fountain-pen/interface/schemas/prose"
 
 //shorthands
 import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
@@ -29,12 +28,9 @@ export const Error: declarations.Error = ($) => {
                                 sh.ph.literal("escape character (), but found "),
                                 p_.from.optional($.found).decide(
                                     ($) => sh.ph.literal(
-                                        p_s.text_from_list_of_characters(
-                                            p_s.list_of_characters_from_list(
-                                                p_.literal.list([$]),
-                                                ($) => $,
-                                            ),
-                                        
+                                        p_text_from_list(
+                                            p_.literal.list([$]),
+                                            ($) => $,
                                         )
 
                                     ),

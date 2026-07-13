@@ -1,6 +1,6 @@
 import * as interface_ from "./interface/api.js"
 
-import * as r_parse_tree_from_list_of_characters from "./deserializers/parse_tree.js"
+import * as r_parse_tree_from_list_of_characters from "./_implementation/refiners/parse_tree/list_of_characters.js"
 import * as r_unmarshalled_from_parse_tree from "./_implementation/refiners/unmarshalled/parse_tree.js"
 import * as t_deserialize_parse_tree_to_list_of_characters from "./_implementation/serializers/deserialize_parse_tree.js"
 import * as t_parse_tree_to_full_value_range from "./_implementation/transformers/parse_tree/full_value_range.js"
@@ -28,13 +28,12 @@ export const api: interface_.API = {
         },
 
     },
-    'deserializers': {
-        'parse tree': {
-            'Document': r_parse_tree_from_list_of_characters.Document,
-        },
-
-    },
     'refiners': {
+        'parse tree': {
+            'list of characters': {
+                'Document': r_parse_tree_from_list_of_characters.Document,
+            }
+        },
         'unmarshalled': {
             'parse tree': {
                 'Dictionary': r_unmarshalled_from_parse_tree.Dictionary,

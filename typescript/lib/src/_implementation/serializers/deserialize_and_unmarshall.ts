@@ -1,19 +1,17 @@
-import * as p_ from 'pareto-core/implementation/transformer'
+import * as p_ from 'pareto-core/implementation/serializer'
 
 //schemas
-import type * as s_in from "../../../private_schemas/deserialize.js"
-import type * as s_out from "../../../private_schemas/prose.js"
+import type * as s_in from "../../private_schemas/deserialize_and_unmarshall.js"
 
 namespace declarations {
-    export type Error = p_.Transformer<
-        s_in.Error,
-        s_out.Phrase
+    export type Error = p_.Serializer<
+        s_in.Error
     >
 }
 
 //dependencies
-import * as t_deserialize_parse_tree_to_prose from "../deserialize_parse_tree/prose.js"
-import * as t_unmarshall_to_prose from "../unmarshall/prose.js"
+import * as t_deserialize_parse_tree_to_prose from "../transformers/deserialize_parse_tree/prose.js"
+import * as t_unmarshall_to_prose from "./unmarshall.js"
 
 export const Error: declarations.Error = ($) => p_.from.state($).decide(
     ($) => {

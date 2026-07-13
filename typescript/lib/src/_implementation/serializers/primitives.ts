@@ -5,6 +5,15 @@ import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_f
 
 //schemas
 import type * as s_in from "../../private_schemas/primitives.js"
+
+namespace s_parameters {
+
+    export type Parameters = {
+        'add delimiters': boolean
+    }
+
+}
+
 namespace declarations {
     export type Quoted = p_.Serializer_With_Parameter<
         s_in.Quoted,
@@ -23,13 +32,7 @@ namespace declarations {
     >
 }
 
-namespace s_parameters {
-
-    export type Parameters = {
-        'add delimiters': boolean
-    }
-
-}
+import * as sh from 'pareto-fountain-pen/shorthands/prose/deprecated'
 
 
 export const Escaped: p_t.Transformer<
@@ -98,7 +101,7 @@ export const Escaped: p_t.Transformer<
     }
 )
 
-export const Quoted: declarations.Quoted = ($, $p) => p_.list_of_characters_from_list(
+export const Quoted: declarations.Quoted = ($, $p) => sh.ph.list_of_characters(
     $p['add delimiters']
         ? p_.literal.segmented_list([
             p_.literal.list([
@@ -112,10 +115,9 @@ export const Quoted: declarations.Quoted = ($, $p) => p_.list_of_characters_from
             ])
         ])
         : Escaped($),
-    ($) => $
 )
 
-export const Apostrophed: declarations.Apostrophed = ($, $p) => p_.list_of_characters_from_list(
+export const Apostrophed: declarations.Apostrophed = ($, $p) => sh.ph.list_of_characters(
     $p['add delimiters']
         ? p_.literal.segmented_list([
             p_.literal.list([
@@ -129,10 +131,9 @@ export const Apostrophed: declarations.Apostrophed = ($, $p) => p_.list_of_chara
             ])
         ])
         : Escaped($),
-    ($) => $
 )
 
-export const Backticked: declarations.Backticked = ($, $p) => p_.list_of_characters_from_list(
+export const Backticked: declarations.Backticked = ($, $p) => sh.ph.list_of_characters(
     $p['add delimiters']
         ? p_.literal.segmented_list([
             p_.literal.list([
@@ -146,13 +147,11 @@ export const Backticked: declarations.Backticked = ($, $p) => p_.list_of_charact
             ])
         ])
         : Escaped($),
-    ($) => $
 )
 
-export const Undelimited: declarations.Undelimited = ($) => p_.list_of_characters_from_list(
+export const Undelimited: declarations.Undelimited = ($) => sh.ph.list_of_characters(
     p_list_from_text(
         $,
         ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
     ),
-    ($) => $
 )

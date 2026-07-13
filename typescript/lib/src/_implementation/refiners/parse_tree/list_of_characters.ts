@@ -1,22 +1,24 @@
-import * as p_ from 'pareto-core/implementation/deserializer'
+import * as p_ from 'pareto-core/implementation/refiner'
 import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
 
 //schemas
-import type * as s_function from "../interface/schemas/deserialize_parse_tree.js"
-import type * as s_out from "../interface/schemas/parse_tree.js"
+import type * as s_function from "../../../interface/schemas/deserialize_parse_tree.js"
+import type * as s_out from "../../../interface/schemas/parse_tree.js"
+import type * as s_in from "../../../interface/schemas/list_of_characters.js"
 
 namespace declarations {
-    export type Document = p_.Deserializer_With_Parameter<
+    export type Document = p_.Refiner_With_Parameter<
         s_out.Document,
         s_function.Error,
+        s_in.List_Of_Characters,
         s_function.Parameters
     >
 }
 
 //dependencies
-import * as r_annotated_characters from "./annotated_characters.js"
-import * as r_tokenize from "../_implementation/refiners/token/annotated_character.js"
-import * as r_from_tokenizer_result from "../_implementation/refiners/parse_tree/tokenizer_result.js"
+import * as r_annotated_characters from "../annotated_characters/list_of_characters.js"
+import * as r_tokenize from "../token/annotated_character.js"
+import * as r_from_tokenizer_result from "./tokenizer_result.js"
 
 
 

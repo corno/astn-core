@@ -1,29 +1,130 @@
 import * as p_ from 'pareto-core/implementation/serializer'
 
+//schemas
 import type * as s_in from "../../interface/schemas/sealed_target.js"
-import type * as s_parameters from "../../interface/schemas/serialize_prose.js"
 
 namespace declarations {
-    export type Document = p_.Serializer_With_Parameter<
-        s_in.Document,
-        s_parameters.Parameters
+    export type Document = p_.Serializer<
+        s_in.Document
     >
-    export type Value = p_.Serializer_With_Parameter<
-        s_in.Value,
-        s_parameters.Parameters
+    export type Value = p_.Serializer<
+        s_in.Value
     >
 }
 
 //dependencies
-import * as t_to_prose from "../transformers/sealed_target/prose.js"
-import * as fp_api from "pareto-fountain-pen/api"
+import * as ser_primitives from "./primitives.js"
 
+//shorthands
+import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
 
-export const Document: declarations.Document = ($, $p) => fp_api.api.serializers.prose['list of characters'].Paragraph(
-    t_to_prose.Document($),
-    $p
-)
-export const Value: declarations.Value = ($, $p) => fp_api.api.serializers.prose['list of characters'].Phrase(
-    t_to_prose.Value($),
-    $p
-)
+export const Document: declarations.Document = ($) => Value($)
+
+export const Value: declarations.Value = ($) => sh.ph.composed([
+    p_.from.state($).decide(
+        ($) => {
+            switch ($[0]) {
+                case 'dictionary': return p_.option($, ($) => sh.ph.composed([
+                    sh.ph.literal("{"),
+                    sh.ph.indent(
+                        sh.pg.sentences(p_.from.dictionary($).convert_to_list(
+                            ($, id) => sh.sentence(
+                                p_.literal.list([
+                                    ser_primitives.Apostrophed(
+                                        id,
+                                        {
+                                            'add delimiters': true
+                                        }
+                                    ),
+                                    sh.ph.literal(": "),
+                                    Value($),
+                                ])))
+                        ),
+                    ),
+                    sh.ph.literal("}"),
+                ]))
+                case 'group': return p_.option($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'verbose': return p_.option($, ($) => sh.ph.composed([
+                                sh.ph.composed([
+                                    sh.ph.literal("("),
+                                    sh.ph.indent(
+                                        sh.pg.sentences(p_.from.dictionary($).convert_to_list(
+                                            ($, id) => sh.sentence(
+                                                p_.literal.list([
+                                                    ser_primitives.Backticked(id, {
+                                                        'add delimiters': true
+                                                    }),
+                                                    sh.ph.literal(": "),
+                                                    Value($),
+                                                ])))
+                                        ),
+                                    ),
+                                    sh.ph.literal(")"),
+                                ])
+                            ]))
+                            default: return p_.exhaustive($[0])
+                        }
+                    }))
+                case 'list': return p_.option($, ($) => sh.ph.composed([
+                    sh.ph.literal("["),
+                    sh.ph.composed(p_.from.list($).map(
+                        ($) => sh.ph.composed([
+                            sh.ph.literal(" "),
+                            Value($),
+                        ]))),
+                    sh.ph.literal(" ]"),
+                ]))
+                case 'nothing': return p_.option($, ($) => sh.ph.literal("~"))
+                case 'optional': return p_.option($, ($) => p_.from.state($).decide(
+                    ($) => {
+                        switch ($[0]) {
+                            case 'not set': return p_.option($, ($) => sh.ph.literal("_"))
+                            case 'set': return p_.option($, ($) => sh.ph.composed([
+                                sh.ph.literal("* "),
+                                Value($),
+                            ]))
+
+                            default: return p_.exhaustive($[0])
+                        }
+                    }))
+                case 'state': return p_.option($, ($) => sh.ph.composed([
+                    sh.ph.literal("| "),
+                    ser_primitives.Backticked(
+                        $.option,
+                        {
+                            'add delimiters': true
+                        }
+                    ),
+                    sh.ph.literal(" "),
+                    Value($.value),
+                ]))
+                case 'text': return p_.option($, ($) => {
+                    const value = $.value
+                    return p_.from.state($.delimiter).decide(
+                        ($) => {
+                            switch ($[0]) {
+                                case 'apostrophe': return p_.option($, ($) => ser_primitives.Apostrophed(
+                                    value,
+                                    {
+                                        'add delimiters': true
+                                    }
+                                ))
+                                case 'quote': return p_.option($, ($) => ser_primitives.Quoted(
+                                    value,
+                                    {
+                                        'add delimiters': true
+                                    }
+                                ))
+                                case 'none': return p_.option($, ($) => ser_primitives.Undelimited(
+                                    value
+                                ))
+                                default: return p_.exhaustive($[0])
+                            }
+                        })
+                })
+                default: return p_.exhaustive($[0])
+            }
+        })
+])
