@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/schema'
 
-import type * as s_parse_tree from "../interface/schemas/parse_tree.js"
+import type * as s_parse_tree from "./parse_tree.js"
 
 export type Dictionary = {
     'value': s_parse_tree.Value

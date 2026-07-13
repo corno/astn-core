@@ -1,6 +1,6 @@
 import * as p_ from 'pareto-core/interface/schema'
 
-import type * as s_location from "../interface/schemas/location.js"
+import type * as s_location from "./location.js"
 
 export type Error = {
     'type': Error_Type
@@ -31,3 +31,8 @@ export type Type_Error =
         'expected': p_.Dictionary<null>
     }]
     | ['missing property', string]
+
+
+export type Verbose_Group_Parameters = {
+    'expected properties': p_.Dictionary<null>
+}

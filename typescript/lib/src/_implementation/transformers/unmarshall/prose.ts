@@ -1,7 +1,7 @@
 import * as p_ from 'pareto-core/implementation/transformer'
 
 //schemas
-import type * as s_in from "../../../private_schemas/unmarshall.js"
+import type * as s_in from "../../../interface/schemas/unmarshall.js"
 import type * as s_out from "../../../private_schemas/prose.js"
 
 namespace declarations {
