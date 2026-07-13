@@ -12,14 +12,14 @@ namespace declarations {
 }
 
 //dependencies
-import * as t_deserialize_parse_tree_to_location from "../parse_tree_deserialization/location.js"
-import * as t_unmarshall_to_location from "../unmarshalling/location.js"
+import * as t_parse_tree_deserialization_to_location from "../parse_tree_deserialization/location.js"
+import * as t_value_unmarshalling_to_location from "../value_unmarshalling/location.js"
 
 export const Error: declarations.Error = ($) => p_.from.state($).decide(
     ($): s_out.Possible_Range => {
         switch ($[0]) {
-            case 'deserialize': return p_.option($, ($) => t_deserialize_parse_tree_to_location.Error($))
-            case 'unmarshall parse tree': return p_.option($, ($) => ['range', t_unmarshall_to_location.Error($)])
+            case 'parse tree deserialization': return p_.option($, ($) => t_parse_tree_deserialization_to_location.Error($))
+            case 'value unmarshalling': return p_.option($, ($) => ['range', t_value_unmarshalling_to_location.Error($)])
             default: return p_.exhaustive($[0])
         }
     })

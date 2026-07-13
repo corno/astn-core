@@ -10,14 +10,14 @@ namespace declarations {
 }
 
 //dependencies
-import * as ser_deserialize_parse_tree_to_prose from "../serializers/parse_tree_deserialization.js"
-import * as ser_unmarshall_to_prose from "./unmarshalling_from_parse_tree.js"
+import * as ser_parse_tree_deserialization from "./parse_tree_deserialization.js"
+import * as ser_value_unmarshalling from "./value_unmarshalling.js"
 
 export const Error: declarations.Error = ($) => p_.from.state($).decide(
     ($) => {
         switch ($[0]) {
-            case 'deserialize': return p_.option($, ($) => ser_deserialize_parse_tree_to_prose.Error($))
-            case 'unmarshall parse tree': return p_.option($, ($) => ser_unmarshall_to_prose.Error($))
+            case 'parse tree deserialization': return p_.option($, ($) => ser_parse_tree_deserialization.Error($))
+            case 'value unmarshalling': return p_.option($, ($) => ser_value_unmarshalling.Error($))
             default: return p_.exhaustive($[0])
         }
     })

@@ -11,7 +11,7 @@ import * as t_parse_tree_deserialization_to_location from "./_implementation/tra
 
 export const api: interface_.API = {
     'serializers': {
-        'deserialize parse tree': {
+        'parse tree deserialization': {
             'Error': ser_deserialize_parse_tree.Error,
         },
         'sealed target': {
@@ -45,7 +45,7 @@ export const api: interface_.API = {
                 'Document': r_parse_tree_from_list_of_characters.Document,
             }
         },
-        'unmarshalled': {
+        'unmarshalled value': {
             'parse tree': {
                 'Dictionary': r_unmarshalled_from_parse_tree.Dictionary,
                 'State': r_unmarshalled_from_parse_tree.State,
