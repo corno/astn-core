@@ -108,10 +108,36 @@ export const Quoted: declarations.Quoted = ($, $p) => sh.ph.list_of_characters(
                 0x22, // "
             ]),
             Escaped(
-                $,
+                p_.text_from_phrase(
+                    $,
+                    "",
+                    ""
+                ),
             ),
             p_.literal.list([
                 0x22, // "
+            ])
+        ])
+        : Escaped(
+            p_.text_from_phrase(
+                $,
+                "",
+                ""
+            ),
+        ),
+)
+
+export const ID: declarations.Apostrophed = ($, $p) => sh.ph.list_of_characters(
+    $p['add delimiters']
+        ? p_.literal.segmented_list([
+            p_.literal.list([
+                0x27, // '
+            ]),
+            Escaped(
+                $,
+            ),
+            p_.literal.list([
+                0x27, // '
             ])
         ])
         : Escaped($),
@@ -151,7 +177,11 @@ export const Backticked: declarations.Backticked = ($, $p) => sh.ph.list_of_char
 
 export const Undelimited: declarations.Undelimited = ($) => sh.ph.list_of_characters(
     p_list_from_text(
-        $,
+        p_.text_from_phrase(
+            $,
+            "",
+            ""
+        ),
         ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
     ),
 )

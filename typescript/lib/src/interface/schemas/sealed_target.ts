@@ -1,5 +1,6 @@
 
 import * as p_di from 'pareto-core/interface/schema'
+import * as p_prose from 'pareto-core/temp/fountain_pen/prose'
 
 export type Document_ = Value_
 
@@ -65,7 +66,7 @@ export namespace Value_ {
     
     export namespace text {
         
-        export type value = string
+        export type value = p_prose.Phrase
         
         export namespace delimiter {
             
@@ -80,13 +81,15 @@ export namespace Value_ {
         export type delimiter = 
             | readonly ['none', delimiter.none]
             | readonly ['quote', delimiter.quote]
-            | readonly ['apostrophe', delimiter.apostrophe]
         
     }
     
     export type text = {
         readonly 'value': text.value
         readonly 'delimiter': text.delimiter
+    }
+    export type reference = {
+        readonly 'value': string
     }
     
 }
@@ -99,6 +102,7 @@ export type Value_ =
     | readonly ['optional', Value_.optional]
     | readonly ['state', Value_.state]
     | readonly ['text', Value_.text]
+    | readonly ['reference', Value_.reference]
 
 export type { 
     Document_ as Document, 

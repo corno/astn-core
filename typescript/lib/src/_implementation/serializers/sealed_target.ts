@@ -88,7 +88,17 @@ export const Value: declarations.Value = ($) => sh.ph.composed([
 
                             default: return p_.exhaustive($[0])
                         }
-                    }))
+                    }
+                ))
+                case 'reference': return p_.option($, ($) => {
+                    const value = $.value
+                    return ser_primitives.Apostrophed(
+                        value,
+                        {
+                            'add delimiters': true
+                        }
+                    )
+                })
                 case 'state': return p_.option($, ($) => sh.ph.composed([
                     sh.ph.literal("| "),
                     ser_primitives.Backticked(
@@ -105,12 +115,6 @@ export const Value: declarations.Value = ($) => sh.ph.composed([
                     return p_.from.state($.delimiter).decide(
                         ($) => {
                             switch ($[0]) {
-                                case 'apostrophe': return p_.option($, ($) => ser_primitives.Apostrophed(
-                                    value,
-                                    {
-                                        'add delimiters': true
-                                    }
-                                ))
                                 case 'quote': return p_.option($, ($) => ser_primitives.Quoted(
                                     value,
                                     {
