@@ -22,7 +22,7 @@ namespace declarations {
 
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose_simple/deprecated"
 
 
 const temp_serialize_number = (n: number): string => {

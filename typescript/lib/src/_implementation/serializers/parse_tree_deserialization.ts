@@ -13,7 +13,7 @@ namespace declarations {
 import * as s_out from "pareto-fountain-pen/interface/schemas/prose"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/prose_extended/deprecated"
 
 export const Error: declarations.Error = ($) => {
     const Parse_Error_Type = ($: s_in.Error.type_): s_out.Phrase => p_.from.state($).decide(

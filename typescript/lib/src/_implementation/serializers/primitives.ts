@@ -32,7 +32,7 @@ namespace declarations {
     >
 }
 
-import * as sh from 'pareto-fountain-pen/shorthands/prose/deprecated'
+import * as sh from 'pareto-fountain-pen/shorthands/prose_simple/deprecated'
 
 
 export const Escaped: p_t.Transformer<
