@@ -4,7 +4,7 @@ import * as r_parse_tree_from_list_of_characters from "./_implementation/refiner
 import * as r_unmarshalled_from_parse_tree from "./_implementation/refiners/unmarshalled/parse_tree.js"
 import * as ser_deserialize_parse_tree from "./_implementation/serializers/parse_tree_deserialization.js"
 import * as ser_location from "./_implementation/serializers/location.js"
-import * as t_sealed_target_to_paragraph_lines from "./_implementation/transformers/sealed_target/paragraph_lines.js"
+import * as t_sealed_target_to_paragraph_lines from "./_implementation/transformers/sealed_target/serialized_paragraph.js"
 import * as ser_value_unmarshalling from "./_implementation/serializers/value_unmarshalling.js"
 import * as t_parse_tree_deserialization_to_location from "./_implementation/transformers/parse_tree_deserialization/location.js"
 import * as t_parse_tree_to_full_value_range from "./_implementation/transformers/parse_tree/full_value_range.js"
@@ -39,7 +39,7 @@ export const api: interface_.API = {
             }
         },
         'sealed target': {
-            'paragraph lines': {
+            'serialized paragraph': {
 
                 'Document': t_sealed_target_to_paragraph_lines.Document,
             }

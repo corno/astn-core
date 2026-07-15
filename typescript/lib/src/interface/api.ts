@@ -50,10 +50,10 @@ export type API = {
             }
         },
         'sealed target': {
-            'paragraph lines': {
+            'serialized paragraph': {
                 'Document': p_t.Transformer_With_Parameter<
                     import("./schemas/sealed_target.js").Document,
-                    import("./schemas/paragraph_lines.js").Lines,
+                    import("./schemas/serialized_paragraph.js").Lines,
                     import("./schemas/paragraph_serialization.js").Parameters
                 >
             }
