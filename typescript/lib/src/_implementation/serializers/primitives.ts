@@ -1,5 +1,4 @@
 import * as p_ from 'pareto-core/implementation/serializer'
-import * as p_t from 'pareto-core/implementation/transformer'
 import type * as p_schema from 'pareto-core/interface/schema'
 import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
 
@@ -33,9 +32,8 @@ namespace declarations {
 }
 
 
-export const Escaped: p_t.Transformer<
-    s_in.Escaped,
-    string
+export const Escaped: p_.Serializer<
+    s_in.Escaped
 > = ($) => p_.ph.list_of_characters(p_.from.list(p_list_from_text(
     $,
     ($) => $
