@@ -1,6 +1,5 @@
 
 import * as p_di from 'pareto-core/interface/schema'
-import * as p_prose from 'pareto-core/temp/fountain_pen/prose'
 
 export type Document_ = Value_
 
@@ -66,7 +65,7 @@ export namespace Value_ {
     
     export namespace text {
         
-        export type value = p_prose.Phrase
+        export type value = string
         
         export namespace delimiter {
             

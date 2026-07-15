@@ -6,15 +6,15 @@ import type * as s_in from "../../interface/schemas/location.js"
 import type * as s_parameters from "../../interface/schemas/location_serialization.js"
 
 namespace declarations {
-    export type Location = p_.Phrase_Serializer_With_Parameter<
+    export type Location = p_.Serializer_With_Parameter<
         s_in.Location,
         s_parameters.Parameters
     >
-    export type Range = p_.Phrase_Serializer_With_Parameter<
+    export type Range = p_.Serializer_With_Parameter<
         s_in.Range,
         s_parameters.Parameters
     >
-    export type Possible_Range = p_.Phrase_Serializer_With_Parameter<
+    export type Possible_Range = p_.Serializer_With_Parameter<
         s_in.Possible_Range,
         s_parameters.Parameters
     >
@@ -22,26 +22,28 @@ namespace declarations {
 
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose_simple/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/rich_phrase/deprecated"
 
+//dependencies
+import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
 
 const temp_serialize_number = (n: number): string => {
     return `${n}`
 }
 
-export const Range: declarations.Range = ($, $p) => sh.ph.composed([
-    sh.ph.literal(temp_serialize_number($.start.relative.line + p_.from.state($p['character location reporting']).decide(
+export const Range: declarations.Range = ($, $p) => ser_rich_phrase.Phrase(sh.ph.composed([
+    sh.ph.text(temp_serialize_number($.start.relative.line + p_.from.state($p['character location reporting']).decide(
         ($) => ($[0] === 'zero based' ? 0 : 1)))),
-    sh.ph.literal(":"),
-    sh.ph.literal(temp_serialize_number($.start.relative.column + p_.from.state($p['character location reporting']).decide(
+    sh.ph.text(":"),
+    sh.ph.text(temp_serialize_number($.start.relative.column + p_.from.state($p['character location reporting']).decide(
         ($) => ($[0] === 'zero based' ? 0 : 1)))),
-    sh.ph.literal("-"),
-    sh.ph.literal(temp_serialize_number($.end.relative.line + p_.from.state($p['character location reporting']).decide(
+    sh.ph.text("-"),
+    sh.ph.text(temp_serialize_number($.end.relative.line + p_.from.state($p['character location reporting']).decide(
         ($) => ($[0] === 'zero based' ? 0 : 1)))),
-    sh.ph.literal(":"),
-    sh.ph.literal(temp_serialize_number($.end.relative.column + p_.from.state($p['character location reporting']).decide(
+    sh.ph.text(":"),
+    sh.ph.text(temp_serialize_number($.end.relative.column + p_.from.state($p['character location reporting']).decide(
         ($) => ($[0] === 'zero based' ? 0 : 1))))
-])
+]))
 
 export const Possible_Range: declarations.Possible_Range = ($, $p) => p_.from.state($).decide(
     ($) => {
@@ -53,11 +55,11 @@ export const Possible_Range: declarations.Possible_Range = ($, $p) => p_.from.st
     })
 
 export const Location: declarations.Location = ($, $p) => {
-    return sh.ph.composed([
-        sh.ph.literal(temp_serialize_number($.relative.line + p_.from.state($p['character location reporting']).decide(
+    return ser_rich_phrase.Phrase(sh.ph.composed([
+        sh.ph.text(temp_serialize_number($.relative.line + p_.from.state($p['character location reporting']).decide(
             ($) => ($[0] === 'zero based' ? 0 : 1)))),
-        sh.ph.literal(":"),
-        sh.ph.literal(temp_serialize_number($.relative.column + p_.from.state($p['character location reporting']).decide(
+        sh.ph.text(":"),
+        sh.ph.text(temp_serialize_number($.relative.column + p_.from.state($p['character location reporting']).decide(
             ($) => ($[0] === 'zero based' ? 0 : 1)))),
-    ])
+    ]))
 }

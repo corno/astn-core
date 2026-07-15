@@ -2,18 +2,20 @@ import * as p_ from 'pareto-core/implementation/serializer'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //schemas
+import * as s_out from "pareto-fountain-pen/interface/schemas/rich_phrase"
 import type * as s_in from "../../interface/schemas/parse_tree_deserialization.js"
 
 namespace declarations {
-    export type Error = p_.Phrase_Serializer<
+    export type Error = p_.Serializer<
         s_in.Error
     >
 }
 
-import * as s_out from "pareto-fountain-pen/interface/schemas/prose"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/prose_extended/deprecated"
+import * as sh from "pareto-fountain-pen/shorthands/rich_phrase/deprecated"
+
+import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
 
 export const Error: declarations.Error = ($) => {
     const Parse_Error_Type = ($: s_in.Error.type_): s_out.Phrase => p_.from.state($).decide(
@@ -22,32 +24,32 @@ export const Error: declarations.Error = ($) => {
                 case 'lexer': return p_.option($, ($) => p_.from.state($.expected).decide(
                     ($) => {
                         switch ($[0]) {
-                            case 'unicode character': return sh.ph.literal("found invalid unicode escape sequence")
-                            case 'no end of line in text': return p_.option($, ($) => sh.ph.literal("no end of line in text"))
+                            case 'unicode character': return sh.ph.text("found invalid unicode escape sequence")
+                            case 'no end of line in text': return p_.option($, ($) => sh.ph.text("no end of line in text"))
                             case 'escape character': return p_.option($, ($) => sh.ph.composed([
-                                sh.ph.literal("escape character (), but found "),
+                                sh.ph.text("escape character (), but found "),
                                 p_.from.optional($.found).decide(
-                                    ($) => sh.ph.literal(
+                                    ($) => sh.ph.text(
                                         p_text_from_list(
                                             p_.literal.list([$]),
                                             ($) => $,
                                         )
 
                                     ),
-                                    () => sh.ph.literal("nothing")
+                                    () => sh.ph.text("nothing")
                                 ),
                             ]))
-                            case 'block comment termination': return p_.option($, ($) => sh.ph.literal("block comment termination: */"))
-                            case 'text termination': return p_.option($, ($) => sh.ph.literal("text delimiter: \" or ' or `"))
+                            case 'block comment termination': return p_.option($, ($) => sh.ph.text("block comment termination: */"))
+                            case 'text termination': return p_.option($, ($) => sh.ph.text("text delimiter: \" or ' or `"))
 
                             default: return p_.exhaustive($[0])
                         }
                     }))
                 case 'parser': return p_.option($, ($) => sh.ph.composed([
-                    sh.ph.literal("expected "),
+                    sh.ph.text("expected "),
                     sh.ph.rich_phrase(
                         p_.from.list($.expected).map(
-                            ($) => sh.ph.literal(
+                            ($) => sh.ph.text(
                                 p_.from.state($).decide(
                                     ($) => {
                                         switch ($[0]) {
@@ -67,21 +69,21 @@ export const Error: declarations.Error = ($) => {
                                     })
                             ),
                         ),
-                        sh.ph.literal("something"),
-                        sh.ph.nothing(),
-                        sh.ph.literal(" or "),
-                        sh.ph.nothing(),
+                        sh.ph.text("something"),
+                        null,
+                        sh.ph.text(" or "),
+                        null,
                     ),
-                    sh.ph.literal(", found "),
+                    sh.ph.text(", found "),
                     p_.from.state($.cause).decide(
                         ($) => {
                             switch ($[0]) {
                                 case 'unexpected token': return p_.option($, ($) => sh.ph.composed([
-                                    sh.ph.literal("'"),
-                                    sh.ph.literal($.found.type[0]),
-                                    sh.ph.literal("'")
+                                    sh.ph.text("'"),
+                                    sh.ph.text($.found.type[0]),
+                                    sh.ph.text("'")
                                 ]))
-                                case 'missing token': return p_.option($, ($) => sh.ph.literal("nothing"))
+                                case 'missing token': return p_.option($, ($) => sh.ph.text("nothing"))
                                 default: return p_.exhaustive($[0])
                             }
                         })
@@ -89,8 +91,8 @@ export const Error: declarations.Error = ($) => {
                 default: return p_.exhaustive($[0])
             }
         })
-    return sh.ph.composed([
-        sh.ph.literal("failed to parse ASTN: "),
+    return ser_rich_phrase.Phrase(sh.ph.composed([
+        sh.ph.text("failed to parse ASTN: "),
         Parse_Error_Type($['type']),
-    ])
+    ]))
 }

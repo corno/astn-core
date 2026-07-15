@@ -15,35 +15,31 @@ namespace s_parameters {
 }
 
 namespace declarations {
-    export type Quoted = p_.Phrase_Serializer_With_Parameter<
+    export type Quoted = p_.Serializer_With_Parameter<
         s_in.Quoted,
         s_parameters.Parameters
     >
-    export type Apostrophed = p_.Phrase_Serializer_With_Parameter<
+    export type Apostrophed = p_.Serializer_With_Parameter<
         s_in.Apostrophed,
         s_parameters.Parameters
     >
-    export type Backticked = p_.Phrase_Serializer_With_Parameter<
+    export type Backticked = p_.Serializer_With_Parameter<
         s_in.Backticked,
         s_parameters.Parameters
     >
-    export type Undelimited = p_.Phrase_Serializer<
+    export type Undelimited = p_.Serializer<
         s_in.Undelimited
     >
 }
 
-import * as sh from 'pareto-fountain-pen/shorthands/prose_simple/deprecated'
-
 
 export const Escaped: p_t.Transformer<
     s_in.Escaped,
-    p_schema.List<number>
-> = ($) => p_.from.list(
-    p_list_from_text(
-        $,
-        ($) => $
-    ),
-).flatten(
+    string
+> = ($) => p_.ph.list_of_characters(p_.from.list(p_list_from_text(
+    $,
+    ($) => $
+)).flatten(
     ($) => {
         switch ($) {
             //I see no need to escape the slash, as it is not an operator character in JSON, and it is not whitespace
@@ -100,88 +96,38 @@ export const Escaped: p_t.Transformer<
         }
     }
 )
-
-export const Quoted: declarations.Quoted = ($, $p) => sh.ph.list_of_characters(
-    $p['add delimiters']
-        ? p_.literal.segmented_list([
-            p_.literal.list([
-                0x22, // "
-            ]),
-            Escaped(
-                p_.text_from_phrase(
-                    $,
-                    "",
-                    ""
-                ),
-            ),
-            p_.literal.list([
-                0x22, // "
-            ])
-        ])
-        : Escaped(
-            p_.text_from_phrase(
-                $,
-                "",
-                ""
-            ),
-        ),
 )
 
-export const ID: declarations.Apostrophed = ($, $p) => sh.ph.list_of_characters(
-    $p['add delimiters']
-        ? p_.literal.segmented_list([
-            p_.literal.list([
-                0x27, // '
-            ]),
-            Escaped(
-                $,
-            ),
-            p_.literal.list([
-                0x27, // '
-            ])
-        ])
-        : Escaped($),
-)
+export const Quoted: declarations.Quoted = ($, $p) => $p['add delimiters']
+    ? p_.ph.composed([
+        p_.ph.literal('"'),
+        Escaped($),
+        p_.ph.literal('"'),
+    ])
+    : Escaped($)
 
-export const Apostrophed: declarations.Apostrophed = ($, $p) => sh.ph.list_of_characters(
-    $p['add delimiters']
-        ? p_.literal.segmented_list([
-            p_.literal.list([
-                0x27, // '
-            ]),
-            Escaped(
-                $,
-            ),
-            p_.literal.list([
-                0x27, // '
-            ])
-        ])
-        : Escaped($),
-)
+export const ID: declarations.Apostrophed = ($, $p) => $p['add delimiters']
+    ? p_.ph.composed([
+        p_.ph.literal("'"),
+        Escaped($),
+        p_.ph.literal("'"),
+    ])
+    : Escaped($)
 
-export const Backticked: declarations.Backticked = ($, $p) => sh.ph.list_of_characters(
-    $p['add delimiters']
-        ? p_.literal.segmented_list([
-            p_.literal.list([
-                0x60, // `
-            ]),
-            Escaped(
-                $,
-            ),
-            p_.literal.list([
-                0x60, // `
-            ])
-        ])
-        : Escaped($),
-)
+export const Apostrophed: declarations.Apostrophed = ($, $p) => $p['add delimiters']
+    ? p_.ph.composed([
+        p_.ph.literal("'"),
+        Escaped($),
+        p_.ph.literal("'"),
+    ])
+    : Escaped($)
 
-export const Undelimited: declarations.Undelimited = ($) => sh.ph.list_of_characters(
-    p_list_from_text(
-        p_.text_from_phrase(
-            $,
-            "",
-            ""
-        ),
-        ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
-    ),
-)
+export const Backticked: declarations.Backticked = ($, $p) => $p['add delimiters']
+    ? p_.ph.composed([
+        p_.ph.literal("`"),
+        Escaped($),
+        p_.ph.literal("`"),
+    ])
+    : Escaped($)
+
+export const Undelimited: declarations.Undelimited = ($) => $ //FIXME: this needs escaping of the operator characters and whitespace
