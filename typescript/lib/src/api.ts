@@ -51,7 +51,6 @@ export const api: interface_.API = {
         'transformers': {
             'sealed target': {
                 'serialized paragraph': {
-
                     'Document': t_sealed_target_to_paragraph_lines.Document,
                 }
             },
