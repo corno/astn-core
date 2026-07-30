@@ -10,10 +10,10 @@ namespace declarations {
 }
 
 //dependencies
-import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
+import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/implementation/serializers/rich_phrase"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/rich_phrase/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
 
 export const Error: declarations.Error = ($) => ser_rich_phrase.Phrase(sh.ph.composed([
     p_.from.state($.type).decide(

@@ -2,7 +2,7 @@ import * as p_ from 'pareto-core/implementation/serializer'
 import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
 
 //schemas
-import * as s_out from "pareto-fountain-pen/interface/schemas/rich_phrase"
+import * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase"
 import type * as s_in from "../../schemas/parse_tree_deserialization.js"
 
 namespace declarations {
@@ -13,9 +13,9 @@ namespace declarations {
 
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/rich_phrase/deprecated"
+import * as sh from "pareto-fountain-pen/modules/rich_phrase/shorthands/deprecated"
 
-import * as ser_rich_phrase from "pareto-fountain-pen/_implementation/serializers/rich_phrase"
+import * as ser_rich_phrase from "pareto-fountain-pen/modules/rich_phrase/implementation/serializers/rich_phrase"
 
 export const Error: declarations.Error = ($) => {
     const Parse_Error_Type = ($: s_in.Error.type_): s_out.Phrase => p_.from.state($).decide(

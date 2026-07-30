@@ -19,7 +19,7 @@ namespace declarations {
 import * as ser_primitives from "../../serializers/primitives.js"
 
 //shorthands
-import * as sh from "pareto-fountain-pen/shorthands/paragraph/deprecated"
+import * as sh from "pareto-fountain-pen/modules/paragraph/shorthands/deprecated"
 
 export const Document: declarations.Document = ($) => sh.pg.sentences([sh.sentence([Value($)])])
 

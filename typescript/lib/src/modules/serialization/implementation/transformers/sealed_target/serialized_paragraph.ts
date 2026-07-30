@@ -15,7 +15,7 @@ namespace declarations {
 }
 
 //dependencies
-import * as t_paragraph_to_serialized_paragraph from "pareto-fountain-pen/_implementation/transformers/paragraph/serialized"
+import * as t_paragraph_to_serialized_paragraph from "pareto-fountain-pen/modules/paragraph/implementation/transformers/paragraph/serialized"
 import * as t_to_paragraph from "./paragraph.js"
 
 export const Document: declarations.Document = ($, $p) => t_paragraph_to_serialized_paragraph.Paragraph(
