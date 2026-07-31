@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// import * as p_h from 'pareto-host-nodejs/index'
+// import * as p_h from 'pareto-core-application/index'
 
 // import type * as s_read_directory from "../../../schemas/read_directory"
 
