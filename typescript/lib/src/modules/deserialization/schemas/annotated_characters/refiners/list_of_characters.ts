@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/implementation/refiner'
+import * as p_ from 'pareto-core/refiner'
 
 import type * as s_out from "../schema.js"
 import type * as s_function from "../../parse_tree_deserialization/schema.js"

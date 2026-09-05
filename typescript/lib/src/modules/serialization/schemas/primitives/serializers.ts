@@ -1,6 +1,6 @@
-import * as p_ from 'pareto-core/implementation/serializer'
-import type * as p_schema from 'pareto-core/interface/schema'
-import p_list_from_text from 'pareto-core/implementation/refiner/specials/list_from_text'
+import * as p_ from 'pareto-core/serializer'
+import type * as p_schema from 'pareto-core/schema'
+import p_list_from_text from 'pareto-core/refiner/specials/list_from_text'
 
 //schemas
 import type * as s_in from "./schema.js"

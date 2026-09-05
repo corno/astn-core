@@ -1,5 +1,5 @@
 
-import * as p_di from 'pareto-core/interface/schema'
+import * as p_di from 'pareto-core/schema'
 
 import * as i_imports_token from "../token/schema.js"
 

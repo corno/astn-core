@@ -1,5 +1,5 @@
-import * as p_ from 'pareto-core/implementation/refiner'
-import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
+import * as p_ from 'pareto-core/refiner'
+import p_iterate from 'pareto-core/refiner/specials/iterate'
 
 //schemas
 import type * as s_function from "../../parse_tree_deserialization/schema.js"

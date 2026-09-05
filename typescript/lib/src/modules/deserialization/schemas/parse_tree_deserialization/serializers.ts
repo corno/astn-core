@@ -1,5 +1,5 @@
-import * as p_ from 'pareto-core/implementation/serializer'
-import p_text_from_list from 'pareto-core/implementation/transformer/specials/text_from_list'
+import * as p_ from 'pareto-core/serializer'
+import p_text_from_list from 'pareto-core/transformer/specials/text_from_list'
 
 //schemas
 import * as s_out from "pareto-fountain-pen/modules/rich_phrase/schemas/rich_phrase/schema"

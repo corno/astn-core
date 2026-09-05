@@ -1,7 +1,7 @@
-import * as p_ from 'pareto-core/implementation/refiner'
-import type * as p_ti from 'pareto-core/interface/transformer'
-import p_iterate from 'pareto-core/implementation/refiner/specials/iterate'
-import p_unreachable_code_path from 'pareto-core/implementation/transformer/specials/unreachable_code_path'
+import * as p_ from 'pareto-core/refiner'
+import type * as p_ti from 'pareto-core/transformer'
+import p_iterate from 'pareto-core/refiner/specials/iterate'
+import p_unreachable_code_path from 'pareto-core/transformer/specials/unreachable_code_path'
 
 //schemas
 import type * as s_choice from "../../parse_tree_deserialization/schema.js"

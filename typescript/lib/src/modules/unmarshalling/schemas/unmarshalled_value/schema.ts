@@ -1,4 +1,4 @@
-import * as p_ from 'pareto-core/interface/schema'
+import * as p_ from 'pareto-core/schema'
 
 import type * as s_parse_tree from "../../../deserialization/schemas/parse_tree/schema.js"
 

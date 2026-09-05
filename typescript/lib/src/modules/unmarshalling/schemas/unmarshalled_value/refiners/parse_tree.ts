@@ -1,7 +1,7 @@
-import * as p_ from 'pareto-core/implementation/refiner'
-import * as p_t from 'pareto-core/implementation/transformer'
-import type * as p_di from 'pareto-core/interface/schema'
-import p_assert from 'pareto-core/implementation/refiner/specials/assert'
+import * as p_ from 'pareto-core/refiner'
+import * as p_t from 'pareto-core/transformer'
+import type * as p_di from 'pareto-core/schema'
+import p_assert from 'pareto-core/refiner/specials/assert'
 
 //schemas
 import type * as s_out from "../schema.js"
