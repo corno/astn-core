@@ -317,17 +317,16 @@ export const Value: declarations.Value = (iterator, abort) => ({
 })
 
 export const Guaranteed_Structural_Token: declarations.Guaranteed_Structural_Token = (iterator, abort, $p) => {
-    iterator.consume(
-        () => p_unreachable_code_path("guaranteed"),
-        () => null,
-    ) //make this a 'discard' operation
-    return {
-        'trailing trivia': $p.token['trailing trivia'],
-        'range': {
-            'start': $p.token['start'],
-            'end': $p.token['end']
-        }
-    }
+    return iterator.consume(
+        ($) => p_unreachable_code_path("guaranteed"),
+        ($) => ({ 
+            'trailing trivia': $['trailing trivia'],
+            'range': {
+                'start': $['start'],
+                'end': $['end']
+            }
+        }),
+    )
 }
 
 export const Possible_Structural_Token: declarations.Possible_Structural_Token = (iterator, abort, $p) => iterator.peek_with_expectation(

@@ -180,7 +180,7 @@ export const Trivia: p_.Production<
                                                     }
                                                 }),
                                         )
-                                        iterator.consume( // discard the solidus
+                                        return iterator.consume( // discard the solidus
                                             ($) => abort({
                                                 'expected': ['block comment termination', null],
                                                 'range': {
@@ -189,7 +189,7 @@ export const Trivia: p_.Production<
                                                 }
                                             }),
                                             ($) => $.code === 0x2F
-                                                ? null
+                                                ? $p_temp_content
                                                 : abort({
                                                     'expected': ['block comment termination', null],
                                                     'range': {
@@ -199,7 +199,6 @@ export const Trivia: p_.Production<
                                                 }),
                                         )
 
-                                        return $p_temp_content
                                     }
                                     ),
                                     'range': create_range(iterator, { 'start character': $ }),
