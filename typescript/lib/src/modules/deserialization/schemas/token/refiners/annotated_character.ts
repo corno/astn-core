@@ -138,77 +138,75 @@ export const Trivia: p_.Production<
                                     }),
 
                                 )
-                            case 0x2A: {// *
-                                return iterator.consume(// discard the asterisk
-                                    () => p_unreachable_code_path("has_more_items -> true"),
-                                    () => ({
-                                        'type': ['block', null],
-                                        'content': p_variables(() => {
-                                            const $p_temp_content = p_text_from_list(
-                                                iterator.build_list({
-                                                    has_more_items: ($) => {
-                                                        // not an asterisk followed by a solidus (end of block comment)
-                                                        return $.code !== 0x2A
-                                                            || iterator.peek_ahead(
-                                                                1,
-                                                                () => true, // the asterisk needs to be processed, so, yes, there are more items
-                                                                ($) => $.code !== 0x2F, // not a solidus
-                                                            )
-                                                    },
-                                                    handle: () => iterator.consume(
-                                                        () => p_unreachable_code_path("has_more_items -> true"),
-                                                        ($) => $.code,
-                                                    ),
-                                                    on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
-                                                }),
-                                                ($) => $
-                                            )
-                                            iterator.consume( // discard the asterisk
-                                                ($) => abort({
+                            case 0x2A: return iterator.consume(// discard the asterisk
+                                () => p_unreachable_code_path("has_more_items -> true"),
+                                () => ({
+                                    'type': ['block', null],
+                                    'content': p_variables(() => {
+                                        const $p_temp_content = p_text_from_list(
+                                            iterator.build_list({
+                                                has_more_items: ($) => {
+                                                    // not an asterisk followed by a solidus (end of block comment)
+                                                    return $.code !== 0x2A
+                                                        || iterator.peek_ahead(
+                                                            1,
+                                                            () => true, // the asterisk needs to be processed, so, yes, there are more items
+                                                            ($) => $.code !== 0x2F, // not a solidus
+                                                        )
+                                                },
+                                                handle: () => iterator.consume(
+                                                    () => p_unreachable_code_path("has_more_items -> true"),
+                                                    ($) => $.code,
+                                                ),
+                                                on_no_progression: () => p_unreachable_code_path("'handle' directly consumes the next character, so this should never happen"),
+                                            }),
+                                            ($) => $
+                                        )
+                                        iterator.consume( // discard the asterisk
+                                            ($) => abort({
+                                                'expected': ['block comment termination', null],
+                                                'range': {
+                                                    'start': $,
+                                                    'end': $,
+                                                }
+                                            }),
+                                            ($) => $.code === 0x2A
+                                                ? null
+                                                : abort({
                                                     'expected': ['block comment termination', null],
                                                     'range': {
-                                                        'start': $,
-                                                        'end': $,
+                                                        'start': $.location,
+                                                        'end': $.location,
                                                     }
                                                 }),
-                                                ($) => $.code === 0x2A
-                                                    ? null
-                                                    : abort({
-                                                        'expected': ['block comment termination', null],
-                                                        'range': {
-                                                            'start': $.location,
-                                                            'end': $.location,
-                                                        }
-                                                    }),
-                                            )
-                                            iterator.consume( // discard the solidus
-                                                ($) => abort({
+                                        )
+                                        iterator.consume( // discard the solidus
+                                            ($) => abort({
+                                                'expected': ['block comment termination', null],
+                                                'range': {
+                                                    'start': $,
+                                                    'end': $,
+                                                }
+                                            }),
+                                            ($) => $.code === 0x2F
+                                                ? null
+                                                : abort({
                                                     'expected': ['block comment termination', null],
                                                     'range': {
-                                                        'start': $,
-                                                        'end': $,
+                                                        'start': $.location,
+                                                        'end': $.location,
                                                     }
                                                 }),
-                                                ($) => $.code === 0x2F
-                                                    ? null
-                                                    : abort({
-                                                        'expected': ['block comment termination', null],
-                                                        'range': {
-                                                            'start': $.location,
-                                                            'end': $.location,
-                                                        }
-                                                    }),
-                                            )
+                                        )
 
-                                            return $p_temp_content
-                                        }
-                                        ),
-                                        'range': create_range(iterator, { 'start character': $ }),
-                                        'trailing whitespace': Whitespace(iterator)
-                                    }),
+                                        return $p_temp_content
+                                    }
+                                    ),
+                                    'range': create_range(iterator, { 'start character': $ }),
+                                    'trailing whitespace': Whitespace(iterator)
+                                }),
 
-                                )
-                            }
+                            )
                             default: return p_unreachable_code_path("we checked in has_more_items that the next character is either a * or a /, so this should never happen")
                         }
                     },
