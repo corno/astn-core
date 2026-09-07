@@ -24,6 +24,7 @@ namespace declarations {
 export const Annotated_Characters: declarations.Annotated_Characters = ($, $p) => p_.from.list(
     $,
 ).map_with_state<
+    s_out.Annotated_Characters,
     s_out.Annotated_Character,
     {
         'location': {
@@ -35,8 +36,7 @@ export const Annotated_Characters: declarations.Annotated_Characters = ($, $p) =
         },
         'line indentation': number | null
         'found carriage return before': boolean
-    },
-    s_out.Annotated_Characters
+    }
 >(
     {
         'location': {
