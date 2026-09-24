@@ -623,7 +623,7 @@ export const Tokenizer_Result: p_.Production_With_Parameter<
                 'trailing trivia': Trivia(iterator, abort),
             })
         },
-        on_no_progression: () => p_unreachable_code_path("handle is expected to always consume at least one character, so this should never happen"),
+        on_no_progression: ($) => p_unreachable_code_path("handle is expected to always consume at least one character, so this should never happen, character:" + $.code + "("+ $.location.relative.line + ":" + $.location.relative.column + ")"),
     }),
     'end': $p['end info']
 })
